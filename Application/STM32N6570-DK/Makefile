@@ -23,7 +23,7 @@ rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(su
 # target
 ######################################
 TARGET = Project
-MODEL_DIR = ../../Model/STM32N6570-DK
+MODEL_DIR     = ../../Model/STM32N6570-DK
 BINARY_DIR = Binary
 ifdef APP_GIT_SHA1_STRING
 C_DEFS += -DAPP_GIT_SHA1_STRING=\"$(APP_GIT_SHA1_STRING)\"
@@ -102,6 +102,7 @@ C_SOURCES += ../../Middlewares/stm32-mw-camera/sensors/cmw_imx335.c
 C_SOURCES += ../../Middlewares/stm32-mw-camera/sensors/cmw_vd1943.c
 C_SOURCES += ../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c
 C_SOURCES += Src/crop_img.c
+C_SOURCES += Src/pose_pipeline.c
 C_SOURCES += Src/app_camerapipeline.c
 C_SOURCES += ../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c
 C_SOURCES += ../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_awb_algo.c
@@ -292,6 +293,7 @@ flash: $(BUILD_DIR)/$(TARGET)_sign.bin
 .PHONY: flash_weights
 flash_weights: $(MODEL_DIR)/network_data.hex
 	$(FLASHER) -c port=SWD mode=HOTPLUG -el $(EL) -hardRst -w $<
+
 
 #######################################
 # dependencies
