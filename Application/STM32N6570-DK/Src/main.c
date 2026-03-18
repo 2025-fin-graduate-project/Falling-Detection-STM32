@@ -33,6 +33,7 @@
 #include "main.h"
 #include <stdio.h>
 #include "app_config.h"
+#include "pose_pipeline.h"
 #include "crop_img.h"
 #include "stlogo.h"
 #include "utils.h"
@@ -128,7 +129,7 @@ uint8_t dcmipp_out_nn[DCMIPP_OUT_NN_BUFF_LEN];
 uint8_t *dcmipp_out_nn;
 #endif
 
-/* model */
+/* MoveNet model context */
 STAI_NETWORK_CONTEXT_DECLARE(network_context, STAI_NETWORK_CONTEXT_SIZE)
 /* Lcd Background Buffer */
 __attribute__ ((section (".psram_bss")))
@@ -140,6 +141,8 @@ __attribute__ ((aligned (32)))
 static uint8_t lcd_fg_buffer[2][LCD_FG_WIDTH * LCD_FG_HEIGHT * 2];
 static int lcd_fg_buffer_rd_idx;
 static PoseDebugMetrics_TypeDef pose_debug_metrics;
+static PosePipeline_t pose_pipeline;
+static uint32_t pose_last_tick;
 
 static void SystemClock_Config(void);
 static void CONSOLE_Config(void);
@@ -199,6 +202,10 @@ int main(void)
   assert(ret == STAI_SUCCESS);
   app_postprocess_init(&pp_params, &info);
 
+  /*** Pose pipeline Init *****************************************************/
+  PosePipeline_Init(&pose_pipeline);
+  pose_last_tick = HAL_GetTick();
+
   /*** Camera Init ************************************************************/
   CameraPipeline_Init(&lcd_bg_area.XSize, &lcd_bg_area.YSize, &pitch_nn);
 
@@ -253,6 +260,15 @@ int main(void)
     int32_t ret = app_postprocess_run((void **) nn_out, number_output, &pp_output, &pp_params);
     pose_debug_metrics.postprocess_status = ret;
     Update_PoseDebugMetrics(nn_out, nn_out_len, number_output, &pp_output);
+
+    /* --- Pose pipeline (every frame) --------------------------------------- */
+    uint32_t now_tick = HAL_GetTick();
+    float32_t dt_s = (float32_t)(now_tick - pose_last_tick) * 1e-3f;
+    if (dt_s <= 0.0f || dt_s > 1.0f) dt_s = 1.0f / 15.0f;
+    pose_last_tick = now_tick;
+
+    PoseFeatureVec_t feat_vec;
+    PosePipeline_Process(&pose_pipeline, pp_output.pOutBuff, dt_s, &feat_vec);
 
     Display_NetworkOutput(&pp_output, ts[1] - ts[0]);
   }
@@ -521,6 +537,9 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
                       pose_debug_metrics.output_channels,
                       (long)pose_debug_metrics.postprocess_status);
   UTIL_LCDEx_PrintfAt(0, LINE(20), CENTER_MODE, "Inference: %ums", inference_ms);
+
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetFont(&Font20);
   UTIL_LCD_SetBackColor(0);
 
   Display_WelcomeScreen();
@@ -847,14 +866,6 @@ void npu_cache_disable_clocks_and_reset(void)
 }
 
 #ifdef  USE_FULL_ASSERT
-
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
 void assert_failed(uint8_t* file, uint32_t line)
 {
   UNUSED(file);
@@ -864,5 +875,4 @@ void assert_failed(uint8_t* file, uint32_t line)
   {
   }
 }
-
 #endif
