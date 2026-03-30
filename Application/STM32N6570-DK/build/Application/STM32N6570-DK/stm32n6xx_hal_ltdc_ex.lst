@@ -1,0 +1,105 @@
+ARM GAS  /tmp/ccxzTkp5.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"stm32n6xx_hal_ltdc_ex.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_ltdc_ex.c"
+  25              	.Letext0:
+ARM GAS  /tmp/ccxzTkp5.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32n6xx_hal_ltdc_ex.c
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
+                           .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
+                           .group:00000000 wm4.arm_cmse.h.103.a0d15a79c4c9a67da8d5831704d7248e
+                           .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
+                           .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.cmsis_version.h.30.d128735bf87720f7436b74fefeb5043c
+                           .group:00000000 wm4.core_cm55.h.67.25006a3ce7048d64bcddd2996d5fac93
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
+                           .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230
+                           .group:00000000 wm4.armv8m_pmu.h.24.6ded195d2625055391fd378c0e1d2519
+                           .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
+                           .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
+                           .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+                           .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
+                           .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
+                           .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
+                           .group:00000000 wm4.stm32n6xx_hal_def.h.63.3a8f01490e8852464e9fcb69092e9c75
+                           .group:00000000 wm4.stm32n6xx_ll_bus.h.38.2366a295ee4cdb04833997d3787fcd2d
+                           .group:00000000 wm4.stm32n6xx_ll_rcc.h.21.656bd5637db608589ad16ea57d39430c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.194.69b522b1afdf59a82d05a1f71efe03c7
+                           .group:00000000 wm4.stm32n6xx_hal_rcc_ex.h.21.cc6be0a7d168882a1a6f470236ba784c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.4361.4b490a4a19722e68c21f88cb8a774a30
+                           .group:00000000 wm4.stm32n6xx_hal_gpio.h.21.89d54af663b98eb8fc098192053f7eeb
+                           .group:00000000 wm4.stm32n6xx_hal_gpio_ex.h.22.f7e795fb05a69a19b87d946b47c8db8b
+                           .group:00000000 wm4.stm32n6xx_hal_rif.h.21.33f2c553a8a3fc14dca8c470b213ab19
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.21.61e48c5c2e8d25d22177834b232fe45c
+                           .group:00000000 wm4.stm32n6xx_hal_dma_ex.h.21.82f854ecdb6a463b06d0b4e5c217c368
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.1020.87e2180c009560b617c1f8208140c950
+                           .group:00000000 wm4.stm32n6xx_hal_cortex.h.21.f493623cc58f9454ab4eae41e395c5cc
+                           .group:00000000 wm4.stm32n6xx_hal_bsec.h.21.1ee89319140541f82434908b4267aa30
+                           .group:00000000 wm4.stm32n6xx_hal_dcmipp.h.21.e2b87dce83d7d722d696a597f6ac56bf
+                           .group:00000000 wm4.stm32n6xx_hal_dma2d.h.21.75c8d46cdbb72970123b3f34ae2043d7
+                           .group:00000000 wm4.stm32n6xx_hal_exti.h.21.e0efb23591051684dc14f1f2431c6aab
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.21.3f483626ff64c5bf027265bb2e1d1331
+ARM GAS  /tmp/ccxzTkp5.s 			page 3
+
+
+                           .group:00000000 wm4.stm32n6xx_hal_i2c_ex.h.21.79e9196c22282cdaf6b4047893638c45
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.741.1084702632703acc669e4282b3043372
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.21.ae1eb09930e7e550e48e418ac5849e4d
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.1002.b13ede7fc94ed5ad1c6768a157d2149a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr.h.21.cdb73e4869c3fed3fc84f901ec0e5f0a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr_ex.h.21.1a673224a58b0c1e5fad8eeda6514208
+                           .group:00000000 wm4.stm32n6xx_hal_ramcfg.h.21.a62dfbb4d2c14e9a8c634a215e37bd3d
+                           .group:00000000 wm4.stm32n6xx_hal_uart.h.21.230f549bfa0d5ebfd77bfb311b2aca15
+                           .group:00000000 wm4.stm32n6xx_hal_uart_ex.h.21.a0d5511e1d0703b7b5278c8f5472b96d
+                           .group:00000000 wm4.stm32n6xx_hal_xspi.h.21.7fd922d3bdb871475cf18436a68935bb
+                           .group:00000000 wm4.stm32n6xx_hal_cacheaxi.h.21.7c3375b7903ec42376e4883320997f74
+                           .group:00000000 wm4.stm32n6xx_hal.h.81.e79d59262ba173c33cf1d69281830d15
+
+NO UNDEFINED SYMBOLS

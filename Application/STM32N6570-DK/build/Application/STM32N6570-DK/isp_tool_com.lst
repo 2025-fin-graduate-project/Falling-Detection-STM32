@@ -1,0 +1,36 @@
+ARM GAS  /tmp/ccSm5GTY.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"isp_tool_com.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_tool_com.c"
+  25              	.Letext0:
+ARM GAS  /tmp/ccSm5GTY.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 isp_tool_com.c
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+
+NO UNDEFINED SYMBOLS

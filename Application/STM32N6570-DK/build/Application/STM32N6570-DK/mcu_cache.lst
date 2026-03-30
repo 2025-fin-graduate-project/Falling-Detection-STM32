@@ -1,0 +1,1814 @@
+ARM GAS  /tmp/ccPkfCL7.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"mcu_cache.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c"
+  25              		.section	.text.mcu_cache_invalidate,"ax",%progbits
+  26              		.align	1
+  27              		.global	mcu_cache_invalidate
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	mcu_cache_invalidate:
+  33              	.LFB276:
+   1:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** /**
+   2:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   ******************************************************************************
+   3:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * @file    mcu_cache.c
+   4:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * @brief   Implementation of MCU cache-handling functions
+   5:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   ******************************************************************************
+   6:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * @attention
+   7:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   *
+   8:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * Copyright (c) 2024 STMicroelectronics.
+   9:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * All rights reserved.
+  10:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   *
+  11:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  12:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * in the root directory of this software component.
+  13:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  14:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   *
+  15:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   ******************************************************************************
+  16:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   */
+  17:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  18:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #include "mcu_cache.h"
+  19:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #include "stm32n6xx.h"          // Needed for cmsis_compiler (__STATIC_FORCEINLINE) and core-cm55 (
+  20:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** __STATIC_FORCEINLINE uint32_t mcu_cache_enabled(void) {
+  22:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   return (SCB->CCR & SCB_CCR_DC_Msk);
+  24:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+  25:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   return 0;
+ARM GAS  /tmp/ccPkfCL7.s 			page 2
+
+
+  26:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #endif
+  27:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+  28:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  29:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_invalidate(void)
+  30:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** {
+  34              		.loc 1 30 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  31:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+  38              		.loc 1 31 3 view .LVU1
+  39              	.LBB104:
+  40              	.LBI104:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+  41              		.loc 1 21 31 view .LVU2
+  42              	.LBB105:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+  43              		.loc 1 23 3 view .LVU3
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+  44              		.loc 1 23 14 is_stmt 0 view .LVU4
+  45 0000 144A     		ldr	r2, .L10
+  46              	.LBE105:
+  47              	.LBE104:
+  30:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+  48              		.loc 1 30 1 view .LVU5
+  49 0002 70B5     		push	{r4, r5, r6, lr}
+  50              		.cfi_def_cfa_offset 16
+  51              		.cfi_offset 4, -16
+  52              		.cfi_offset 5, -12
+  53              		.cfi_offset 6, -8
+  54              		.cfi_offset 14, -4
+  55              	.LBB107:
+  56              	.LBB106:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+  57              		.loc 1 23 14 view .LVU6
+  58 0004 5369     		ldr	r3, [r2, #20]
+  59              	.LBE106:
+  60              	.LBE107:
+  61              		.loc 1 31 5 discriminator 1 view .LVU7
+  62 0006 DB03     		lsls	r3, r3, #15
+  63 0008 23D5     		bpl	.L1
+  32:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_InvalidateDCache();
+  64              		.loc 1 32 5 is_stmt 1 view .LVU8
+  65              	.LBB108:
+  66              	.LBI108:
+  67              		.file 2 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h"
+   1:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /*
+   2:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
+   3:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  *
+   4:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * SPDX-License-Identifier: Apache-2.0
+   5:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  *
+   6:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+   7:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * not use this file except in compliance with the License.
+   8:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * You may obtain a copy of the License at
+   9:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  *
+  10:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * www.apache.org/licenses/LICENSE-2.0
+  11:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  *
+ARM GAS  /tmp/ccPkfCL7.s 			page 3
+
+
+  12:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * Unless required by applicable law or agreed to in writing, software
+  13:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  14:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * See the License for the specific language governing permissions and
+  16:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * limitations under the License.
+  17:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  */
+  18:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  19:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /*
+  20:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  * CMSIS-Core(M) Level 1 Cache API for Armv7-M and later
+  21:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  */
+  22:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  23:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #ifndef ARM_ARMV7M_CACHEL1_H
+  24:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #define ARM_ARMV7M_CACHEL1_H
+  25:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  26:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #if   defined ( __ICCARM__ )
+  27:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #pragma system_include         /* treat file as system include file for MISRA check */
+  28:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #elif defined (__clang__)
+  29:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #pragma clang system_header    /* treat file as system include file */
+  30:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #endif
+  31:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  32:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+  33:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \ingroup  CMSIS_Core_FunctionInterface
+  34:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \defgroup CMSIS_Core_CacheFunctions Cache Functions
+  35:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief    Functions that configure Instruction and Data cache.
+  36:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   @{
+  37:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****  */
+  38:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  39:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /* Cache Size ID Register Macros */
+  40:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #define CCSIDR_WAYS(x)         (((x) & SCB_CCSIDR_ASSOCIATIVITY_Msk) >> SCB_CCSIDR_ASSOCIATIVITY_Po
+  41:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #define CCSIDR_SETS(x)         (((x) & SCB_CCSIDR_NUMSETS_Msk      ) >> SCB_CCSIDR_NUMSETS_Pos     
+  42:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  43:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #ifndef __SCB_DCACHE_LINE_SIZE
+  44:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #define __SCB_DCACHE_LINE_SIZE  32U /*!< Cortex-M7 cache line size is fixed to 32 bytes (8 words). 
+  45:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #endif
+  46:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  47:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #ifndef __SCB_ICACHE_LINE_SIZE
+  48:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #define __SCB_ICACHE_LINE_SIZE  32U /*!< Cortex-M7 cache line size is fixed to 32 bytes (8 words). 
+  49:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** #endif
+  50:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  51:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+  52:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Enable I-Cache
+  53:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Turns on I-Cache
+  54:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+  55:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_EnableICache (void)
+  56:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+  57:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  58:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if (SCB->CCR & SCB_CCR_IC_Msk) return;  /* return if ICache is already enabled */
+  59:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  60:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  61:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  62:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->ICIALLU = 0UL;                     /* invalidate I-Cache */
+  63:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  64:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  65:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CCR |=  (uint32_t)SCB_CCR_IC_Msk;  /* enable I-Cache */
+  66:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  67:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  68:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ARM GAS  /tmp/ccPkfCL7.s 			page 4
+
+
+  69:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+  70:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  71:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  72:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+  73:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Disable I-Cache
+  74:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Turns off I-Cache
+  75:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+  76:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_DisableICache (void)
+  77:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+  78:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  79:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  80:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  81:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CCR &= ~(uint32_t)SCB_CCR_IC_Msk;  /* disable I-Cache */
+  82:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->ICIALLU = 0UL;                     /* invalidate I-Cache */
+  83:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  84:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  85:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+  86:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+  87:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  88:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  89:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+  90:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Invalidate I-Cache
+  91:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Invalidates I-Cache
+  92:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+  93:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_InvalidateICache (void)
+  94:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+  95:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+  96:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  97:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+  98:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->ICIALLU = 0UL;
+  99:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 100:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 101:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 102:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 103:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 104:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 105:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 106:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   I-Cache Invalidate by address
+ 107:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Invalidates I-Cache for the given address.
+ 108:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            I-Cache is invalidated starting from a 32 byte aligned address in 32 byte granularity.
+ 109:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            I-Cache memory blocks which are part of given address + given size are invalidated.
+ 110:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   addr    address
+ 111:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   isize   size of memory block (in number of bytes)
+ 112:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** */
+ 113:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_InvalidateICache_by_Addr (volatile void *addr, int32_t isize)
+ 114:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 115:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+ 116:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if ( isize > 0 ) {
+ 117:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        int32_t op_size = isize + (((uint32_t)addr) & (__SCB_ICACHE_LINE_SIZE - 1U));
+ 118:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_ICACHE_LINE_SIZE - 1U) */;
+ 119:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 120:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 121:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 122:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 123:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->ICIMVAU = op_addr;             /* register accepts only 32byte aligned values, only bi
+ 124:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_ICACHE_LINE_SIZE;
+ 125:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_ICACHE_LINE_SIZE;
+ARM GAS  /tmp/ccPkfCL7.s 			page 5
+
+
+ 126:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 127:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 128:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 129:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __ISB();
+ 130:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     }
+ 131:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 132:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 133:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 134:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 135:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 136:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Enable D-Cache
+ 137:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Turns on D-Cache
+ 138:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+ 139:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_EnableDCache (void)
+ 140:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 141:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 142:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ccsidr;
+ 143:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t sets;
+ 144:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ways;
+ 145:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 146:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if (SCB->CCR & SCB_CCR_DC_Msk) return;  /* return if DCache is already enabled */
+ 147:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 148:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+ 149:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 150:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 151:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     ccsidr = SCB->CCSIDR;
+ 152:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 153:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                                             /* invalidate D-Cache */
+ 154:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
+ 155:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 156:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 157:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 158:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCISW = (((sets << SCB_DCISW_SET_Pos) & SCB_DCISW_SET_Msk) |
+ 159:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                       ((ways << SCB_DCISW_WAY_Pos) & SCB_DCISW_WAY_Msk)  );
+ 160:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #if defined ( __CC_ARM )
+ 161:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****           __schedule_barrier();
+ 162:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #endif
+ 163:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while (ways-- != 0U);
+ 164:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } while(sets-- != 0U);
+ 165:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 166:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 167:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CCR |=  (uint32_t)SCB_CCR_DC_Msk;  /* enable D-Cache */
+ 168:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 169:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 170:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 171:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 172:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 174:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 176:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Disable D-Cache
+ 177:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Turns off D-Cache
+ 178:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+ 179:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_DisableDCache (void)
+ 180:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 181:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 182:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     struct {
+ARM GAS  /tmp/ccPkfCL7.s 			page 6
+
+
+ 183:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t ccsidr;
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t sets;
+ 185:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t ways;
+ 186:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } locals
+ 187:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
+ 188:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        __ALIGNED(__SCB_DCACHE_LINE_SIZE)
+ 189:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #endif
+ 190:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     ;
+ 191:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 192:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+ 193:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 194:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 195:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
+ 196:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 197:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 198:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #if !defined(__OPTIMIZE__)
+ 199:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       /*
+ 200:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * For the endless loop issue with no optimization builds.
+ 201:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * More details, see https://github.com/ARM-software/CMSIS_5/issues/620
+ 202:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        *
+ 203:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * The issue only happens when local variables are in stack. If
+ 204:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * local variables are saved in general purpose register, then the function
+ 205:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * is OK.
+ 206:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        *
+ 207:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * When local variables are in stack, after disabling the cache, flush the
+ 208:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        * local variables cache line for data consistency.
+ 209:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        */
+ 210:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       /* Clean and invalidate the local variable cache. */
+ 211:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #if defined(__ICCARM__)
+ 212:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     /* As we can't align the stack to the cache line size, invalidate each of the variables */
+ 213:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       SCB->DCCIMVAC = (uint32_t)&locals.sets;
+ 214:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       SCB->DCCIMVAC = (uint32_t)&locals.ways;
+ 215:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       SCB->DCCIMVAC = (uint32_t)&locals.ccsidr;
+ 216:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #else
+ 217:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       SCB->DCCIMVAC = (uint32_t)&locals;
+ 218:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #endif
+ 219:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 220:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __ISB();
+ 221:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     #endif
+ 222:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 223:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     locals.ccsidr = SCB->CCSIDR;
+ 224:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                                             /* clean & invalidate D-Cache */
+ 225:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     locals.sets = (uint32_t)(CCSIDR_SETS(locals.ccsidr));
+ 226:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 227:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       locals.ways = (uint32_t)(CCSIDR_WAYS(locals.ccsidr));
+ 228:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 229:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCISW = (((locals.sets << SCB_DCCISW_SET_Pos) & SCB_DCCISW_SET_Msk) |
+ 230:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                        ((locals.ways << SCB_DCCISW_WAY_Pos) & SCB_DCCISW_WAY_Msk)  );
+ 231:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #if defined ( __CC_ARM )
+ 232:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****           __schedule_barrier();
+ 233:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #endif
+ 234:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while (locals.ways-- != 0U);
+ 235:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } while(locals.sets-- != 0U);
+ 236:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 237:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 238:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 239:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ARM GAS  /tmp/ccPkfCL7.s 			page 7
+
+
+ 240:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 241:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 242:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 243:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 244:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Invalidate D-Cache
+ 245:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Invalidates D-Cache
+ 246:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+ 247:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_InvalidateDCache (void)
+  68              		.loc 2 247 27 view .LVU9
+  69              	.LBB109:
+ 248:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 249:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 250:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ccsidr;
+  70              		.loc 2 250 5 view .LVU10
+ 251:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t sets;
+  71              		.loc 2 251 5 view .LVU11
+ 252:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ways;
+  72              		.loc 2 252 5 view .LVU12
+ 253:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 254:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+  73              		.loc 2 254 5 view .LVU13
+  74              		.loc 2 254 17 is_stmt 0 view .LVU14
+  75 000a 0023     		movs	r3, #0
+  76 000c C2F88430 		str	r3, [r2, #132]
+ 255:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+  77              		.loc 2 255 5 is_stmt 1 view .LVU15
+  78              	.LBB110:
+  79              	.LBI110:
+  80              		.file 3 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V6.0.0
+   5:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     27. July 2024
+   6:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /*
+   8:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
+   9:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  10:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  12:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  16:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  18:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  24:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  25:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  28:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC system_header   /* treat file as system include file */
+ARM GAS  /tmp/ccPkfCL7.s 			page 8
+
+
+  29:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  30:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #include <arm_acle.h>
+  31:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  32:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
+  33:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
+  34:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
+  35:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  36:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  37:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  38:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  39:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+  40:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  41:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  42:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
+  43:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  44:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  45:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
+  46:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  47:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE
+  48:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
+  49:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  50:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  51:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN                            __attribute__((__noreturn__))
+  52:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  53:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   CMSIS_DEPRECATED
+  54:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define CMSIS_DEPRECATED                       __attribute__((deprecated))
+  55:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  56:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  57:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
+  58:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  59:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+  60:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
+  61:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  62:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  63:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                               __attribute__((packed, aligned(1)))
+  64:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  65:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  66:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+  67:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  68:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
+  69:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+  70:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  71:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_WRITE
+  72:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  73:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  74:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  75:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  76:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  77:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
+  78:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  79:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_READ
+  80:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  81:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  82:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  83:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  84:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  85:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
+ARM GAS  /tmp/ccPkfCL7.s 			page 9
+
+
+  86:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  87:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
+  88:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  89:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  90:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  91:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  92:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  93:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
+  94:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  95:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_READ
+  96:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  97:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  98:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  99:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+ 100:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 101:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
+ 102:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 103:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+ 104:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)                           __attribute__((aligned(x)))
+ 105:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 106:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
+ 107:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
+ 108:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 109:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __COMPILER_BARRIER
+ 110:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+ 111:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 112:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __NO_INIT
+ 113:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_INIT                              __attribute__ ((section (".noinit")))
+ 114:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 115:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __ALIAS
+ 116:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIAS(x)                             __attribute__ ((alias(x)))
+ 117:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 118:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 119:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 120:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 121:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
+ 122:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 123:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ 124:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 125:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 126:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 127:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 128:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 129:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 130:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 131:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 132:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #else
+ 133:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 134:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 135:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 136:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 137:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 139:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
+ 140:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 141:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 142:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __NOP()         __ASM volatile ("nop")
+ARM GAS  /tmp/ccPkfCL7.s 			page 10
+
+
+ 143:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 144:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 145:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 146:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 147:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 148:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 149:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFI()         __ASM volatile ("wfi":::"memory")
+ 150:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 151:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 153:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Event
+ 154:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 155:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 156:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 157:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFE()         __ASM volatile ("wfe":::"memory")
+ 158:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 159:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 160:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 161:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Send Event
+ 162:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 163:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 164:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __SEV()         __ASM volatile ("sev")
+ 165:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 166:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 168:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 169:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 170:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 171:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
+ 172:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __ISB(void)
+ 174:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 176:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 177:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 178:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 179:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 180:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 181:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 182:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 183:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __DSB(void)
+  81              		.loc 3 184 27 view .LVU16
+  82              	.LBB111:
+ 185:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 186:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+  83              		.loc 3 186 3 view .LVU17
+  84              		.syntax unified
+  85              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  86 0010 BFF34F8F 		dsb 0xF
+  87              	@ 0 "" 2
+  88              		.thumb
+  89              		.syntax unified
+  90              	.LBE111:
+  91              	.LBE110:
+ 256:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 257:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     ccsidr = SCB->CCSIDR;
+ARM GAS  /tmp/ccPkfCL7.s 			page 11
+
+
+  92              		.loc 2 257 5 view .LVU18
+ 258:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 259:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                                             /* invalidate D-Cache */
+ 260:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
+ 261:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 262:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 263:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 264:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCISW = (((sets << SCB_DCISW_SET_Pos) & SCB_DCISW_SET_Msk) |
+  93              		.loc 2 264 52 is_stmt 0 view .LVU19
+  94 0014 43F6E074 		movw	r4, #16352
+ 257:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+  95              		.loc 2 257 12 view .LVU20
+  96 0018 D2F88030 		ldr	r3, [r2, #128]
+  97              	.LVL0:
+ 260:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+  98              		.loc 2 260 5 is_stmt 1 view .LVU21
+ 262:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+  99              		.loc 2 262 12 is_stmt 0 view .LVU22
+ 100 001c C3F3C900 		ubfx	r0, r3, #3, #10
+ 260:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 101              		.loc 2 260 10 view .LVU23
+ 102 0020 C3F34E33 		ubfx	r3, r3, #13, #15
+ 103              	.LVL1:
+ 260:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 104              		.loc 2 260 10 view .LVU24
+ 105 0024 5B01     		lsls	r3, r3, #5
+ 106              	.LVL2:
+ 107              	.L4:
+ 261:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 108              		.loc 2 261 5 is_stmt 1 view .LVU25
+ 262:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 109              		.loc 2 262 7 view .LVU26
+ 262:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 110              		.loc 2 262 12 is_stmt 0 view .LVU27
+ 111 0026 00F1010E 		add	lr, r0, #1
+ 112 002a 0146     		mov	r1, r0
+ 113 002c 4EF001E0 		dls	lr, lr
+ 114              		.loc 2 264 52 view .LVU28
+ 115 0030 03EA0406 		and	r6, r3, r4
+ 116              	.LVL3:
+ 117              	.L3:
+ 263:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCISW = (((sets << SCB_DCISW_SET_Pos) & SCB_DCISW_SET_Msk) |
+ 118              		.loc 2 263 7 is_stmt 1 view .LVU29
+ 119              		.loc 2 264 9 view .LVU30
+ 120              		.loc 2 264 73 is_stmt 0 view .LVU31
+ 121 0034 46EA8175 		orr	r5, r6, r1, lsl #30
+ 122              		.loc 2 264 20 view .LVU32
+ 123 0038 C2F86052 		str	r5, [r2, #608]
+ 265:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                       ((ways << SCB_DCISW_WAY_Pos) & SCB_DCISW_WAY_Msk)  );
+ 266:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #if defined ( __CC_ARM )
+ 267:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****           __schedule_barrier();
+ 268:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #endif
+ 269:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while (ways-- != 0U);
+ 124              		.loc 2 269 23 is_stmt 1 discriminator 1 view .LVU33
+ 125              		.loc 2 269 20 is_stmt 0 discriminator 1 view .LVU34
+ 126 003c 0139     		subs	r1, r1, #1
+ 127              	.LVL4:
+ARM GAS  /tmp/ccPkfCL7.s 			page 12
+
+
+ 128              		.loc 2 269 23 discriminator 1 view .LVU35
+ 129 003e 0FF007C8 		le	lr, .L3
+ 270:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } while(sets-- != 0U);
+ 130              		.loc 2 270 20 is_stmt 1 view .LVU36
+ 131 0042 203B     		subs	r3, r3, #32
+ 132 0044 13F1200F 		cmn	r3, #32
+ 133 0048 EDD1     		bne	.L4
+ 271:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 272:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 134              		.loc 2 272 5 view .LVU37
+ 135              	.LBB112:
+ 136              	.LBI112:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 137              		.loc 3 184 27 view .LVU38
+ 138              	.LBB113:
+ 139              		.loc 3 186 3 view .LVU39
+ 140              		.syntax unified
+ 141              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 142 004a BFF34F8F 		dsb 0xF
+ 143              	@ 0 "" 2
+ 144              		.thumb
+ 145              		.syntax unified
+ 146              	.LBE113:
+ 147              	.LBE112:
+ 273:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 148              		.loc 2 273 5 view .LVU40
+ 149              	.LBB114:
+ 150              	.LBI114:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 151              		.loc 3 173 27 view .LVU41
+ 152              	.LBB115:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 153              		.loc 3 175 3 view .LVU42
+ 154              		.syntax unified
+ 155              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 156 004e BFF36F8F 		isb 0xF
+ 157              	@ 0 "" 2
+ 158              	.LVL5:
+ 159              		.thumb
+ 160              		.syntax unified
+ 161              	.L1:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 162              		.loc 3 175 3 is_stmt 0 view .LVU43
+ 163              	.LBE115:
+ 164              	.LBE114:
+ 165              	.LBE109:
+ 166              	.LBE108:
+  33:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  34:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+ 167              		.loc 1 34 1 view .LVU44
+ 168 0052 70BD     		pop	{r4, r5, r6, pc}
+ 169              	.L11:
+ 170              		.align	2
+ 171              	.L10:
+ 172 0054 00ED00E0 		.word	-536810240
+ 173              		.cfi_endproc
+ 174              	.LFE276:
+ARM GAS  /tmp/ccPkfCL7.s 			page 13
+
+
+ 176              		.section	.text.mcu_cache_clean,"ax",%progbits
+ 177              		.align	1
+ 178              		.global	mcu_cache_clean
+ 179              		.syntax unified
+ 180              		.thumb
+ 181              		.thumb_func
+ 183              	mcu_cache_clean:
+ 184              	.LFB277:
+  35:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  36:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_clean(void)
+  37:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** {
+ 185              		.loc 1 37 1 is_stmt 1 view -0
+ 186              		.cfi_startproc
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+  38:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 189              		.loc 1 38 3 view .LVU46
+ 190              	.LBB116:
+ 191              	.LBI116:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+ 192              		.loc 1 21 31 view .LVU47
+ 193              	.LBB117:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 194              		.loc 1 23 3 view .LVU48
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 195              		.loc 1 23 14 is_stmt 0 view .LVU49
+ 196 0000 144A     		ldr	r2, .L21
+ 197              	.LBE117:
+ 198              	.LBE116:
+  37:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 199              		.loc 1 37 1 view .LVU50
+ 200 0002 70B5     		push	{r4, r5, r6, lr}
+ 201              		.cfi_def_cfa_offset 16
+ 202              		.cfi_offset 4, -16
+ 203              		.cfi_offset 5, -12
+ 204              		.cfi_offset 6, -8
+ 205              		.cfi_offset 14, -4
+ 206              	.LBB119:
+ 207              	.LBB118:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 208              		.loc 1 23 14 view .LVU51
+ 209 0004 5369     		ldr	r3, [r2, #20]
+ 210              	.LBE118:
+ 211              	.LBE119:
+ 212              		.loc 1 38 5 discriminator 1 view .LVU52
+ 213 0006 DB03     		lsls	r3, r3, #15
+ 214 0008 23D5     		bpl	.L12
+  39:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_CleanDCache();
+ 215              		.loc 1 39 5 is_stmt 1 view .LVU53
+ 216              	.LBB120:
+ 217              	.LBI120:
+ 274:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 275:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 276:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 277:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 278:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 279:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Clean D-Cache
+ARM GAS  /tmp/ccPkfCL7.s 			page 14
+
+
+ 280:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Cleans D-Cache
+ 281:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+ 282:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_CleanDCache (void)
+ 218              		.loc 2 282 27 view .LVU54
+ 219              	.LBB121:
+ 283:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 284:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 285:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ccsidr;
+ 220              		.loc 2 285 5 view .LVU55
+ 286:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t sets;
+ 221              		.loc 2 286 5 view .LVU56
+ 287:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ways;
+ 222              		.loc 2 287 5 view .LVU57
+ 288:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 289:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+ 223              		.loc 2 289 5 view .LVU58
+ 224              		.loc 2 289 17 is_stmt 0 view .LVU59
+ 225 000a 0023     		movs	r3, #0
+ 226 000c C2F88430 		str	r3, [r2, #132]
+ 290:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 227              		.loc 2 290 5 is_stmt 1 view .LVU60
+ 228              	.LBB122:
+ 229              	.LBI122:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 230              		.loc 3 184 27 view .LVU61
+ 231              	.LBB123:
+ 232              		.loc 3 186 3 view .LVU62
+ 233              		.syntax unified
+ 234              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 235 0010 BFF34F8F 		dsb 0xF
+ 236              	@ 0 "" 2
+ 237              		.thumb
+ 238              		.syntax unified
+ 239              	.LBE123:
+ 240              	.LBE122:
+ 291:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 292:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     ccsidr = SCB->CCSIDR;
+ 241              		.loc 2 292 5 view .LVU63
+ 293:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 294:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                                             /* clean D-Cache */
+ 295:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
+ 296:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 297:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 298:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 299:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCSW = (((sets << SCB_DCCSW_SET_Pos) & SCB_DCCSW_SET_Msk) |
+ 242              		.loc 2 299 52 is_stmt 0 view .LVU64
+ 243 0014 43F6E074 		movw	r4, #16352
+ 292:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 244              		.loc 2 292 12 view .LVU65
+ 245 0018 D2F88030 		ldr	r3, [r2, #128]
+ 246              	.LVL6:
+ 295:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 247              		.loc 2 295 5 is_stmt 1 view .LVU66
+ 297:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 248              		.loc 2 297 12 is_stmt 0 view .LVU67
+ 249 001c C3F3C900 		ubfx	r0, r3, #3, #10
+ 295:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ARM GAS  /tmp/ccPkfCL7.s 			page 15
+
+
+ 250              		.loc 2 295 10 view .LVU68
+ 251 0020 C3F34E33 		ubfx	r3, r3, #13, #15
+ 252              	.LVL7:
+ 295:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 253              		.loc 2 295 10 view .LVU69
+ 254 0024 5B01     		lsls	r3, r3, #5
+ 255              	.LVL8:
+ 256              	.L15:
+ 296:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 257              		.loc 2 296 5 is_stmt 1 view .LVU70
+ 297:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 258              		.loc 2 297 7 view .LVU71
+ 297:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 259              		.loc 2 297 12 is_stmt 0 view .LVU72
+ 260 0026 00F1010E 		add	lr, r0, #1
+ 261 002a 0146     		mov	r1, r0
+ 262 002c 4EF001E0 		dls	lr, lr
+ 263              		.loc 2 299 52 view .LVU73
+ 264 0030 03EA0406 		and	r6, r3, r4
+ 265              	.LVL9:
+ 266              	.L14:
+ 298:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCSW = (((sets << SCB_DCCSW_SET_Pos) & SCB_DCCSW_SET_Msk) |
+ 267              		.loc 2 298 7 is_stmt 1 view .LVU74
+ 268              		.loc 2 299 9 view .LVU75
+ 269              		.loc 2 299 73 is_stmt 0 view .LVU76
+ 270 0034 46EA8175 		orr	r5, r6, r1, lsl #30
+ 271              		.loc 2 299 20 view .LVU77
+ 272 0038 C2F86C52 		str	r5, [r2, #620]
+ 300:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                       ((ways << SCB_DCCSW_WAY_Pos) & SCB_DCCSW_WAY_Msk)  );
+ 301:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #if defined ( __CC_ARM )
+ 302:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****           __schedule_barrier();
+ 303:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #endif
+ 304:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while (ways-- != 0U);
+ 273              		.loc 2 304 23 is_stmt 1 discriminator 1 view .LVU78
+ 274              		.loc 2 304 20 is_stmt 0 discriminator 1 view .LVU79
+ 275 003c 0139     		subs	r1, r1, #1
+ 276              	.LVL10:
+ 277              		.loc 2 304 23 discriminator 1 view .LVU80
+ 278 003e 0FF007C8 		le	lr, .L14
+ 305:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } while(sets-- != 0U);
+ 279              		.loc 2 305 20 is_stmt 1 view .LVU81
+ 280 0042 203B     		subs	r3, r3, #32
+ 281 0044 13F1200F 		cmn	r3, #32
+ 282 0048 EDD1     		bne	.L15
+ 306:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 307:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 283              		.loc 2 307 5 view .LVU82
+ 284              	.LBB124:
+ 285              	.LBI124:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 286              		.loc 3 184 27 view .LVU83
+ 287              	.LBB125:
+ 288              		.loc 3 186 3 view .LVU84
+ 289              		.syntax unified
+ 290              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 291 004a BFF34F8F 		dsb 0xF
+ 292              	@ 0 "" 2
+ARM GAS  /tmp/ccPkfCL7.s 			page 16
+
+
+ 293              		.thumb
+ 294              		.syntax unified
+ 295              	.LBE125:
+ 296              	.LBE124:
+ 308:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 297              		.loc 2 308 5 view .LVU85
+ 298              	.LBB126:
+ 299              	.LBI126:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 300              		.loc 3 173 27 view .LVU86
+ 301              	.LBB127:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 302              		.loc 3 175 3 view .LVU87
+ 303              		.syntax unified
+ 304              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 305 004e BFF36F8F 		isb 0xF
+ 306              	@ 0 "" 2
+ 307              	.LVL11:
+ 308              		.thumb
+ 309              		.syntax unified
+ 310              	.L12:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 311              		.loc 3 175 3 is_stmt 0 view .LVU88
+ 312              	.LBE127:
+ 313              	.LBE126:
+ 314              	.LBE121:
+ 315              	.LBE120:
+  40:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  41:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+ 316              		.loc 1 41 1 view .LVU89
+ 317 0052 70BD     		pop	{r4, r5, r6, pc}
+ 318              	.L22:
+ 319              		.align	2
+ 320              	.L21:
+ 321 0054 00ED00E0 		.word	-536810240
+ 322              		.cfi_endproc
+ 323              	.LFE277:
+ 325              		.section	.text.mcu_cache_clean_invalidate,"ax",%progbits
+ 326              		.align	1
+ 327              		.global	mcu_cache_clean_invalidate
+ 328              		.syntax unified
+ 329              		.thumb
+ 330              		.thumb_func
+ 332              	mcu_cache_clean_invalidate:
+ 333              	.LFB278:
+  42:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  43:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_clean_invalidate(void)
+  44:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** {
+ 334              		.loc 1 44 1 is_stmt 1 view -0
+ 335              		.cfi_startproc
+ 336              		@ args = 0, pretend = 0, frame = 0
+ 337              		@ frame_needed = 0, uses_anonymous_args = 0
+  45:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 338              		.loc 1 45 3 view .LVU91
+ 339              	.LBB128:
+ 340              	.LBI128:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+ARM GAS  /tmp/ccPkfCL7.s 			page 17
+
+
+ 341              		.loc 1 21 31 view .LVU92
+ 342              	.LBB129:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 343              		.loc 1 23 3 view .LVU93
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 344              		.loc 1 23 14 is_stmt 0 view .LVU94
+ 345 0000 144A     		ldr	r2, .L32
+ 346              	.LBE129:
+ 347              	.LBE128:
+  44:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 348              		.loc 1 44 1 view .LVU95
+ 349 0002 70B5     		push	{r4, r5, r6, lr}
+ 350              		.cfi_def_cfa_offset 16
+ 351              		.cfi_offset 4, -16
+ 352              		.cfi_offset 5, -12
+ 353              		.cfi_offset 6, -8
+ 354              		.cfi_offset 14, -4
+ 355              	.LBB131:
+ 356              	.LBB130:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 357              		.loc 1 23 14 view .LVU96
+ 358 0004 5369     		ldr	r3, [r2, #20]
+ 359              	.LBE130:
+ 360              	.LBE131:
+ 361              		.loc 1 45 5 discriminator 1 view .LVU97
+ 362 0006 DB03     		lsls	r3, r3, #15
+ 363 0008 23D5     		bpl	.L23
+  46:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_CleanInvalidateDCache();
+ 364              		.loc 1 46 5 is_stmt 1 view .LVU98
+ 365              	.LBB132:
+ 366              	.LBI132:
+ 309:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 310:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 311:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 312:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 313:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 314:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   Clean & Invalidate D-Cache
+ 315:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Cleans and Invalidates D-Cache
+ 316:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   */
+ 317:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache (void)
+ 367              		.loc 2 317 27 view .LVU99
+ 368              	.LBB133:
+ 318:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 319:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 320:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ccsidr;
+ 369              		.loc 2 320 5 view .LVU100
+ 321:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t sets;
+ 370              		.loc 2 321 5 view .LVU101
+ 322:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     uint32_t ways;
+ 371              		.loc 2 322 5 view .LVU102
+ 323:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 324:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
+ 372              		.loc 2 324 5 view .LVU103
+ 373              		.loc 2 324 17 is_stmt 0 view .LVU104
+ 374 000a 0023     		movs	r3, #0
+ 375 000c C2F88430 		str	r3, [r2, #132]
+ 325:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ARM GAS  /tmp/ccPkfCL7.s 			page 18
+
+
+ 376              		.loc 2 325 5 is_stmt 1 view .LVU105
+ 377              	.LBB134:
+ 378              	.LBI134:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 379              		.loc 3 184 27 view .LVU106
+ 380              	.LBB135:
+ 381              		.loc 3 186 3 view .LVU107
+ 382              		.syntax unified
+ 383              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 384 0010 BFF34F8F 		dsb 0xF
+ 385              	@ 0 "" 2
+ 386              		.thumb
+ 387              		.syntax unified
+ 388              	.LBE135:
+ 389              	.LBE134:
+ 326:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 327:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     ccsidr = SCB->CCSIDR;
+ 390              		.loc 2 327 5 view .LVU108
+ 328:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 329:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                                             /* clean & invalidate D-Cache */
+ 330:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
+ 331:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 332:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 333:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 334:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCISW = (((sets << SCB_DCCISW_SET_Pos) & SCB_DCCISW_SET_Msk) |
+ 391              		.loc 2 334 54 is_stmt 0 view .LVU109
+ 392 0014 43F6E074 		movw	r4, #16352
+ 327:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 393              		.loc 2 327 12 view .LVU110
+ 394 0018 D2F88030 		ldr	r3, [r2, #128]
+ 395              	.LVL12:
+ 330:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 396              		.loc 2 330 5 is_stmt 1 view .LVU111
+ 332:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 397              		.loc 2 332 12 is_stmt 0 view .LVU112
+ 398 001c C3F3C900 		ubfx	r0, r3, #3, #10
+ 330:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 399              		.loc 2 330 10 view .LVU113
+ 400 0020 C3F34E33 		ubfx	r3, r3, #13, #15
+ 401              	.LVL13:
+ 330:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     do {
+ 402              		.loc 2 330 10 view .LVU114
+ 403 0024 5B01     		lsls	r3, r3, #5
+ 404              	.LVL14:
+ 405              	.L26:
+ 331:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+ 406              		.loc 2 331 5 is_stmt 1 view .LVU115
+ 332:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 407              		.loc 2 332 7 view .LVU116
+ 332:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 408              		.loc 2 332 12 is_stmt 0 view .LVU117
+ 409 0026 00F1010E 		add	lr, r0, #1
+ 410 002a 0146     		mov	r1, r0
+ 411 002c 4EF001E0 		dls	lr, lr
+ 412              		.loc 2 334 54 view .LVU118
+ 413 0030 03EA0406 		and	r6, r3, r4
+ 414              	.LVL15:
+ARM GAS  /tmp/ccPkfCL7.s 			page 19
+
+
+ 415              	.L25:
+ 333:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCISW = (((sets << SCB_DCCISW_SET_Pos) & SCB_DCCISW_SET_Msk) |
+ 416              		.loc 2 333 7 is_stmt 1 view .LVU119
+ 417              		.loc 2 334 9 view .LVU120
+ 418              		.loc 2 334 76 is_stmt 0 view .LVU121
+ 419 0034 46EA8175 		orr	r5, r6, r1, lsl #30
+ 420              		.loc 2 334 21 view .LVU122
+ 421 0038 C2F87452 		str	r5, [r2, #628]
+ 335:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****                        ((ways << SCB_DCCISW_WAY_Pos) & SCB_DCCISW_WAY_Msk)  );
+ 336:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #if defined ( __CC_ARM )
+ 337:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****           __schedule_barrier();
+ 338:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         #endif
+ 339:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while (ways-- != 0U);
+ 422              		.loc 2 339 23 is_stmt 1 discriminator 1 view .LVU123
+ 423              		.loc 2 339 20 is_stmt 0 discriminator 1 view .LVU124
+ 424 003c 0139     		subs	r1, r1, #1
+ 425              	.LVL16:
+ 426              		.loc 2 339 23 discriminator 1 view .LVU125
+ 427 003e 0FF007C8 		le	lr, .L25
+ 340:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     } while(sets-- != 0U);
+ 428              		.loc 2 340 20 is_stmt 1 view .LVU126
+ 429 0042 203B     		subs	r3, r3, #32
+ 430 0044 13F1200F 		cmn	r3, #32
+ 431 0048 EDD1     		bne	.L26
+ 341:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 342:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __DSB();
+ 432              		.loc 2 342 5 view .LVU127
+ 433              	.LBB136:
+ 434              	.LBI136:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 435              		.loc 3 184 27 view .LVU128
+ 436              	.LBB137:
+ 437              		.loc 3 186 3 view .LVU129
+ 438              		.syntax unified
+ 439              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 440 004a BFF34F8F 		dsb 0xF
+ 441              	@ 0 "" 2
+ 442              		.thumb
+ 443              		.syntax unified
+ 444              	.LBE137:
+ 445              	.LBE136:
+ 343:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     __ISB();
+ 446              		.loc 2 343 5 view .LVU130
+ 447              	.LBB138:
+ 448              	.LBI138:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 449              		.loc 3 173 27 view .LVU131
+ 450              	.LBB139:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 451              		.loc 3 175 3 view .LVU132
+ 452              		.syntax unified
+ 453              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 454 004e BFF36F8F 		isb 0xF
+ 455              	@ 0 "" 2
+ 456              	.LVL17:
+ 457              		.thumb
+ 458              		.syntax unified
+ARM GAS  /tmp/ccPkfCL7.s 			page 20
+
+
+ 459              	.L23:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 460              		.loc 3 175 3 is_stmt 0 view .LVU133
+ 461              	.LBE139:
+ 462              	.LBE138:
+ 463              	.LBE133:
+ 464              	.LBE132:
+  47:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  48:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+ 465              		.loc 1 48 1 view .LVU134
+ 466 0052 70BD     		pop	{r4, r5, r6, pc}
+ 467              	.L33:
+ 468              		.align	2
+ 469              	.L32:
+ 470 0054 00ED00E0 		.word	-536810240
+ 471              		.cfi_endproc
+ 472              	.LFE278:
+ 474              		.section	.text.mcu_cache_invalidate_range,"ax",%progbits
+ 475              		.align	1
+ 476              		.global	mcu_cache_invalidate_range
+ 477              		.syntax unified
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	mcu_cache_invalidate_range:
+ 482              	.LVL18:
+ 483              	.LFB279:
+  49:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  50:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_invalidate_range(uint32_t start_addr, uint32_t end_addr)
+  51:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** {
+ 484              		.loc 1 51 1 is_stmt 1 view -0
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 0
+ 487              		@ frame_needed = 0, uses_anonymous_args = 0
+  52:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 488              		.loc 1 52 3 view .LVU136
+ 489              	.LBB140:
+ 490              	.LBI140:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+ 491              		.loc 1 21 31 view .LVU137
+ 492              	.LBB141:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 493              		.loc 1 23 3 view .LVU138
+ 494              	.LBE141:
+ 495              	.LBE140:
+  51:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 496              		.loc 1 51 1 is_stmt 0 view .LVU139
+ 497 0000 10B5     		push	{r4, lr}
+ 498              		.cfi_def_cfa_offset 8
+ 499              		.cfi_offset 4, -8
+ 500              		.cfi_offset 14, -4
+ 501              	.LBB143:
+ 502              	.LBB142:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 503              		.loc 1 23 14 view .LVU140
+ 504 0002 134C     		ldr	r4, .L42
+ 505 0004 6369     		ldr	r3, [r4, #20]
+ 506              	.LBE142:
+ARM GAS  /tmp/ccPkfCL7.s 			page 21
+
+
+ 507              	.LBE143:
+ 508              		.loc 1 52 5 discriminator 1 view .LVU141
+ 509 0006 DB03     		lsls	r3, r3, #15
+ 510 0008 21D5     		bpl	.L34
+  53:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_InvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
+ 511              		.loc 1 53 5 is_stmt 1 view .LVU142
+ 512              		.loc 1 53 82 is_stmt 0 view .LVU143
+ 513 000a 0A1A     		subs	r2, r1, r0
+ 514              	.LVL19:
+ 515              	.LBB144:
+ 516              	.LBI144:
+ 344:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 345:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 346:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 347:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 348:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 349:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   D-Cache Invalidate by address
+ 350:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Invalidates D-Cache for the given address.
+ 351:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache is invalidated starting from a 32 byte aligned address in 32 byte granularity.
+ 352:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache memory blocks which are part of given address + given size are invalidated.
+ 353:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   addr    address
+ 354:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   dsize   size of memory block (in number of bytes)
+ 355:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** */
+ 356:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (volatile void *addr, int32_t dsize)
+ 517              		.loc 2 356 27 is_stmt 1 view .LVU144
+ 518              	.LBB145:
+ 357:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 358:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 359:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if ( dsize > 0 ) {
+ 519              		.loc 2 359 5 view .LVU145
+ 520              		.loc 2 359 8 is_stmt 0 view .LVU146
+ 521 000c 002A     		cmp	r2, #0
+ 522 000e 1EDD     		ble	.L34
+ 523              	.LBB146:
+ 360:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+ 524              		.loc 2 360 8 is_stmt 1 view .LVU147
+ 525              		.loc 2 360 52 is_stmt 0 view .LVU148
+ 526 0010 00F01F03 		and	r3, r0, #31
+ 527              		.loc 2 360 32 view .LVU149
+ 528 0014 1A44     		add	r2, r2, r3
+ 529              	.LVL20:
+ 361:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+ 530              		.loc 2 361 7 is_stmt 1 view .LVU150
+ 362:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 363:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 531              		.loc 2 363 7 view .LVU151
+ 532              	.LBB147:
+ 533              	.LBI147:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 534              		.loc 3 184 27 view .LVU152
+ 535              	.LBB148:
+ 536              		.loc 3 186 3 view .LVU153
+ 537              		.syntax unified
+ 538              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 539 0016 BFF34F8F 		dsb 0xF
+ 540              	@ 0 "" 2
+ 541              		.thumb
+ARM GAS  /tmp/ccPkfCL7.s 			page 22
+
+
+ 542              		.syntax unified
+ 543              	.LBE148:
+ 544              	.LBE147:
+ 364:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 365:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 366:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCIMVAC = op_addr;             /* register accepts only 32byte aligned values, only bi
+ 367:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 368:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 369:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 545              		.loc 2 369 25 is_stmt 0 discriminator 1 view .LVU154
+ 546 001a 6FEA000E 		mvn	lr, r0
+ 547 001e 1B1A     		subs	r3, r3, r0
+ 548 0020 0244     		add	r2, r2, r0
+ 549              	.LVL21:
+ 550              		.loc 2 369 25 discriminator 1 view .LVU155
+ 551 0022 0B44     		add	r3, r3, r1
+ 552 0024 9644     		add	lr, lr, r2
+ 553 0026 203B     		subs	r3, r3, #32
+ 554 0028 4FEA5E1E 		lsr	lr, lr, #5
+ 555 002c 2033     		adds	r3, r3, #32
+ 556 002e 0EF1010E 		add	lr, lr, #1
+ 557 0032 D8BF     		it	le
+ 558 0034 4FF0010E 		movle	lr, #1
+ 559 0038 4EF001E0 		dls	lr, lr
+ 560              	.LVL22:
+ 561              	.L36:
+ 365:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCIMVAC = op_addr;             /* register accepts only 32byte aligned values, only bi
+ 562              		.loc 2 365 7 is_stmt 1 view .LVU156
+ 366:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 563              		.loc 2 366 9 view .LVU157
+ 366:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 564              		.loc 2 366 22 is_stmt 0 view .LVU158
+ 565 003c C4F85C02 		str	r0, [r4, #604]
+ 367:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 566              		.loc 2 367 9 is_stmt 1 view .LVU159
+ 367:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 567              		.loc 2 367 17 is_stmt 0 view .LVU160
+ 568 0040 2030     		adds	r0, r0, #32
+ 569              	.LVL23:
+ 368:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 570              		.loc 2 368 9 is_stmt 1 view .LVU161
+ 571              		.loc 2 369 25 discriminator 1 view .LVU162
+ 572 0042 0FF005C8 		le	lr, .L36
+ 370:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 371:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 573              		.loc 2 371 7 view .LVU163
+ 574              	.LBB149:
+ 575              	.LBI149:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 576              		.loc 3 184 27 view .LVU164
+ 577              	.LBB150:
+ 578              		.loc 3 186 3 view .LVU165
+ 579              		.syntax unified
+ 580              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 581 0046 BFF34F8F 		dsb 0xF
+ 582              	@ 0 "" 2
+ 583              		.thumb
+ARM GAS  /tmp/ccPkfCL7.s 			page 23
+
+
+ 584              		.syntax unified
+ 585              	.LBE150:
+ 586              	.LBE149:
+ 372:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __ISB();
+ 587              		.loc 2 372 7 view .LVU166
+ 588              	.LBB151:
+ 589              	.LBI151:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 590              		.loc 3 173 27 view .LVU167
+ 591              	.LBB152:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 592              		.loc 3 175 3 view .LVU168
+ 593              		.syntax unified
+ 594              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 595 004a BFF36F8F 		isb 0xF
+ 596              	@ 0 "" 2
+ 597              	.LVL24:
+ 598              		.thumb
+ 599              		.syntax unified
+ 600              	.L34:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 601              		.loc 3 175 3 is_stmt 0 view .LVU169
+ 602              	.LBE152:
+ 603              	.LBE151:
+ 604              	.LBE146:
+ 605              	.LBE145:
+ 606              	.LBE144:
+  54:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  55:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+ 607              		.loc 1 55 1 view .LVU170
+ 608 004e 10BD     		pop	{r4, pc}
+ 609              	.L43:
+ 610              		.align	2
+ 611              	.L42:
+ 612 0050 00ED00E0 		.word	-536810240
+ 613              		.cfi_endproc
+ 614              	.LFE279:
+ 616              		.section	.text.mcu_cache_clean_range,"ax",%progbits
+ 617              		.align	1
+ 618              		.global	mcu_cache_clean_range
+ 619              		.syntax unified
+ 620              		.thumb
+ 621              		.thumb_func
+ 623              	mcu_cache_clean_range:
+ 624              	.LVL25:
+ 625              	.LFB280:
+  56:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  57:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_clean_range(uint32_t start_addr, uint32_t end_addr) {
+ 626              		.loc 1 57 68 is_stmt 1 view -0
+ 627              		.cfi_startproc
+ 628              		@ args = 0, pretend = 0, frame = 0
+ 629              		@ frame_needed = 0, uses_anonymous_args = 0
+  58:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 630              		.loc 1 58 3 view .LVU172
+ 631              	.LBB153:
+ 632              	.LBI153:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+ARM GAS  /tmp/ccPkfCL7.s 			page 24
+
+
+ 633              		.loc 1 21 31 view .LVU173
+ 634              	.LBB154:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 635              		.loc 1 23 3 view .LVU174
+ 636              	.LBE154:
+ 637              	.LBE153:
+  57:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 638              		.loc 1 57 68 is_stmt 0 view .LVU175
+ 639 0000 10B5     		push	{r4, lr}
+ 640              		.cfi_def_cfa_offset 8
+ 641              		.cfi_offset 4, -8
+ 642              		.cfi_offset 14, -4
+ 643              	.LBB156:
+ 644              	.LBB155:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 645              		.loc 1 23 14 view .LVU176
+ 646 0002 134C     		ldr	r4, .L52
+ 647 0004 6369     		ldr	r3, [r4, #20]
+ 648              	.LBE155:
+ 649              	.LBE156:
+ 650              		.loc 1 58 5 discriminator 1 view .LVU177
+ 651 0006 DB03     		lsls	r3, r3, #15
+ 652 0008 21D5     		bpl	.L44
+  59:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_CleanDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr));
+ 653              		.loc 1 59 5 is_stmt 1 view .LVU178
+ 654              		.loc 1 59 77 is_stmt 0 view .LVU179
+ 655 000a 0A1A     		subs	r2, r1, r0
+ 656              	.LVL26:
+ 657              	.LBB157:
+ 658              	.LBI157:
+ 373:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     }
+ 374:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 375:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 376:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 377:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 378:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 379:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   D-Cache Clean by address
+ 380:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Cleans D-Cache for the given address
+ 381:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache is cleaned starting from a 32 byte aligned address in 32 byte granularity.
+ 382:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache memory blocks which are part of given address + given size are cleaned.
+ 383:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   addr    address
+ 384:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   dsize   size of memory block (in number of bytes)
+ 385:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** */
+ 386:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (volatile void *addr, int32_t dsize)
+ 659              		.loc 2 386 27 is_stmt 1 view .LVU180
+ 660              	.LBB158:
+ 387:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 388:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 389:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if ( dsize > 0 ) {
+ 661              		.loc 2 389 5 view .LVU181
+ 662              		.loc 2 389 8 is_stmt 0 view .LVU182
+ 663 000c 002A     		cmp	r2, #0
+ 664 000e 1EDD     		ble	.L44
+ 665              	.LBB159:
+ 390:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+ 666              		.loc 2 390 8 is_stmt 1 view .LVU183
+ 667              		.loc 2 390 52 is_stmt 0 view .LVU184
+ARM GAS  /tmp/ccPkfCL7.s 			page 25
+
+
+ 668 0010 00F01F03 		and	r3, r0, #31
+ 669              		.loc 2 390 32 view .LVU185
+ 670 0014 1A44     		add	r2, r2, r3
+ 671              	.LVL27:
+ 391:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+ 672              		.loc 2 391 7 is_stmt 1 view .LVU186
+ 392:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 393:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 673              		.loc 2 393 7 view .LVU187
+ 674              	.LBB160:
+ 675              	.LBI160:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 676              		.loc 3 184 27 view .LVU188
+ 677              	.LBB161:
+ 678              		.loc 3 186 3 view .LVU189
+ 679              		.syntax unified
+ 680              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 681 0016 BFF34F8F 		dsb 0xF
+ 682              	@ 0 "" 2
+ 683              		.thumb
+ 684              		.syntax unified
+ 685              	.LBE161:
+ 686              	.LBE160:
+ 394:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 395:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 396:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCMVAC = op_addr;             /* register accepts only 32byte aligned values, only bi
+ 397:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 398:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 399:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 687              		.loc 2 399 25 is_stmt 0 discriminator 1 view .LVU190
+ 688 001a 6FEA000E 		mvn	lr, r0
+ 689 001e 1B1A     		subs	r3, r3, r0
+ 690 0020 0244     		add	r2, r2, r0
+ 691              	.LVL28:
+ 692              		.loc 2 399 25 discriminator 1 view .LVU191
+ 693 0022 0B44     		add	r3, r3, r1
+ 694 0024 9644     		add	lr, lr, r2
+ 695 0026 203B     		subs	r3, r3, #32
+ 696 0028 4FEA5E1E 		lsr	lr, lr, #5
+ 697 002c 2033     		adds	r3, r3, #32
+ 698 002e 0EF1010E 		add	lr, lr, #1
+ 699 0032 D8BF     		it	le
+ 700 0034 4FF0010E 		movle	lr, #1
+ 701 0038 4EF001E0 		dls	lr, lr
+ 702              	.LVL29:
+ 703              	.L46:
+ 395:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCMVAC = op_addr;             /* register accepts only 32byte aligned values, only bi
+ 704              		.loc 2 395 7 is_stmt 1 view .LVU192
+ 396:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 705              		.loc 2 396 9 view .LVU193
+ 396:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr += __SCB_DCACHE_LINE_SIZE;
+ 706              		.loc 2 396 22 is_stmt 0 view .LVU194
+ 707 003c C4F86802 		str	r0, [r4, #616]
+ 397:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 708              		.loc 2 397 9 is_stmt 1 view .LVU195
+ 397:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -= __SCB_DCACHE_LINE_SIZE;
+ 709              		.loc 2 397 17 is_stmt 0 view .LVU196
+ARM GAS  /tmp/ccPkfCL7.s 			page 26
+
+
+ 710 0040 2030     		adds	r0, r0, #32
+ 711              	.LVL30:
+ 398:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 712              		.loc 2 398 9 is_stmt 1 view .LVU197
+ 713              		.loc 2 399 25 discriminator 1 view .LVU198
+ 714 0042 0FF005C8 		le	lr, .L46
+ 400:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 401:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 715              		.loc 2 401 7 view .LVU199
+ 716              	.LBB162:
+ 717              	.LBI162:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 718              		.loc 3 184 27 view .LVU200
+ 719              	.LBB163:
+ 720              		.loc 3 186 3 view .LVU201
+ 721              		.syntax unified
+ 722              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 723 0046 BFF34F8F 		dsb 0xF
+ 724              	@ 0 "" 2
+ 725              		.thumb
+ 726              		.syntax unified
+ 727              	.LBE163:
+ 728              	.LBE162:
+ 402:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __ISB();
+ 729              		.loc 2 402 7 view .LVU202
+ 730              	.LBB164:
+ 731              	.LBI164:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 732              		.loc 3 173 27 view .LVU203
+ 733              	.LBB165:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 734              		.loc 3 175 3 view .LVU204
+ 735              		.syntax unified
+ 736              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 737 004a BFF36F8F 		isb 0xF
+ 738              	@ 0 "" 2
+ 739              	.LVL31:
+ 740              		.thumb
+ 741              		.syntax unified
+ 742              	.L44:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 743              		.loc 3 175 3 is_stmt 0 view .LVU205
+ 744              	.LBE165:
+ 745              	.LBE164:
+ 746              	.LBE159:
+ 747              	.LBE158:
+ 748              	.LBE157:
+  60:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  61:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }
+ 749              		.loc 1 61 1 view .LVU206
+ 750 004e 10BD     		pop	{r4, pc}
+ 751              	.L53:
+ 752              		.align	2
+ 753              	.L52:
+ 754 0050 00ED00E0 		.word	-536810240
+ 755              		.cfi_endproc
+ 756              	.LFE280:
+ARM GAS  /tmp/ccPkfCL7.s 			page 27
+
+
+ 758              		.section	.text.mcu_cache_clean_invalidate_range,"ax",%progbits
+ 759              		.align	1
+ 760              		.global	mcu_cache_clean_invalidate_range
+ 761              		.syntax unified
+ 762              		.thumb
+ 763              		.thumb_func
+ 765              	mcu_cache_clean_invalidate_range:
+ 766              	.LVL32:
+ 767              	.LFB281:
+  62:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** 
+  63:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** void mcu_cache_clean_invalidate_range(uint32_t start_addr, uint32_t end_addr) {
+ 768              		.loc 1 63 79 is_stmt 1 view -0
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 0
+ 771              		@ frame_needed = 0, uses_anonymous_args = 0
+  64:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 772              		.loc 1 64 3 view .LVU208
+ 773              	.LBB166:
+ 774              	.LBI166:
+  21:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT != 0U)
+ 775              		.loc 1 21 31 view .LVU209
+ 776              	.LBB167:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 777              		.loc 1 23 3 view .LVU210
+ 778              	.LBE167:
+ 779              	.LBE166:
+  63:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   if(mcu_cache_enabled() != 0) {
+ 780              		.loc 1 63 79 is_stmt 0 view .LVU211
+ 781 0000 10B5     		push	{r4, lr}
+ 782              		.cfi_def_cfa_offset 8
+ 783              		.cfi_offset 4, -8
+ 784              		.cfi_offset 14, -4
+ 785              	.LBB169:
+ 786              	.LBB168:
+  23:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** #else
+ 787              		.loc 1 23 14 view .LVU212
+ 788 0002 134C     		ldr	r4, .L62
+ 789 0004 6369     		ldr	r3, [r4, #20]
+ 790              	.LBE168:
+ 791              	.LBE169:
+ 792              		.loc 1 64 5 discriminator 1 view .LVU213
+ 793 0006 DB03     		lsls	r3, r3, #15
+ 794 0008 21D5     		bpl	.L54
+  65:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****     SCB_CleanInvalidateDCache_by_Addr((volatile void *)start_addr, (int32_t)(end_addr - start_addr)
+ 795              		.loc 1 65 5 is_stmt 1 view .LVU214
+ 796              		.loc 1 65 87 is_stmt 0 view .LVU215
+ 797 000a 0A1A     		subs	r2, r1, r0
+ 798              	.LVL33:
+ 799              	.LBB170:
+ 800              	.LBI170:
+ 403:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     }
+ 404:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #endif
+ 405:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** }
+ 406:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 407:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 408:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** /**
+ 409:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \brief   D-Cache Clean and Invalidate by address
+ARM GAS  /tmp/ccPkfCL7.s 			page 28
+
+
+ 410:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \details Cleans and invalidates D_Cache for the given address
+ 411:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache is cleaned and invalidated starting from a 32 byte aligned address in 32 byte gr
+ 412:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****            D-Cache memory blocks which are part of given address + given size are cleaned and inval
+ 413:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   addr    address (aligned to 32-byte boundary)
+ 414:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   \param[in]   dsize   size of memory block (in number of bytes)
+ 415:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** */
+ 416:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (volatile void *addr, int32_t dsize)
+ 801              		.loc 2 416 27 is_stmt 1 view .LVU216
+ 802              	.LBB171:
+ 417:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** {
+ 418:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+ 419:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****     if ( dsize > 0 ) {
+ 803              		.loc 2 419 5 view .LVU217
+ 804              		.loc 2 419 8 is_stmt 0 view .LVU218
+ 805 000c 002A     		cmp	r2, #0
+ 806 000e 1EDD     		ble	.L54
+ 807              	.LBB172:
+ 420:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****        int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+ 808              		.loc 2 420 8 is_stmt 1 view .LVU219
+ 809              		.loc 2 420 52 is_stmt 0 view .LVU220
+ 810 0010 00F01F03 		and	r3, r0, #31
+ 811              		.loc 2 420 32 view .LVU221
+ 812 0014 1A44     		add	r2, r2, r3
+ 813              	.LVL34:
+ 421:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+ 814              		.loc 2 421 7 is_stmt 1 view .LVU222
+ 422:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 423:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 815              		.loc 2 423 7 view .LVU223
+ 816              	.LBB173:
+ 817              	.LBI173:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 818              		.loc 3 184 27 view .LVU224
+ 819              	.LBB174:
+ 820              		.loc 3 186 3 view .LVU225
+ 821              		.syntax unified
+ 822              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 823 0016 BFF34F8F 		dsb 0xF
+ 824              	@ 0 "" 2
+ 825              		.thumb
+ 826              		.syntax unified
+ 827              	.LBE174:
+ 828              	.LBE173:
+ 424:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 425:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       do {
+ 426:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCIMVAC = op_addr;            /* register accepts only 32byte aligned values, only bi
+ 427:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr +=          __SCB_DCACHE_LINE_SIZE;
+ 428:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -=          __SCB_DCACHE_LINE_SIZE;
+ 429:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 829              		.loc 2 429 25 is_stmt 0 discriminator 1 view .LVU226
+ 830 001a 6FEA000E 		mvn	lr, r0
+ 831 001e 1B1A     		subs	r3, r3, r0
+ 832 0020 0244     		add	r2, r2, r0
+ 833              	.LVL35:
+ 834              		.loc 2 429 25 discriminator 1 view .LVU227
+ 835 0022 0B44     		add	r3, r3, r1
+ 836 0024 9644     		add	lr, lr, r2
+ARM GAS  /tmp/ccPkfCL7.s 			page 29
+
+
+ 837 0026 203B     		subs	r3, r3, #32
+ 838 0028 4FEA5E1E 		lsr	lr, lr, #5
+ 839 002c 2033     		adds	r3, r3, #32
+ 840 002e 0EF1010E 		add	lr, lr, #1
+ 841 0032 D8BF     		it	le
+ 842 0034 4FF0010E 		movle	lr, #1
+ 843 0038 4EF001E0 		dls	lr, lr
+ 844              	.LVL36:
+ 845              	.L56:
+ 425:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         SCB->DCCIMVAC = op_addr;            /* register accepts only 32byte aligned values, only bi
+ 846              		.loc 2 425 7 is_stmt 1 view .LVU228
+ 426:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr +=          __SCB_DCACHE_LINE_SIZE;
+ 847              		.loc 2 426 9 view .LVU229
+ 426:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_addr +=          __SCB_DCACHE_LINE_SIZE;
+ 848              		.loc 2 426 23 is_stmt 0 view .LVU230
+ 849 003c C4F87002 		str	r0, [r4, #624]
+ 427:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -=          __SCB_DCACHE_LINE_SIZE;
+ 850              		.loc 2 427 9 is_stmt 1 view .LVU231
+ 427:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****         op_size -=          __SCB_DCACHE_LINE_SIZE;
+ 851              		.loc 2 427 17 is_stmt 0 view .LVU232
+ 852 0040 2030     		adds	r0, r0, #32
+ 853              	.LVL37:
+ 428:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       } while ( op_size > 0 );
+ 854              		.loc 2 428 9 is_stmt 1 view .LVU233
+ 855              		.loc 2 429 25 discriminator 1 view .LVU234
+ 856 0042 0FF005C8 		le	lr, .L56
+ 430:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h **** 
+ 431:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __DSB();
+ 857              		.loc 2 431 7 view .LVU235
+ 858              	.LBB175:
+ 859              	.LBI175:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 860              		.loc 3 184 27 view .LVU236
+ 861              	.LBB176:
+ 862              		.loc 3 186 3 view .LVU237
+ 863              		.syntax unified
+ 864              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 865 0046 BFF34F8F 		dsb 0xF
+ 866              	@ 0 "" 2
+ 867              		.thumb
+ 868              		.syntax unified
+ 869              	.LBE176:
+ 870              	.LBE175:
+ 432:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/m-profile/armv7m_cachel1.h ****       __ISB();
+ 871              		.loc 2 432 7 view .LVU238
+ 872              	.LBB177:
+ 873              	.LBI177:
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 874              		.loc 3 173 27 view .LVU239
+ 875              	.LBB178:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 876              		.loc 3 175 3 view .LVU240
+ 877              		.syntax unified
+ 878              	@ 175 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 879 004a BFF36F8F 		isb 0xF
+ 880              	@ 0 "" 2
+ 881              	.LVL38:
+ARM GAS  /tmp/ccPkfCL7.s 			page 30
+
+
+ 882              		.thumb
+ 883              		.syntax unified
+ 884              	.L54:
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 885              		.loc 3 175 3 is_stmt 0 view .LVU241
+ 886              	.LBE178:
+ 887              	.LBE177:
+ 888              	.LBE172:
+ 889              	.LBE171:
+ 890              	.LBE170:
+  66:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c ****   }
+  67:../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c **** }...
+ 891              		.loc 1 67 1 view .LVU242
+ 892 004e 10BD     		pop	{r4, pc}
+ 893              	.L63:
+ 894              		.align	2
+ 895              	.L62:
+ 896 0050 00ED00E0 		.word	-536810240
+ 897              		.cfi_endproc
+ 898              	.LFE281:
+ 900              		.text
+ 901              	.Letext0:
+ 902              		.file 4 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 903              		.file 5 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 904              		.file 6 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/core_cm55.h"
+ARM GAS  /tmp/ccPkfCL7.s 			page 31
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 mcu_cache.c
+     /tmp/ccPkfCL7.s:26     .text.mcu_cache_invalidate:00000000 $t
+     /tmp/ccPkfCL7.s:32     .text.mcu_cache_invalidate:00000000 mcu_cache_invalidate
+     /tmp/ccPkfCL7.s:172    .text.mcu_cache_invalidate:00000054 $d
+     /tmp/ccPkfCL7.s:177    .text.mcu_cache_clean:00000000 $t
+     /tmp/ccPkfCL7.s:183    .text.mcu_cache_clean:00000000 mcu_cache_clean
+     /tmp/ccPkfCL7.s:321    .text.mcu_cache_clean:00000054 $d
+     /tmp/ccPkfCL7.s:326    .text.mcu_cache_clean_invalidate:00000000 $t
+     /tmp/ccPkfCL7.s:332    .text.mcu_cache_clean_invalidate:00000000 mcu_cache_clean_invalidate
+     /tmp/ccPkfCL7.s:470    .text.mcu_cache_clean_invalidate:00000054 $d
+     /tmp/ccPkfCL7.s:475    .text.mcu_cache_invalidate_range:00000000 $t
+     /tmp/ccPkfCL7.s:481    .text.mcu_cache_invalidate_range:00000000 mcu_cache_invalidate_range
+     /tmp/ccPkfCL7.s:612    .text.mcu_cache_invalidate_range:00000050 $d
+     /tmp/ccPkfCL7.s:617    .text.mcu_cache_clean_range:00000000 $t
+     /tmp/ccPkfCL7.s:623    .text.mcu_cache_clean_range:00000000 mcu_cache_clean_range
+     /tmp/ccPkfCL7.s:754    .text.mcu_cache_clean_range:00000050 $d
+     /tmp/ccPkfCL7.s:759    .text.mcu_cache_clean_invalidate_range:00000000 $t
+     /tmp/ccPkfCL7.s:765    .text.mcu_cache_clean_invalidate_range:00000000 mcu_cache_clean_invalidate_range
+     /tmp/ccPkfCL7.s:896    .text.mcu_cache_clean_invalidate_range:00000050 $d
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
+                           .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
+                           .group:00000000 wm4.cmsis_version.h.30.d128735bf87720f7436b74fefeb5043c
+                           .group:00000000 wm4.core_cm55.h.67.25006a3ce7048d64bcddd2996d5fac93
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
+                           .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230
+                           .group:00000000 wm4.armv8m_pmu.h.24.6ded195d2625055391fd378c0e1d2519
+                           .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
+                           .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
+                           .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+                           .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
+
+NO UNDEFINED SYMBOLS

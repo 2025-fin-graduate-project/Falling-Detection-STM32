@@ -1,0 +1,1216 @@
+ARM GAS  /tmp/ccksZpnv.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"cmw_ov5640.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c"
+  25              		.section	.text.CMW_OV5640_GetSensorInfo,"ax",%progbits
+  26              		.align	1
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	CMW_OV5640_GetSensorInfo:
+  32              	.LVL0:
+  33              	.LFB884:
+   1:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** /**
+   2:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ******************************************************************************
+   3:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @file    cmw_ov5640.c
+   4:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @author  MDG Application Team
+   5:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ******************************************************************************
+   6:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @attention
+   7:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   *
+   8:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * Copyright (c) 2024 STMicroelectronics.
+   9:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * All rights reserved.
+  10:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   *
+  11:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  12:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * in the root directory of this software component.
+  13:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  14:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   *
+  15:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ******************************************************************************
+  16:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   */
+  17:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  18:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include <assert.h>
+  19:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include <stdlib.h>
+  20:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include <stdio.h>
+  21:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include <stddef.h>
+  22:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include <string.h>
+  23:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include "cmw_ov5640.h"
+  24:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include "cmw_camera.h"
+  25:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include "ov5640_reg.h"
+ARM GAS  /tmp/ccksZpnv.s 			page 2
+
+
+  26:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** #include "ov5640.h"
+  27:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  28:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  29:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** /**
+  30:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @brief  Get the sensor info
+  31:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @param  pObj  pointer to component object
+  32:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @param  pInfo pointer to sensor info structure
+  33:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   * @retval Component status
+  34:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   */
+  35:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_GetSensorInfo(void *io_ctx, ISP_SensorInfoTypeDef *info)
+  36:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+  34              		.loc 1 36 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              		@ link register save eliminated.
+  37:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if ((io_ctx ==  NULL) || (info == NULL))
+  39              		.loc 1 37 3 view .LVU1
+  40              		.loc 1 37 6 is_stmt 0 view .LVU2
+  41 0000 40B1     		cbz	r0, .L4
+  42              		.loc 1 37 25 discriminator 1 view .LVU3
+  43 0002 39B1     		cbz	r1, .L4
+  38:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  39:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_WRONG_PARAM;
+  40:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  41:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  42:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   /* Return the default full resolution */
+  43:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   info->width = 640;
+  44              		.loc 1 43 3 is_stmt 1 view .LVU4
+  44:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   info->height = 480;
+  45              		.loc 1 44 16 is_stmt 0 view .LVU5
+  46 0004 4FF42072 		mov	r2, #640
+  47 0008 4FF4F073 		mov	r3, #480
+  45:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  46:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return CMW_ERROR_NONE;
+  48              		.loc 1 46 10 view .LVU6
+  49 000c 0020     		movs	r0, #0
+  50              	.LVL1:
+  44:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   info->height = 480;
+  51              		.loc 1 44 16 view .LVU7
+  52 000e C1E90923 		strd	r2, r3, [r1, #36]
+  53              		.loc 1 46 3 is_stmt 1 view .LVU8
+  54              		.loc 1 46 10 is_stmt 0 view .LVU9
+  55 0012 7047     		bx	lr
+  56              	.LVL2:
+  57              	.L4:
+  39:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  58              		.loc 1 39 12 view .LVU10
+  59 0014 6FF00100 		mvn	r0, #1
+  60              	.LVL3:
+  47:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+  61              		.loc 1 47 1 view .LVU11
+  62 0018 7047     		bx	lr
+  63              		.cfi_endproc
+  64              	.LFE884:
+  66              		.section	.text.CMW_OV5640_ReadID,"ax",%progbits
+  67              		.align	1
+ARM GAS  /tmp/ccksZpnv.s 			page 3
+
+
+  68              		.syntax unified
+  69              		.thumb
+  70              		.thumb_func
+  72              	CMW_OV5640_ReadID:
+  73              	.LVL4:
+  74              	.LFB888:
+  48:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  49:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int CMW_OV5640_GetResType(uint32_t width, uint32_t height, uint32_t*res)
+  50:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+  51:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (width == 160 && height == 120)
+  52:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  53:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     *res = OV5640_R160x120;
+  54:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  55:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   else if (width == 320 && height == 240)
+  56:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  57:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     *res = OV5640_R320x240;
+  58:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  59:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   else if (width == 480 && height == 272)
+  60:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  61:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     *res = OV5640_R480x272;
+  62:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  63:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   else if (width == 640 && height == 480)
+  64:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  65:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     *res = OV5640_R640x480;
+  66:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  67:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   else if (width == 800 && height == 480)
+  68:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  69:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     *res = OV5640_R800x480;
+  70:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  71:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   else
+  72:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+  73:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return -1;
+  74:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  75:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return 0;
+  76:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+  77:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  78:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_getMirrorFlipConfig(uint32_t Config)
+  79:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+  80:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   switch (Config) {
+  81:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_MIRRORFLIP_NONE:
+  82:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return OV5640_MIRROR_FLIP_NONE;
+  83:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+  84:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_MIRRORFLIP_FLIP:
+  85:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return OV5640_FLIP;
+  86:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+  87:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_MIRRORFLIP_MIRROR:
+  88:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return OV5640_MIRROR;
+  89:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+  90:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_MIRRORFLIP_FLIP_MIRROR:
+  91:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return OV5640_MIRROR_FLIP;
+  92:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+  93:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     default:
+  94:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return CMW_ERROR_PERIPH_FAILURE;
+  95:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+  96:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+  97:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+  98:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_DeInit(void *io_ctx)
+ARM GAS  /tmp/ccksZpnv.s 			page 4
+
+
+  99:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 100:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 101:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 102:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = OV5640_DeInit(&((CMW_OV5640_t *)io_ctx)->ctx_driver);
+ 103:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 104:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 105:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_COMPONENT_FAILURE;
+ 106:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 107:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return ret;
+ 108:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 109:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 110:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_ReadID(void *io_ctx, uint32_t *Id)
+ 111:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+  75              		.loc 1 111 1 is_stmt 1 view -0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+ 112:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return OV5640_ReadID(&((CMW_OV5640_t *)io_ctx)->ctx_driver, Id);
+  80              		.loc 1 112 3 view .LVU13
+  81              		.loc 1 112 10 is_stmt 0 view .LVU14
+  82 0000 0830     		adds	r0, r0, #8
+  83              	.LVL5:
+  84              		.loc 1 112 10 view .LVU15
+  85 0002 FFF7FEBF 		b	OV5640_ReadID
+  86              	.LVL6:
+  87              		.loc 1 112 10 view .LVU16
+  88              		.cfi_endproc
+  89              	.LFE888:
+  91              		.section	.text.CMW_OV5640_SetMirrorFlip,"ax",%progbits
+  92              		.align	1
+  93              		.syntax unified
+  94              		.thumb
+  95              		.thumb_func
+  97              	CMW_OV5640_SetMirrorFlip:
+  98              	.LVL7:
+  99              	.LFB889:
+ 113:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 114:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 115:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_SetMirrorFlip(void *io_ctx, uint32_t config)
+ 116:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 100              		.loc 1 116 1 is_stmt 1 view -0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104              		@ link register save eliminated.
+ 117:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int32_t mirrorFlip = CMW_OV5640_getMirrorFlipConfig(config);
+ 105              		.loc 1 117 3 view .LVU18
+ 116:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int32_t mirrorFlip = CMW_OV5640_getMirrorFlipConfig(config);
+ 106              		.loc 1 116 1 is_stmt 0 view .LVU19
+ 107 0000 0429     		cmp	r1, #4
+ 108              	.LVL8:
+ 118:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return OV5640_MirrorFlipConfig(&((CMW_OV5640_t *)io_ctx)->ctx_driver, mirrorFlip);
+ 109              		.loc 1 118 3 is_stmt 1 view .LVU20
+ 110              		.loc 1 118 10 is_stmt 0 view .LVU21
+ 111 0002 28BF     		it	cs
+ 112 0004 6FF00301 		mvncs	r1, #3
+ARM GAS  /tmp/ccksZpnv.s 			page 5
+
+
+ 113              	.LVL9:
+ 114              		.loc 1 118 10 view .LVU22
+ 115 0008 0830     		adds	r0, r0, #8
+ 116              	.LVL10:
+ 117              		.loc 1 118 10 view .LVU23
+ 118 000a FFF7FEBF 		b	OV5640_MirrorFlipConfig
+ 119              	.LVL11:
+ 120              		.loc 1 118 10 view .LVU24
+ 121              		.cfi_endproc
+ 122              	.LFE889:
+ 124              		.section	.text.CMW_OV5640_DeInit,"ax",%progbits
+ 125              		.align	1
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 130              	CMW_OV5640_DeInit:
+ 131              	.LVL12:
+ 132              	.LFB887:
+  99:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 133              		.loc 1 99 1 is_stmt 1 view -0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 137              		.loc 1 100 3 view .LVU26
+ 102:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 138              		.loc 1 102 3 view .LVU27
+  99:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 139              		.loc 1 99 1 is_stmt 0 view .LVU28
+ 140 0000 08B5     		push	{r3, lr}
+ 141              		.cfi_def_cfa_offset 8
+ 142              		.cfi_offset 3, -8
+ 143              		.cfi_offset 14, -4
+ 102:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 144              		.loc 1 102 9 view .LVU29
+ 145 0002 0830     		adds	r0, r0, #8
+ 146              	.LVL13:
+ 102:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 147              		.loc 1 102 9 view .LVU30
+ 148 0004 FFF7FEFF 		bl	OV5640_DeInit
+ 149              	.LVL14:
+ 103:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 150              		.loc 1 103 3 is_stmt 1 view .LVU31
+ 105:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 151              		.loc 1 105 12 is_stmt 0 view .LVU32
+ 152 0008 0028     		cmp	r0, #0
+ 108:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 153              		.loc 1 108 1 view .LVU33
+ 154 000a 18BF     		it	ne
+ 155 000c 6FF00400 		mvnne	r0, #4
+ 156              	.LVL15:
+ 108:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 157              		.loc 1 108 1 view .LVU34
+ 158 0010 08BD     		pop	{r3, pc}
+ 159              		.cfi_endproc
+ 160              	.LFE887:
+ 162              		.section	.text.CMW_OV5640_Start,"ax",%progbits
+ARM GAS  /tmp/ccksZpnv.s 			page 6
+
+
+ 163              		.align	1
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	CMW_OV5640_Start:
+ 169              	.LVL16:
+ 170              	.LFB892:
+ 119:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 120:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 121:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_Init(void *io_ctx, CMW_Sensor_Init_t *initSensor)
+ 122:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 123:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 124:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   uint32_t resolution;
+ 125:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   uint32_t pixelFormat;
+ 126:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   CMW_OV5640_config_t *sensor_config;
+ 127:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   sensor_config = (CMW_OV5640_config_t*)(initSensor->sensor_config);
+ 128:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (sensor_config == NULL)
+ 129:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 130:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_WRONG_PARAM;
+ 131:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 132:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 133:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = CMW_OV5640_GetResType(initSensor->width, initSensor->height, &resolution);
+ 134:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 135:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 136:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_WRONG_PARAM;
+ 137:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 138:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   switch (sensor_config->pixel_format)
+ 140:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 141:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 142:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_PIXEL_FORMAT_YUV422_8:
+ 143:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     {
+ 144:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       pixelFormat = OV5640_YUV422;
+ 145:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 146:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     }
+ 147:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_PIXEL_FORMAT_DEFAULT:
+ 148:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_PIXEL_FORMAT_RGB565:
+ 149:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     {
+ 150:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       pixelFormat = OV5640_RGB565;
+ 151:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 152:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     }
+ 153:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_PIXEL_FORMAT_RGB888:
+ 154:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     {
+ 155:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       pixelFormat = OV5640_RGB888;
+ 156:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 157:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     }
+ 158:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     case CMW_PIXEL_FORMAT_RAW8:
+ 159:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     {
+ 160:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       pixelFormat = OV5640_Y8;
+ 161:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 162:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     }
+ 163:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     default:
+ 164:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       return CMW_ERROR_COMPONENT_FAILURE;
+ 165:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 166:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 167:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 168:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = OV5640_Init(&((CMW_OV5640_t *)io_ctx)->ctx_driver, resolution, pixelFormat);
+ARM GAS  /tmp/ccksZpnv.s 			page 7
+
+
+ 169:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 170:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 171:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_COMPONENT_FAILURE;
+ 172:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 173:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 174:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = CMW_OV5640_SetMirrorFlip(io_ctx, initSensor->mirrorFlip);
+ 175:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 176:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 177:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_WRONG_PARAM;
+ 178:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 179:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 180:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return CMW_ERROR_NONE;
+ 181:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 182:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 183:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** void CMW_OV5640_SetDefaultSensorValues(CMW_OV5640_config_t *ov5640_config)
+ 184:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 185:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   assert(ov5640_config != NULL);
+ 186:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_config->pixel_format = CMW_PIXEL_FORMAT_RGB565;
+ 187:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 188:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 189:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static int32_t CMW_OV5640_Start(void *io_ctx)
+ 190:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 171              		.loc 1 190 1 is_stmt 1 view -0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              		@ link register save eliminated.
+ 191:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return OV5640_Start(&((CMW_OV5640_t *)io_ctx)->ctx_driver);
+ 176              		.loc 1 191 3 view .LVU36
+ 177              		.loc 1 191 10 is_stmt 0 view .LVU37
+ 178 0000 0830     		adds	r0, r0, #8
+ 179              	.LVL17:
+ 180              		.loc 1 191 10 view .LVU38
+ 181 0002 FFF7FEBF 		b	OV5640_Start
+ 182              	.LVL18:
+ 183              		.loc 1 191 10 view .LVU39
+ 184              		.cfi_endproc
+ 185              	.LFE892:
+ 187              		.section	.text.CMW_OV5640_Init,"ax",%progbits
+ 188              		.align	1
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	CMW_OV5640_Init:
+ 194              	.LVL19:
+ 195              	.LFB890:
+ 122:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 196              		.loc 1 122 1 is_stmt 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   uint32_t resolution;
+ 200              		.loc 1 123 3 view .LVU41
+ 124:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   uint32_t pixelFormat;
+ 201              		.loc 1 124 3 view .LVU42
+ 125:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   CMW_OV5640_config_t *sensor_config;
+ 202              		.loc 1 125 3 view .LVU43
+ARM GAS  /tmp/ccksZpnv.s 			page 8
+
+
+ 126:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   sensor_config = (CMW_OV5640_config_t*)(initSensor->sensor_config);
+ 203              		.loc 1 126 3 view .LVU44
+ 127:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (sensor_config == NULL)
+ 204              		.loc 1 127 3 view .LVU45
+ 122:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 205              		.loc 1 122 1 is_stmt 0 view .LVU46
+ 206 0000 38B5     		push	{r3, r4, r5, lr}
+ 207              		.cfi_def_cfa_offset 16
+ 208              		.cfi_offset 3, -16
+ 209              		.cfi_offset 4, -12
+ 210              		.cfi_offset 5, -8
+ 211              		.cfi_offset 14, -4
+ 122:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 212              		.loc 1 122 1 view .LVU47
+ 213 0002 0546     		mov	r5, r0
+ 127:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (sensor_config == NULL)
+ 214              		.loc 1 127 17 view .LVU48
+ 215 0004 0869     		ldr	r0, [r1, #16]
+ 216              	.LVL20:
+ 128:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 217              		.loc 1 128 3 is_stmt 1 view .LVU49
+ 122:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 218              		.loc 1 122 1 is_stmt 0 view .LVU50
+ 219 0006 0C46     		mov	r4, r1
+ 128:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 220              		.loc 1 128 6 view .LVU51
+ 221 0008 10B9     		cbnz	r0, .L13
+ 222              	.LVL21:
+ 223              	.L17:
+ 130:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 224              		.loc 1 130 12 view .LVU52
+ 225 000a 6FF00100 		mvn	r0, #1
+ 226              	.L12:
+ 181:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 227              		.loc 1 181 1 view .LVU53
+ 228 000e 38BD     		pop	{r3, r4, r5, pc}
+ 229              	.LVL22:
+ 230              	.L13:
+ 133:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 231              		.loc 1 133 3 is_stmt 1 view .LVU54
+ 133:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 232              		.loc 1 133 9 is_stmt 0 view .LVU55
+ 233 0010 D1E90023 		ldrd	r2, r3, [r1]
+ 234              	.LVL23:
+ 235              	.LBB6:
+ 236              	.LBI6:
+  49:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 237              		.loc 1 49 12 is_stmt 1 view .LVU56
+ 238              	.LBB7:
+  51:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 239              		.loc 1 51 3 view .LVU57
+  51:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 240              		.loc 1 51 6 is_stmt 0 view .LVU58
+ 241 0014 A02A     		cmp	r2, #160
+ 242 0016 03D1     		bne	.L15
+  51:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 243              		.loc 1 51 20 discriminator 1 view .LVU59
+ARM GAS  /tmp/ccksZpnv.s 			page 9
+
+
+ 244 0018 782B     		cmp	r3, #120
+ 245 001a F6D1     		bne	.L17
+  53:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 246              		.loc 1 53 10 view .LVU60
+ 247 001c 0021     		movs	r1, #0
+ 248              	.LVL24:
+  53:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 249              		.loc 1 53 10 view .LVU61
+ 250 001e 1DE0     		b	.L16
+ 251              	.LVL25:
+ 252              	.L15:
+  55:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 253              		.loc 1 55 8 is_stmt 1 view .LVU62
+  55:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 254              		.loc 1 55 11 is_stmt 0 view .LVU63
+ 255 0020 B2F5A07F 		cmp	r2, #320
+ 256 0024 03D1     		bne	.L18
+  55:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 257              		.loc 1 55 25 discriminator 1 view .LVU64
+ 258 0026 F02B     		cmp	r3, #240
+ 259 0028 EFD1     		bne	.L17
+  57:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 260              		.loc 1 57 10 view .LVU65
+ 261 002a 0121     		movs	r1, #1
+ 262              	.LVL26:
+  57:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 263              		.loc 1 57 10 view .LVU66
+ 264 002c 16E0     		b	.L16
+ 265              	.LVL27:
+ 266              	.L18:
+  59:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 267              		.loc 1 59 8 is_stmt 1 view .LVU67
+  59:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 268              		.loc 1 59 11 is_stmt 0 view .LVU68
+ 269 002e B2F5F07F 		cmp	r2, #480
+ 270 0032 04D1     		bne	.L19
+  59:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 271              		.loc 1 59 25 discriminator 1 view .LVU69
+ 272 0034 B3F5887F 		cmp	r3, #272
+ 273 0038 E7D1     		bne	.L17
+  61:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 274              		.loc 1 61 10 view .LVU70
+ 275 003a 0221     		movs	r1, #2
+ 276              	.LVL28:
+  61:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 277              		.loc 1 61 10 view .LVU71
+ 278 003c 0EE0     		b	.L16
+ 279              	.LVL29:
+ 280              	.L19:
+  63:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 281              		.loc 1 63 8 is_stmt 1 view .LVU72
+  63:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 282              		.loc 1 63 11 is_stmt 0 view .LVU73
+ 283 003e B2F5207F 		cmp	r2, #640
+ 284 0042 04D1     		bne	.L20
+  63:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 285              		.loc 1 63 25 discriminator 1 view .LVU74
+ARM GAS  /tmp/ccksZpnv.s 			page 10
+
+
+ 286 0044 B3F5F07F 		cmp	r3, #480
+ 287 0048 DFD1     		bne	.L17
+  65:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 288              		.loc 1 65 10 view .LVU75
+ 289 004a 0321     		movs	r1, #3
+ 290              	.LVL30:
+  65:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 291              		.loc 1 65 10 view .LVU76
+ 292 004c 06E0     		b	.L16
+ 293              	.LVL31:
+ 294              	.L20:
+  67:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 295              		.loc 1 67 8 is_stmt 1 view .LVU77
+  67:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 296              		.loc 1 67 11 is_stmt 0 view .LVU78
+ 297 004e B2F5487F 		cmp	r2, #800
+ 298 0052 DAD1     		bne	.L17
+  67:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 299              		.loc 1 67 25 discriminator 1 view .LVU79
+ 300 0054 B3F5F07F 		cmp	r3, #480
+ 301 0058 D7D1     		bne	.L17
+  69:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 302              		.loc 1 69 10 view .LVU80
+ 303 005a 0421     		movs	r1, #4
+ 304              	.LVL32:
+ 305              	.L16:
+  69:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 306              		.loc 1 69 10 view .LVU81
+ 307              	.LBE7:
+ 308              	.LBE6:
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 309              		.loc 1 139 3 is_stmt 1 view .LVU82
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 310              		.loc 1 139 24 is_stmt 0 view .LVU83
+ 311 005c 0268     		ldr	r2, [r0]
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 312              		.loc 1 139 3 view .LVU84
+ 313 005e 242A     		cmp	r2, #36
+ 314 0060 18D0     		beq	.L29
+ 315 0062 07D8     		bhi	.L22
+ 316 0064 1E2A     		cmp	r2, #30
+ 317 0066 17D0     		beq	.L30
+ 318 0068 222A     		cmp	r2, #34
+ 319 006a 17D0     		beq	.L31
+ 320 006c 2AB1     		cbz	r2, .L21
+ 321              	.LVL33:
+ 322              	.L23:
+ 164:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 323              		.loc 1 164 14 view .LVU85
+ 324 006e 6FF00400 		mvn	r0, #4
+ 325 0072 CCE7     		b	.L12
+ 326              	.LVL34:
+ 327              	.L22:
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 328              		.loc 1 139 3 view .LVU86
+ 329 0074 2A2A     		cmp	r2, #42
+ 330 0076 FAD1     		bne	.L23
+ARM GAS  /tmp/ccksZpnv.s 			page 11
+
+
+ 160:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 331              		.loc 1 160 19 view .LVU87
+ 332 0078 0722     		movs	r2, #7
+ 333              	.L21:
+ 334              	.LVL35:
+ 165:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 335              		.loc 1 165 7 is_stmt 1 view .LVU88
+ 168:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 336              		.loc 1 168 3 view .LVU89
+ 168:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 337              		.loc 1 168 9 is_stmt 0 view .LVU90
+ 338 007a 05F10800 		add	r0, r5, #8
+ 339              	.LVL36:
+ 168:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 340              		.loc 1 168 9 view .LVU91
+ 341 007e FFF7FEFF 		bl	OV5640_Init
+ 342              	.LVL37:
+ 169:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 343              		.loc 1 169 3 is_stmt 1 view .LVU92
+ 169:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 344              		.loc 1 169 6 is_stmt 0 view .LVU93
+ 345 0082 0028     		cmp	r0, #0
+ 346 0084 F3D1     		bne	.L23
+ 174:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 347              		.loc 1 174 3 is_stmt 1 view .LVU94
+ 174:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 348              		.loc 1 174 9 is_stmt 0 view .LVU95
+ 349 0086 2846     		mov	r0, r5
+ 350              	.LVL38:
+ 174:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret)
+ 351              		.loc 1 174 9 view .LVU96
+ 352 0088 E168     		ldr	r1, [r4, #12]
+ 353 008a FFF7FEFF 		bl	CMW_OV5640_SetMirrorFlip
+ 354              	.LVL39:
+ 175:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 355              		.loc 1 175 3 is_stmt 1 view .LVU97
+ 175:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 356              		.loc 1 175 6 is_stmt 0 view .LVU98
+ 357 008e 0028     		cmp	r0, #0
+ 358 0090 BDD0     		beq	.L12
+ 359 0092 BAE7     		b	.L17
+ 360              	.LVL40:
+ 361              	.L29:
+ 155:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 362              		.loc 1 155 19 view .LVU99
+ 363 0094 0122     		movs	r2, #1
+ 364 0096 F0E7     		b	.L21
+ 365              	.L30:
+ 144:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       break;
+ 366              		.loc 1 144 19 view .LVU100
+ 367 0098 0222     		movs	r2, #2
+ 368 009a EEE7     		b	.L21
+ 369              	.L31:
+ 139:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 370              		.loc 1 139 3 view .LVU101
+ 371 009c 0022     		movs	r2, #0
+ 372 009e ECE7     		b	.L21
+ARM GAS  /tmp/ccksZpnv.s 			page 12
+
+
+ 373              		.cfi_endproc
+ 374              	.LFE890:
+ 376              		.section	.rodata.CMW_OV5640_SetDefaultSensorValues.str1.1,"aMS",%progbits,1
+ 377              	.LC0:
+ 378 0000 6F763536 		.ascii	"ov5640_config != NULL\000"
+ 378      34305F63 
+ 378      6F6E6669 
+ 378      6720213D 
+ 378      204E554C 
+ 379              	.LC1:
+ 380 0016 2E2E2F2E 		.ascii	"../../Middlewares/stm32-mw-camera/sensors/cmw_ov564"
+ 380      2E2F4D69 
+ 380      64646C65 
+ 380      77617265 
+ 380      732F7374 
+ 381 0049 302E6300 		.ascii	"0.c\000"
+ 382              		.section	.text.CMW_OV5640_SetDefaultSensorValues,"ax",%progbits
+ 383              		.align	1
+ 384              		.global	CMW_OV5640_SetDefaultSensorValues
+ 385              		.syntax unified
+ 386              		.thumb
+ 387              		.thumb_func
+ 389              	CMW_OV5640_SetDefaultSensorValues:
+ 390              	.LVL41:
+ 391              	.LFB891:
+ 184:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   assert(ov5640_config != NULL);
+ 392              		.loc 1 184 1 is_stmt 1 view -0
+ 393              		.cfi_startproc
+ 394              		@ args = 0, pretend = 0, frame = 0
+ 395              		@ frame_needed = 0, uses_anonymous_args = 0
+ 185:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_config->pixel_format = CMW_PIXEL_FORMAT_RGB565;
+ 396              		.loc 1 185 3 view .LVU103
+ 184:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   assert(ov5640_config != NULL);
+ 397              		.loc 1 184 1 is_stmt 0 view .LVU104
+ 398 0000 08B5     		push	{r3, lr}
+ 399              		.cfi_def_cfa_offset 8
+ 400              		.cfi_offset 3, -8
+ 401              		.cfi_offset 14, -4
+ 185:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_config->pixel_format = CMW_PIXEL_FORMAT_RGB565;
+ 402              		.loc 1 185 3 view .LVU105
+ 403 0002 28B9     		cbnz	r0, .L36
+ 185:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_config->pixel_format = CMW_PIXEL_FORMAT_RGB565;
+ 404              		.loc 1 185 3 discriminator 1 view .LVU106
+ 405 0004 B921     		movs	r1, #185
+ 406 0006 044B     		ldr	r3, .L37
+ 407 0008 044A     		ldr	r2, .L37+4
+ 408 000a 0548     		ldr	r0, .L37+8
+ 409              	.LVL42:
+ 185:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_config->pixel_format = CMW_PIXEL_FORMAT_RGB565;
+ 410              		.loc 1 185 3 discriminator 1 view .LVU107
+ 411 000c FFF7FEFF 		bl	__assert_func
+ 412              	.LVL43:
+ 413              	.L36:
+ 186:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 414              		.loc 1 186 3 is_stmt 1 view .LVU108
+ 186:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 415              		.loc 1 186 31 is_stmt 0 view .LVU109
+ARM GAS  /tmp/ccksZpnv.s 			page 13
+
+
+ 416 0010 2223     		movs	r3, #34
+ 417 0012 0360     		str	r3, [r0]
+ 187:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 418              		.loc 1 187 1 view .LVU110
+ 419 0014 08BD     		pop	{r3, pc}
+ 420              	.L38:
+ 421 0016 00BF     		.align	2
+ 422              	.L37:
+ 423 0018 00000000 		.word	.LC0
+ 424 001c 00000000 		.word	__func__.0
+ 425 0020 16000000 		.word	.LC1
+ 426              		.cfi_endproc
+ 427              	.LFE891:
+ 429              		.section	.text.CMW_OV5640_Probe,"ax",%progbits
+ 430              		.align	1
+ 431              		.global	CMW_OV5640_Probe
+ 432              		.syntax unified
+ 433              		.thumb
+ 434              		.thumb_func
+ 436              	CMW_OV5640_Probe:
+ 437              	.LVL44:
+ 438              	.LFB894:
+ 192:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 193:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 194:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** static void CMW_OV5640_PowerOn(CMW_OV5640_t *io_ctx)
+ 195:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 196:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   /* Camera sensor Power-On sequence */
+ 197:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   /* Assert the camera  NRST pins */
+ 198:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->EnablePin(1);
+ 199:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ShutdownPin(0);  /* Disable MB1723 2V8 signal  */
+ 200:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->Delay(200); /* NRST signals asserted during 200ms */
+ 201:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   /* De-assert the camera STANDBY pin (active high) */
+ 202:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ShutdownPin(1);  /* Disable MB1723 2V8 signal  */
+ 203:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 	io_ctx->Delay(20);     /* NRST de-asserted during 20ms */
+ 204:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 205:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 206:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** int CMW_OV5640_Probe(CMW_OV5640_t *io_ctx, CMW_Sensor_if_t *ov5640_if)
+ 207:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 439              		.loc 1 207 1 is_stmt 1 view -0
+ 440              		.cfi_startproc
+ 441              		@ args = 0, pretend = 0, frame = 8
+ 442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 443              		.loc 1 208 3 view .LVU112
+ 209:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   uint32_t id;
+ 444              		.loc 1 209 3 view .LVU113
+ 210:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.Address = io_ctx->Address;
+ 445              		.loc 1 210 3 view .LVU114
+ 207:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 446              		.loc 1 207 1 is_stmt 0 view .LVU115
+ 447 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 448              		.cfi_def_cfa_offset 32
+ 449              		.cfi_offset 4, -20
+ 450              		.cfi_offset 5, -16
+ 451              		.cfi_offset 6, -12
+ 452              		.cfi_offset 7, -8
+ 453              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccksZpnv.s 			page 14
+
+
+ 211:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.Init = io_ctx->Init;
+ 212:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.DeInit = io_ctx->DeInit;
+ 213:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.GetTick = io_ctx->GetTick;
+ 214:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.ReadReg = io_ctx->ReadReg;
+ 215:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.WriteReg = io_ctx->WriteReg;
+ 216:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.Mode = SERIAL_MODE;
+ 454              		.loc 1 216 27 view .LVU116
+ 455 0002 0126     		movs	r6, #1
+ 217:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.VirtualChannelID = 0U;
+ 456              		.loc 1 217 39 view .LVU117
+ 457 0004 0027     		movs	r7, #0
+ 207:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 458              		.loc 1 207 1 view .LVU118
+ 459 0006 0446     		mov	r4, r0
+ 210:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.Init = io_ctx->Init;
+ 460              		.loc 1 210 33 view .LVU119
+ 461 0008 0388     		ldrh	r3, [r0]
+ 216:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.VirtualChannelID = 0U;
+ 462              		.loc 1 216 27 view .LVU120
+ 463 000a 80F82D60 		strb	r6, [r0, #45]
+ 210:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.Init = io_ctx->Init;
+ 464              		.loc 1 210 33 view .LVU121
+ 465 000e 0382     		strh	r3, [r0, #16]	@ movhi
+ 211:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.DeInit = io_ctx->DeInit;
+ 466              		.loc 1 211 3 is_stmt 1 view .LVU122
+ 211:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.DeInit = io_ctx->DeInit;
+ 467              		.loc 1 211 30 is_stmt 0 view .LVU123
+ 468 0010 836B     		ldr	r3, [r0, #56]
+ 469              		.loc 1 217 39 view .LVU124
+ 470 0012 0763     		str	r7, [r0, #48]
+ 211:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.DeInit = io_ctx->DeInit;
+ 471              		.loc 1 211 30 view .LVU125
+ 472 0014 8360     		str	r3, [r0, #8]
+ 212:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.GetTick = io_ctx->GetTick;
+ 473              		.loc 1 212 3 is_stmt 1 view .LVU126
+ 212:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.GetTick = io_ctx->GetTick;
+ 474              		.loc 1 212 32 is_stmt 0 view .LVU127
+ 475 0016 C36B     		ldr	r3, [r0, #60]
+ 207:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   int ret = CMW_ERROR_NONE;
+ 476              		.loc 1 207 1 view .LVU128
+ 477 0018 0D46     		mov	r5, r1
+ 212:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.GetTick = io_ctx->GetTick;
+ 478              		.loc 1 212 32 view .LVU129
+ 479 001a C360     		str	r3, [r0, #12]
+ 213:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.ReadReg = io_ctx->ReadReg;
+ 480              		.loc 1 213 3 is_stmt 1 view .LVU130
+ 213:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.ReadReg = io_ctx->ReadReg;
+ 481              		.loc 1 213 33 is_stmt 0 view .LVU131
+ 482 001c 836C     		ldr	r3, [r0, #72]
+ 218:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 219:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   CMW_OV5640_PowerOn(io_ctx);
+ 220:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 221:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = OV5640_RegisterBusIO(&io_ctx->ctx_driver, &io_ctx->ctx_driver.IO);
+ 483              		.loc 1 221 9 view .LVU132
+ 484 001e 0834     		adds	r4, r4, #8
+ 213:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.ReadReg = io_ctx->ReadReg;
+ 485              		.loc 1 213 33 view .LVU133
+ARM GAS  /tmp/ccksZpnv.s 			page 15
+
+
+ 486 0020 C361     		str	r3, [r0, #28]
+ 214:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.WriteReg = io_ctx->WriteReg;
+ 487              		.loc 1 214 3 is_stmt 1 view .LVU134
+ 214:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.IO.WriteReg = io_ctx->WriteReg;
+ 488              		.loc 1 214 33 is_stmt 0 view .LVU135
+ 489 0022 436C     		ldr	r3, [r0, #68]
+ 490 0024 8361     		str	r3, [r0, #24]
+ 215:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.Mode = SERIAL_MODE;
+ 491              		.loc 1 215 3 is_stmt 1 view .LVU136
+ 215:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.Mode = SERIAL_MODE;
+ 492              		.loc 1 215 34 is_stmt 0 view .LVU137
+ 493 0026 036C     		ldr	r3, [r0, #64]
+ 494 0028 4361     		str	r3, [r0, #20]
+ 216:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ctx_driver.VirtualChannelID = 0U;
+ 495              		.loc 1 216 3 is_stmt 1 view .LVU138
+ 217:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 496              		.loc 1 217 3 view .LVU139
+ 219:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 497              		.loc 1 219 3 view .LVU140
+ 498              	.LVL45:
+ 499              	.LBB10:
+ 500              	.LBI10:
+ 194:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** {
+ 501              		.loc 1 194 13 view .LVU141
+ 502              	.LBB11:
+ 198:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ShutdownPin(0);  /* Disable MB1723 2V8 signal  */
+ 503              		.loc 1 198 3 view .LVU142
+ 504 002a 436D     		ldr	r3, [r0, #84]
+ 505 002c 3046     		mov	r0, r6
+ 506              	.LVL46:
+ 198:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->ShutdownPin(0);  /* Disable MB1723 2V8 signal  */
+ 507              		.loc 1 198 3 is_stmt 0 view .LVU143
+ 508 002e 9847     		blx	r3
+ 509              	.LVL47:
+ 199:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   io_ctx->Delay(200); /* NRST signals asserted during 200ms */
+ 510              		.loc 1 199 3 is_stmt 1 view .LVU144
+ 511 0030 A36C     		ldr	r3, [r4, #72]
+ 512 0032 3846     		mov	r0, r7
+ 513 0034 9847     		blx	r3
+ 514              	.LVL48:
+ 200:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   /* De-assert the camera STANDBY pin (active high) */
+ 515              		.loc 1 200 3 view .LVU145
+ 516 0036 636C     		ldr	r3, [r4, #68]
+ 517 0038 C820     		movs	r0, #200
+ 518 003a 9847     		blx	r3
+ 519              	.LVL49:
+ 202:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 	io_ctx->Delay(20);     /* NRST de-asserted during 20ms */
+ 520              		.loc 1 202 3 view .LVU146
+ 521 003c A36C     		ldr	r3, [r4, #72]
+ 522 003e 3046     		mov	r0, r6
+ 523 0040 9847     		blx	r3
+ 524              	.LVL50:
+ 203:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 525              		.loc 1 203 2 view .LVU147
+ 526 0042 636C     		ldr	r3, [r4, #68]
+ 527 0044 1420     		movs	r0, #20
+ 528 0046 9847     		blx	r3
+ARM GAS  /tmp/ccksZpnv.s 			page 16
+
+
+ 529              	.LVL51:
+ 203:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 530              		.loc 1 203 2 is_stmt 0 view .LVU148
+ 531              	.LBE11:
+ 532              	.LBE10:
+ 533              		.loc 1 221 3 is_stmt 1 view .LVU149
+ 534              		.loc 1 221 9 is_stmt 0 view .LVU150
+ 535 0048 2146     		mov	r1, r4
+ 536 004a 2046     		mov	r0, r4
+ 537 004c FFF7FEFF 		bl	OV5640_RegisterBusIO
+ 538              	.LVL52:
+ 222:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 539              		.loc 1 222 3 is_stmt 1 view .LVU151
+ 540              		.loc 1 222 6 is_stmt 0 view .LVU152
+ 541 0050 0646     		mov	r6, r0
+ 542 0052 20B1     		cbz	r0, .L40
+ 543              	.LVL53:
+ 544              	.L42:
+ 223:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 224:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_COMPONENT_FAILURE;
+ 545              		.loc 1 224 12 view .LVU153
+ 546 0054 6FF00404 		mvn	r4, #4
+ 547              	.LVL54:
+ 548              	.L39:
+ 225:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 226:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 227:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ret = OV5640_ReadID(&io_ctx->ctx_driver, &id);
+ 228:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 229:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 230:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****     return CMW_ERROR_COMPONENT_FAILURE;
+ 231:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 232:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (id != OV5640_ID)
+ 233:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 234:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****       ret = CMW_ERROR_UNKNOWN_COMPONENT;
+ 235:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 236:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** 
+ 237:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   memset(ov5640_if, 0, sizeof(*ov5640_if));
+ 238:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Init = CMW_OV5640_Init;
+ 239:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Start = CMW_OV5640_Start;
+ 240:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->DeInit = CMW_OV5640_DeInit;
+ 241:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->ReadID = CMW_OV5640_ReadID;
+ 242:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->SetMirrorFlip = CMW_OV5640_SetMirrorFlip;
+ 243:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->GetSensorInfo = CMW_OV5640_GetSensorInfo;
+ 244:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return ret;
+ 245:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 549              		.loc 1 245 1 view .LVU154
+ 550 0058 2046     		mov	r0, r4
+ 551 005a 03B0     		add	sp, sp, #12
+ 552              		.cfi_remember_state
+ 553              		.cfi_def_cfa_offset 20
+ 554              		@ sp needed
+ 555 005c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 556              	.LVL55:
+ 557              	.L40:
+ 558              		.cfi_restore_state
+ 227:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 559              		.loc 1 227 3 is_stmt 1 view .LVU155
+ARM GAS  /tmp/ccksZpnv.s 			page 17
+
+
+ 227:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 560              		.loc 1 227 9 is_stmt 0 view .LVU156
+ 561 005e 2046     		mov	r0, r4
+ 562              	.LVL56:
+ 227:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   if (ret != OV5640_OK)
+ 563              		.loc 1 227 9 view .LVU157
+ 564 0060 01A9     		add	r1, sp, #4
+ 565 0062 FFF7FEFF 		bl	OV5640_ReadID
+ 566              	.LVL57:
+ 228:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 567              		.loc 1 228 3 is_stmt 1 view .LVU158
+ 228:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 568              		.loc 1 228 6 is_stmt 0 view .LVU159
+ 569 0066 0446     		mov	r4, r0
+ 570 0068 0028     		cmp	r0, #0
+ 571 006a F3D1     		bne	.L42
+ 232:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   {
+ 572              		.loc 1 232 3 is_stmt 1 view .LVU160
+ 234:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 573              		.loc 1 234 11 is_stmt 0 view .LVU161
+ 574 006c 45F24063 		movw	r3, #22080
+ 575 0070 019A     		ldr	r2, [sp, #4]
+ 237:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Init = CMW_OV5640_Init;
+ 576              		.loc 1 237 3 view .LVU162
+ 577 0072 3146     		mov	r1, r6
+ 234:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 578              		.loc 1 234 11 view .LVU163
+ 579 0074 9A42     		cmp	r2, r3
+ 580 0076 08BF     		it	eq
+ 581 0078 0446     		moveq	r4, r0
+ 237:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Init = CMW_OV5640_Init;
+ 582              		.loc 1 237 3 view .LVU164
+ 583 007a 4FF06002 		mov	r2, #96
+ 584 007e 05F10C00 		add	r0, r5, #12
+ 585              	.LVL58:
+ 234:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   }
+ 586              		.loc 1 234 11 view .LVU165
+ 587 0082 18BF     		it	ne
+ 588 0084 6FF00604 		mvnne	r4, #6
+ 589              	.LVL59:
+ 237:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Init = CMW_OV5640_Init;
+ 590              		.loc 1 237 3 is_stmt 1 view .LVU166
+ 591 0088 FFF7FEFF 		bl	memset
+ 592              	.LVL60:
+ 238:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Start = CMW_OV5640_Start;
+ 593              		.loc 1 238 3 view .LVU167
+ 238:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->Start = CMW_OV5640_Start;
+ 594              		.loc 1 238 19 is_stmt 0 view .LVU168
+ 595 008c 064B     		ldr	r3, .L45
+ 596 008e 2B60     		str	r3, [r5]
+ 239:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->DeInit = CMW_OV5640_DeInit;
+ 597              		.loc 1 239 3 is_stmt 1 view .LVU169
+ 239:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->DeInit = CMW_OV5640_DeInit;
+ 598              		.loc 1 239 20 is_stmt 0 view .LVU170
+ 599 0090 064B     		ldr	r3, .L45+4
+ 600 0092 AB60     		str	r3, [r5, #8]
+ 240:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->ReadID = CMW_OV5640_ReadID;
+ARM GAS  /tmp/ccksZpnv.s 			page 18
+
+
+ 601              		.loc 1 240 3 is_stmt 1 view .LVU171
+ 240:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->ReadID = CMW_OV5640_ReadID;
+ 602              		.loc 1 240 21 is_stmt 0 view .LVU172
+ 603 0094 064B     		ldr	r3, .L45+8
+ 604 0096 6B60     		str	r3, [r5, #4]
+ 241:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->SetMirrorFlip = CMW_OV5640_SetMirrorFlip;
+ 605              		.loc 1 241 3 is_stmt 1 view .LVU173
+ 241:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->SetMirrorFlip = CMW_OV5640_SetMirrorFlip;
+ 606              		.loc 1 241 21 is_stmt 0 view .LVU174
+ 607 0098 064B     		ldr	r3, .L45+12
+ 608 009a EB61     		str	r3, [r5, #28]
+ 242:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->GetSensorInfo = CMW_OV5640_GetSensorInfo;
+ 609              		.loc 1 242 3 is_stmt 1 view .LVU175
+ 242:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   ov5640_if->GetSensorInfo = CMW_OV5640_GetSensorInfo;
+ 610              		.loc 1 242 28 is_stmt 0 view .LVU176
+ 611 009c 064B     		ldr	r3, .L45+16
+ 612 009e EB62     		str	r3, [r5, #44]
+ 243:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return ret;
+ 613              		.loc 1 243 3 is_stmt 1 view .LVU177
+ 243:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c ****   return ret;
+ 614              		.loc 1 243 28 is_stmt 0 view .LVU178
+ 615 00a0 064B     		ldr	r3, .L45+20
+ 616 00a2 2B66     		str	r3, [r5, #96]
+ 244:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 617              		.loc 1 244 3 is_stmt 1 view .LVU179
+ 244:../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.c **** }
+ 618              		.loc 1 244 10 is_stmt 0 view .LVU180
+ 619 00a4 D8E7     		b	.L39
+ 620              	.L46:
+ 621 00a6 00BF     		.align	2
+ 622              	.L45:
+ 623 00a8 00000000 		.word	CMW_OV5640_Init
+ 624 00ac 00000000 		.word	CMW_OV5640_Start
+ 625 00b0 00000000 		.word	CMW_OV5640_DeInit
+ 626 00b4 00000000 		.word	CMW_OV5640_ReadID
+ 627 00b8 00000000 		.word	CMW_OV5640_SetMirrorFlip
+ 628 00bc 00000000 		.word	CMW_OV5640_GetSensorInfo
+ 629              		.cfi_endproc
+ 630              	.LFE894:
+ 632              		.section	.rodata.__func__.0,"a"
+ 635              	__func__.0:
+ 636 0000 434D575F 		.ascii	"CMW_OV5640_SetDefaultSensorValues\000"
+ 636      4F563536 
+ 636      34305F53 
+ 636      65744465 
+ 636      6661756C 
+ 637              		.text
+ 638              	.Letext0:
+ 639              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 640              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 641              		.file 4 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Inc/isp_core.h"
+ 642              		.file 5 "../../Middlewares/stm32-mw-camera/sensors/cmw_sensors_if.h"
+ 643              		.file 6 "../../Middlewares/stm32-mw-camera/sensors/ov5640/ov5640_reg.h"
+ 644              		.file 7 "../../Middlewares/stm32-mw-camera/sensors/ov5640/ov5640.h"
+ 645              		.file 8 "../../Middlewares/stm32-mw-camera/cmw_camera.h"
+ 646              		.file 9 "../../Middlewares/stm32-mw-camera/sensors/cmw_ov5640.h"
+ 647              		.file 10 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/a
+ARM GAS  /tmp/ccksZpnv.s 			page 19
+
+
+ 648              		.file 11 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/a
+ 649              		.file 12 "<built-in>"
+ARM GAS  /tmp/ccksZpnv.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 cmw_ov5640.c
+     /tmp/ccksZpnv.s:26     .text.CMW_OV5640_GetSensorInfo:00000000 $t
+     /tmp/ccksZpnv.s:31     .text.CMW_OV5640_GetSensorInfo:00000000 CMW_OV5640_GetSensorInfo
+     /tmp/ccksZpnv.s:67     .text.CMW_OV5640_ReadID:00000000 $t
+     /tmp/ccksZpnv.s:72     .text.CMW_OV5640_ReadID:00000000 CMW_OV5640_ReadID
+     /tmp/ccksZpnv.s:92     .text.CMW_OV5640_SetMirrorFlip:00000000 $t
+     /tmp/ccksZpnv.s:97     .text.CMW_OV5640_SetMirrorFlip:00000000 CMW_OV5640_SetMirrorFlip
+     /tmp/ccksZpnv.s:125    .text.CMW_OV5640_DeInit:00000000 $t
+     /tmp/ccksZpnv.s:130    .text.CMW_OV5640_DeInit:00000000 CMW_OV5640_DeInit
+     /tmp/ccksZpnv.s:163    .text.CMW_OV5640_Start:00000000 $t
+     /tmp/ccksZpnv.s:168    .text.CMW_OV5640_Start:00000000 CMW_OV5640_Start
+     /tmp/ccksZpnv.s:188    .text.CMW_OV5640_Init:00000000 $t
+     /tmp/ccksZpnv.s:193    .text.CMW_OV5640_Init:00000000 CMW_OV5640_Init
+     /tmp/ccksZpnv.s:383    .text.CMW_OV5640_SetDefaultSensorValues:00000000 $t
+     /tmp/ccksZpnv.s:389    .text.CMW_OV5640_SetDefaultSensorValues:00000000 CMW_OV5640_SetDefaultSensorValues
+     /tmp/ccksZpnv.s:423    .text.CMW_OV5640_SetDefaultSensorValues:00000018 $d
+     /tmp/ccksZpnv.s:635    .rodata.__func__.0:00000000 __func__.0
+     /tmp/ccksZpnv.s:430    .text.CMW_OV5640_Probe:00000000 $t
+     /tmp/ccksZpnv.s:436    .text.CMW_OV5640_Probe:00000000 CMW_OV5640_Probe
+     /tmp/ccksZpnv.s:623    .text.CMW_OV5640_Probe:000000a8 $d
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.newlib.h.27.b904f6f8971bd921b436e5701877de32
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.features.h.22.4b93ad64e0d80833c46a20ecae380bb0
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.assert.h.11.db24e541f16414db224bf986d21017e2
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.stddef.h.200.7df09ddbfbefc5947db7aca5a0fd7644
+                           .group:00000000 wm4.stddef.h.39.613e674cf2e6f142dfe584123421de07
+                           .group:00000000 wm4._default_types.h.6.959254cf5f09734ea7516c89e8bb21bd
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.stdio.h.27.3fc80220048df77954e38daec3bb9670
+                           .group:00000000 wm4.stddef.h.173.1cea4f16a943c8e875db6791959c3141
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.stdio.h.47.dc31ec4674d7bcb103c9f08809549f45
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.isp_conf.h.21.f38432dbfef47e2ce2a64e60ef6a2d79
+                           .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
+                           .group:00000000 wm4.arm_cmse.h.103.a0d15a79c4c9a67da8d5831704d7248e
+                           .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
+ARM GAS  /tmp/ccksZpnv.s 			page 21
+
+
+                           .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
+                           .group:00000000 wm4.cmsis_version.h.30.d128735bf87720f7436b74fefeb5043c
+                           .group:00000000 wm4.core_cm55.h.67.25006a3ce7048d64bcddd2996d5fac93
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
+                           .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230
+                           .group:00000000 wm4.armv8m_pmu.h.24.6ded195d2625055391fd378c0e1d2519
+                           .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
+                           .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
+                           .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+                           .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
+                           .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
+                           .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
+                           .group:00000000 wm4.stm32n6xx_hal_def.h.63.3a8f01490e8852464e9fcb69092e9c75
+                           .group:00000000 wm4.stm32n6xx_ll_bus.h.38.2366a295ee4cdb04833997d3787fcd2d
+                           .group:00000000 wm4.stm32n6xx_ll_rcc.h.21.656bd5637db608589ad16ea57d39430c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.194.69b522b1afdf59a82d05a1f71efe03c7
+                           .group:00000000 wm4.stm32n6xx_hal_rcc_ex.h.21.cc6be0a7d168882a1a6f470236ba784c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.4361.4b490a4a19722e68c21f88cb8a774a30
+                           .group:00000000 wm4.stm32n6xx_hal_gpio.h.21.89d54af663b98eb8fc098192053f7eeb
+                           .group:00000000 wm4.stm32n6xx_hal_gpio_ex.h.22.f7e795fb05a69a19b87d946b47c8db8b
+                           .group:00000000 wm4.stm32n6xx_hal_rif.h.21.33f2c553a8a3fc14dca8c470b213ab19
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.21.61e48c5c2e8d25d22177834b232fe45c
+                           .group:00000000 wm4.stm32n6xx_hal_dma_ex.h.21.82f854ecdb6a463b06d0b4e5c217c368
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.1020.87e2180c009560b617c1f8208140c950
+                           .group:00000000 wm4.stm32n6xx_hal_cortex.h.21.f493623cc58f9454ab4eae41e395c5cc
+                           .group:00000000 wm4.stm32n6xx_hal_bsec.h.21.1ee89319140541f82434908b4267aa30
+                           .group:00000000 wm4.stm32n6xx_hal_dcmipp.h.21.e2b87dce83d7d722d696a597f6ac56bf
+                           .group:00000000 wm4.stm32n6xx_hal_dma2d.h.21.75c8d46cdbb72970123b3f34ae2043d7
+                           .group:00000000 wm4.stm32n6xx_hal_exti.h.21.e0efb23591051684dc14f1f2431c6aab
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.21.3f483626ff64c5bf027265bb2e1d1331
+                           .group:00000000 wm4.stm32n6xx_hal_i2c_ex.h.21.79e9196c22282cdaf6b4047893638c45
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.741.1084702632703acc669e4282b3043372
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.21.ae1eb09930e7e550e48e418ac5849e4d
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.1002.b13ede7fc94ed5ad1c6768a157d2149a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr.h.21.cdb73e4869c3fed3fc84f901ec0e5f0a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr_ex.h.21.1a673224a58b0c1e5fad8eeda6514208
+                           .group:00000000 wm4.stm32n6xx_hal_ramcfg.h.21.a62dfbb4d2c14e9a8c634a215e37bd3d
+                           .group:00000000 wm4.stm32n6xx_hal_uart.h.21.230f549bfa0d5ebfd77bfb311b2aca15
+                           .group:00000000 wm4.stm32n6xx_hal_uart_ex.h.21.a0d5511e1d0703b7b5278c8f5472b96d
+                           .group:00000000 wm4.stm32n6xx_hal_xspi.h.21.7fd922d3bdb871475cf18436a68935bb
+                           .group:00000000 wm4.stm32n6xx_hal_cacheaxi.h.21.7c3375b7903ec42376e4883320997f74
+                           .group:00000000 wm4.stm32n6xx_hal.h.81.e79d59262ba173c33cf1d69281830d15
+                           .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
+                           .group:00000000 wm4.isp_core.h.110.8c4344a3506ac8fadc31ee17c3f6f7d7
+                           .group:00000000 wm4.cmw_errno.h.21.91021ac9b2627a1ce6b8517d105715d1
+                           .group:00000000 wm4.ov5640_reg.h.58.ab4a59f1ce69f2f3abad0ce2b02d2ee7
+                           .group:00000000 wm4.ov5640.h.105.8f6617c2cfa2f6b3a1c79e09c30f8efd
+                           .group:00000000 wm4.stm32n6570_discovery_conf.h.21.f52c8202689527a3dc0d9c6cba9c0416
+                           .group:00000000 wm4.stm32n6570_discovery_errno.h.22.80e523b09444a11ebe4b6e24ae914f0e
+                           .group:00000000 wm4.stm32n6570_discovery_bus.h.62.3b5b2c6837f7adeb489604fa214cd371
+                           .group:00000000 wm4.cmw_camera_conf.h.44.2cf1f5f6faa562b7e26aecd266b787f4
+                           .group:00000000 wm4.cmw_camera.h.33.3e21b0797a1f24d8d61aeb33a948c5cd
+
+UNDEFINED SYMBOLS
+ARM GAS  /tmp/ccksZpnv.s 			page 22
+
+
+OV5640_ReadID
+OV5640_MirrorFlipConfig
+OV5640_DeInit
+OV5640_Start
+OV5640_Init
+__assert_func
+OV5640_RegisterBusIO
+memset

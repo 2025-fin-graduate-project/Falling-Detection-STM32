@@ -1,0 +1,6 @@
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:64:5:LL_Streng_EncryptionInit	8	static
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:106:5:LL_Busif_SetKeys	12	static
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:148:5:LL_EpochCtrl_EncryptionInit	8	static
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:178:5:LL_DmaCypherInit	200	static
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:313:5:LL_ExtDmaCypherInit	240	static,ignoring_inline_asm
+../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c:514:6:LL_ATON_DecryptAndCopy	48	static

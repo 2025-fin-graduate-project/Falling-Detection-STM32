@@ -1,0 +1,2 @@
+../../Middlewares/stm32-mw-camera/cmw_utils.c:46:6:CMW_UTILS_GetPipeConfig	24	static
+../../Middlewares/stm32-mw-camera/cmw_utils.c:79:9:CMW_UTILS_getClosest_HAL_PHYBitrate	12	static

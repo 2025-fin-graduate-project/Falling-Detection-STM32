@@ -1,0 +1,192 @@
+ARM GAS  /tmp/ccC37KdM.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"imx335_reg.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c"
+  25              		.section	.text.imx335_read_reg,"ax",%progbits
+  26              		.align	1
+  27              		.global	imx335_read_reg
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	imx335_read_reg:
+  33              	.LVL0:
+  34              	.LFB186:
+   1:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /**
+   2:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   ******************************************************************************
+   3:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @file    imx335_reg.c
+   4:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @author  MCD Application Team
+   5:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @brief   This file provides unitary register function to control the IMX335
+   6:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   *          Camera driver.
+   7:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   ******************************************************************************
+   8:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @attention
+   9:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   *
+  10:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * Copyright (c) 2022 STMicroelectronics.
+  11:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * All rights reserved.
+  12:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   *
+  13:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * in the root directory of this software component.
+  15:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   *
+  17:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   ******************************************************************************
+  18:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  19:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  20:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /* Includes ------------------------------------------------------------------*/
+  21:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** #include "imx335_reg.h"
+  22:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  23:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /** @addtogroup BSP
+  24:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @{
+ARM GAS  /tmp/ccC37KdM.s 			page 2
+
+
+  25:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  26:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  27:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /** @addtogroup Components
+  28:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @{
+  29:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  30:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  31:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /** @addtogroup IMX335
+  32:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @brief     This file provides a set of functions needed to drive the
+  33:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   *            IMX335 Camera sensor.
+  34:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @{
+  35:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  36:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  37:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /**
+  38:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @brief  Read IMX335 component registers
+  39:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  ctx component context
+  40:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  reg Register to read from
+  41:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  pdata Pointer to data buffer
+  42:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  length Number of data to read
+  43:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @retval Component status
+  44:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  45:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** int32_t imx335_read_reg(imx335_ctx_t *ctx, uint16_t reg, uint8_t *pdata, uint16_t length)
+  46:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** {
+  35              		.loc 1 46 1 view -0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+  47:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->ReadReg(ctx->handle, reg, pdata, length);
+  40              		.loc 1 47 3 view .LVU1
+  46:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->ReadReg(ctx->handle, reg, pdata, length);
+  41              		.loc 1 46 1 is_stmt 0 view .LVU2
+  42 0000 10B4     		push	{r4}
+  43              		.cfi_def_cfa_offset 4
+  44              		.cfi_offset 4, -4
+  45              		.loc 1 47 10 view .LVU3
+  46 0002 D0E90140 		ldrd	r4, r0, [r0, #4]
+  47              	.LVL1:
+  48              		.loc 1 47 10 view .LVU4
+  49 0006 A446     		mov	ip, r4
+  48:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** }
+  50              		.loc 1 48 1 view .LVU5
+  51 0008 5DF8044B 		ldr	r4, [sp], #4
+  47:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->ReadReg(ctx->handle, reg, pdata, length);
+  52              		.loc 1 47 10 view .LVU6
+  53 000c 6047     		bx	ip
+  54              	.LVL2:
+  47:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->ReadReg(ctx->handle, reg, pdata, length);
+  55              		.loc 1 47 10 view .LVU7
+  56              		.cfi_endproc
+  57              	.LFE186:
+  59              		.section	.text.imx335_write_reg,"ax",%progbits
+  60              		.align	1
+  61              		.global	imx335_write_reg
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  66              	imx335_write_reg:
+ARM GAS  /tmp/ccC37KdM.s 			page 3
+
+
+  67              	.LVL3:
+  68              	.LFB187:
+  49:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** 
+  50:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** /**
+  51:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @brief  Write IMX335 component registers
+  52:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  ctx component context
+  53:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  reg Register to write to
+  54:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  pdata Pointer to data buffer
+  55:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @param  length Number of data to write
+  56:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   * @retval Component status
+  57:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   */
+  58:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** int32_t imx335_write_reg(imx335_ctx_t *ctx, uint16_t reg, uint8_t *data, uint16_t length)
+  59:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** {
+  69              		.loc 1 59 1 is_stmt 1 view -0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+  60:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->WriteReg(ctx->handle, reg, data, length);
+  74              		.loc 1 60 3 view .LVU9
+  59:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->WriteReg(ctx->handle, reg, data, length);
+  75              		.loc 1 59 1 is_stmt 0 view .LVU10
+  76 0000 10B4     		push	{r4}
+  77              		.cfi_def_cfa_offset 4
+  78              		.cfi_offset 4, -4
+  79              		.loc 1 60 10 view .LVU11
+  80 0002 0468     		ldr	r4, [r0]
+  81 0004 8068     		ldr	r0, [r0, #8]
+  82              	.LVL4:
+  83              		.loc 1 60 10 view .LVU12
+  84 0006 A446     		mov	ip, r4
+  61:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c **** }
+  85              		.loc 1 61 1 view .LVU13
+  86 0008 5DF8044B 		ldr	r4, [sp], #4
+  60:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->WriteReg(ctx->handle, reg, data, length);
+  87              		.loc 1 60 10 view .LVU14
+  88 000c 6047     		bx	ip
+  89              	.LVL5:
+  60:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.c ****   return ctx->WriteReg(ctx->handle, reg, data, length);
+  90              		.loc 1 60 10 view .LVU15
+  91              		.cfi_endproc
+  92              	.LFE187:
+  94              		.text
+  95              	.Letext0:
+  96              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+  97              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+  98              		.file 4 "../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.h"
+ARM GAS  /tmp/ccC37KdM.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 imx335_reg.c
+     /tmp/ccC37KdM.s:26     .text.imx335_read_reg:00000000 $t
+     /tmp/ccC37KdM.s:32     .text.imx335_read_reg:00000000 imx335_read_reg
+     /tmp/ccC37KdM.s:60     .text.imx335_write_reg:00000000 $t
+     /tmp/ccC37KdM.s:66     .text.imx335_write_reg:00000000 imx335_write_reg
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.imx335_reg.h.54.13b2bb4b7463faf527ee2adbd5473566
+
+NO UNDEFINED SYMBOLS

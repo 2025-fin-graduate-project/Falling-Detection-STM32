@@ -1,0 +1,4 @@
+../../Middlewares/ai-postprocessing-wrapper/app_postprocess_spe_movenet_ui.c:29:13:movenet_decode_layout_int8	48	static
+../../Middlewares/ai-postprocessing-wrapper/app_postprocess_spe_movenet_ui.c:62:17:movenet_layout_spread_score	20	static
+../../Middlewares/ai-postprocessing-wrapper/app_postprocess_spe_movenet_ui.c:100:9:app_postprocess_init	0	static
+../../Middlewares/ai-postprocessing-wrapper/app_postprocess_spe_movenet_ui.c:114:9:app_postprocess_run	424	static

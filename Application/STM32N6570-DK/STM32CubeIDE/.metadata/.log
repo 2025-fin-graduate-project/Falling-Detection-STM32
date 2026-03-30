@@ -1,0 +1,12 @@
+!SESSION 2026-03-18 20:53:51.168 -----------------------------------------------
+eclipse.buildId=Version 2.1.1
+java.version=21.0.9
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=ko_KR
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-03-18 20:54:27.427
+!MESSAGE Log4j2 initialized with config file /home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Application/STM32N6570-DK/STM32CubeIDE/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-03-18 20:54:29.310
+!MESSAGE Started RMI Server, listening on port 41338

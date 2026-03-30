@@ -1,0 +1,1090 @@
+ARM GAS  /tmp/ccqUPMsv.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"sseg_pp_deeplabv3.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_dee
+  25              		.section	.text.sseg_deeplabv3_pp_argmax,"ax",%progbits
+  26              		.align	1
+  27              		.global	sseg_deeplabv3_pp_argmax
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	sseg_deeplabv3_pp_argmax:
+  33              	.LVL0:
+  34              	.LFB774:
+   1:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** /*---------------------------------------------------------------------------------------------
+   2:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  * Copyright (c) 2023 STMicroelectronics.
+   3:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  * All rights reserved.
+   4:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  *
+   5:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  * This software is licensed under terms that can be found in the LICENSE file in
+   6:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  * the root directory of this software component.
+   7:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  * If no LICENSE file comes with this software, it is provided AS-IS.
+   8:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  *--------------------------------------------------------------------------------------------*/
+   9:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+  10:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #include "sseg_deeplabv3_pp_if.h"
+  11:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #include "vision_models_pp.h"
+  12:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+  13:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #if 0 // Not used
+  14:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_argmax_to_colormap(sseg_deeplabv3_pp_in_t *pInput,
+  15:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                     sseg_pp_out_t *pOutput,
+  16:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                     sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+  17:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+  18:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+  19:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
+  20:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t *out = pOutput->pOutBuff;
+  21:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+  22:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+  23:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   switch (pInput->type) {
+  24:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   case AI_SSEG_DATA_FLOAT:
+ARM GAS  /tmp/ccqUPMsv.s 			page 2
+
+
+  25:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+  26:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       float32_t *pSrc = (float32_t *)pInput->pRawData;
+  27:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       uint32_t _index_a[4];
+  28:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       float32_t _maxim_a[4];
+  29:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         for (size_t i = 0; i < (pInput_static_param->width * pInput_static_param->height) >> 2; i++
+  30:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         {
+  31:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             vision_models_maxi_p_if32ou32(pSrc, nb_classes, nb_classes, _maxim_a, _index_a, 4);
+  32:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             pSrc+=4*nb_classes;
+  33:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             for (int p = 0; p < 4; p++) {
+  34:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 memcpy(out, &pInput_static_param->color_map[_index_a[p]], 3 * sizeof(uint8_t));
+  35:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 out+=3 * sizeof(uint8_t);
+  36:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             }
+  37:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  38:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         int remaing = (pInput_static_param->width * pInput_static_param->height) & 3;
+  39:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         while(remaing-- > 0) {
+  40:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           uint32_t index;
+  41:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           float32_t maxim;
+  42:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           vision_models_maxi_if32ou32(pSrc, nb_classes, &maxim, &index);
+  43:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           memcpy(out, &pInput_static_param->color_map[index], 3 * sizeof(uint8_t));
+  44:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           out+=3 * sizeof(uint8_t);
+  45:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  46:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+  47:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     break;
+  48:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   case AI_SSEG_DATA_UINT8:
+  49:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+  50:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       uint8_t *pSrc = (uint8_t *)pInput->pRawData;
+  51:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       if (nb_classes < 256) {
+  52:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         uint8_t _index_a[16];
+  53:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         uint8_t _maxim_a[16];
+  54:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         for (size_t i = 0; i < (pInput_static_param->width * pInput_static_param->height) >> 4; i++
+  55:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         {
+  56:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             vision_models_maxi_p_iu8ou8(pSrc, nb_classes, nb_classes, _maxim_a, _index_a, 4);
+  57:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             pSrc+=16*nb_classes;
+  58:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             for (int p = 0; p < 16; p++) {
+  59:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 memcpy(out, &pInput_static_param->color_map[_index_a[p]], 3 * sizeof(uint8_t));
+  60:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 out+=3 * sizeof(uint8_t);
+  61:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             }
+  62:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  63:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         int remaing = (pInput_static_param->width * pInput_static_param->height) & 15;
+  64:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         while(remaing-- > 0) {
+  65:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           uint8_t index;
+  66:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           uint8_t maxim;
+  67:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           vision_models_maxi_iu8ou8(pSrc, nb_classes, &maxim, &index);
+  68:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           memcpy(out, &pInput_static_param->color_map[index], 3 * sizeof(uint8_t));
+  69:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           out+=3 * sizeof(uint8_t);
+  70:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  71:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       } else {
+  72:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         uint16_t _index_a[8];
+  73:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         uint8_t _maxim_a[8];
+  74:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         for (size_t i = 0; i < (pInput_static_param->width * pInput_static_param->height) >> 3; i++
+  75:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         {
+  76:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             vision_models_maxi_p_iu8ou16(pSrc, nb_classes, nb_classes, _maxim_a, _index_a, 4);
+  77:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             pSrc+=8*nb_classes;
+  78:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             for (int p = 0; p < 8; p++) {
+  79:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 memcpy(out, &pInput_static_param->color_map[_index_a[p]], 3 * sizeof(uint8_t));
+  80:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 out+=3 * sizeof(uint8_t);
+  81:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             }
+ARM GAS  /tmp/ccqUPMsv.s 			page 3
+
+
+  82:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  83:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         int remaing = (pInput_static_param->width * pInput_static_param->height) & 7;
+  84:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         while(remaing-- > 0) {
+  85:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           uint16_t index;
+  86:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           uint8_t maxim;
+  87:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           vision_models_maxi_iu8ou16(pSrc, nb_classes, &maxim, &index);
+  88:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           memcpy(out, &pInput_static_param->color_map[index], 3 * sizeof(uint8_t));
+  89:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****           out+=3 * sizeof(uint8_t);
+  90:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
+  91:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****       }
+  92:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+  93:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     break;
+  94:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   default:
+  95:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     error = AI_SSEG_POSTPROCESS_ERROR;
+  96:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+  97:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   return error;
+  98:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+  99:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #endif
+ 100:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 101:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_argmax(sseg_deeplabv3_pp_in_t *pInput,
+ 102:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                  sseg_pp_out_t          *pOutput,
+ 103:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                  sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 104:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+  35              		.loc 1 104 1 view -0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 16
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+  39              		.loc 1 105 3 view .LVU1
+ 106:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
+  40              		.loc 1 106 3 view .LVU2
+ 104:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+  41              		.loc 1 104 1 is_stmt 0 view .LVU3
+  42 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  43              		.cfi_def_cfa_offset 28
+  44              		.cfi_offset 4, -28
+  45              		.cfi_offset 5, -24
+  46              		.cfi_offset 6, -20
+  47              		.cfi_offset 7, -16
+  48              		.cfi_offset 8, -12
+  49              		.cfi_offset 9, -8
+  50              		.cfi_offset 14, -4
+ 107:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 108:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   float32_t *pSrc = (float32_t *)pInput->pRawData;
+ 109:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+  51              		.loc 1 109 45 view .LVU4
+  52 0004 D2E90043 		ldrd	r4, r3, [r2]
+ 106:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+  53              		.loc 1 106 12 view .LVU5
+  54 0008 9768     		ldr	r7, [r2, #8]
+  55              	.LVL1:
+ 108:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+  56              		.loc 1 108 3 is_stmt 1 view .LVU6
+  57              		.loc 1 109 45 is_stmt 0 view .LVU7
+  58 000a 5C43     		muls	r4, r3, r4
+ 110:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   float32_t _maxim_a[4];
+ 111:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (nb_classes < 256) {
+ARM GAS  /tmp/ccqUPMsv.s 			page 4
+
+
+  59              		.loc 1 111 6 view .LVU8
+  60 000c FF2F     		cmp	r7, #255
+ 108:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+  61              		.loc 1 108 14 view .LVU9
+  62 000e 0568     		ldr	r5, [r0]
+  63              	.LVL2:
+ 109:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   float32_t _maxim_a[4];
+  64              		.loc 1 109 3 is_stmt 1 view .LVU10
+ 110:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   float32_t _maxim_a[4];
+  65              		.loc 1 110 3 view .LVU11
+  66              		.loc 1 111 3 view .LVU12
+  67              	.LBB2:
+ 112:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+  68              		.loc 1 112 14 is_stmt 0 view .LVU13
+  69 0010 0E68     		ldr	r6, [r1]
+  70              	.LBE2:
+ 104:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+  71              		.loc 1 104 1 view .LVU14
+  72 0012 87B0     		sub	sp, sp, #28
+  73              		.cfi_def_cfa_offset 56
+  74              	.LBB3:
+ 113:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 114:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 115:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_if32ou8(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
+ 116:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+  75              		.loc 1 116 13 view .LVU15
+  76 0014 4FEA0718 		lsl	r8, r7, #4
+  77              	.LBE3:
+ 111:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+  78              		.loc 1 111 6 view .LVU16
+  79 0018 08D8     		bhi	.L8
+  80 001a 2644     		add	r6, r6, r4
+  81              	.LVL3:
+  82              	.L2:
+  83              	.LBB4:
+ 113:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+  84              		.loc 1 113 16 view .LVU17
+  85 001c 002C     		cmp	r4, #0
+  86 001e A6EB0403 		sub	r3, r6, r4
+  87              	.LVL4:
+ 113:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+  88              		.loc 1 113 16 is_stmt 1 view .LVU18
+  89 0022 13DC     		bgt	.L4
+  90              	.LVL5:
+  91              	.L9:
+ 113:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+  92              		.loc 1 113 16 is_stmt 0 view .LVU19
+  93              	.LBE4:
+ 117:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 118:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=4;
+ 119:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 120:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   } else {
+ 121:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint16_t *out = (uint16_t *)pOutput->pOutBuff;
+ 122:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 123:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 124:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_if32ou16(pSrc, nb_classes, nb_classes, _maxim_a, (uint16_t *)out, loop
+ 125:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+ARM GAS  /tmp/ccqUPMsv.s 			page 5
+
+
+ 126:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 127:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=4;
+ 128:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 129:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 130:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   return error;
+ 131:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+  94              		.loc 1 131 1 view .LVU20
+  95 0024 0020     		movs	r0, #0
+  96 0026 07B0     		add	sp, sp, #28
+  97              		.cfi_remember_state
+  98              		.cfi_def_cfa_offset 28
+  99              		@ sp needed
+ 100 0028 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 101              	.LVL6:
+ 102              	.L8:
+ 103              		.cfi_restore_state
+ 104              	.LBB5:
+ 124:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+ 105              		.loc 1 124 9 view .LVU21
+ 106 002c 1FFA87F9 		uxth	r9, r7
+ 107              	.LVL7:
+ 108              	.L3:
+ 122:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 109              		.loc 1 122 16 is_stmt 1 view .LVU22
+ 110 0030 002C     		cmp	r4, #0
+ 111 0032 F7DD     		ble	.L9
+ 124:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+ 112              		.loc 1 124 9 view .LVU23
+ 113 0034 CDE90064 		strd	r6, r4, [sp]
+ 114 0038 2846     		mov	r0, r5
+ 115 003a 4A46     		mov	r2, r9
+ 116 003c 3946     		mov	r1, r7
+ 117 003e 02AB     		add	r3, sp, #8
+ 118 0040 FFF7FEFF 		bl	vision_models_maxi_p_if32ou16
+ 119              	.LVL8:
+ 125:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 120              		.loc 1 125 9 view .LVU24
+ 125:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 121              		.loc 1 125 13 is_stmt 0 view .LVU25
+ 122 0044 4544     		add	r5, r5, r8
+ 123              	.LVL9:
+ 126:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=4;
+ 124              		.loc 1 126 9 is_stmt 1 view .LVU26
+ 126:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=4;
+ 125              		.loc 1 126 13 is_stmt 0 view .LVU27
+ 126 0046 0836     		adds	r6, r6, #8
+ 127              	.LVL10:
+ 127:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 128              		.loc 1 127 9 is_stmt 1 view .LVU28
+ 127:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 129              		.loc 1 127 13 is_stmt 0 view .LVU29
+ 130 0048 043C     		subs	r4, r4, #4
+ 131              	.LVL11:
+ 127:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 132              		.loc 1 127 13 view .LVU30
+ 133 004a F1E7     		b	.L3
+ 134              	.LVL12:
+ARM GAS  /tmp/ccqUPMsv.s 			page 6
+
+
+ 135              	.L4:
+ 127:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 136              		.loc 1 127 13 view .LVU31
+ 137              	.LBE5:
+ 138              	.LBB6:
+ 115:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+ 139              		.loc 1 115 9 is_stmt 1 view .LVU32
+ 140 004c CDE90034 		strd	r3, r4, [sp]
+ 141 0050 2846     		mov	r0, r5
+ 142 0052 3A46     		mov	r2, r7
+ 143 0054 3946     		mov	r1, r7
+ 144 0056 02AB     		add	r3, sp, #8
+ 145              	.LVL13:
+ 115:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
+ 146              		.loc 1 115 9 is_stmt 0 view .LVU33
+ 147 0058 FFF7FEFF 		bl	vision_models_maxi_p_if32ou8
+ 148              	.LVL14:
+ 116:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 149              		.loc 1 116 9 is_stmt 1 view .LVU34
+ 116:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
+ 150              		.loc 1 116 13 is_stmt 0 view .LVU35
+ 151 005c 4544     		add	r5, r5, r8
+ 152              	.LVL15:
+ 117:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=4;
+ 153              		.loc 1 117 9 is_stmt 1 view .LVU36
+ 118:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 154              		.loc 1 118 9 view .LVU37
+ 118:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 155              		.loc 1 118 13 is_stmt 0 view .LVU38
+ 156 005e 043C     		subs	r4, r4, #4
+ 157              	.LVL16:
+ 118:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 158              		.loc 1 118 13 view .LVU39
+ 159 0060 DCE7     		b	.L2
+ 160              	.LBE6:
+ 161              		.cfi_endproc
+ 162              	.LFE774:
+ 164              		.section	.text.sseg_deeplabv3_pp_argmax_uint8,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	sseg_deeplabv3_pp_argmax_uint8
+ 167              		.syntax unified
+ 168              		.thumb
+ 169              		.thumb_func
+ 171              	sseg_deeplabv3_pp_argmax_uint8:
+ 172              	.LVL17:
+ 173              	.LFB775:
+ 132:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 133:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_argmax_uint8(sseg_deeplabv3_pp_in_t *pInput,
+ 134:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                        sseg_pp_out_t          *pOutput,
+ 135:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                        sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 136:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 174              		.loc 1 136 1 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 16
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 178              		.loc 1 137 3 view .LVU41
+ARM GAS  /tmp/ccqUPMsv.s 			page 7
+
+
+ 138:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
+ 179              		.loc 1 138 3 view .LVU42
+ 136:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 180              		.loc 1 136 1 is_stmt 0 view .LVU43
+ 181 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 182              		.cfi_def_cfa_offset 24
+ 183              		.cfi_offset 4, -24
+ 184              		.cfi_offset 5, -20
+ 185              		.cfi_offset 6, -16
+ 186              		.cfi_offset 7, -12
+ 187              		.cfi_offset 8, -8
+ 188              		.cfi_offset 14, -4
+ 139:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 140:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t *pSrc = (uint8_t *)pInput->pRawData;
+ 141:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 189              		.loc 1 141 45 view .LVU44
+ 190 0004 D2E90043 		ldrd	r4, r3, [r2]
+ 138:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 191              		.loc 1 138 12 view .LVU45
+ 192 0008 9568     		ldr	r5, [r2, #8]
+ 193              	.LVL18:
+ 140:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 194              		.loc 1 140 3 is_stmt 1 view .LVU46
+ 195              		.loc 1 141 45 is_stmt 0 view .LVU47
+ 196 000a 5C43     		muls	r4, r3, r4
+ 142:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t _maxim_a[16];
+ 143:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (nb_classes < UCHAR_MAX) {
+ 197              		.loc 1 143 6 view .LVU48
+ 198 000c FE2D     		cmp	r5, #254
+ 140:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 199              		.loc 1 140 12 view .LVU49
+ 200 000e 0668     		ldr	r6, [r0]
+ 201              	.LVL19:
+ 141:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t _maxim_a[16];
+ 202              		.loc 1 141 3 is_stmt 1 view .LVU50
+ 142:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t _maxim_a[16];
+ 203              		.loc 1 142 3 view .LVU51
+ 204              		.loc 1 143 3 view .LVU52
+ 205              	.LBB7:
+ 144:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+ 206              		.loc 1 144 14 is_stmt 0 view .LVU53
+ 207 0010 0F68     		ldr	r7, [r1]
+ 208              	.LBE7:
+ 136:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 209              		.loc 1 136 1 view .LVU54
+ 210 0012 86B0     		sub	sp, sp, #24
+ 211              		.cfi_def_cfa_offset 48
+ 143:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+ 212              		.loc 1 143 6 view .LVU55
+ 213 0014 15D8     		bhi	.L11
+ 214              	.LBB8:
+ 215              		.loc 1 144 5 is_stmt 1 view .LVU56
+ 216              	.LVL20:
+ 145:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 217              		.loc 1 145 5 view .LVU57
+ 146:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 147:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_iu8ou8(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
+ARM GAS  /tmp/ccqUPMsv.s 			page 8
+
+
+ 148:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 218              		.loc 1 148 17 is_stmt 0 view .LVU58
+ 219 0016 4FEA0518 		lsl	r8, r5, #4
+ 220 001a 2744     		add	r7, r7, r4
+ 221              	.LVL21:
+ 222              	.L12:
+ 145:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 223              		.loc 1 145 16 view .LVU59
+ 224 001c 002C     		cmp	r4, #0
+ 225 001e A7EB0403 		sub	r3, r7, r4
+ 226              	.LVL22:
+ 145:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 227              		.loc 1 145 16 is_stmt 1 view .LVU60
+ 228 0022 03DC     		bgt	.L13
+ 229              	.LVL23:
+ 230              	.L17:
+ 145:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 231              		.loc 1 145 16 is_stmt 0 view .LVU61
+ 232              	.LBE8:
+ 149:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 150:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=16;
+ 151:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 152:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   } else {
+ 153:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint16_t *out = (uint16_t *)pOutput->pOutBuff;
+ 154:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 155:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 156:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_iu8ou16(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
+ 157:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****        pSrc+=8*nb_classes;
+ 158:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 159:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 160:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 161:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 162:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   return error;
+ 163:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 233              		.loc 1 163 1 view .LVU62
+ 234 0024 0020     		movs	r0, #0
+ 235 0026 06B0     		add	sp, sp, #24
+ 236              		.cfi_remember_state
+ 237              		.cfi_def_cfa_offset 24
+ 238              		@ sp needed
+ 239 0028 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 240              	.LVL24:
+ 241              	.L13:
+ 242              		.cfi_restore_state
+ 243              	.LBB9:
+ 147:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 244              		.loc 1 147 9 is_stmt 1 view .LVU63
+ 245 002c CDE90034 		strd	r3, r4, [sp]
+ 246 0030 3046     		mov	r0, r6
+ 247 0032 2A46     		mov	r2, r5
+ 248 0034 2946     		mov	r1, r5
+ 249 0036 02AB     		add	r3, sp, #8
+ 250              	.LVL25:
+ 147:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 251              		.loc 1 147 9 is_stmt 0 view .LVU64
+ 252 0038 FFF7FEFF 		bl	vision_models_maxi_p_iu8ou8
+ 253              	.LVL26:
+ARM GAS  /tmp/ccqUPMsv.s 			page 9
+
+
+ 148:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 254              		.loc 1 148 9 is_stmt 1 view .LVU65
+ 148:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 255              		.loc 1 148 13 is_stmt 0 view .LVU66
+ 256 003c 4644     		add	r6, r6, r8
+ 257              	.LVL27:
+ 149:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 258              		.loc 1 149 9 is_stmt 1 view .LVU67
+ 150:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 259              		.loc 1 150 9 view .LVU68
+ 150:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 260              		.loc 1 150 13 is_stmt 0 view .LVU69
+ 261 003e 103C     		subs	r4, r4, #16
+ 262              	.LVL28:
+ 150:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 263              		.loc 1 150 13 view .LVU70
+ 264 0040 ECE7     		b	.L12
+ 265              	.LVL29:
+ 266              	.L11:
+ 150:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 267              		.loc 1 150 13 view .LVU71
+ 268              	.LBE9:
+ 269              	.LBB10:
+ 153:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 270              		.loc 1 153 5 is_stmt 1 view .LVU72
+ 154:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 271              		.loc 1 154 5 view .LVU73
+ 157:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 272              		.loc 1 157 15 is_stmt 0 view .LVU74
+ 273 0042 4FEAC508 		lsl	r8, r5, #3
+ 274              	.LVL30:
+ 275              	.L14:
+ 154:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 276              		.loc 1 154 16 is_stmt 1 view .LVU75
+ 277 0046 002C     		cmp	r4, #0
+ 278 0048 ECDD     		ble	.L17
+ 156:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****        pSrc+=8*nb_classes;
+ 279              		.loc 1 156 9 view .LVU76
+ 280 004a CDE90074 		strd	r7, r4, [sp]
+ 281 004e 3046     		mov	r0, r6
+ 282 0050 2A46     		mov	r2, r5
+ 283 0052 2946     		mov	r1, r5
+ 284 0054 02AB     		add	r3, sp, #8
+ 285 0056 FFF7FEFF 		bl	vision_models_maxi_p_iu8ou16
+ 286              	.LVL31:
+ 157:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 287              		.loc 1 157 8 view .LVU77
+ 157:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 288              		.loc 1 157 12 is_stmt 0 view .LVU78
+ 289 005a 4644     		add	r6, r6, r8
+ 290              	.LVL32:
+ 158:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 291              		.loc 1 158 9 is_stmt 1 view .LVU79
+ 158:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 292              		.loc 1 158 13 is_stmt 0 view .LVU80
+ 293 005c 1037     		adds	r7, r7, #16
+ 294              	.LVL33:
+ARM GAS  /tmp/ccqUPMsv.s 			page 10
+
+
+ 159:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 295              		.loc 1 159 9 is_stmt 1 view .LVU81
+ 159:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 296              		.loc 1 159 13 is_stmt 0 view .LVU82
+ 297 005e 083C     		subs	r4, r4, #8
+ 298              	.LVL34:
+ 159:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 299              		.loc 1 159 13 view .LVU83
+ 300 0060 F1E7     		b	.L14
+ 301              	.LBE10:
+ 302              		.cfi_endproc
+ 303              	.LFE775:
+ 305              		.section	.text.sseg_deeplabv3_pp_argmax_int8,"ax",%progbits
+ 306              		.align	1
+ 307              		.global	sseg_deeplabv3_pp_argmax_int8
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	sseg_deeplabv3_pp_argmax_int8:
+ 313              	.LVL35:
+ 314              	.LFB776:
+ 164:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 165:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_argmax_int8(sseg_deeplabv3_pp_in_t *pInput,
+ 166:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                       sseg_pp_out_t          *pOutput,
+ 167:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                       sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 168:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 315              		.loc 1 168 1 is_stmt 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 0, pretend = 0, frame = 16
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 319              		.loc 1 169 3 view .LVU85
+ 170:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
+ 320              		.loc 1 170 3 view .LVU86
+ 168:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 321              		.loc 1 168 1 is_stmt 0 view .LVU87
+ 322 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 323              		.cfi_def_cfa_offset 24
+ 324              		.cfi_offset 4, -24
+ 325              		.cfi_offset 5, -20
+ 326              		.cfi_offset 6, -16
+ 327              		.cfi_offset 7, -12
+ 328              		.cfi_offset 8, -8
+ 329              		.cfi_offset 14, -4
+ 171:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 172:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int8_t *pSrc = (int8_t *)pInput->pRawData;
+ 173:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 330              		.loc 1 173 45 view .LVU88
+ 331 0004 D2E90043 		ldrd	r4, r3, [r2]
+ 170:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 332              		.loc 1 170 12 view .LVU89
+ 333 0008 9568     		ldr	r5, [r2, #8]
+ 334              	.LVL36:
+ 172:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 335              		.loc 1 172 3 is_stmt 1 view .LVU90
+ 336              		.loc 1 173 45 is_stmt 0 view .LVU91
+ 337 000a 5C43     		muls	r4, r3, r4
+ARM GAS  /tmp/ccqUPMsv.s 			page 11
+
+
+ 174:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int8_t _maxim_a[16];
+ 175:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (nb_classes < UCHAR_MAX) {
+ 338              		.loc 1 175 6 view .LVU92
+ 339 000c FE2D     		cmp	r5, #254
+ 172:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = pInput_static_param->width * pInput_static_param->height;
+ 340              		.loc 1 172 11 view .LVU93
+ 341 000e 0668     		ldr	r6, [r0]
+ 342              	.LVL37:
+ 173:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int8_t _maxim_a[16];
+ 343              		.loc 1 173 3 is_stmt 1 view .LVU94
+ 174:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int8_t _maxim_a[16];
+ 344              		.loc 1 174 3 view .LVU95
+ 345              		.loc 1 175 3 view .LVU96
+ 346              	.LBB11:
+ 176:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+ 347              		.loc 1 176 14 is_stmt 0 view .LVU97
+ 348 0010 0F68     		ldr	r7, [r1]
+ 349              	.LBE11:
+ 168:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 350              		.loc 1 168 1 view .LVU98
+ 351 0012 86B0     		sub	sp, sp, #24
+ 352              		.cfi_def_cfa_offset 48
+ 175:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *out = (uint8_t *)pOutput->pOutBuff;
+ 353              		.loc 1 175 6 view .LVU99
+ 354 0014 15D8     		bhi	.L19
+ 355              	.LBB12:
+ 356              		.loc 1 176 5 is_stmt 1 view .LVU100
+ 357              	.LVL38:
+ 177:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 358              		.loc 1 177 5 view .LVU101
+ 178:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 179:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_is8ou8(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
+ 180:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 359              		.loc 1 180 17 is_stmt 0 view .LVU102
+ 360 0016 4FEA0518 		lsl	r8, r5, #4
+ 361 001a 2744     		add	r7, r7, r4
+ 362              	.LVL39:
+ 363              	.L20:
+ 177:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 364              		.loc 1 177 16 view .LVU103
+ 365 001c 002C     		cmp	r4, #0
+ 366 001e A7EB0403 		sub	r3, r7, r4
+ 367              	.LVL40:
+ 177:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 368              		.loc 1 177 16 is_stmt 1 view .LVU104
+ 369 0022 03DC     		bgt	.L21
+ 370              	.LVL41:
+ 371              	.L25:
+ 177:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 372              		.loc 1 177 16 is_stmt 0 view .LVU105
+ 373              	.LBE12:
+ 181:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 182:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=16;
+ 183:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 184:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   } else {
+ 185:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint16_t *out = (uint16_t *)pOutput->pOutBuff;
+ 186:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ARM GAS  /tmp/ccqUPMsv.s 			page 12
+
+
+ 187:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 188:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_is8ou16(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
+ 189:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=8*nb_classes;
+ 190:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 191:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 192:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 193:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 194:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   return error;
+ 195:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 374              		.loc 1 195 1 view .LVU106
+ 375 0024 0020     		movs	r0, #0
+ 376 0026 06B0     		add	sp, sp, #24
+ 377              		.cfi_remember_state
+ 378              		.cfi_def_cfa_offset 24
+ 379              		@ sp needed
+ 380 0028 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 381              	.LVL42:
+ 382              	.L21:
+ 383              		.cfi_restore_state
+ 384              	.LBB13:
+ 179:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 385              		.loc 1 179 9 is_stmt 1 view .LVU107
+ 386 002c CDE90034 		strd	r3, r4, [sp]
+ 387 0030 3046     		mov	r0, r6
+ 388 0032 2A46     		mov	r2, r5
+ 389 0034 2946     		mov	r1, r5
+ 390 0036 02AB     		add	r3, sp, #8
+ 391              	.LVL43:
+ 179:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
+ 392              		.loc 1 179 9 is_stmt 0 view .LVU108
+ 393 0038 FFF7FEFF 		bl	vision_models_maxi_p_is8ou8
+ 394              	.LVL44:
+ 180:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 395              		.loc 1 180 9 is_stmt 1 view .LVU109
+ 180:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 396              		.loc 1 180 13 is_stmt 0 view .LVU110
+ 397 003c 4644     		add	r6, r6, r8
+ 398              	.LVL45:
+ 181:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
+ 399              		.loc 1 181 9 is_stmt 1 view .LVU111
+ 182:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 400              		.loc 1 182 9 view .LVU112
+ 182:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 401              		.loc 1 182 13 is_stmt 0 view .LVU113
+ 402 003e 103C     		subs	r4, r4, #16
+ 403              	.LVL46:
+ 182:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 404              		.loc 1 182 13 view .LVU114
+ 405 0040 ECE7     		b	.L20
+ 406              	.LVL47:
+ 407              	.L19:
+ 182:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 408              		.loc 1 182 13 view .LVU115
+ 409              	.LBE13:
+ 410              	.LBB14:
+ 185:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
+ 411              		.loc 1 185 5 is_stmt 1 view .LVU116
+ARM GAS  /tmp/ccqUPMsv.s 			page 13
+
+
+ 186:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 412              		.loc 1 186 5 view .LVU117
+ 189:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 413              		.loc 1 189 16 is_stmt 0 view .LVU118
+ 414 0042 4FEAC508 		lsl	r8, r5, #3
+ 415              	.LVL48:
+ 416              	.L22:
+ 186:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
+ 417              		.loc 1 186 16 is_stmt 1 view .LVU119
+ 418 0046 002C     		cmp	r4, #0
+ 419 0048 ECDD     		ble	.L25
+ 188:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=8*nb_classes;
+ 420              		.loc 1 188 9 view .LVU120
+ 421 004a CDE90074 		strd	r7, r4, [sp]
+ 422 004e 3046     		mov	r0, r6
+ 423 0050 2A46     		mov	r2, r5
+ 424 0052 2946     		mov	r1, r5
+ 425 0054 02AB     		add	r3, sp, #8
+ 426 0056 FFF7FEFF 		bl	vision_models_maxi_p_is8ou16
+ 427              	.LVL49:
+ 189:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 428              		.loc 1 189 9 view .LVU121
+ 189:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=8;
+ 429              		.loc 1 189 13 is_stmt 0 view .LVU122
+ 430 005a 4644     		add	r6, r6, r8
+ 431              	.LVL50:
+ 190:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 432              		.loc 1 190 9 is_stmt 1 view .LVU123
+ 190:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop-=8;
+ 433              		.loc 1 190 13 is_stmt 0 view .LVU124
+ 434 005c 1037     		adds	r7, r7, #16
+ 435              	.LVL51:
+ 191:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 436              		.loc 1 191 9 is_stmt 1 view .LVU125
+ 191:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 437              		.loc 1 191 13 is_stmt 0 view .LVU126
+ 438 005e 083C     		subs	r4, r4, #8
+ 439              	.LVL52:
+ 191:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 440              		.loc 1 191 13 view .LVU127
+ 441 0060 F1E7     		b	.L22
+ 442              	.LBE14:
+ 443              		.cfi_endproc
+ 444              	.LFE776:
+ 446              		.section	.text.sseg_deeplabv3_pp_reset,"ax",%progbits
+ 447              		.align	1
+ 448              		.global	sseg_deeplabv3_pp_reset
+ 449              		.syntax unified
+ 450              		.thumb
+ 451              		.thumb_func
+ 453              	sseg_deeplabv3_pp_reset:
+ 454              	.LVL53:
+ 455              	.LFB777:
+ 196:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #if 0 // Not used
+ 197:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_apply_color_map(sseg_deeplabv3_pp_in_t *pInput,
+ 198:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                           sseg_pp_out_t *pOutput,
+ 199:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                           sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ARM GAS  /tmp/ccqUPMsv.s 			page 14
+
+
+ 200:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 201:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 202:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
+ 203:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   size_t width = pInput_static_param->width;
+ 204:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   size_t height = pInput_static_param->height;
+ 205:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint8_t *out = pOutput->pOutBuff;
+ 206:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t loop = width * height;
+ 207:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   out += 3 * sizeof(uint8_t) * (width * height - 1) ;
+ 208:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 209:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (nb_classes < 256) {
+ 210:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint8_t *pIdx = (uint8_t *)pOutput->pOutBuff;
+ 211:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     pIdx += loop - 1;
+ 212:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0) {
+ 213:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         memcpy(out, &pInput_static_param->color_map[*pIdx], 3 * sizeof(uint8_t));
+ 214:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out-=3 * sizeof(uint8_t);
+ 215:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pIdx--;
+ 216:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         loop--;
+ 217:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 218:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   } else {
+ 219:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint16_t *pIdx = (uint16_t *)pOutput->pOutBuff;
+ 220:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     pIdx += loop - 1;
+ 221:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0) {
+ 222:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         memcpy(out, &pInput_static_param->color_map[*pIdx], 3 * sizeof(uint8_t));
+ 223:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out -=3 * sizeof(uint8_t);
+ 224:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pIdx--;
+ 225:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
+ 226:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 227:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   return error;
+ 228:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 229:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #endif
+ 230:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 231:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 232:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 233:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** /* ----------------------       Exported routines      ---------------------- */
+ 234:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 235:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_reset(sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 236:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 456              		.loc 1 236 1 is_stmt 1 view -0
+ 457              		.cfi_startproc
+ 458              		@ args = 0, pretend = 0, frame = 0
+ 459              		@ frame_needed = 0, uses_anonymous_args = 0
+ 460              		@ link register save eliminated.
+ 237:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     /* Initializations */
+ 238:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     //sseg_deeplabv3_pp_static_param_t->... = 0;
+ 239:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 240:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (AI_SSEG_POSTPROCESS_ERROR_NO);
+ 461              		.loc 1 240 5 view .LVU129
+ 241:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 462              		.loc 1 241 1 is_stmt 0 view .LVU130
+ 463 0000 0020     		movs	r0, #0
+ 464              	.LVL54:
+ 465              		.loc 1 241 1 view .LVU131
+ 466 0002 7047     		bx	lr
+ 467              		.cfi_endproc
+ 468              	.LFE777:
+ 470              		.section	.text.sseg_deeplabv3_pp_process,"ax",%progbits
+ 471              		.align	1
+ARM GAS  /tmp/ccqUPMsv.s 			page 15
+
+
+ 472              		.global	sseg_deeplabv3_pp_process
+ 473              		.syntax unified
+ 474              		.thumb
+ 475              		.thumb_func
+ 477              	sseg_deeplabv3_pp_process:
+ 478              	.LVL55:
+ 479              	.LFB778:
+ 242:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 243:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 244:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_process(sseg_deeplabv3_pp_in_t *pInput,
+ 245:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                       sseg_pp_out_t *pOutput,
+ 246:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                       sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 247:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 480              		.loc 1 247 1 is_stmt 1 view -0
+ 481              		.cfi_startproc
+ 482              		@ args = 0, pretend = 0, frame = 0
+ 483              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 484              		.loc 1 248 3 view .LVU133
+ 249:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 250:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #if 0
+ 251:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  if (pInput_static_param->color_map) {
+ 252:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   /* Call argmax and directly generate colormap */
+ 253:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   error = sseg_deeplabv3_pp_argmax_to_colormap(pInput,
+ 254:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                                   pOutput,
+ 255:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                                   pInput_static_param);
+ 256:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 257:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 258:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  }
+ 259:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #else
+ 260:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   /* Call argmax */
+ 261:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   error = sseg_deeplabv3_pp_argmax(pInput,
+ 485              		.loc 1 261 3 view .LVU134
+ 247:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 486              		.loc 1 247 1 is_stmt 0 view .LVU135
+ 487 0000 08B5     		push	{r3, lr}
+ 488              		.cfi_def_cfa_offset 8
+ 489              		.cfi_offset 3, -8
+ 490              		.cfi_offset 14, -4
+ 491              		.loc 1 261 11 view .LVU136
+ 492 0002 FFF7FEFF 		bl	sseg_deeplabv3_pp_argmax
+ 493              	.LVL56:
+ 262:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                    pOutput,
+ 263:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                    pInput_static_param);
+ 264:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 265:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #if 0
+ 266:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  if (pInput_static_param->color_map) {
+ 267:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (error != AI_SSEG_POSTPROCESS_ERROR_NO) {
+ 268:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (error);
+ 269:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 270:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 271:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   /* Then apply color map */
+ 272:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   error = sseg_deeplabv3_pp_apply_color_map(pInput,
+ 273:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                                pOutput,
+ 274:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                                pInput_static_param);
+ 275:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  }
+ 276:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ARM GAS  /tmp/ccqUPMsv.s 			page 16
+
+
+ 277:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (error != AI_SSEG_POSTPROCESS_ERROR_NO) {
+ 278:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (error);
+ 279:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   }
+ 280:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #endif
+ 281:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** #endif
+ 282:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (error);
+ 494              		.loc 1 282 5 is_stmt 1 view .LVU137
+ 283:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 495              		.loc 1 283 1 is_stmt 0 view .LVU138
+ 496 0006 0020     		movs	r0, #0
+ 497 0008 08BD     		pop	{r3, pc}
+ 498              		.cfi_endproc
+ 499              	.LFE778:
+ 501              		.section	.text.sseg_deeplabv3_pp_process_uint8,"ax",%progbits
+ 502              		.align	1
+ 503              		.global	sseg_deeplabv3_pp_process_uint8
+ 504              		.syntax unified
+ 505              		.thumb
+ 506              		.thumb_func
+ 508              	sseg_deeplabv3_pp_process_uint8:
+ 509              	.LVL57:
+ 510              	.LFB779:
+ 284:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 285:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_process_uint8(sseg_deeplabv3_pp_in_t *pInput,
+ 286:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         sseg_pp_out_t *pOutput,
+ 287:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 288:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 511              		.loc 1 288 1 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 515              		.loc 1 289 3 view .LVU140
+ 290:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 291:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   /* Call argmax */
+ 292:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   error = sseg_deeplabv3_pp_argmax_uint8(pInput,
+ 516              		.loc 1 292 3 view .LVU141
+ 288:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 517              		.loc 1 288 1 is_stmt 0 view .LVU142
+ 518 0000 08B5     		push	{r3, lr}
+ 519              		.cfi_def_cfa_offset 8
+ 520              		.cfi_offset 3, -8
+ 521              		.cfi_offset 14, -4
+ 522              		.loc 1 292 11 view .LVU143
+ 523 0002 FFF7FEFF 		bl	sseg_deeplabv3_pp_argmax_uint8
+ 524              	.LVL58:
+ 293:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                    pOutput,
+ 294:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                    pInput_static_param);
+ 295:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 296:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (error);
+ 525              		.loc 1 296 5 is_stmt 1 view .LVU144
+ 297:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 526              		.loc 1 297 1 is_stmt 0 view .LVU145
+ 527 0006 0020     		movs	r0, #0
+ 528 0008 08BD     		pop	{r3, pc}
+ 529              		.cfi_endproc
+ 530              	.LFE779:
+ARM GAS  /tmp/ccqUPMsv.s 			page 17
+
+
+ 532              		.section	.text.sseg_deeplabv3_pp_process_int8,"ax",%progbits
+ 533              		.align	1
+ 534              		.global	sseg_deeplabv3_pp_process_int8
+ 535              		.syntax unified
+ 536              		.thumb
+ 537              		.thumb_func
+ 539              	sseg_deeplabv3_pp_process_int8:
+ 540              	.LVL59:
+ 541              	.LFB780:
+ 298:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 299:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_process_int8(sseg_deeplabv3_pp_in_t *pInput,
+ 300:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         sseg_pp_out_t *pOutput,
+ 301:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         sseg_deeplabv3_pp_static_param_t *pInput_static_param)
+ 302:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
+ 542              		.loc 1 302 1 is_stmt 1 view -0
+ 543              		.cfi_startproc
+ 544              		@ args = 0, pretend = 0, frame = 0
+ 545              		@ frame_needed = 0, uses_anonymous_args = 0
+ 303:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 546              		.loc 1 303 3 view .LVU147
+ 304:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 305:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   /* Call argmax */
+ 306:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   error = sseg_deeplabv3_pp_argmax_int8(pInput,
+ 547              		.loc 1 306 3 view .LVU148
+ 302:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
+ 548              		.loc 1 302 1 is_stmt 0 view .LVU149
+ 549 0000 08B5     		push	{r3, lr}
+ 550              		.cfi_def_cfa_offset 8
+ 551              		.cfi_offset 3, -8
+ 552              		.cfi_offset 14, -4
+ 553              		.loc 1 306 11 view .LVU150
+ 554 0002 FFF7FEFF 		bl	sseg_deeplabv3_pp_argmax_int8
+ 555              	.LVL60:
+ 307:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         pOutput,
+ 308:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                         pInput_static_param);
+ 309:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
+ 310:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     return (error);
+ 556              		.loc 1 310 5 is_stmt 1 view .LVU151
+ 311:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** }
+ 557              		.loc 1 311 1 is_stmt 0 view .LVU152
+ 558 0006 0020     		movs	r0, #0
+ 559 0008 08BD     		pop	{r3, pc}
+ 560              		.cfi_endproc
+ 561              	.LFE780:
+ 563              		.text
+ 564              	.Letext0:
+ 565              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 566              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 567              		.file 4 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
+ 568              		.file 5 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
+ 569              		.file 6 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/sseg_pp_out
+ 570              		.file 7 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/sseg_deepla
+ 571              		.file 8 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_mode
+ARM GAS  /tmp/ccqUPMsv.s 			page 18
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sseg_pp_deeplabv3.c
+     /tmp/ccqUPMsv.s:26     .text.sseg_deeplabv3_pp_argmax:00000000 $t
+     /tmp/ccqUPMsv.s:32     .text.sseg_deeplabv3_pp_argmax:00000000 sseg_deeplabv3_pp_argmax
+     /tmp/ccqUPMsv.s:165    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 $t
+     /tmp/ccqUPMsv.s:171    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 sseg_deeplabv3_pp_argmax_uint8
+     /tmp/ccqUPMsv.s:306    .text.sseg_deeplabv3_pp_argmax_int8:00000000 $t
+     /tmp/ccqUPMsv.s:312    .text.sseg_deeplabv3_pp_argmax_int8:00000000 sseg_deeplabv3_pp_argmax_int8
+     /tmp/ccqUPMsv.s:447    .text.sseg_deeplabv3_pp_reset:00000000 $t
+     /tmp/ccqUPMsv.s:453    .text.sseg_deeplabv3_pp_reset:00000000 sseg_deeplabv3_pp_reset
+     /tmp/ccqUPMsv.s:471    .text.sseg_deeplabv3_pp_process:00000000 $t
+     /tmp/ccqUPMsv.s:477    .text.sseg_deeplabv3_pp_process:00000000 sseg_deeplabv3_pp_process
+     /tmp/ccqUPMsv.s:502    .text.sseg_deeplabv3_pp_process_uint8:00000000 $t
+     /tmp/ccqUPMsv.s:508    .text.sseg_deeplabv3_pp_process_uint8:00000000 sseg_deeplabv3_pp_process_uint8
+     /tmp/ccqUPMsv.s:533    .text.sseg_deeplabv3_pp_process_int8:00000000 $t
+     /tmp/ccqUPMsv.s:539    .text.sseg_deeplabv3_pp_process_int8:00000000 sseg_deeplabv3_pp_process_int8
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4.arm_math_types.h.28.9e71aea5cdf6aebdd83091bf39b4832a
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:00000000 wm4.stddef.h.173.1cea4f16a943c8e875db6791959c3141
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
+                           .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
+                           .group:00000000 wm4.float.h.29.0e9d9baf95ec39f9555dc80c6e28186b
+                           .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:00000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:00000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
+                           .group:00000000 wm4.arm_math_types.h.116.3e44bd031718f65bdb345972ddc8cf86
+                           .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
+                           .group:00000000 wm4.arm_mve.h.48.53b982d307987e8d8669fd51fdc5e583
+                           .group:00000000 wm4.arm_math_types.h.605.32c5d7843b3dcaa8f5174feea7de7445
+                           .group:00000000 wm4.arm_math_memory.h.28.3ee75b06517df8378241b72d6c61e5b0
+                           .group:00000000 wm4.none.h.185.db055cca83e83f96d8d0bb450fbdf4bb
+                           .group:00000000 wm4.utils.h.41.820d6032ed1c0d7dd5bd2ed80938ee65
+                           .group:00000000 wm4.fast_math_functions.h.28.aa389abd5521cfceab0e76a6af3dd2e2
+                           .group:00000000 wm4.matrix_functions.h.28.8fc8488c73b2d6f328b0946db3460102
+                           .group:00000000 wm4.controller_functions.h.28.388735b97ccd96442b0ac9e554629f36
+ARM GAS  /tmp/ccqUPMsv.s 			page 19
+
+
+                           .group:00000000 wm4.filtering_functions.h.46.6cf1424fb1f86d5f9958d208b83340a1
+                           .group:00000000 wm4.sseg_pp_output_if.h.22.51361df01e54a849f44906b5086e61fc
+                           .group:00000000 wm4.vision_models_pp.h.11.598f62543089e1082e2d9c4ef4b02d88
+
+UNDEFINED SYMBOLS
+vision_models_maxi_p_if32ou16
+vision_models_maxi_p_if32ou8
+vision_models_maxi_p_iu8ou8
+vision_models_maxi_p_iu8ou16
+vision_models_maxi_p_is8ou8
+vision_models_maxi_p_is8ou16

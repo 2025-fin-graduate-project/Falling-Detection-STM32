@@ -1,0 +1,3 @@
+../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/iseg_pp_yolov8.c:17:16:iseg_yolov8_nms_comparator_s8	8	static
+../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/iseg_pp_yolov8.c:271:9:iseg_yolov8_pp_reset	0	static
+../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/iseg_pp_yolov8.c:279:9:iseg_yolov8_pp_process_int8	176	static

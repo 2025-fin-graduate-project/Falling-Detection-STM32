@@ -1,0 +1,1027 @@
+ARM GAS  /tmp/ccD1BuJk.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"display_mpe.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "Src/display_mpe.c"
+  25              		.section	.text.Display_keypoint,"ax",%progbits
+  26              		.align	1
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	Display_keypoint:
+  32              	.LVL0:
+  33              	.LFB1513:
+   1:Src/display_mpe.c ****  /**
+   2:Src/display_mpe.c ****  ******************************************************************************
+   3:Src/display_mpe.c ****  * @file    display_mpe.c
+   4:Src/display_mpe.c ****  * @author  GPM Application Team
+   5:Src/display_mpe.c ****  *
+   6:Src/display_mpe.c ****  ******************************************************************************
+   7:Src/display_mpe.c ****  * @attention
+   8:Src/display_mpe.c ****  *
+   9:Src/display_mpe.c ****  * Copyright (c) 2024 STMicroelectronics.
+  10:Src/display_mpe.c ****  * All rights reserved.
+  11:Src/display_mpe.c ****  *
+  12:Src/display_mpe.c ****  * This software is licensed under terms that can be found in the LICENSE file
+  13:Src/display_mpe.c ****  * in the root directory of this software component.
+  14:Src/display_mpe.c ****  * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Src/display_mpe.c ****  *
+  16:Src/display_mpe.c ****  ******************************************************************************
+  17:Src/display_mpe.c ****  */
+  18:Src/display_mpe.c **** 
+  19:Src/display_mpe.c **** #include "display_mpe.h"
+  20:Src/display_mpe.c **** #include "app_config.h"
+  21:Src/display_mpe.c **** #include "main.h"
+  22:Src/display_mpe.c **** #include "utils.h"
+  23:Src/display_mpe.c **** #include <assert.h>
+  24:Src/display_mpe.c **** #include <stdlib.h>
+  25:Src/display_mpe.c **** #include <stdint.h>
+ARM GAS  /tmp/ccD1BuJk.s 			page 2
+
+
+  26:Src/display_mpe.c **** 
+  27:Src/display_mpe.c **** #define NUMBER_COLORS 10
+  28:Src/display_mpe.c **** const uint32_t colors[NUMBER_COLORS] = {
+  29:Src/display_mpe.c ****   UTIL_LCD_COLOR_GREEN,
+  30:Src/display_mpe.c ****   UTIL_LCD_COLOR_RED,
+  31:Src/display_mpe.c ****   UTIL_LCD_COLOR_CYAN,
+  32:Src/display_mpe.c ****   UTIL_LCD_COLOR_MAGENTA,
+  33:Src/display_mpe.c ****   UTIL_LCD_COLOR_YELLOW,
+  34:Src/display_mpe.c ****   UTIL_LCD_COLOR_GRAY,
+  35:Src/display_mpe.c ****   UTIL_LCD_COLOR_BLACK,
+  36:Src/display_mpe.c ****   UTIL_LCD_COLOR_BROWN,
+  37:Src/display_mpe.c ****   UTIL_LCD_COLOR_BLUE,
+  38:Src/display_mpe.c ****   UTIL_LCD_COLOR_ORANGE
+  39:Src/display_mpe.c **** };
+  40:Src/display_mpe.c **** 
+  41:Src/display_mpe.c **** static int (*clamp_point)(int *x, int *y);
+  42:Src/display_mpe.c **** static void (*convert_length)(float32_t wi, float32_t hi, int *wo, int *ho);
+  43:Src/display_mpe.c **** static void (*convert_point)(float32_t xi, float32_t yi, int *xo, int *yo);
+  44:Src/display_mpe.c **** static void (*Display_binding_line)(int x0, int y0, int x1, int y1, uint32_t color);
+  45:Src/display_mpe.c **** 
+  46:Src/display_mpe.c **** static void Display_keypoint(mpe_pp_keyPoints_t *key, uint32_t color)
+  47:Src/display_mpe.c **** {
+  34              		.loc 1 47 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 16
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  48:Src/display_mpe.c ****   int is_clamp;
+  38              		.loc 1 48 3 view .LVU1
+  49:Src/display_mpe.c ****   int xc, yc;
+  39              		.loc 1 49 3 view .LVU2
+  50:Src/display_mpe.c ****   int x, y;
+  40              		.loc 1 50 3 view .LVU3
+  51:Src/display_mpe.c **** 
+  52:Src/display_mpe.c ****   if (key->conf < AI_POSE_PP_CONF_THRESHOLD)
+  41              		.loc 1 52 3 view .LVU4
+  42              		.loc 1 52 6 is_stmt 0 view .LVU5
+  43 0000 90ED027A 		vldr.32	s14, [r0, #8]
+  44 0004 DFED197A 		vldr.32	s15, .L4
+  45 0008 B4EEE77A 		vcmpe.f32	s14, s15
+  46 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  47:Src/display_mpe.c ****   int is_clamp;
+  47              		.loc 1 47 1 view .LVU6
+  48 0010 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+  49              		.cfi_def_cfa_offset 32
+  50              		.cfi_offset 4, -16
+  51              		.cfi_offset 5, -12
+  52              		.cfi_offset 6, -8
+  53              		.cfi_offset 14, -4
+  47:Src/display_mpe.c ****   int is_clamp;
+  54              		.loc 1 47 1 view .LVU7
+  55 0012 0246     		mov	r2, r0
+  56 0014 0D46     		mov	r5, r1
+  57              		.loc 1 52 6 view .LVU8
+  58 0016 26D4     		bmi	.L1
+  53:Src/display_mpe.c ****     return ;
+  54:Src/display_mpe.c **** 
+  55:Src/display_mpe.c ****   convert_point(key->x, key->y, &x, &y);
+ARM GAS  /tmp/ccD1BuJk.s 			page 3
+
+
+  59              		.loc 1 55 3 is_stmt 1 view .LVU9
+  60 0018 154B     		ldr	r3, .L4+4
+  61 001a D2ED010A 		vldr.32	s1, [r2, #4]
+  62 001e 92ED000A 		vldr.32	s0, [r2]
+  63 0022 1B68     		ldr	r3, [r3]
+  64 0024 03A9     		add	r1, sp, #12
+  65              	.LVL1:
+  66              		.loc 1 55 3 is_stmt 0 view .LVU10
+  67 0026 02A8     		add	r0, sp, #8
+  68              	.LVL2:
+  69              		.loc 1 55 3 view .LVU11
+  70 0028 9847     		blx	r3
+  71              	.LVL3:
+  56:Src/display_mpe.c ****   xc = x - CIRCLE_RADIUS / 2;
+  72              		.loc 1 56 3 is_stmt 1 view .LVU12
+  73              		.loc 1 56 10 is_stmt 0 view .LVU13
+  74 002a 029B     		ldr	r3, [sp, #8]
+  57:Src/display_mpe.c ****   yc = y - CIRCLE_RADIUS / 2;
+  58:Src/display_mpe.c ****   is_clamp = clamp_point(&xc, &yc);
+  75              		.loc 1 58 14 view .LVU14
+  76 002c 114E     		ldr	r6, .L4+8
+  56:Src/display_mpe.c ****   xc = x - CIRCLE_RADIUS / 2;
+  77              		.loc 1 56 10 view .LVU15
+  78 002e 023B     		subs	r3, r3, #2
+  56:Src/display_mpe.c ****   xc = x - CIRCLE_RADIUS / 2;
+  79              		.loc 1 56 6 view .LVU16
+  80 0030 0093     		str	r3, [sp]
+  57:Src/display_mpe.c ****   yc = y - CIRCLE_RADIUS / 2;
+  81              		.loc 1 57 3 is_stmt 1 view .LVU17
+  57:Src/display_mpe.c ****   yc = y - CIRCLE_RADIUS / 2;
+  82              		.loc 1 57 10 is_stmt 0 view .LVU18
+  83 0032 039B     		ldr	r3, [sp, #12]
+  84              		.loc 1 58 14 view .LVU19
+  85 0034 01A9     		add	r1, sp, #4
+  57:Src/display_mpe.c ****   yc = y - CIRCLE_RADIUS / 2;
+  86              		.loc 1 57 10 view .LVU20
+  87 0036 023B     		subs	r3, r3, #2
+  57:Src/display_mpe.c ****   yc = y - CIRCLE_RADIUS / 2;
+  88              		.loc 1 57 6 view .LVU21
+  89 0038 0193     		str	r3, [sp, #4]
+  90              		.loc 1 58 3 is_stmt 1 view .LVU22
+  91              		.loc 1 58 14 is_stmt 0 view .LVU23
+  92 003a 6846     		mov	r0, sp
+  93 003c 3368     		ldr	r3, [r6]
+  94 003e 9847     		blx	r3
+  95              	.LVL4:
+  59:Src/display_mpe.c ****   xc = x + CIRCLE_RADIUS / 2;
+  96              		.loc 1 59 10 view .LVU24
+  97 0040 029B     		ldr	r3, [sp, #8]
+  58:Src/display_mpe.c ****   xc = x + CIRCLE_RADIUS / 2;
+  98              		.loc 1 58 14 view .LVU25
+  99 0042 0446     		mov	r4, r0
+ 100              	.LVL5:
+ 101              		.loc 1 59 3 is_stmt 1 view .LVU26
+ 102              		.loc 1 59 10 is_stmt 0 view .LVU27
+ 103 0044 0233     		adds	r3, r3, #2
+ 104              		.loc 1 59 6 view .LVU28
+ARM GAS  /tmp/ccD1BuJk.s 			page 4
+
+
+ 105 0046 0093     		str	r3, [sp]
+  60:Src/display_mpe.c ****   yc = y + CIRCLE_RADIUS / 2;
+ 106              		.loc 1 60 3 is_stmt 1 view .LVU29
+ 107              		.loc 1 60 10 is_stmt 0 view .LVU30
+ 108 0048 039B     		ldr	r3, [sp, #12]
+  61:Src/display_mpe.c ****   is_clamp |= clamp_point(&xc, &yc);
+ 109              		.loc 1 61 15 view .LVU31
+ 110 004a 6846     		mov	r0, sp
+ 111              	.LVL6:
+  60:Src/display_mpe.c ****   yc = y + CIRCLE_RADIUS / 2;
+ 112              		.loc 1 60 10 view .LVU32
+ 113 004c 0233     		adds	r3, r3, #2
+  60:Src/display_mpe.c ****   yc = y + CIRCLE_RADIUS / 2;
+ 114              		.loc 1 60 6 view .LVU33
+ 115 004e 0193     		str	r3, [sp, #4]
+ 116              		.loc 1 61 3 is_stmt 1 view .LVU34
+ 117              		.loc 1 61 15 is_stmt 0 view .LVU35
+ 118 0050 01A9     		add	r1, sp, #4
+ 119 0052 3368     		ldr	r3, [r6]
+ 120 0054 9847     		blx	r3
+ 121              	.LVL7:
+  62:Src/display_mpe.c **** 
+  63:Src/display_mpe.c ****   if (is_clamp)
+ 122              		.loc 1 63 3 is_stmt 1 view .LVU36
+ 123              		.loc 1 63 6 is_stmt 0 view .LVU37
+ 124 0056 0443     		orrs	r4, r4, r0
+ 125              	.LVL8:
+ 126              		.loc 1 63 6 view .LVU38
+ 127 0058 05D1     		bne	.L1
+  64:Src/display_mpe.c ****     return ;
+  65:Src/display_mpe.c **** 
+  66:Src/display_mpe.c ****   UTIL_LCD_FillCircle(x, y, CIRCLE_RADIUS, color);
+ 128              		.loc 1 66 3 is_stmt 1 view .LVU39
+ 129 005a DDE90201 		ldrd	r0, r1, [sp, #8]
+ 130 005e 2B46     		mov	r3, r5
+ 131 0060 0522     		movs	r2, #5
+ 132 0062 FFF7FEFF 		bl	UTIL_LCD_FillCircle
+ 133              	.LVL9:
+ 134              	.L1:
+  67:Src/display_mpe.c **** }
+ 135              		.loc 1 67 1 is_stmt 0 view .LVU40
+ 136 0066 04B0     		add	sp, sp, #16
+ 137              		.cfi_def_cfa_offset 16
+ 138              		@ sp needed
+ 139 0068 70BD     		pop	{r4, r5, r6, pc}
+ 140              	.LVL10:
+ 141              	.L5:
+ 142              		.loc 1 67 1 view .LVU41
+ 143 006a 00BF     		.align	2
+ 144              	.L4:
+ 145 006c 0AD7A33B 		.word	1000593162
+ 146 0070 00000000 		.word	convert_point
+ 147 0074 00000000 		.word	clamp_point
+ 148              		.cfi_endproc
+ 149              	.LFE1513:
+ 151              		.section	.text.Display_mpe_InitFunctions,"ax",%progbits
+ 152              		.align	1
+ARM GAS  /tmp/ccD1BuJk.s 			page 5
+
+
+ 153              		.global	Display_mpe_InitFunctions
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	Display_mpe_InitFunctions:
+ 159              	.LVL11:
+ 160              	.LFB1515:
+  68:Src/display_mpe.c **** 
+  69:Src/display_mpe.c **** #ifdef USE_BINDINGS
+  70:Src/display_mpe.c **** static void Display_binding(mpe_pp_keyPoints_t *from, mpe_pp_keyPoints_t *to, uint32_t color)
+  71:Src/display_mpe.c **** {
+  72:Src/display_mpe.c ****   int is_clamp;
+  73:Src/display_mpe.c ****   int x0, y0;
+  74:Src/display_mpe.c ****   int x1, y1;
+  75:Src/display_mpe.c ****   int i;
+  76:Src/display_mpe.c **** 
+  77:Src/display_mpe.c ****   assert(BINDING_WIDTH % 2 == 1);
+  78:Src/display_mpe.c **** 
+  79:Src/display_mpe.c ****   if (from->conf < AI_POSE_PP_CONF_THRESHOLD)
+  80:Src/display_mpe.c ****     return ;
+  81:Src/display_mpe.c ****   if (to->conf < AI_POSE_PP_CONF_THRESHOLD)
+  82:Src/display_mpe.c ****     return ;
+  83:Src/display_mpe.c **** 
+  84:Src/display_mpe.c ****   convert_point(from->x, from->y, &x0, &y0);
+  85:Src/display_mpe.c ****   is_clamp = clamp_point(&x0, &y0);
+  86:Src/display_mpe.c ****   if (is_clamp)
+  87:Src/display_mpe.c ****     return ;
+  88:Src/display_mpe.c **** 
+  89:Src/display_mpe.c ****   convert_point(to->x, to->y, &x1, &y1);
+  90:Src/display_mpe.c ****   is_clamp = clamp_point(&x1, &y1);
+  91:Src/display_mpe.c ****   if (is_clamp)
+  92:Src/display_mpe.c ****     return ;
+  93:Src/display_mpe.c **** 
+  94:Src/display_mpe.c ****   UTIL_LCD_DrawLine(x0, y0, x1, y1, color);
+  95:Src/display_mpe.c ****   for (i = 1; i <= (BINDING_WIDTH - 1) / 2; i++) {
+  96:Src/display_mpe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
+  97:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+  98:Src/display_mpe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
+  99:Src/display_mpe.c ****     } else {
+ 100:Src/display_mpe.c ****       Display_binding_line(x0, y0 + i, x1 , y1 + i, color);
+ 101:Src/display_mpe.c ****       Display_binding_line(x0, y0 - i, x1 , y1 - i, color);
+ 102:Src/display_mpe.c ****     }
+ 103:Src/display_mpe.c ****   }
+ 104:Src/display_mpe.c **** 
+ 105:Src/display_mpe.c ****   Display_keypoint(from, color);
+ 106:Src/display_mpe.c ****   Display_keypoint(to, color);
+ 107:Src/display_mpe.c **** }
+ 108:Src/display_mpe.c **** #endif
+ 109:Src/display_mpe.c **** 
+ 110:Src/display_mpe.c **** void Display_mpe_InitFunctions(int clamp_point_init(int *x, int *y),
+ 111:Src/display_mpe.c ****                                void convert_length_init(float32_t wi, float32_t hi, int *wo, int *h
+ 112:Src/display_mpe.c ****                                void convert_point_init(float32_t xi, float32_t yi, int *xo, int *yo
+ 113:Src/display_mpe.c ****                                void Display_binding_line_init(int x0, int y0, int x1, int y1, uint3
+ 114:Src/display_mpe.c **** {
+ 161              		.loc 1 114 1 is_stmt 1 view -0
+ 162              		.cfi_startproc
+ 163              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccD1BuJk.s 			page 6
+
+
+ 164              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115:Src/display_mpe.c ****   clamp_point = clamp_point_init;
+ 165              		.loc 1 115 3 view .LVU43
+ 114:Src/display_mpe.c ****   clamp_point = clamp_point_init;
+ 166              		.loc 1 114 1 is_stmt 0 view .LVU44
+ 167 0000 10B5     		push	{r4, lr}
+ 168              		.cfi_def_cfa_offset 8
+ 169              		.cfi_offset 4, -8
+ 170              		.cfi_offset 14, -4
+ 171              		.loc 1 115 15 view .LVU45
+ 172 0002 044C     		ldr	r4, .L7
+ 173 0004 2060     		str	r0, [r4]
+ 116:Src/display_mpe.c ****   convert_length = convert_length_init;
+ 174              		.loc 1 116 3 is_stmt 1 view .LVU46
+ 175              		.loc 1 116 18 is_stmt 0 view .LVU47
+ 176 0006 0448     		ldr	r0, .L7+4
+ 177              	.LVL12:
+ 178              		.loc 1 116 18 view .LVU48
+ 179 0008 0160     		str	r1, [r0]
+ 117:Src/display_mpe.c ****   convert_point = convert_point_init;
+ 180              		.loc 1 117 3 is_stmt 1 view .LVU49
+ 181              		.loc 1 117 17 is_stmt 0 view .LVU50
+ 182 000a 0449     		ldr	r1, .L7+8
+ 183              	.LVL13:
+ 184              		.loc 1 117 17 view .LVU51
+ 185 000c 0A60     		str	r2, [r1]
+ 118:Src/display_mpe.c ****   Display_binding_line = Display_binding_line_init;
+ 186              		.loc 1 118 3 is_stmt 1 view .LVU52
+ 187              		.loc 1 118 24 is_stmt 0 view .LVU53
+ 188 000e 044A     		ldr	r2, .L7+12
+ 189              	.LVL14:
+ 190              		.loc 1 118 24 view .LVU54
+ 191 0010 1360     		str	r3, [r2]
+ 119:Src/display_mpe.c **** }
+ 192              		.loc 1 119 1 view .LVU55
+ 193 0012 10BD     		pop	{r4, pc}
+ 194              	.L8:
+ 195              		.loc 1 119 1 view .LVU56
+ 196              		.align	2
+ 197              	.L7:
+ 198 0014 00000000 		.word	clamp_point
+ 199 0018 00000000 		.word	convert_length
+ 200 001c 00000000 		.word	convert_point
+ 201 0020 00000000 		.word	Display_binding_line
+ 202              		.cfi_endproc
+ 203              	.LFE1515:
+ 205              		.section	.text.Display_mpe_Detection,"ax",%progbits
+ 206              		.align	1
+ 207              		.global	Display_mpe_Detection
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 212              	Display_mpe_Detection:
+ 213              	.LVL15:
+ 214              	.LFB1516:
+ 120:Src/display_mpe.c **** 
+ 121:Src/display_mpe.c **** void Display_mpe_Detection(mpe_pp_outBuffer_t *detect)
+ARM GAS  /tmp/ccD1BuJk.s 			page 7
+
+
+ 122:Src/display_mpe.c **** {
+ 215              		.loc 1 122 1 is_stmt 1 view -0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 56
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123:Src/display_mpe.c ****   int xc, yc;
+ 219              		.loc 1 123 3 view .LVU58
+ 124:Src/display_mpe.c ****   int x0, y0;
+ 220              		.loc 1 124 3 view .LVU59
+ 125:Src/display_mpe.c ****   int x1, y1;
+ 221              		.loc 1 125 3 view .LVU60
+ 126:Src/display_mpe.c ****   int w, h;
+ 222              		.loc 1 126 3 view .LVU61
+ 127:Src/display_mpe.c ****   int i;
+ 223              		.loc 1 127 3 view .LVU62
+ 128:Src/display_mpe.c **** 
+ 129:Src/display_mpe.c ****   convert_point(detect->x_center, detect->y_center, &xc, &yc);
+ 224              		.loc 1 129 3 view .LVU63
+ 122:Src/display_mpe.c ****   int xc, yc;
+ 225              		.loc 1 122 1 is_stmt 0 view .LVU64
+ 226 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 227              		.cfi_def_cfa_offset 36
+ 228              		.cfi_offset 4, -36
+ 229              		.cfi_offset 5, -32
+ 230              		.cfi_offset 6, -28
+ 231              		.cfi_offset 7, -24
+ 232              		.cfi_offset 8, -20
+ 233              		.cfi_offset 9, -16
+ 234              		.cfi_offset 10, -12
+ 235              		.cfi_offset 11, -8
+ 236              		.cfi_offset 14, -4
+ 237 0004 2DED028B 		vpush.64	{d8}
+ 238              		.cfi_def_cfa_offset 44
+ 239              		.cfi_offset 80, -44
+ 240              		.cfi_offset 81, -40
+ 241 0008 0446     		mov	r4, r0
+ 242              		.loc 1 129 3 view .LVU65
+ 243 000a DFF8B0A1 		ldr	r10, .L17+12
+ 122:Src/display_mpe.c ****   int xc, yc;
+ 244              		.loc 1 122 1 view .LVU66
+ 245 000e 91B0     		sub	sp, sp, #68
+ 246              		.cfi_def_cfa_offset 112
+ 247              		.loc 1 129 3 view .LVU67
+ 248 0010 D4ED010A 		vldr.32	s1, [r4, #4]
+ 249 0014 94ED000A 		vldr.32	s0, [r4]
+ 250 0018 DAF80030 		ldr	r3, [r10]
+ 251 001c 05A9     		add	r1, sp, #20
+ 252 001e 04A8     		add	r0, sp, #16
+ 253              	.LVL16:
+ 254              		.loc 1 129 3 view .LVU68
+ 255 0020 9847     		blx	r3
+ 256              	.LVL17:
+ 130:Src/display_mpe.c ****   convert_length(detect->width, detect->height, &w, &h);
+ 257              		.loc 1 130 3 is_stmt 1 view .LVU69
+ 258 0022 634B     		ldr	r3, .L17
+ 259 0024 D4ED030A 		vldr.32	s1, [r4, #12]
+ 260 0028 94ED020A 		vldr.32	s0, [r4, #8]
+ARM GAS  /tmp/ccD1BuJk.s 			page 8
+
+
+ 261 002c 1B68     		ldr	r3, [r3]
+ 262 002e 0BA9     		add	r1, sp, #44
+ 263 0030 0AA8     		add	r0, sp, #40
+ 264 0032 9847     		blx	r3
+ 265              	.LVL18:
+ 131:Src/display_mpe.c ****   x0 = xc - (w + 1) / 2;
+ 266              		.loc 1 131 3 view .LVU70
+ 267              		.loc 1 131 16 is_stmt 0 view .LVU71
+ 268 0034 0A9A     		ldr	r2, [sp, #40]
+ 269              		.loc 1 131 11 view .LVU72
+ 270 0036 0498     		ldr	r0, [sp, #16]
+ 271              		.loc 1 131 16 view .LVU73
+ 272 0038 0132     		adds	r2, r2, #1
+ 273              		.loc 1 131 21 view .LVU74
+ 274 003a 02EBD272 		add	r2, r2, r2, lsr #31
+ 275 003e 5210     		asrs	r2, r2, #1
+ 276 0040 5242     		rsbs	r2, r2, #0
+ 277              		.loc 1 131 11 view .LVU75
+ 278 0042 1318     		adds	r3, r2, r0
+ 279              		.loc 1 131 6 view .LVU76
+ 280 0044 0693     		str	r3, [sp, #24]
+ 132:Src/display_mpe.c ****   y0 = yc - (h + 1) / 2;
+ 281              		.loc 1 132 3 is_stmt 1 view .LVU77
+ 282              		.loc 1 132 16 is_stmt 0 view .LVU78
+ 283 0046 0B9B     		ldr	r3, [sp, #44]
+ 284              		.loc 1 132 11 view .LVU79
+ 285 0048 0599     		ldr	r1, [sp, #20]
+ 286              		.loc 1 132 16 view .LVU80
+ 287 004a 0133     		adds	r3, r3, #1
+ 288              		.loc 1 132 21 view .LVU81
+ 289 004c 03EBD373 		add	r3, r3, r3, lsr #31
+ 290 0050 5B10     		asrs	r3, r3, #1
+ 291 0052 5B42     		rsbs	r3, r3, #0
+ 133:Src/display_mpe.c ****   x1 = xc + (w + 1) / 2;
+ 134:Src/display_mpe.c ****   y1 = yc + (h + 1) / 2;
+ 135:Src/display_mpe.c ****   clamp_point(&x0, &y0);
+ 292              		.loc 1 135 3 view .LVU82
+ 293 0054 DFF86891 		ldr	r9, .L17+16
+ 133:Src/display_mpe.c ****   x1 = xc + (w + 1) / 2;
+ 294              		.loc 1 133 6 view .LVU83
+ 295 0058 801A     		subs	r0, r0, r2
+ 132:Src/display_mpe.c ****   y0 = yc - (h + 1) / 2;
+ 296              		.loc 1 132 11 view .LVU84
+ 297 005a 5D18     		adds	r5, r3, r1
+ 134:Src/display_mpe.c ****   clamp_point(&x0, &y0);
+ 298              		.loc 1 134 6 view .LVU85
+ 299 005c C91A     		subs	r1, r1, r3
+ 132:Src/display_mpe.c ****   y0 = yc - (h + 1) / 2;
+ 300              		.loc 1 132 6 view .LVU86
+ 301 005e 0795     		str	r5, [sp, #28]
+ 133:Src/display_mpe.c ****   x1 = xc + (w + 1) / 2;
+ 302              		.loc 1 133 3 is_stmt 1 view .LVU87
+ 303              		.loc 1 135 3 is_stmt 0 view .LVU88
+ 304 0060 D9F80030 		ldr	r3, [r9]
+ 133:Src/display_mpe.c ****   x1 = xc + (w + 1) / 2;
+ 305              		.loc 1 133 6 view .LVU89
+ 306 0064 0890     		str	r0, [sp, #32]
+ARM GAS  /tmp/ccD1BuJk.s 			page 9
+
+
+ 134:Src/display_mpe.c ****   clamp_point(&x0, &y0);
+ 307              		.loc 1 134 3 is_stmt 1 view .LVU90
+ 134:Src/display_mpe.c ****   clamp_point(&x0, &y0);
+ 308              		.loc 1 134 6 is_stmt 0 view .LVU91
+ 309 0066 0991     		str	r1, [sp, #36]
+ 310              		.loc 1 135 3 is_stmt 1 view .LVU92
+ 311 0068 06A8     		add	r0, sp, #24
+ 312 006a 07A9     		add	r1, sp, #28
+ 313 006c 9847     		blx	r3
+ 314              	.LVL19:
+ 136:Src/display_mpe.c ****   clamp_point(&x1, &y1);
+ 315              		.loc 1 136 3 view .LVU93
+ 316 006e D9F80030 		ldr	r3, [r9]
+ 317 0072 09A9     		add	r1, sp, #36
+ 318 0074 08A8     		add	r0, sp, #32
+ 319 0076 9847     		blx	r3
+ 320              	.LVL20:
+ 137:Src/display_mpe.c **** 
+ 138:Src/display_mpe.c ****   UTIL_LCD_DrawRect(x0, y0, x1 - x0, y1 - y0, colors[detect->class_index % NUMBER_COLORS]);
+ 321              		.loc 1 138 3 view .LVU94
+ 322 0078 DDE90601 		ldrd	r0, r1, [sp, #24]
+ 323              		.loc 1 138 74 is_stmt 0 view .LVU95
+ 324 007c 0A22     		movs	r2, #10
+ 325 007e 6369     		ldr	r3, [r4, #20]
+ 326              	.LBB4:
+ 327              	.LBB5:
+  79:Src/display_mpe.c ****     return ;
+ 328              		.loc 1 79 6 view .LVU96
+ 329 0080 9FED4C8A 		vldr.32	s16, .L17+4
+ 330              	.LBE5:
+ 331              	.LBE4:
+ 332              		.loc 1 138 74 view .LVU97
+ 333 0084 93FBF2F5 		sdiv	r5, r3, r2
+ 334 0088 02FB1533 		mls	r3, r2, r5, r3
+ 335              		.loc 1 138 3 view .LVU98
+ 336 008c 4A4A     		ldr	r2, .L17+8
+ 337 008e DFF83481 		ldr	r8, .L17+20
+ 338 0092 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 339 0096 089A     		ldr	r2, [sp, #32]
+ 340 0098 0093     		str	r3, [sp]
+ 341 009a 099B     		ldr	r3, [sp, #36]
+ 342 009c 121A     		subs	r2, r2, r0
+ 343 009e 5B1A     		subs	r3, r3, r1
+ 344 00a0 FFF7FEFF 		bl	UTIL_LCD_DrawRect
+ 345              	.LVL21:
+ 139:Src/display_mpe.c **** 
+ 140:Src/display_mpe.c **** #ifdef USE_BINDINGS
+ 141:Src/display_mpe.c ****   for (i = 0; i < BINDINGS_NB; i++)
+ 346              		.loc 1 141 3 is_stmt 1 view .LVU99
+ 347              		.loc 1 141 17 discriminator 1 view .LVU100
+ 138:Src/display_mpe.c **** 
+ 348              		.loc 1 138 3 is_stmt 0 view .LVU101
+ 349 00a4 1223     		movs	r3, #18
+ 350              	.LBB12:
+ 351              	.LBB6:
+  97:Src/display_mpe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
+ 352              		.loc 1 97 7 view .LVU102
+ARM GAS  /tmp/ccD1BuJk.s 			page 10
+
+
+ 353 00a6 DFF820B1 		ldr	fp, .L17+24
+ 354              	.LBE6:
+ 355              	.LBE12:
+ 138:Src/display_mpe.c **** 
+ 356              		.loc 1 138 3 view .LVU103
+ 357 00aa 0393     		str	r3, [sp, #12]
+ 358              	.LVL22:
+ 359              	.L14:
+ 142:Src/display_mpe.c ****     Display_binding(&detect->pKeyPoints[bindings[i][0]], &detect->pKeyPoints[bindings[i][1]], bindi
+ 360              		.loc 1 142 5 is_stmt 1 view .LVU104
+ 361              		.loc 1 142 40 is_stmt 0 view .LVU105
+ 362 00ac 0C23     		movs	r3, #12
+ 363              		.loc 1 142 28 view .LVU106
+ 364 00ae A569     		ldr	r5, [r4, #24]
+ 365              		.loc 1 142 40 view .LVU107
+ 366 00b0 D8F80070 		ldr	r7, [r8]
+ 367              		.loc 1 142 5 view .LVU108
+ 368 00b4 03FB0757 		mla	r7, r3, r7, r5
+ 369              	.LVL23:
+ 370              	.LBB13:
+ 371              	.LBI4:
+  70:Src/display_mpe.c **** {
+ 372              		.loc 1 70 13 is_stmt 1 view .LVU109
+ 373              	.LBB7:
+  72:Src/display_mpe.c ****   int x0, y0;
+ 374              		.loc 1 72 3 view .LVU110
+  73:Src/display_mpe.c ****   int x1, y1;
+ 375              		.loc 1 73 3 view .LVU111
+  74:Src/display_mpe.c ****   int i;
+ 376              		.loc 1 74 3 view .LVU112
+  75:Src/display_mpe.c **** 
+ 377              		.loc 1 75 3 view .LVU113
+  77:Src/display_mpe.c **** 
+ 378              		.loc 1 77 3 view .LVU114
+  79:Src/display_mpe.c ****     return ;
+ 379              		.loc 1 79 3 view .LVU115
+  79:Src/display_mpe.c ****     return ;
+ 380              		.loc 1 79 6 is_stmt 0 view .LVU116
+ 381 00b8 D7ED027A 		vldr.32	s15, [r7, #8]
+ 382 00bc F4EEC87A 		vcmpe.f32	s15, s16
+ 383 00c0 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 384 00c4 5ED4     		bmi	.L13
+ 385              	.LBE7:
+ 386              	.LBE13:
+ 387              		.loc 1 142 77 view .LVU117
+ 388 00c6 D8F80420 		ldr	r2, [r8, #4]
+ 389              		.loc 1 142 5 view .LVU118
+ 390 00ca 03FB0253 		mla	r3, r3, r2, r5
+ 391              	.LBB14:
+ 392              	.LBB8:
+  81:Src/display_mpe.c ****     return ;
+ 393              		.loc 1 81 6 view .LVU119
+ 394 00ce D3ED027A 		vldr.32	s15, [r3, #8]
+ 395 00d2 F4EEC87A 		vcmpe.f32	s15, s16
+ 396 00d6 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 397              	.LBE8:
+ 398              	.LBE14:
+ARM GAS  /tmp/ccD1BuJk.s 			page 11
+
+
+ 399              		.loc 1 142 5 view .LVU120
+ 400 00da 0293     		str	r3, [sp, #8]
+ 401              	.LBB15:
+ 402              	.LBB9:
+  81:Src/display_mpe.c ****     return ;
+ 403              		.loc 1 81 3 is_stmt 1 view .LVU121
+  81:Src/display_mpe.c ****     return ;
+ 404              		.loc 1 81 6 is_stmt 0 view .LVU122
+ 405 00dc 52D4     		bmi	.L13
+  84:Src/display_mpe.c ****   is_clamp = clamp_point(&x0, &y0);
+ 406              		.loc 1 84 3 view .LVU123
+ 407 00de DAF80030 		ldr	r3, [r10]
+ 408 00e2 0DA9     		add	r1, sp, #52
+ 409 00e4 0CA8     		add	r0, sp, #48
+ 410 00e6 D7ED010A 		vldr.32	s1, [r7, #4]
+ 411 00ea 97ED000A 		vldr.32	s0, [r7]
+ 412              	.LBE9:
+ 413              	.LBE15:
+ 414              		.loc 1 142 106 view .LVU124
+ 415 00ee D8F80860 		ldr	r6, [r8, #8]
+ 416              	.LBB16:
+ 417              	.LBB10:
+  84:Src/display_mpe.c ****   is_clamp = clamp_point(&x0, &y0);
+ 418              		.loc 1 84 3 is_stmt 1 view .LVU125
+ 419 00f2 9847     		blx	r3
+ 420              	.LVL24:
+  85:Src/display_mpe.c ****   if (is_clamp)
+ 421              		.loc 1 85 3 view .LVU126
+  85:Src/display_mpe.c ****   if (is_clamp)
+ 422              		.loc 1 85 14 is_stmt 0 view .LVU127
+ 423 00f4 D9F80030 		ldr	r3, [r9]
+ 424 00f8 0DA9     		add	r1, sp, #52
+ 425 00fa 0CA8     		add	r0, sp, #48
+ 426 00fc 9847     		blx	r3
+ 427              	.LVL25:
+  86:Src/display_mpe.c ****     return ;
+ 428              		.loc 1 86 3 is_stmt 1 view .LVU128
+  86:Src/display_mpe.c ****     return ;
+ 429              		.loc 1 86 6 is_stmt 0 view .LVU129
+ 430 00fe 0028     		cmp	r0, #0
+ 431 0100 40D1     		bne	.L13
+  89:Src/display_mpe.c ****   is_clamp = clamp_point(&x1, &y1);
+ 432              		.loc 1 89 3 is_stmt 1 view .LVU130
+ 433 0102 029A     		ldr	r2, [sp, #8]
+ 434 0104 DAF80030 		ldr	r3, [r10]
+ 435 0108 0FA9     		add	r1, sp, #60
+ 436 010a 0EA8     		add	r0, sp, #56
+ 437              	.LVL26:
+  89:Src/display_mpe.c ****   is_clamp = clamp_point(&x1, &y1);
+ 438              		.loc 1 89 3 is_stmt 0 view .LVU131
+ 439 010c D2ED010A 		vldr.32	s1, [r2, #4]
+ 440 0110 92ED000A 		vldr.32	s0, [r2]
+ 441 0114 9847     		blx	r3
+ 442              	.LVL27:
+  90:Src/display_mpe.c ****   if (is_clamp)
+ 443              		.loc 1 90 3 is_stmt 1 view .LVU132
+  90:Src/display_mpe.c ****   if (is_clamp)
+ARM GAS  /tmp/ccD1BuJk.s 			page 12
+
+
+ 444              		.loc 1 90 14 is_stmt 0 view .LVU133
+ 445 0116 D9F80030 		ldr	r3, [r9]
+ 446 011a 0FA9     		add	r1, sp, #60
+ 447 011c 0EA8     		add	r0, sp, #56
+ 448 011e 9847     		blx	r3
+ 449              	.LVL28:
+  91:Src/display_mpe.c ****     return ;
+ 450              		.loc 1 91 3 is_stmt 1 view .LVU134
+  91:Src/display_mpe.c ****     return ;
+ 451              		.loc 1 91 6 is_stmt 0 view .LVU135
+ 452 0120 80BB     		cbnz	r0, .L13
+  94:Src/display_mpe.c ****   for (i = 1; i <= (BINDING_WIDTH - 1) / 2; i++) {
+ 453              		.loc 1 94 3 is_stmt 1 view .LVU136
+ 454 0122 DDE90C01 		ldrd	r0, r1, [sp, #48]
+ 455              	.LVL29:
+  94:Src/display_mpe.c ****   for (i = 1; i <= (BINDING_WIDTH - 1) / 2; i++) {
+ 456              		.loc 1 94 3 is_stmt 0 view .LVU137
+ 457 0126 DDE90E23 		ldrd	r2, r3, [sp, #56]
+ 458 012a 0096     		str	r6, [sp]
+ 459 012c FFF7FEFF 		bl	UTIL_LCD_DrawLine
+ 460              	.LVL30:
+  95:Src/display_mpe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
+ 461              		.loc 1 95 3 is_stmt 1 view .LVU138
+  95:Src/display_mpe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
+ 462              		.loc 1 95 17 discriminator 1 view .LVU139
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 463              		.loc 1 96 5 view .LVU140
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 464              		.loc 1 96 31 is_stmt 0 view .LVU141
+ 465 0130 0CA8     		add	r0, sp, #48
+ 466 0132 0FC8     		ldm	r0, {r0, r1, r2, r3}
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 467              		.loc 1 96 16 view .LVU142
+ 468 0134 A3EB010E 		sub	lr, r3, r1
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 469              		.loc 1 96 31 view .LVU143
+ 470 0138 A2EB000C 		sub	ip, r2, r0
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 471              		.loc 1 96 9 view .LVU144
+ 472 013c BEF1000F 		cmp	lr, #0
+ 473 0140 B8BF     		it	lt
+ 474 0142 CEF1000E 		rsblt	lr, lr, #0
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 475              		.loc 1 96 24 view .LVU145
+ 476 0146 BCF1000F 		cmp	ip, #0
+ 477 014a B8BF     		it	lt
+ 478 014c CCF1000C 		rsblt	ip, ip, #0
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 479              		.loc 1 96 8 view .LVU146
+ 480 0150 E645     		cmp	lr, ip
+  97:Src/display_mpe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
+ 481              		.loc 1 97 7 view .LVU147
+ 482 0152 DBF80050 		ldr	r5, [fp]
+ 483              	.LVL31:
+  97:Src/display_mpe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
+ 484              		.loc 1 97 7 view .LVU148
+ 485 0156 0096     		str	r6, [sp]
+ARM GAS  /tmp/ccD1BuJk.s 			page 13
+
+
+  96:Src/display_mpe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 486              		.loc 1 96 8 view .LVU149
+ 487 0158 1FDD     		ble	.L11
+  97:Src/display_mpe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
+ 488              		.loc 1 97 7 is_stmt 1 view .LVU150
+ 489 015a 0132     		adds	r2, r2, #1
+ 490 015c 0130     		adds	r0, r0, #1
+ 491 015e A847     		blx	r5
+ 492              	.LVL32:
+  98:Src/display_mpe.c ****     } else {
+ 493              		.loc 1 98 7 view .LVU151
+ 494 0160 DDE90E23 		ldrd	r2, r3, [sp, #56]
+ 495 0164 DDE90C01 		ldrd	r0, r1, [sp, #48]
+ 496 0168 0096     		str	r6, [sp]
+ 497 016a 013A     		subs	r2, r2, #1
+ 498 016c 0138     		subs	r0, r0, #1
+ 499              	.L16:
+ 101:Src/display_mpe.c ****     }
+ 500              		.loc 1 101 7 is_stmt 0 view .LVU152
+ 501 016e DBF80050 		ldr	r5, [fp]
+ 502 0172 A847     		blx	r5
+ 503              	.LVL33:
+  95:Src/display_mpe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
+ 504              		.loc 1 95 17 is_stmt 1 discriminator 1 view .LVU153
+ 105:Src/display_mpe.c ****   Display_keypoint(to, color);
+ 505              		.loc 1 105 3 view .LVU154
+ 506 0174 3146     		mov	r1, r6
+ 507 0176 3846     		mov	r0, r7
+ 508 0178 FFF7FEFF 		bl	Display_keypoint
+ 509              	.LVL34:
+ 106:Src/display_mpe.c **** }
+ 510              		.loc 1 106 3 view .LVU155
+ 511 017c 3146     		mov	r1, r6
+ 512 017e 0298     		ldr	r0, [sp, #8]
+ 513 0180 FFF7FEFF 		bl	Display_keypoint
+ 514              	.LVL35:
+ 515              	.L13:
+ 106:Src/display_mpe.c **** }
+ 516              		.loc 1 106 3 is_stmt 0 view .LVU156
+ 517              	.LBE10:
+ 518              	.LBE16:
+ 141:Src/display_mpe.c ****     Display_binding(&detect->pKeyPoints[bindings[i][0]], &detect->pKeyPoints[bindings[i][1]], bindi
+ 519              		.loc 1 141 33 is_stmt 1 discriminator 3 view .LVU157
+ 141:Src/display_mpe.c ****     Display_binding(&detect->pKeyPoints[bindings[i][0]], &detect->pKeyPoints[bindings[i][1]], bindi
+ 520              		.loc 1 141 17 discriminator 1 view .LVU158
+ 521 0184 039B     		ldr	r3, [sp, #12]
+ 522 0186 08F10C08 		add	r8, r8, #12
+ 523 018a 013B     		subs	r3, r3, #1
+ 524 018c 0393     		str	r3, [sp, #12]
+ 525              	.LVL36:
+ 141:Src/display_mpe.c ****     Display_binding(&detect->pKeyPoints[bindings[i][0]], &detect->pKeyPoints[bindings[i][1]], bindi
+ 526              		.loc 1 141 17 is_stmt 0 discriminator 1 view .LVU159
+ 527 018e 8DD1     		bne	.L14
+ 143:Src/display_mpe.c **** #else
+ 144:Src/display_mpe.c ****   for (i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
+ 145:Src/display_mpe.c ****     Display_keypoint(&detect->pKeyPoints[i], DEFAULT_KEYPOINTS_COLOR);
+ 146:Src/display_mpe.c **** #endif
+ARM GAS  /tmp/ccD1BuJk.s 			page 14
+
+
+ 147:Src/display_mpe.c **** }
+ 528              		.loc 1 147 1 view .LVU160
+ 529 0190 11B0     		add	sp, sp, #68
+ 530              		.cfi_remember_state
+ 531              		.cfi_def_cfa_offset 44
+ 532              		@ sp needed
+ 533 0192 BDEC028B 		vldm	sp!, {d8}
+ 534              		.cfi_restore 80
+ 535              		.cfi_restore 81
+ 536              		.cfi_def_cfa_offset 36
+ 537 0196 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 538              	.LVL37:
+ 539              	.L11:
+ 540              		.cfi_restore_state
+ 541              	.LBB17:
+ 542              	.LBB11:
+ 100:Src/display_mpe.c ****       Display_binding_line(x0, y0 - i, x1 , y1 - i, color);
+ 543              		.loc 1 100 7 is_stmt 1 view .LVU161
+ 544 019a 0133     		adds	r3, r3, #1
+ 545 019c 0131     		adds	r1, r1, #1
+ 546 019e A847     		blx	r5
+ 547              	.LVL38:
+ 101:Src/display_mpe.c ****     }
+ 548              		.loc 1 101 7 view .LVU162
+ 549 01a0 DDE90D12 		ldrd	r1, r2, [sp, #52]
+ 550 01a4 0F9B     		ldr	r3, [sp, #60]
+ 551 01a6 0C98     		ldr	r0, [sp, #48]
+ 552 01a8 0096     		str	r6, [sp]
+ 553 01aa 013B     		subs	r3, r3, #1
+ 554 01ac 0139     		subs	r1, r1, #1
+ 555 01ae DEE7     		b	.L16
+ 556              	.L18:
+ 557              		.align	2
+ 558              	.L17:
+ 559 01b0 00000000 		.word	convert_length
+ 560 01b4 0AD7A33B 		.word	1000593162
+ 561 01b8 00000000 		.word	colors
+ 562 01bc 00000000 		.word	convert_point
+ 563 01c0 00000000 		.word	clamp_point
+ 564 01c4 00000000 		.word	bindings
+ 565 01c8 00000000 		.word	Display_binding_line
+ 566              	.LBE11:
+ 567              	.LBE17:
+ 568              		.cfi_endproc
+ 569              	.LFE1516:
+ 571              		.section	.bss.Display_binding_line,"aw",%nobits
+ 572              		.align	2
+ 575              	Display_binding_line:
+ 576 0000 00000000 		.space	4
+ 577              		.section	.bss.convert_point,"aw",%nobits
+ 578              		.align	2
+ 581              	convert_point:
+ 582 0000 00000000 		.space	4
+ 583              		.section	.bss.convert_length,"aw",%nobits
+ 584              		.align	2
+ 587              	convert_length:
+ 588 0000 00000000 		.space	4
+ARM GAS  /tmp/ccD1BuJk.s 			page 15
+
+
+ 589              		.section	.bss.clamp_point,"aw",%nobits
+ 590              		.align	2
+ 593              	clamp_point:
+ 594 0000 00000000 		.space	4
+ 595              		.global	colors
+ 596              		.section	.rodata.colors,"a"
+ 597              		.align	2
+ 600              	colors:
+ 601 0000 00FF00FF 		.word	-16711936
+ 602 0004 0000FFFF 		.word	-65536
+ 603 0008 FFFF00FF 		.word	-16711681
+ 604 000c FF00FFFF 		.word	-65281
+ 605 0010 00FFFFFF 		.word	-256
+ 606 0014 808080FF 		.word	-8355712
+ 607 0018 000000FF 		.word	-16777216
+ 608 001c 2A2AA5FF 		.word	-5952982
+ 609 0020 FF0000FF 		.word	-16776961
+ 610 0024 00A5FFFF 		.word	-23296
+ 611              		.text
+ 612              	.Letext0:
+ 613              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 614              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 615              		.file 4 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
+ 616              		.file 5 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/mpe_pp_outp
+ 617              		.file 6 "Inc/app_config.h"
+ 618              		.file 7 "../../STM32Cube_FW_N6/Utilities/lcd/stm32_lcd.h"
+ARM GAS  /tmp/ccD1BuJk.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 display_mpe.c
+     /tmp/ccD1BuJk.s:26     .text.Display_keypoint:00000000 $t
+     /tmp/ccD1BuJk.s:31     .text.Display_keypoint:00000000 Display_keypoint
+     /tmp/ccD1BuJk.s:145    .text.Display_keypoint:0000006c $d
+     /tmp/ccD1BuJk.s:581    .bss.convert_point:00000000 convert_point
+     /tmp/ccD1BuJk.s:593    .bss.clamp_point:00000000 clamp_point
+     /tmp/ccD1BuJk.s:152    .text.Display_mpe_InitFunctions:00000000 $t
+     /tmp/ccD1BuJk.s:158    .text.Display_mpe_InitFunctions:00000000 Display_mpe_InitFunctions
+     /tmp/ccD1BuJk.s:198    .text.Display_mpe_InitFunctions:00000014 $d
+     /tmp/ccD1BuJk.s:587    .bss.convert_length:00000000 convert_length
+     /tmp/ccD1BuJk.s:575    .bss.Display_binding_line:00000000 Display_binding_line
+     /tmp/ccD1BuJk.s:206    .text.Display_mpe_Detection:00000000 $t
+     /tmp/ccD1BuJk.s:212    .text.Display_mpe_Detection:00000000 Display_mpe_Detection
+     /tmp/ccD1BuJk.s:559    .text.Display_mpe_Detection:000001b0 $d
+     /tmp/ccD1BuJk.s:600    .rodata.colors:00000000 colors
+     /tmp/ccD1BuJk.s:572    .bss.Display_binding_line:00000000 $d
+     /tmp/ccD1BuJk.s:578    .bss.convert_point:00000000 $d
+     /tmp/ccD1BuJk.s:584    .bss.convert_length:00000000 $d
+     /tmp/ccD1BuJk.s:590    .bss.clamp_point:00000000 $d
+     /tmp/ccD1BuJk.s:597    .rodata.colors:00000000 $d
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4.mpe_pp_output_if.h.11.db0dd5ceb87072354c56b51e8f9b2a0d
+                           .group:00000000 wm4.arm_math_types.h.28.9e71aea5cdf6aebdd83091bf39b4832a
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:00000000 wm4.stddef.h.173.1cea4f16a943c8e875db6791959c3141
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
+                           .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
+                           .group:00000000 wm4.float.h.29.0e9d9baf95ec39f9555dc80c6e28186b
+                           .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:00000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:00000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
+                           .group:00000000 wm4.arm_math_types.h.116.3e44bd031718f65bdb345972ddc8cf86
+                           .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
+                           .group:00000000 wm4.arm_mve.h.48.53b982d307987e8d8669fd51fdc5e583
+                           .group:00000000 wm4.arm_math_types.h.605.32c5d7843b3dcaa8f5174feea7de7445
+ARM GAS  /tmp/ccD1BuJk.s 			page 17
+
+
+                           .group:00000000 wm4.arm_math_memory.h.28.3ee75b06517df8378241b72d6c61e5b0
+                           .group:00000000 wm4.none.h.185.db055cca83e83f96d8d0bb450fbdf4bb
+                           .group:00000000 wm4.utils.h.41.820d6032ed1c0d7dd5bd2ed80938ee65
+                           .group:00000000 wm4.fast_math_functions.h.28.aa389abd5521cfceab0e76a6af3dd2e2
+                           .group:00000000 wm4.matrix_functions.h.28.8fc8488c73b2d6f328b0946db3460102
+                           .group:00000000 wm4.controller_functions.h.28.388735b97ccd96442b0ac9e554629f36
+                           .group:00000000 wm4.filtering_functions.h.46.6cf1424fb1f86d5f9958d208b83340a1
+                           .group:00000000 wm4.ll_aton_config.h.20.27cfa9f6f5afc4105991355367358a39
+                           .group:00000000 wm4.ll_aton_attributes.h.20.26d469460cb32db5740effdc8cc403f3
+                           .group:00000000 wm4.ll_aton_cipher.h.20.e98fdae11c912f4036a83cedb835e14e
+                           .group:00000000 wm4.assert.h.11.db24e541f16414db224bf986d21017e2
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.errno.h.9.ae5ea2b0ff9ea6e39e585807e35200d3
+                           .group:00000000 wm4.stdio.h.27.3fc80220048df77954e38daec3bb9670
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.stdio.h.47.dc31ec4674d7bcb103c9f08809549f45
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.ll_aton_util.h.34.9098eaa90d3d72b819973556e3e5fe44
+                           .group:00000000 wm4.ll_aton_osal.h.20.08c7c488030992aa35928699d77c6f6e
+                           .group:00000000 wm4.ll_aton_platform.h.20.8f1d4e7781c282794886ffdd00ccd30b
+                           .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
+                           .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
+                           .group:00000000 wm4.cmsis_version.h.30.d128735bf87720f7436b74fefeb5043c
+                           .group:00000000 wm4.core_cm55.h.67.25006a3ce7048d64bcddd2996d5fac93
+                           .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
+                           .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230
+                           .group:00000000 wm4.armv8m_pmu.h.24.6ded195d2625055391fd378c0e1d2519
+                           .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
+                           .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
+                           .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+                           .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
+                           .group:00000000 wm4.ll_aton_platform.h.205.098bebcb126012e5dfc0544db0a7d4c8
+                           .group:00000000 wm4.inttypes.h.14.b28deb26920e51e0da310220ef0f9003
+                           .group:00000000 wm4.inttypes.h.28.684aa7736e7ecc9a6ffc44acc61c7a90
+                           .group:00000000 wm4.ATONidxs.h.16.969ebf3fd32e13543179e6907b3869c9
+                           .group:00000000 wm4.ATON.h.19.0bce86f27eb7ac354272c44c1804cd24
+                           .group:00000000 wm4.ll_aton_rcompat.h.22.4788366561a5f8dfb37661f794bdd403
+                           .group:00000000 wm4.ll_aton_platform.h.279.2fa1ab569e6816db5b603cc3ef09d875
+                           .group:00000000 wm4.ll_aton_rt_user_api.h.71.52957347efa02883c6e8b1a7f756d297
+                           .group:00000000 wm4.stai.h.24.a274645e79490de4e05332b397550d1f
+                           .group:00000000 wm4.stai_debug.h.37.4be079c70c66033549ba26b63a31db94
+                           .group:00000000 wm4.ll_aton_stai_internal.h.35.4ede4d59178f196dca4b635c5600498b
+                           .group:00000000 wm4.stai_network.h.57.8dfb21a08a1ef1a6e6a309b63eb85b05
+                           .group:00000000 wm4.lcd.h.21.98701c105e66fef2e089854e5bc0fe32
+                           .group:00000000 wm4.stm32_lcd.h.55.1a04e503950bf34ef3721d2ebb9542fc
+                           .group:00000000 wm4.app_config.h.26.10fe3386001de9569c7f48483ec5ef10
+                           .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
+                           .group:00000000 wm4.arm_cmse.h.103.a0d15a79c4c9a67da8d5831704d7248e
+                           .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
+                           .group:00000000 wm4.stm32n6xx_hal_def.h.63.2cbbf1954826c09c874c4e06e42e8b71
+                           .group:00000000 wm4.stm32n6xx_ll_bus.h.38.2366a295ee4cdb04833997d3787fcd2d
+                           .group:00000000 wm4.stm32n6xx_ll_rcc.h.21.656bd5637db608589ad16ea57d39430c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.194.69b522b1afdf59a82d05a1f71efe03c7
+                           .group:00000000 wm4.stm32n6xx_hal_rcc_ex.h.21.cc6be0a7d168882a1a6f470236ba784c
+                           .group:00000000 wm4.stm32n6xx_hal_rcc.h.4361.4b490a4a19722e68c21f88cb8a774a30
+                           .group:00000000 wm4.stm32n6xx_hal_gpio.h.21.89d54af663b98eb8fc098192053f7eeb
+ARM GAS  /tmp/ccD1BuJk.s 			page 18
+
+
+                           .group:00000000 wm4.stm32n6xx_hal_gpio_ex.h.22.f7e795fb05a69a19b87d946b47c8db8b
+                           .group:00000000 wm4.stm32n6xx_hal_rif.h.21.33f2c553a8a3fc14dca8c470b213ab19
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.21.61e48c5c2e8d25d22177834b232fe45c
+                           .group:00000000 wm4.stm32n6xx_hal_dma_ex.h.21.82f854ecdb6a463b06d0b4e5c217c368
+                           .group:00000000 wm4.stm32n6xx_hal_dma.h.1020.87e2180c009560b617c1f8208140c950
+                           .group:00000000 wm4.stm32n6xx_hal_cortex.h.21.f493623cc58f9454ab4eae41e395c5cc
+                           .group:00000000 wm4.stm32n6xx_hal_bsec.h.21.1ee89319140541f82434908b4267aa30
+                           .group:00000000 wm4.stm32n6xx_hal_dcmipp.h.21.e2b87dce83d7d722d696a597f6ac56bf
+                           .group:00000000 wm4.stm32n6xx_hal_dma2d.h.21.75c8d46cdbb72970123b3f34ae2043d7
+                           .group:00000000 wm4.stm32n6xx_hal_exti.h.21.e0efb23591051684dc14f1f2431c6aab
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.21.3f483626ff64c5bf027265bb2e1d1331
+                           .group:00000000 wm4.stm32n6xx_hal_i2c_ex.h.21.79e9196c22282cdaf6b4047893638c45
+                           .group:00000000 wm4.stm32n6xx_hal_i2c.h.741.1084702632703acc669e4282b3043372
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.21.ae1eb09930e7e550e48e418ac5849e4d
+                           .group:00000000 wm4.stm32n6xx_hal_ltdc.h.1002.b13ede7fc94ed5ad1c6768a157d2149a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr.h.21.cdb73e4869c3fed3fc84f901ec0e5f0a
+                           .group:00000000 wm4.stm32n6xx_hal_pwr_ex.h.21.1a673224a58b0c1e5fad8eeda6514208
+                           .group:00000000 wm4.stm32n6xx_hal_ramcfg.h.21.a62dfbb4d2c14e9a8c634a215e37bd3d
+                           .group:00000000 wm4.stm32n6xx_hal_uart.h.21.230f549bfa0d5ebfd77bfb311b2aca15
+                           .group:00000000 wm4.stm32n6xx_hal_uart_ex.h.21.a0d5511e1d0703b7b5278c8f5472b96d
+                           .group:00000000 wm4.stm32n6xx_hal_xspi.h.21.7fd922d3bdb871475cf18436a68935bb
+                           .group:00000000 wm4.stm32n6xx_hal_cacheaxi.h.21.7c3375b7903ec42376e4883320997f74
+                           .group:00000000 wm4.stm32n6xx_hal.h.81.e79d59262ba173c33cf1d69281830d15
+                           .group:00000000 wm4.main.h.30.b69ac6fd956d61a1b3eb6a39671105da
+                           .group:00000000 wm4.utils.h.20.17a5869ee4d09f1d7f0d2b6abe16400f
+                           .group:00000000 wm4.assert.h.11.d99a111e320bc5106fc4046225782672
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+
+UNDEFINED SYMBOLS
+UTIL_LCD_FillCircle
+UTIL_LCD_DrawRect
+UTIL_LCD_DrawLine
+bindings

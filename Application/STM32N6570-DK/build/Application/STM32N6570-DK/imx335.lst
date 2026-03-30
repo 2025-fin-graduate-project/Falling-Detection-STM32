@@ -1,0 +1,3066 @@
+ARM GAS  /tmp/ccxuFpWh.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"imx335.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c"
+  25              		.section	.text.IMX335_ReadRegWrap,"ax",%progbits
+  26              		.align	1
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	IMX335_ReadRegWrap:
+  32              	.LVL0:
+  33              	.LFB188:
+   1:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+   2:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   ******************************************************************************
+   3:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @file    imx335.c
+   4:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @author  MCD Application Team
+   5:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief   This file provides the IMX335 camera driver
+   6:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   ******************************************************************************
+   7:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @attention
+   8:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *
+   9:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * Copyright (c) 2022 STMicroelectronics.
+  10:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * All rights reserved.
+  11:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *
+  12:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * in the root directory of this software component.
+  14:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *
+  16:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   ******************************************************************************
+  17:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+  18:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  19:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /* Includes ------------------------------------------------------------------*/
+  20:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** #include "imx335.h"
+  21:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** #include <string.h>
+  22:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  23:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @addtogroup BSP
+  24:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+  25:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ARM GAS  /tmp/ccxuFpWh.s 			page 2
+
+
+  26:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  27:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @addtogroup Components
+  28:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+  29:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+  30:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  31:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @addtogroup IMX335
+  32:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief     This file provides a set of functions needed to drive the
+  33:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *            IMX335 Camera module.
+  34:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+  35:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+  36:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  37:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @defgroup IMX335_Private_TypesDefinitions Private Types definition
+  38:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+  39:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+  40:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+  41:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  42:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @defgroup IMX335_Private_Constants Private Constants
+  43:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+  44:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+  45:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** struct regval {
+  46:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint16_t addr;
+  47:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t val;
+  48:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+  49:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+  50:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval res_2592_1944_regs[] = {
+  51:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3000, 0x01},
+  52:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3002, 0x00},
+  53:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0x3b},
+  54:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x2a},
+  55:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3018, 0x04},
+  56:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x302c, 0x3c},
+  57:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x302e, 0x20},
+  58:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3056, 0x98},
+  59:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3074, 0xc8},
+  60:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3076, 0x30},
+  61:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x304c, 0x00},
+  62:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0xc6},
+  63:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x02},
+  64:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0xa0},
+  65:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7e},
+  66:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x31a1, 0x00},
+  67:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3288, 0x21},
+  68:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x328a, 0x02},
+  69:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3414, 0x05},
+  70:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3416, 0x18},
+  71:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3648, 0x01},
+  72:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x364a, 0x04},
+  73:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x364c, 0x04},
+  74:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3678, 0x01},
+  75:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x367c, 0x31},
+  76:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x367e, 0x31},
+  77:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3706, 0x10},
+  78:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3708, 0x03},
+  79:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3714, 0x02},
+  80:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3715, 0x02},
+  81:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3716, 0x01},
+  82:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3717, 0x03},
+ARM GAS  /tmp/ccxuFpWh.s 			page 3
+
+
+  83:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x371c, 0x3d},
+  84:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x371d, 0x3f},
+  85:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x372c, 0x00},
+  86:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x372d, 0x00},
+  87:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x372e, 0x46},
+  88:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x372f, 0x00},
+  89:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3730, 0x89},
+  90:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3731, 0x00},
+  91:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3732, 0x08},
+  92:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3733, 0x01},
+  93:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3734, 0xfe},
+  94:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3735, 0x05},
+  95:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3740, 0x02},
+  96:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x375d, 0x00},
+  97:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x375e, 0x00},
+  98:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x375f, 0x11},
+  99:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3760, 0x01},
+ 100:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3768, 0x1b},
+ 101:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3769, 0x1b},
+ 102:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x376a, 0x1b},
+ 103:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x376b, 0x1b},
+ 104:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x376c, 0x1a},
+ 105:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x376d, 0x17},
+ 106:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x376e, 0x0f},
+ 107:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3776, 0x00},
+ 108:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3777, 0x00},
+ 109:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3778, 0x46},
+ 110:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3779, 0x00},
+ 111:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377a, 0x89},
+ 112:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377b, 0x00},
+ 113:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377c, 0x08},
+ 114:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377d, 0x01},
+ 115:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377e, 0x23},
+ 116:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x377f, 0x02},
+ 117:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3780, 0xd9},
+ 118:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3781, 0x03},
+ 119:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3782, 0xf5},
+ 120:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3783, 0x06},
+ 121:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3784, 0xa5},
+ 122:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3788, 0x0f},
+ 123:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378a, 0xd9},
+ 124:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378b, 0x03},
+ 125:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378c, 0xeb},
+ 126:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378d, 0x05},
+ 127:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378e, 0x87},
+ 128:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x378f, 0x06},
+ 129:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3790, 0xf5},
+ 130:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3792, 0x43},
+ 131:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3794, 0x7a},
+ 132:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3796, 0xa1},
+ 133:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x37b0, 0x36},
+ 134:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3a00, 0x01},
+ 135:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 136:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 137:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval mode_2l_10b_regs[] = {
+ 138:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3050, 0x00},
+ 139:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x319D, 0x00},
+ARM GAS  /tmp/ccxuFpWh.s 			page 4
+
+
+ 140:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x341c, 0xff},
+ 141:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x341d, 0x01},
+ 142:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3a01, 0x01},
+ 143:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 144:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 145:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval inck_74Mhz_regs[] = {
+ 146:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0xB6},
+ 147:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x7F},
+ 148:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0x80},
+ 149:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314d, 0x00},
+ 150:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x03},
+ 151:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0x68},
+ 152:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7F},
+ 153:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 154:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 155:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval inck_27Mhz_regs[] = {
+ 156:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0x42},
+ 157:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x2E},
+ 158:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0xB0},
+ 159:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314d, 0x00},
+ 160:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x02},
+ 161:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0x8F},
+ 162:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7E},
+ 163:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 164:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 165:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval inck_24Mhz_regs[] = {
+ 166:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0x3B},
+ 167:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x2A},
+ 168:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0xC6},
+ 169:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314d, 0x00},
+ 170:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x02},
+ 171:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0xA0},
+ 172:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7E},
+ 173:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 174:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 175:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval inck_18Mhz_regs[] = {
+ 176:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0x2D},
+ 177:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x1F},
+ 178:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0x84},
+ 179:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314d, 0x00},
+ 180:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x01},
+ 181:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0x6B},
+ 182:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7D},
+ 183:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 184:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 185:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval inck_6Mhz_regs[] = {
+ 186:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300c, 0x0F},
+ 187:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x300d, 0x0B},
+ 188:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314c, 0xC6},
+ 189:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x314d, 0x00},
+ 190:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x315a, 0x00},
+ 191:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3168, 0xA0},
+ 192:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x316a, 0x7C},
+ 193:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 194:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 195:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval framerate_10fps_regs[] = {
+ 196:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3030, 0xC0},
+ARM GAS  /tmp/ccxuFpWh.s 			page 5
+
+
+ 197:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3031, 0x34},
+ 198:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 199:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 200:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval framerate_15fps_regs[] = {
+ 201:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3030, 0x2A},
+ 202:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3031, 0x23},
+ 203:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 204:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 205:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval framerate_20fps_regs[] = {
+ 206:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3030, 0x60},
+ 207:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3031, 0x1A},
+ 208:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 209:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 210:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval framerate_25fps_regs[] = {
+ 211:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3030, 0x1A},
+ 212:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3031, 0x15},
+ 213:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 214:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 215:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval framerate_30fps_regs[] = {
+ 216:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3030, 0x94},
+ 217:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3031, 0x11},
+ 218:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 219:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 220:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval mirrorflip_mode_regs[][10] = {
+ 221:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 222:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_LSB, 0xc8}, //AREA3_ST_ADR_1 LSB
+ 223:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_MSB, 0x00}, //AREA3_ST_ADR_1 MSB
+ 224:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_HREVERSE, 0x00}, //HREVERSE 0
+ 225:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_VREVERSE, 0x00}, //VREVERSE 0
+ 226:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3081, 0x02}, //RESERVED
+ 227:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3083, 0x02}, //RESERVED
+ 228:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b6, 0x00}, //RESERVED
+ 229:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b7, 0x00}, //RESERVED
+ 230:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3116, 0x08}, //RESERVED
+ 231:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3117, 0x00}, //RESERVED
+ 232:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   },
+ 233:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 234:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_LSB, 0xf8}, //AREA3_ST_ADR_1 LSB
+ 235:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_MSB, 0x0f}, //AREA3_ST_ADR_1 MSB
+ 236:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_HREVERSE, 0x00}, //HREVERSE 0
+ 237:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_VREVERSE, 0x01}, //VREVERSE 1
+ 238:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3081, 0xfe}, //RESERVED
+ 239:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3083, 0xfe}, //RESERVED
+ 240:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b6, 0xfa}, //RESERVED
+ 241:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b7, 0x01}, //RESERVED
+ 242:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3116, 0x02}, //RESERVED
+ 243:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3117, 0x00}, //RESERVED
+ 244:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   },
+ 245:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 246:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_LSB, 0xc8}, //AREA3_ST_ADR_1 LSB
+ 247:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_MSB, 0x00}, //AREA3_ST_ADR_1 MSB
+ 248:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_HREVERSE, 0x01}, //HREVERSE 1
+ 249:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_VREVERSE, 0x00}, //VREVERSE 0
+ 250:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3081, 0x02}, //RESERVED
+ 251:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3083, 0x02}, //RESERVED
+ 252:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b6, 0x00}, //RESERVED
+ 253:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b7, 0x00}, //RESERVED
+ARM GAS  /tmp/ccxuFpWh.s 			page 6
+
+
+ 254:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3116, 0x08}, //RESERVED
+ 255:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3117, 0x00}, //RESERVED
+ 256:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   },
+ 257:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 258:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_LSB, 0xf8}, //AREA3_ST_ADR_1 LSB
+ 259:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {AREA3_ST_ADR_1_MSB, 0x0f}, //AREA3_ST_ADR_1 MSB
+ 260:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_HREVERSE, 0x01}, //HREVERSE 1
+ 261:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {IMX335_REG_VREVERSE, 0x01}, //VREVERSE 1
+ 262:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3081, 0xfe}, //RESERVED
+ 263:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3083, 0xfe}, //RESERVED
+ 264:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b6, 0xfa}, //RESERVED
+ 265:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x30b7, 0x01}, //RESERVED
+ 266:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3116, 0x02}, //RESERVED
+ 267:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {0x3117, 0x00}, //RESERVED
+ 268:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   },
+ 269:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 270:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 271:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval test_pattern_enable_regs[] = {
+ 272:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3148, 0x10},
+ 273:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3280, 0x00},
+ 274:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x329c, 0x01},
+ 275:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x32a0, 0x11},
+ 276:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3302, 0x00},
+ 277:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3303, 0x00},
+ 278:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x336c, 0x00},
+ 279:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 280:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 281:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static const struct regval test_pattern_disable_regs[] = {
+ 282:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3148, 0x00},
+ 283:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3280, 0x01},
+ 284:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x329c, 0x00},
+ 285:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x32a0, 0x10},
+ 286:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3302, 0x32},
+ 287:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x3303, 0x00},
+ 288:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {0x336c, 0x01},
+ 289:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** };
+ 290:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 291:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** #define IMX335_1H_PERIOD_USEC (1000000.0F / 4500 / 30)
+ 292:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 293:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 294:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @}
+ 295:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 296:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 297:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @defgroup IMX335_Private_Functions_Prototypes Private Functions Prototypes
+ 298:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+ 299:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 300:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_WriteTable(IMX335_Object_t *pObj, const struct regval *regs, uint32_t size);
+ 301:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_ReadRegWrap(void *handle, uint16_t Reg, uint8_t* Data, uint16_t Length);
+ 302:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_WriteRegWrap(void *handle, uint16_t Reg, uint8_t* Data, uint16_t Length);
+ 303:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_Delay(IMX335_Object_t *pObj, uint32_t Delay);
+ 304:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 305:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 306:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @}
+ 307:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 308:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 309:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @defgroup IMX335_Private_Functions Private Functions
+ 310:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+ARM GAS  /tmp/ccxuFpWh.s 			page 7
+
+
+ 311:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 312:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_WriteTable(IMX335_Object_t *pObj, const struct regval *regs, uint32_t size)
+ 313:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 314:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t index;
+ 315:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 316:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 317:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   /* Set registers */
+ 318:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   for(index=0; index<size ; index++)
+ 319:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 320:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(ret != IMX335_ERROR)
+ 321:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, regs[index].addr, (uint8_t *)&(regs[index].val), 1) != IMX335
+ 323:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 324:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 325:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 326:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 327:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 328:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 329:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 330:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 331:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 332:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief This function provides accurate delay (in milliseconds)
+ 333:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param pObj   pointer to component object
+ 334:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param Delay  specifies the delay time length, in milliseconds
+ 335:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval IMX335_OK
+ 336:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 337:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_Delay(IMX335_Object_t *pObj, uint32_t Delay)
+ 338:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 339:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t tickstart;
+ 340:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   tickstart = pObj->IO.GetTick();
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   while((pObj->IO.GetTick() - tickstart) < Delay)
+ 342:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 343:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 344:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return IMX335_OK;
+ 345:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 346:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 347:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 348:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Wrap component ReadReg to Bus Read function
+ 349:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  handle  Component object handle
+ 350:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Reg  The target register address to write
+ 351:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pData  The target register value to be written
+ 352:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Length  buffer size to be written
+ 353:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval error status
+ 354:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 355:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_ReadRegWrap(void *handle, uint16_t Reg, uint8_t* pData, uint16_t Length)
+ 356:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+  34              		.loc 1 356 1 view -0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 0, uses_anonymous_args = 0
+  38              		@ link register save eliminated.
+ 357:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   IMX335_Object_t *pObj = (IMX335_Object_t *)handle;
+  39              		.loc 1 357 3 view .LVU1
+ 358:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 359:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return pObj->IO.ReadReg(pObj->IO.Address, Reg, pData, Length);
+  40              		.loc 1 359 3 view .LVU2
+ 356:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   IMX335_Object_t *pObj = (IMX335_Object_t *)handle;
+ARM GAS  /tmp/ccxuFpWh.s 			page 8
+
+
+  41              		.loc 1 356 1 is_stmt 0 view .LVU3
+  42 0000 10B4     		push	{r4}
+  43              		.cfi_def_cfa_offset 4
+  44              		.cfi_offset 4, -4
+  45              		.loc 1 359 10 view .LVU4
+  46 0002 0469     		ldr	r4, [r0, #16]
+  47 0004 0089     		ldrh	r0, [r0, #8]
+  48              	.LVL1:
+  49              		.loc 1 359 10 view .LVU5
+  50 0006 A446     		mov	ip, r4
+ 360:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  51              		.loc 1 360 1 view .LVU6
+  52 0008 5DF8044B 		ldr	r4, [sp], #4
+ 359:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  53              		.loc 1 359 10 view .LVU7
+  54 000c 6047     		bx	ip
+  55              	.LVL2:
+ 359:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  56              		.loc 1 359 10 view .LVU8
+  57              		.cfi_endproc
+  58              	.LFE188:
+  60              		.section	.text.IMX335_WriteRegWrap,"ax",%progbits
+  61              		.align	1
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  66              	IMX335_WriteRegWrap:
+  67              	.LVL3:
+  68              	.LFB189:
+ 361:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 362:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 363:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Wrap component WriteReg to Bus Write function
+ 364:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  handle  Component object handle
+ 365:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Reg  The target register address to write
+ 366:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pData  The target register value to be written
+ 367:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Length  buffer size to be written
+ 368:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval error status
+ 369:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 370:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** static int32_t IMX335_WriteRegWrap(void *handle, uint16_t Reg, uint8_t* pData, uint16_t Length)
+ 371:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+  69              		.loc 1 371 1 is_stmt 1 view -0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+ 372:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   IMX335_Object_t *pObj = (IMX335_Object_t *)handle;
+  74              		.loc 1 372 3 view .LVU10
+ 373:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 374:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return pObj->IO.WriteReg(pObj->IO.Address, Reg, pData, Length);
+  75              		.loc 1 374 3 view .LVU11
+ 371:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   IMX335_Object_t *pObj = (IMX335_Object_t *)handle;
+  76              		.loc 1 371 1 is_stmt 0 view .LVU12
+  77 0000 10B4     		push	{r4}
+  78              		.cfi_def_cfa_offset 4
+  79              		.cfi_offset 4, -4
+  80              		.loc 1 374 10 view .LVU13
+  81 0002 C468     		ldr	r4, [r0, #12]
+ARM GAS  /tmp/ccxuFpWh.s 			page 9
+
+
+  82 0004 0089     		ldrh	r0, [r0, #8]
+  83              	.LVL4:
+  84              		.loc 1 374 10 view .LVU14
+  85 0006 A446     		mov	ip, r4
+ 375:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  86              		.loc 1 375 1 view .LVU15
+  87 0008 5DF8044B 		ldr	r4, [sp], #4
+ 374:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  88              		.loc 1 374 10 view .LVU16
+  89 000c 6047     		bx	ip
+  90              	.LVL5:
+ 374:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+  91              		.loc 1 374 10 view .LVU17
+  92              		.cfi_endproc
+  93              	.LFE189:
+  95              		.section	.text.IMX335_WriteTable,"ax",%progbits
+  96              		.align	1
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 101              	IMX335_WriteTable:
+ 102              	.LVL6:
+ 103              	.LFB186:
+ 313:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t index;
+ 104              		.loc 1 313 1 is_stmt 1 view -0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 314:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 108              		.loc 1 314 3 view .LVU19
+ 315:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 109              		.loc 1 315 3 view .LVU20
+ 318:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 110              		.loc 1 318 3 view .LVU21
+ 318:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 111              		.loc 1 318 21 discriminator 1 view .LVU22
+ 315:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 112              		.loc 1 315 11 is_stmt 0 view .LVU23
+ 113 0000 0023     		movs	r3, #0
+ 313:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t index;
+ 114              		.loc 1 313 1 view .LVU24
+ 115 0002 70B5     		push	{r4, r5, r6, lr}
+ 116              		.cfi_def_cfa_offset 16
+ 117              		.cfi_offset 4, -16
+ 118              		.cfi_offset 5, -12
+ 119              		.cfi_offset 6, -8
+ 120              		.cfi_offset 14, -4
+ 121 0004 8C1C     		adds	r4, r1, #2
+ 122 0006 04EB8205 		add	r5, r4, r2, lsl #2
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 123              		.loc 1 322 10 view .LVU25
+ 124 000a 00F11806 		add	r6, r0, #24
+ 125              	.LVL7:
+ 126              	.L5:
+ 320:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 127              		.loc 1 320 5 is_stmt 1 view .LVU26
+ 320:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ARM GAS  /tmp/ccxuFpWh.s 			page 10
+
+
+ 128              		.loc 1 320 7 is_stmt 0 view .LVU27
+ 129 000e 53B9     		cbnz	r3, .L4
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 130              		.loc 1 322 7 is_stmt 1 view .LVU28
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 131              		.loc 1 322 10 is_stmt 0 view .LVU29
+ 132 0010 0123     		movs	r3, #1
+ 133 0012 2246     		mov	r2, r4
+ 134 0014 3046     		mov	r0, r6
+ 135 0016 34F8021C 		ldrh	r1, [r4, #-2]
+ 136 001a FFF7FEFF 		bl	imx335_write_reg
+ 137              	.LVL8:
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 138              		.loc 1 322 9 discriminator 1 view .LVU30
+ 139 001e 031E     		subs	r3, r0, #0
+ 140 0020 18BF     		it	ne
+ 141 0022 0123     		movne	r3, #1
+ 142              	.LVL9:
+ 322:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 143              		.loc 1 322 9 discriminator 1 view .LVU31
+ 144 0024 5B42     		rsbs	r3, r3, #0
+ 145              	.LVL10:
+ 146              	.L4:
+ 318:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 147              		.loc 1 318 34 is_stmt 1 discriminator 2 view .LVU32
+ 318:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 148              		.loc 1 318 21 discriminator 1 view .LVU33
+ 149 0026 0434     		adds	r4, r4, #4
+ 150 0028 AC42     		cmp	r4, r5
+ 151 002a F0D1     		bne	.L5
+ 328:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 152              		.loc 1 328 3 view .LVU34
+ 329:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 153              		.loc 1 329 1 is_stmt 0 view .LVU35
+ 154 002c 1846     		mov	r0, r3
+ 155 002e 70BD     		pop	{r4, r5, r6, pc}
+ 329:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 156              		.loc 1 329 1 view .LVU36
+ 157              		.cfi_endproc
+ 158              	.LFE186:
+ 160              		.section	.text.IMX335_RegisterBusIO,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	IMX335_RegisterBusIO
+ 163              		.syntax unified
+ 164              		.thumb
+ 165              		.thumb_func
+ 167              	IMX335_RegisterBusIO:
+ 168              	.LVL11:
+ 169              	.LFB190:
+ 376:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 377:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 378:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @}
+ 379:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 380:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 381:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /** @defgroup IMX335_Exported_Functions IMX335 Exported Functions
+ 382:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @{
+ 383:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ARM GAS  /tmp/ccxuFpWh.s 			page 11
+
+
+ 384:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 385:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Register component IO bus
+ 386:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Component object pointer
+ 387:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 388:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 389:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_RegisterBusIO(IMX335_Object_t *pObj, IMX335_IO_t *pIO)
+ 390:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 170              		.loc 1 390 1 is_stmt 1 view -0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              		@ link register save eliminated.
+ 391:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret;
+ 175              		.loc 1 391 3 view .LVU38
+ 392:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 393:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if (pObj == NULL)
+ 176              		.loc 1 393 3 view .LVU39
+ 177              		.loc 1 393 6 is_stmt 0 view .LVU40
+ 178 0000 90B1     		cbz	r0, .L12
+ 394:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 395:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_ERROR;
+ 396:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 397:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 398:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 399:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.Init      = pIO->Init;
+ 179              		.loc 1 399 5 is_stmt 1 view .LVU41
+ 400:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.DeInit    = pIO->DeInit;
+ 180              		.loc 1 400 29 is_stmt 0 view .LVU42
+ 181 0002 4A68     		ldr	r2, [r1, #4]
+ 399:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.DeInit    = pIO->DeInit;
+ 182              		.loc 1 399 29 view .LVU43
+ 183 0004 0B68     		ldr	r3, [r1]
+ 184              		.loc 1 400 24 view .LVU44
+ 185 0006 4260     		str	r2, [r0, #4]
+ 401:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.Address   = pIO->Address;
+ 186              		.loc 1 401 29 view .LVU45
+ 187 0008 0A89     		ldrh	r2, [r1, #8]
+ 399:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.DeInit    = pIO->DeInit;
+ 188              		.loc 1 399 24 view .LVU46
+ 189 000a 0360     		str	r3, [r0]
+ 400:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.DeInit    = pIO->DeInit;
+ 190              		.loc 1 400 5 is_stmt 1 view .LVU47
+ 191              		.loc 1 401 5 view .LVU48
+ 192              		.loc 1 401 24 is_stmt 0 view .LVU49
+ 193 000c 0281     		strh	r2, [r0, #8]	@ movhi
+ 402:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.WriteReg  = pIO->WriteReg;
+ 194              		.loc 1 402 5 is_stmt 1 view .LVU50
+ 195              		.loc 1 402 29 is_stmt 0 view .LVU51
+ 196 000e CA68     		ldr	r2, [r1, #12]
+ 197              		.loc 1 402 24 view .LVU52
+ 198 0010 C260     		str	r2, [r0, #12]
+ 403:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.ReadReg   = pIO->ReadReg;
+ 199              		.loc 1 403 5 is_stmt 1 view .LVU53
+ 200              		.loc 1 403 29 is_stmt 0 view .LVU54
+ 201 0012 0A69     		ldr	r2, [r1, #16]
+ 202              		.loc 1 403 24 view .LVU55
+ 203 0014 0261     		str	r2, [r0, #16]
+ARM GAS  /tmp/ccxuFpWh.s 			page 12
+
+
+ 404:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.GetTick   = pIO->GetTick;
+ 204              		.loc 1 404 5 is_stmt 1 view .LVU56
+ 205              		.loc 1 404 29 is_stmt 0 view .LVU57
+ 206 0016 4A69     		ldr	r2, [r1, #20]
+ 405:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 406:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.ReadReg  = IMX335_ReadRegWrap;
+ 407:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.WriteReg = IMX335_WriteRegWrap;
+ 408:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.handle   = pObj;
+ 207              		.loc 1 408 24 view .LVU58
+ 208 0018 0062     		str	r0, [r0, #32]
+ 404:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IO.GetTick   = pIO->GetTick;
+ 209              		.loc 1 404 24 view .LVU59
+ 210 001a 4261     		str	r2, [r0, #20]
+ 406:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.WriteReg = IMX335_WriteRegWrap;
+ 211              		.loc 1 406 5 is_stmt 1 view .LVU60
+ 406:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.WriteReg = IMX335_WriteRegWrap;
+ 212              		.loc 1 406 24 is_stmt 0 view .LVU61
+ 213 001c 044A     		ldr	r2, .L17
+ 214 001e C261     		str	r2, [r0, #28]
+ 407:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.handle   = pObj;
+ 215              		.loc 1 407 5 is_stmt 1 view .LVU62
+ 407:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->Ctx.handle   = pObj;
+ 216              		.loc 1 407 24 is_stmt 0 view .LVU63
+ 217 0020 044A     		ldr	r2, .L17+4
+ 218 0022 8261     		str	r2, [r0, #24]
+ 219              		.loc 1 408 5 is_stmt 1 view .LVU64
+ 409:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 410:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(pObj->IO.Init != NULL)
+ 220              		.loc 1 410 5 view .LVU65
+ 221              		.loc 1 410 7 is_stmt 0 view .LVU66
+ 222 0024 03B1     		cbz	r3, .L12
+ 411:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 412:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = pObj->IO.Init();
+ 223              		.loc 1 412 7 is_stmt 1 view .LVU67
+ 224              		.loc 1 412 13 is_stmt 0 view .LVU68
+ 225 0026 1847     		bx	r3
+ 226              	.LVL12:
+ 227              	.L12:
+ 413:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 414:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     else
+ 415:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 416:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_ERROR;
+ 417:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 418:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 419:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 420:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 228              		.loc 1 420 3 is_stmt 1 view .LVU69
+ 421:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 229              		.loc 1 421 1 is_stmt 0 view .LVU70
+ 230 0028 4FF0FF30 		mov	r0, #-1
+ 231              	.LVL13:
+ 232              		.loc 1 421 1 view .LVU71
+ 233 002c 7047     		bx	lr
+ 234              	.L18:
+ 235 002e 00BF     		.align	2
+ 236              	.L17:
+ 237 0030 00000000 		.word	IMX335_ReadRegWrap
+ARM GAS  /tmp/ccxuFpWh.s 			page 13
+
+
+ 238 0034 00000000 		.word	IMX335_WriteRegWrap
+ 239              		.cfi_endproc
+ 240              	.LFE190:
+ 242              		.section	.text.IMX335_Init,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	IMX335_Init
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	IMX335_Init:
+ 250              	.LVL14:
+ 251              	.LFB191:
+ 422:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 423:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 424:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Initializes the IMX335 CAMERA component.
+ 425:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 426:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Resolution  Camera resolution
+ 427:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  PixelFormat pixel format to be configured
+ 428:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 429:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 430:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_Init(IMX335_Object_t *pObj, uint32_t Resolution, uint32_t PixelFormat)
+ 431:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 252              		.loc 1 431 1 is_stmt 1 view -0
+ 253              		.cfi_startproc
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 432:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 256              		.loc 1 432 3 view .LVU73
+ 433:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 434:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if(pObj->IsInitialized == 0U)
+ 257              		.loc 1 434 3 view .LVU74
+ 431:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 258              		.loc 1 431 1 is_stmt 0 view .LVU75
+ 259 0000 10B5     		push	{r4, lr}
+ 260              		.cfi_def_cfa_offset 8
+ 261              		.cfi_offset 4, -8
+ 262              		.cfi_offset 14, -4
+ 263              		.loc 1 434 5 view .LVU76
+ 264 0002 90F82430 		ldrb	r3, [r0, #36]	@ zero_extendqisi2
+ 431:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 265              		.loc 1 431 1 view .LVU77
+ 266 0006 0446     		mov	r4, r0
+ 267              		.loc 1 434 5 view .LVU78
+ 268 0008 A3B9     		cbnz	r3, .L20
+ 435:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 436:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     switch (Resolution)
+ 269              		.loc 1 436 5 is_stmt 1 view .LVU79
+ 270 000a 0629     		cmp	r1, #6
+ 271 000c 02D0     		beq	.L21
+ 272              	.LVL15:
+ 273              	.L23:
+ 437:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 438:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       case IMX335_R2592_1944:
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         if(IMX335_WriteTable(pObj, res_2592_1944_regs, ARRAY_SIZE(res_2592_1944_regs)) != IMX335_OK
+ 440:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 441:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           ret = IMX335_ERROR;
+ 442:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         }
+ARM GAS  /tmp/ccxuFpWh.s 			page 14
+
+
+ 443:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         break;
+ 444:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       /* Add new resolution here */
+ 445:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       default:
+ 446:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         /* Resolution not supported */
+ 447:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 274              		.loc 1 447 13 is_stmt 0 view .LVU80
+ 275 000e 4FF0FF30 		mov	r0, #-1
+ 276              	.L19:
+ 448:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 449:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 450:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(!ret)
+ 451:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 452:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, mode_2l_10b_regs, ARRAY_SIZE(mode_2l_10b_regs)) != IMX335_OK)
+ 453:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 454:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 455:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 456:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       else
+ 457:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 458:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         pObj->IsInitialized = 1U;
+ 459:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 460:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 461:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 462:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 463:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 464:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 277              		.loc 1 464 1 view .LVU81
+ 278 0012 10BD     		pop	{r4, pc}
+ 279              	.LVL16:
+ 280              	.L21:
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 281              		.loc 1 439 9 is_stmt 1 view .LVU82
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 282              		.loc 1 439 12 is_stmt 0 view .LVU83
+ 283 0014 5422     		movs	r2, #84
+ 284              	.LVL17:
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 285              		.loc 1 439 12 view .LVU84
+ 286 0016 0849     		ldr	r1, .L24
+ 287              	.LVL18:
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 288              		.loc 1 439 12 view .LVU85
+ 289 0018 FFF7FEFF 		bl	IMX335_WriteTable
+ 290              	.LVL19:
+ 439:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 291              		.loc 1 439 11 discriminator 1 view .LVU86
+ 292 001c 0028     		cmp	r0, #0
+ 293 001e F6D1     		bne	.L23
+ 450:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 294              		.loc 1 450 5 is_stmt 1 view .LVU87
+ 452:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 295              		.loc 1 452 7 view .LVU88
+ 452:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 296              		.loc 1 452 10 is_stmt 0 view .LVU89
+ 297 0020 0522     		movs	r2, #5
+ 298 0022 2046     		mov	r0, r4
+ 299 0024 0549     		ldr	r1, .L24+4
+ 300 0026 FFF7FEFF 		bl	IMX335_WriteTable
+ARM GAS  /tmp/ccxuFpWh.s 			page 15
+
+
+ 301              	.LVL20:
+ 452:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 302              		.loc 1 452 9 discriminator 1 view .LVU90
+ 303 002a 0028     		cmp	r0, #0
+ 304 002c EFD1     		bne	.L23
+ 458:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 305              		.loc 1 458 9 is_stmt 1 view .LVU91
+ 458:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 306              		.loc 1 458 29 is_stmt 0 view .LVU92
+ 307 002e 0123     		movs	r3, #1
+ 308 0030 84F82430 		strb	r3, [r4, #36]
+ 309              	.L20:
+ 432:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 310              		.loc 1 432 11 view .LVU93
+ 311 0034 0020     		movs	r0, #0
+ 463:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 312              		.loc 1 463 3 is_stmt 1 view .LVU94
+ 463:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 313              		.loc 1 463 10 is_stmt 0 view .LVU95
+ 314 0036 ECE7     		b	.L19
+ 315              	.L25:
+ 316              		.align	2
+ 317              	.L24:
+ 318 0038 00000000 		.word	res_2592_1944_regs
+ 319 003c 00000000 		.word	mode_2l_10b_regs
+ 320              		.cfi_endproc
+ 321              	.LFE191:
+ 323              		.section	.text.IMX335_Start,"ax",%progbits
+ 324              		.align	1
+ 325              		.global	IMX335_Start
+ 326              		.syntax unified
+ 327              		.thumb
+ 328              		.thumb_func
+ 330              	IMX335_Start:
+ 331              	.LVL21:
+ 332              	.LFB192:
+ 465:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 466:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 467:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Initializes the IMX335 CAMERA component.
+ 468:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 469:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Resolution  Camera resolution
+ 470:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  PixelFormat pixel format to be configured
+ 471:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 472:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 473:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_Start(IMX335_Object_t *pObj)
+ 474:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 333              		.loc 1 474 1 is_stmt 1 view -0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 8
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 475:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t tmp;
+ 337              		.loc 1 475 3 view .LVU97
+ 476:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 338              		.loc 1 476 3 view .LVU98
+ 477:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   /* Start streaming */
+ 478:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   tmp = IMX335_MODE_STREAMING;
+ 339              		.loc 1 478 3 view .LVU99
+ARM GAS  /tmp/ccxuFpWh.s 			page 16
+
+
+ 340              		.loc 1 478 7 is_stmt 0 view .LVU100
+ 341 0000 0023     		movs	r3, #0
+ 474:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t tmp;
+ 342              		.loc 1 474 1 view .LVU101
+ 343 0002 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 344              		.cfi_def_cfa_offset 24
+ 345              		.cfi_offset 4, -16
+ 346              		.cfi_offset 5, -12
+ 347              		.cfi_offset 6, -8
+ 348              		.cfi_offset 14, -4
+ 474:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t tmp;
+ 349              		.loc 1 474 1 view .LVU102
+ 350 0004 0546     		mov	r5, r0
+ 351              		.loc 1 478 7 view .LVU103
+ 352 0006 8DF80730 		strb	r3, [sp, #7]
+ 479:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   ret = imx335_write_reg(&pObj->Ctx, IMX335_REG_MODE_SELECT, &tmp, 1);
+ 353              		.loc 1 479 3 is_stmt 1 view .LVU104
+ 354              		.loc 1 479 9 is_stmt 0 view .LVU105
+ 355 000a 4FF44051 		mov	r1, #12288
+ 356 000e 0123     		movs	r3, #1
+ 357 0010 0DF10702 		add	r2, sp, #7
+ 358 0014 1830     		adds	r0, r0, #24
+ 359              	.LVL22:
+ 360              		.loc 1 479 9 view .LVU106
+ 361 0016 FFF7FEFF 		bl	imx335_write_reg
+ 362              	.LVL23:
+ 480:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if (ret != IMX335_OK)
+ 363              		.loc 1 480 3 is_stmt 1 view .LVU107
+ 364              		.loc 1 480 6 is_stmt 0 view .LVU108
+ 365 001a 0446     		mov	r4, r0
+ 366 001c 50B9     		cbnz	r0, .L29
+ 481:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 482:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     return IMX335_ERROR;
+ 483:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 484:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   IMX335_Delay(pObj, 20);
+ 367              		.loc 1 484 3 is_stmt 1 view .LVU109
+ 368              	.LVL24:
+ 369              	.LBB4:
+ 370              	.LBI4:
+ 337:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 371              		.loc 1 337 16 view .LVU110
+ 372              	.LBB5:
+ 339:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   tickstart = pObj->IO.GetTick();
+ 373              		.loc 1 339 3 view .LVU111
+ 340:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   while((pObj->IO.GetTick() - tickstart) < Delay)
+ 374              		.loc 1 340 3 view .LVU112
+ 340:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   while((pObj->IO.GetTick() - tickstart) < Delay)
+ 375              		.loc 1 340 15 is_stmt 0 view .LVU113
+ 376 001e 6B69     		ldr	r3, [r5, #20]
+ 377 0020 9847     		blx	r3
+ 378              	.LVL25:
+ 340:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   while((pObj->IO.GetTick() - tickstart) < Delay)
+ 379              		.loc 1 340 15 view .LVU114
+ 380 0022 0646     		mov	r6, r0
+ 381              	.LVL26:
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 382              		.loc 1 341 3 is_stmt 1 view .LVU115
+ARM GAS  /tmp/ccxuFpWh.s 			page 17
+
+
+ 383              	.L28:
+ 343:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return IMX335_OK;
+ 384              		.loc 1 343 3 view .LVU116
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 385              		.loc 1 341 42 discriminator 1 view .LVU117
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 386              		.loc 1 341 10 is_stmt 0 discriminator 1 view .LVU118
+ 387 0024 6B69     		ldr	r3, [r5, #20]
+ 388 0026 9847     		blx	r3
+ 389              	.LVL27:
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 390              		.loc 1 341 29 discriminator 1 view .LVU119
+ 391 0028 831B     		subs	r3, r0, r6
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 392              		.loc 1 341 42 discriminator 1 view .LVU120
+ 393 002a 132B     		cmp	r3, #19
+ 394 002c FAD9     		bls	.L28
+ 395              	.LVL28:
+ 396              	.L26:
+ 341:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 397              		.loc 1 341 42 discriminator 1 view .LVU121
+ 398              	.LBE5:
+ 399              	.LBE4:
+ 485:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 486:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 400              		.loc 1 486 1 view .LVU122
+ 401 002e 2046     		mov	r0, r4
+ 402 0030 02B0     		add	sp, sp, #8
+ 403              		.cfi_remember_state
+ 404              		.cfi_def_cfa_offset 16
+ 405              		@ sp needed
+ 406 0032 70BD     		pop	{r4, r5, r6, pc}
+ 407              	.LVL29:
+ 408              	.L29:
+ 409              		.cfi_restore_state
+ 482:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 410              		.loc 1 482 12 view .LVU123
+ 411 0034 4FF0FF34 		mov	r4, #-1
+ 412 0038 F9E7     		b	.L26
+ 413              		.cfi_endproc
+ 414              	.LFE192:
+ 416              		.section	.text.IMX335_DeInit,"ax",%progbits
+ 417              		.align	1
+ 418              		.global	IMX335_DeInit
+ 419              		.syntax unified
+ 420              		.thumb
+ 421              		.thumb_func
+ 423              	IMX335_DeInit:
+ 424              	.LVL30:
+ 425              	.LFB193:
+ 487:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 488:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 489:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  De-initializes the camera sensor.
+ 490:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 491:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 492:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 493:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_DeInit(IMX335_Object_t *pObj)
+ARM GAS  /tmp/ccxuFpWh.s 			page 18
+
+
+ 494:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 426              		.loc 1 494 1 is_stmt 1 view -0
+ 427              		.cfi_startproc
+ 428              		@ args = 0, pretend = 0, frame = 0
+ 429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 430              		@ link register save eliminated.
+ 495:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if(pObj->IsInitialized == 1U)
+ 431              		.loc 1 495 3 view .LVU125
+ 432              		.loc 1 495 5 is_stmt 0 view .LVU126
+ 433 0000 90F82430 		ldrb	r3, [r0, #36]	@ zero_extendqisi2
+ 434 0004 012B     		cmp	r3, #1
+ 496:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 497:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     /* De-initialize camera sensor interface */
+ 498:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     pObj->IsInitialized = 0U;
+ 435              		.loc 1 498 5 is_stmt 1 view .LVU127
+ 436              		.loc 1 498 25 is_stmt 0 view .LVU128
+ 437 0006 04BF     		itt	eq
+ 438 0008 0023     		moveq	r3, #0
+ 439 000a 80F82430 		strbeq	r3, [r0, #36]
+ 499:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 500:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 501:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return IMX335_OK;
+ 440              		.loc 1 501 3 is_stmt 1 view .LVU129
+ 502:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 441              		.loc 1 502 1 is_stmt 0 view .LVU130
+ 442 000e 0020     		movs	r0, #0
+ 443              	.LVL31:
+ 444              		.loc 1 502 1 view .LVU131
+ 445 0010 7047     		bx	lr
+ 446              		.cfi_endproc
+ 447              	.LFE193:
+ 449              		.section	.text.IMX335_ReadID,"ax",%progbits
+ 450              		.align	1
+ 451              		.global	IMX335_ReadID
+ 452              		.syntax unified
+ 453              		.thumb
+ 454              		.thumb_func
+ 456              	IMX335_ReadID:
+ 457              	.LVL32:
+ 458              	.LFB194:
+ 503:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 504:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 505:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Read the IMX335 Camera identity.
+ 506:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 507:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Id    pointer to component ID
+ 508:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 509:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 510:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_ReadID(IMX335_Object_t *pObj, uint32_t *Id)
+ 511:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 459              		.loc 1 511 1 is_stmt 1 view -0
+ 460              		.cfi_startproc
+ 461              		@ args = 0, pretend = 0, frame = 8
+ 462              		@ frame_needed = 0, uses_anonymous_args = 0
+ 512:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret;
+ 463              		.loc 1 512 3 view .LVU133
+ 513:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t tmp;
+ 464              		.loc 1 513 3 view .LVU134
+ARM GAS  /tmp/ccxuFpWh.s 			page 19
+
+
+ 514:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 515:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   /* Initialize I2C */
+ 516:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   pObj->IO.Init();
+ 465              		.loc 1 516 3 view .LVU135
+ 511:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret;
+ 466              		.loc 1 511 1 is_stmt 0 view .LVU136
+ 467 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 468              		.cfi_def_cfa_offset 24
+ 469              		.cfi_offset 4, -12
+ 470              		.cfi_offset 5, -8
+ 471              		.cfi_offset 14, -4
+ 472              		.loc 1 516 3 view .LVU137
+ 473 0002 0446     		mov	r4, r0
+ 474 0004 54F8183B 		ldr	r3, [r4], #24
+ 511:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret;
+ 475              		.loc 1 511 1 view .LVU138
+ 476 0008 0D46     		mov	r5, r1
+ 477              		.loc 1 516 3 view .LVU139
+ 478 000a 9847     		blx	r3
+ 479              	.LVL33:
+ 517:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 518:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if(imx335_read_reg(&pObj->Ctx, IMX335_REG_ID, &tmp, 1)!= IMX335_OK)
+ 480              		.loc 1 518 3 is_stmt 1 view .LVU140
+ 481              		.loc 1 518 6 is_stmt 0 view .LVU141
+ 482 000c 0123     		movs	r3, #1
+ 483 000e 43F61211 		movw	r1, #14610
+ 484 0012 2046     		mov	r0, r4
+ 485 0014 0DF10702 		add	r2, sp, #7
+ 486 0018 FFF7FEFF 		bl	imx335_read_reg
+ 487              	.LVL34:
+ 488              		.loc 1 518 5 discriminator 1 view .LVU142
+ 489 001c 20B9     		cbnz	r0, .L35
+ 519:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 520:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_ERROR;
+ 521:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 522:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 523:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 524:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     *Id = tmp;
+ 490              		.loc 1 524 5 is_stmt 1 view .LVU143
+ 491              		.loc 1 524 9 is_stmt 0 view .LVU144
+ 492 001e 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 493 0022 2B60     		str	r3, [r5]
+ 525:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_OK;
+ 494              		.loc 1 525 5 is_stmt 1 view .LVU145
+ 495              	.LVL35:
+ 496              	.L33:
+ 526:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 527:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 528:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   /* Component status */
+ 529:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 530:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 497              		.loc 1 530 1 is_stmt 0 view .LVU146
+ 498 0024 03B0     		add	sp, sp, #12
+ 499              		.cfi_remember_state
+ 500              		.cfi_def_cfa_offset 12
+ 501              		@ sp needed
+ 502 0026 30BD     		pop	{r4, r5, pc}
+ARM GAS  /tmp/ccxuFpWh.s 			page 20
+
+
+ 503              	.LVL36:
+ 504              	.L35:
+ 505              		.cfi_restore_state
+ 520:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 506              		.loc 1 520 9 view .LVU147
+ 507 0028 4FF0FF30 		mov	r0, #-1
+ 508              	.LVL37:
+ 529:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 509              		.loc 1 529 3 is_stmt 1 view .LVU148
+ 529:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 510              		.loc 1 529 10 is_stmt 0 view .LVU149
+ 511 002c FAE7     		b	.L33
+ 512              		.cfi_endproc
+ 513              	.LFE194:
+ 515              		.section	.text.IMX335_GetCapabilities,"ax",%progbits
+ 516              		.align	1
+ 517              		.global	IMX335_GetCapabilities
+ 518              		.syntax unified
+ 519              		.thumb
+ 520              		.thumb_func
+ 522              	IMX335_GetCapabilities:
+ 523              	.LVL38:
+ 524              	.LFB195:
+ 531:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 532:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 533:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Read the IMX335 Camera Capabilities.
+ 534:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj          pointer to component object
+ 535:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Capabilities  pointer to component Capabilities
+ 536:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 537:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 538:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_GetCapabilities(IMX335_Object_t *pObj, IMX335_Capabilities_t *Capabilities)
+ 539:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 525              		.loc 1 539 1 is_stmt 1 view -0
+ 526              		.cfi_startproc
+ 527              		@ args = 0, pretend = 0, frame = 0
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 529              		@ link register save eliminated.
+ 540:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret;
+ 530              		.loc 1 540 3 view .LVU151
+ 541:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 542:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if(pObj == NULL)
+ 531              		.loc 1 542 3 view .LVU152
+ 532              		.loc 1 542 5 is_stmt 0 view .LVU153
+ 533 0000 88B1     		cbz	r0, .L38
+ 543:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 544:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_ERROR;
+ 545:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 546:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 547:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 548:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Brightness    = 0;
+ 534              		.loc 1 548 5 is_stmt 1 view .LVU154
+ 535              		.loc 1 548 40 is_stmt 0 view .LVU155
+ 536 0002 0020     		movs	r0, #0
+ 537              	.LVL39:
+ 549:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Contrast      = 0;
+ 550:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_HueDegree     = 0;
+ 551:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Gain          = 1;
+ARM GAS  /tmp/ccxuFpWh.s 			page 21
+
+
+ 538              		.loc 1 551 40 view .LVU156
+ 539 0004 0123     		movs	r3, #1
+ 550:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Gain          = 1;
+ 540              		.loc 1 550 40 view .LVU157
+ 541 0006 C1E90500 		strd	r0, r0, [r1, #20]
+ 552:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Exposure      = 1;
+ 542              		.loc 1 552 40 view .LVU158
+ 543 000a C1E90733 		strd	r3, r3, [r1, #28]
+ 553:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_ExposureMode  = 0;
+ 554:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_LightMode     = 0;
+ 555:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_MirrorFlip    = 1;
+ 556:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_NightMode     = 0;
+ 557:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Resolution    = 0;
+ 558:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Saturation    = 0;
+ 559:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SpecialEffect = 0;
+ 560:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Zoom          = 0;
+ 561:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SensorInfo    = 1;
+ 562:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_TestPattern   = 1;
+ 544              		.loc 1 562 40 view .LVU159
+ 545 000e C1E90D33 		strd	r3, r3, [r1, #52]
+ 548:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Contrast      = 0;
+ 546              		.loc 1 548 40 view .LVU160
+ 547 0012 C860     		str	r0, [r1, #12]
+ 549:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_HueDegree     = 0;
+ 548              		.loc 1 549 5 is_stmt 1 view .LVU161
+ 551:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Exposure      = 1;
+ 549              		.loc 1 551 5 view .LVU162
+ 553:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_LightMode     = 0;
+ 550              		.loc 1 553 5 view .LVU163
+ 553:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_LightMode     = 0;
+ 551              		.loc 1 553 40 is_stmt 0 view .LVU164
+ 552 0014 0863     		str	r0, [r1, #48]
+ 554:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_MirrorFlip    = 1;
+ 553              		.loc 1 554 5 is_stmt 1 view .LVU165
+ 554:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_MirrorFlip    = 1;
+ 554              		.loc 1 554 40 is_stmt 0 view .LVU166
+ 555 0016 4860     		str	r0, [r1, #4]
+ 555:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_NightMode     = 0;
+ 556              		.loc 1 555 5 is_stmt 1 view .LVU167
+ 555:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_NightMode     = 0;
+ 557              		.loc 1 555 40 is_stmt 0 view .LVU168
+ 558 0018 4B62     		str	r3, [r1, #36]
+ 556:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Resolution    = 0;
+ 559              		.loc 1 556 5 is_stmt 1 view .LVU169
+ 556:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Resolution    = 0;
+ 560              		.loc 1 556 40 is_stmt 0 view .LVU170
+ 561 001a C862     		str	r0, [r1, #44]
+ 557:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Saturation    = 0;
+ 562              		.loc 1 557 5 is_stmt 1 view .LVU171
+ 557:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Saturation    = 0;
+ 563              		.loc 1 557 40 is_stmt 0 view .LVU172
+ 564 001c 0860     		str	r0, [r1]
+ 558:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SpecialEffect = 0;
+ 565              		.loc 1 558 5 is_stmt 1 view .LVU173
+ 558:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SpecialEffect = 0;
+ 566              		.loc 1 558 40 is_stmt 0 view .LVU174
+ 567 001e 0861     		str	r0, [r1, #16]
+ARM GAS  /tmp/ccxuFpWh.s 			page 22
+
+
+ 559:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Zoom          = 0;
+ 568              		.loc 1 559 5 is_stmt 1 view .LVU175
+ 559:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_Zoom          = 0;
+ 569              		.loc 1 559 40 is_stmt 0 view .LVU176
+ 570 0020 8860     		str	r0, [r1, #8]
+ 560:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SensorInfo    = 1;
+ 571              		.loc 1 560 5 is_stmt 1 view .LVU177
+ 560:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_SensorInfo    = 1;
+ 572              		.loc 1 560 40 is_stmt 0 view .LVU178
+ 573 0022 8862     		str	r0, [r1, #40]
+ 561:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     Capabilities->Config_TestPattern   = 1;
+ 574              		.loc 1 561 5 is_stmt 1 view .LVU179
+ 563:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 564:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_OK;
+ 575              		.loc 1 564 5 view .LVU180
+ 576              	.LVL40:
+ 577              		.loc 1 564 5 is_stmt 0 view .LVU181
+ 578 0024 7047     		bx	lr
+ 579              	.LVL41:
+ 580              	.L38:
+ 544:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 581              		.loc 1 544 9 view .LVU182
+ 582 0026 4FF0FF30 		mov	r0, #-1
+ 583              	.LVL42:
+ 565:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 566:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 567:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 584              		.loc 1 567 3 is_stmt 1 view .LVU183
+ 568:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 585              		.loc 1 568 1 is_stmt 0 view .LVU184
+ 586 002a 7047     		bx	lr
+ 587              		.cfi_endproc
+ 588              	.LFE195:
+ 590              		.section	.text.IMX335_SetGain,"ax",%progbits
+ 591              		.align	1
+ 592              		.global	IMX335_SetGain
+ 593              		.syntax unified
+ 594              		.thumb
+ 595              		.thumb_func
+ 597              	IMX335_SetGain:
+ 598              	.LVL43:
+ 599              	.LFB196:
+ 569:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 570:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 571:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Set the gain
+ 572:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 573:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Gain Gain in mdB
+ 574:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 575:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 576:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_SetGain(IMX335_Object_t *pObj, int32_t gain)
+ 577:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 600              		.loc 1 577 1 is_stmt 1 view -0
+ 601              		.cfi_startproc
+ 602              		@ args = 0, pretend = 0, frame = 16
+ 603              		@ frame_needed = 0, uses_anonymous_args = 0
+ 578:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 604              		.loc 1 578 3 view .LVU186
+ARM GAS  /tmp/ccxuFpWh.s 			page 23
+
+
+ 579:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t hold;
+ 605              		.loc 1 579 3 view .LVU187
+ 580:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 581:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if ((gain > IMX335_GAIN_MAX) || (gain < IMX335_GAIN_MIN))
+ 606              		.loc 1 581 3 view .LVU188
+ 577:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 607              		.loc 1 577 1 is_stmt 0 view .LVU189
+ 608 0000 30B5     		push	{r4, r5, lr}
+ 609              		.cfi_def_cfa_offset 12
+ 610              		.cfi_offset 4, -12
+ 611              		.cfi_offset 5, -8
+ 612              		.cfi_offset 14, -4
+ 613              		.loc 1 581 6 view .LVU190
+ 614 0002 1A4B     		ldr	r3, .L43
+ 577:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 615              		.loc 1 577 1 view .LVU191
+ 616 0004 85B0     		sub	sp, sp, #20
+ 617              		.cfi_def_cfa_offset 32
+ 618              		.loc 1 581 6 view .LVU192
+ 619 0006 9942     		cmp	r1, r3
+ 620 0008 03D9     		bls	.L40
+ 621              	.LVL44:
+ 622              	.L42:
+ 582:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 583:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_ERROR;
+ 623              		.loc 1 583 9 view .LVU193
+ 624 000a 4FF0FF30 		mov	r0, #-1
+ 625              	.LVL45:
+ 626              	.L39:
+ 584:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 585:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 586:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 587:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     /* Convert to IMX335 gain unit (0.3 dB = 300 mdB) */
+ 588:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     gain /= IMX335_GAIN_UNIT_MDB;
+ 589:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 590:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     hold = 1;
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 592:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 593:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_ERROR;
+ 594:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 595:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     else
+ 596:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 597:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, IMX335_REG_GAIN, (uint8_t *)&gain, 2) != IMX335_OK)
+ 598:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 599:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 600:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 601:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       else
+ 602:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 603:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         hold = 0;
+ 604:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 605:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 606:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           ret = IMX335_ERROR;
+ 607:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         }
+ 608:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 609:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 610:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 611:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ARM GAS  /tmp/ccxuFpWh.s 			page 24
+
+
+ 612:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** return ret;
+ 613:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 627              		.loc 1 613 1 view .LVU194
+ 628 000e 05B0     		add	sp, sp, #20
+ 629              		.cfi_remember_state
+ 630              		.cfi_def_cfa_offset 12
+ 631              		@ sp needed
+ 632 0010 30BD     		pop	{r4, r5, pc}
+ 633              	.LVL46:
+ 634              	.L40:
+ 635              		.cfi_restore_state
+ 588:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 636              		.loc 1 588 5 is_stmt 1 view .LVU195
+ 588:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 637              		.loc 1 588 10 is_stmt 0 view .LVU196
+ 638 0012 4FF49673 		mov	r3, #300
+ 590:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 639              		.loc 1 590 10 view .LVU197
+ 640 0016 0125     		movs	r5, #1
+ 588:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 641              		.loc 1 588 10 view .LVU198
+ 642 0018 91FBF3F1 		sdiv	r1, r1, r3
+ 643              	.LVL47:
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 644              		.loc 1 591 8 view .LVU199
+ 645 001c 00F11804 		add	r4, r0, #24
+ 588:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 646              		.loc 1 588 10 view .LVU200
+ 647 0020 0191     		str	r1, [sp, #4]
+ 590:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 648              		.loc 1 590 5 is_stmt 1 view .LVU201
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 649              		.loc 1 591 8 is_stmt 0 view .LVU202
+ 650 0022 2B46     		mov	r3, r5
+ 651 0024 43F20101 		movw	r1, #12289
+ 652 0028 2046     		mov	r0, r4
+ 653              	.LVL48:
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 654              		.loc 1 591 8 view .LVU203
+ 655 002a 0DF10F02 		add	r2, sp, #15
+ 590:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 656              		.loc 1 590 10 view .LVU204
+ 657 002e 8DF80F50 		strb	r5, [sp, #15]
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 658              		.loc 1 591 5 is_stmt 1 view .LVU205
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 659              		.loc 1 591 8 is_stmt 0 view .LVU206
+ 660 0032 FFF7FEFF 		bl	imx335_write_reg
+ 661              	.LVL49:
+ 591:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 662              		.loc 1 591 7 discriminator 1 view .LVU207
+ 663 0036 0028     		cmp	r0, #0
+ 664 0038 E7D1     		bne	.L42
+ 597:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 665              		.loc 1 597 7 is_stmt 1 view .LVU208
+ 597:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 666              		.loc 1 597 10 is_stmt 0 view .LVU209
+ARM GAS  /tmp/ccxuFpWh.s 			page 25
+
+
+ 667 003a 0223     		movs	r3, #2
+ 668 003c 43F2E801 		movw	r1, #12520
+ 669 0040 2046     		mov	r0, r4
+ 670 0042 01AA     		add	r2, sp, #4
+ 671 0044 FFF7FEFF 		bl	imx335_write_reg
+ 672              	.LVL50:
+ 597:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 673              		.loc 1 597 9 discriminator 1 view .LVU210
+ 674 0048 0028     		cmp	r0, #0
+ 675 004a DED1     		bne	.L42
+ 603:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 676              		.loc 1 603 9 is_stmt 1 view .LVU211
+ 603:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 677              		.loc 1 603 14 is_stmt 0 view .LVU212
+ 678 004c 8DF80F00 		strb	r0, [sp, #15]
+ 604:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 679              		.loc 1 604 9 is_stmt 1 view .LVU213
+ 604:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 680              		.loc 1 604 12 is_stmt 0 view .LVU214
+ 681 0050 2B46     		mov	r3, r5
+ 682 0052 43F20101 		movw	r1, #12289
+ 683 0056 2046     		mov	r0, r4
+ 684 0058 0DF10F02 		add	r2, sp, #15
+ 685 005c FFF7FEFF 		bl	imx335_write_reg
+ 686              	.LVL51:
+ 604:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 687              		.loc 1 604 11 discriminator 1 view .LVU215
+ 688 0060 0038     		subs	r0, r0, #0
+ 689 0062 18BF     		it	ne
+ 690 0064 0120     		movne	r0, #1
+ 691 0066 4042     		rsbs	r0, r0, #0
+ 692              	.LVL52:
+ 612:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 693              		.loc 1 612 1 is_stmt 1 view .LVU216
+ 612:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 694              		.loc 1 612 8 is_stmt 0 view .LVU217
+ 695 0068 D1E7     		b	.L39
+ 696              	.L44:
+ 697 006a 00BF     		.align	2
+ 698              	.L43:
+ 699 006c 40190100 		.word	72000
+ 700              		.cfi_endproc
+ 701              	.LFE196:
+ 703              		.section	.text.IMX335_SetExposure,"ax",%progbits
+ 704              		.align	1
+ 705              		.global	IMX335_SetExposure
+ 706              		.syntax unified
+ 707              		.thumb
+ 708              		.thumb_func
+ 710              	IMX335_SetExposure:
+ 711              	.LVL53:
+ 712              	.LFB197:
+ 614:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 615:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 616:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Set the exposure
+ 617:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 618:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Exposure Exposure in micro seconds
+ARM GAS  /tmp/ccxuFpWh.s 			page 26
+
+
+ 619:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 620:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 621:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_SetExposure(IMX335_Object_t *pObj, int32_t exposure)
+ 622:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 713              		.loc 1 622 1 is_stmt 1 view -0
+ 714              		.cfi_startproc
+ 715              		@ args = 0, pretend = 0, frame = 16
+ 716              		@ frame_needed = 0, uses_anonymous_args = 0
+ 623:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 717              		.loc 1 623 3 view .LVU219
+ 624:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t vmax, shutter;
+ 718              		.loc 1 624 3 view .LVU220
+ 625:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t hold;
+ 719              		.loc 1 625 3 view .LVU221
+ 626:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 627:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 628:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if (imx335_read_reg(&pObj->Ctx, IMX335_REG_VMAX, (uint8_t *)&vmax, 4) != IMX335_OK)
+ 720              		.loc 1 628 3 view .LVU222
+ 622:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 721              		.loc 1 622 1 is_stmt 0 view .LVU223
+ 722 0000 30B5     		push	{r4, r5, lr}
+ 723              		.cfi_def_cfa_offset 12
+ 724              		.cfi_offset 4, -12
+ 725              		.cfi_offset 5, -8
+ 726              		.cfi_offset 14, -4
+ 727 0002 2DED028B 		vpush.64	{d8}
+ 728              		.cfi_def_cfa_offset 20
+ 729              		.cfi_offset 80, -20
+ 730              		.cfi_offset 81, -16
+ 731              		.loc 1 628 7 view .LVU224
+ 732 0006 00F11804 		add	r4, r0, #24
+ 622:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 733              		.loc 1 622 1 view .LVU225
+ 734 000a 85B0     		sub	sp, sp, #20
+ 735              		.cfi_def_cfa_offset 40
+ 622:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 736              		.loc 1 622 1 view .LVU226
+ 737 000c 08EE101A 		vmov	s16, r1	@ int
+ 738              		.loc 1 628 7 view .LVU227
+ 739 0010 0423     		movs	r3, #4
+ 740 0012 43F23001 		movw	r1, #12336
+ 741              	.LVL54:
+ 742              		.loc 1 628 7 view .LVU228
+ 743 0016 2046     		mov	r0, r4
+ 744              	.LVL55:
+ 745              		.loc 1 628 7 view .LVU229
+ 746 0018 02AA     		add	r2, sp, #8
+ 747 001a FFF7FEFF 		bl	imx335_read_reg
+ 748              	.LVL56:
+ 749              		.loc 1 628 6 discriminator 1 view .LVU230
+ 750 001e 28B1     		cbz	r0, .L46
+ 751              	.LVL57:
+ 752              	.L48:
+ 629:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 630:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     ret = IMX335_ERROR;
+ 753              		.loc 1 630 9 view .LVU231
+ 754 0020 4FF0FF30 		mov	r0, #-1
+ARM GAS  /tmp/ccxuFpWh.s 			page 27
+
+
+ 755              	.LVL58:
+ 756              	.L45:
+ 631:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 632:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 633:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     shutter = (uint32_t) (vmax - (exposure / IMX335_1H_PERIOD_USEC));
+ 635:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 636:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if (shutter < IMX335_SHUTTER_MIN)
+ 637:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 638:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_ERROR;
+ 639:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 640:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     else
+ 641:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 642:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       hold = 1;
+ 643:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 644:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 645:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 646:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 647:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       else
+ 648:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 649:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         if(imx335_write_reg(&pObj->Ctx, IMX335_REG_SHUTTER, (uint8_t *)&shutter, 3) != IMX335_OK)
+ 650:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 651:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           ret = IMX335_ERROR;
+ 652:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         }
+ 653:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         else
+ 654:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 655:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           hold = 0;
+ 656:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 657:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           {
+ 658:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****             ret = IMX335_ERROR;
+ 659:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           }
+ 660:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         }
+ 661:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 662:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 663:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 664:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 665:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 666:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 757              		.loc 1 666 1 view .LVU232
+ 758 0024 05B0     		add	sp, sp, #20
+ 759              		.cfi_remember_state
+ 760              		.cfi_def_cfa_offset 20
+ 761              		@ sp needed
+ 762 0026 BDEC028B 		vldm	sp!, {d8}
+ 763              		.cfi_restore 80
+ 764              		.cfi_restore 81
+ 765              		.cfi_def_cfa_offset 12
+ 766 002a 30BD     		pop	{r4, r5, pc}
+ 767              	.LVL59:
+ 768              	.L46:
+ 769              		.cfi_restore_state
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 770              		.loc 1 634 5 is_stmt 1 view .LVU233
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 771              		.loc 1 634 32 is_stmt 0 view .LVU234
+ 772 002c DDED027A 		vldr.32	s15, [sp, #8]	@ int
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ARM GAS  /tmp/ccxuFpWh.s 			page 28
+
+
+ 773              		.loc 1 634 44 view .LVU235
+ 774 0030 B8EEC88A 		vcvt.f32.s32	s16, s16
+ 775              	.LVL60:
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 776              		.loc 1 634 44 view .LVU236
+ 777 0034 DFED1A6A 		vldr.32	s13, .L49
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 778              		.loc 1 634 32 view .LVU237
+ 779 0038 F8EE677A 		vcvt.f32.u32	s15, s15
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 780              		.loc 1 634 44 view .LVU238
+ 781 003c 88EE267A 		vdiv.f32	s14, s16, s13
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 782              		.loc 1 634 32 view .LVU239
+ 783 0040 77EEC77A 		vsub.f32	s15, s15, s14
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 784              		.loc 1 634 15 view .LVU240
+ 785 0044 FCEEE77A 		vcvt.u32.f32	s15, s15
+ 786 0048 17EE903A 		vmov	r3, s15	@ int
+ 636:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 787              		.loc 1 636 8 view .LVU241
+ 788 004c 082B     		cmp	r3, #8
+ 634:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 789              		.loc 1 634 13 view .LVU242
+ 790 004e CDED037A 		vstr.32	s15, [sp, #12]	@ int
+ 636:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 791              		.loc 1 636 5 is_stmt 1 view .LVU243
+ 636:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 792              		.loc 1 636 8 is_stmt 0 view .LVU244
+ 793 0052 E5D9     		bls	.L48
+ 642:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 794              		.loc 1 642 7 is_stmt 1 view .LVU245
+ 642:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 795              		.loc 1 642 12 is_stmt 0 view .LVU246
+ 796 0054 0125     		movs	r5, #1
+ 643:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 797              		.loc 1 643 10 view .LVU247
+ 798 0056 43F20101 		movw	r1, #12289
+ 799 005a 2B46     		mov	r3, r5
+ 800 005c 2046     		mov	r0, r4
+ 801 005e 0DF10702 		add	r2, sp, #7
+ 642:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 802              		.loc 1 642 12 view .LVU248
+ 803 0062 8DF80750 		strb	r5, [sp, #7]
+ 643:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 804              		.loc 1 643 7 is_stmt 1 view .LVU249
+ 643:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 805              		.loc 1 643 10 is_stmt 0 view .LVU250
+ 806 0066 FFF7FEFF 		bl	imx335_write_reg
+ 807              	.LVL61:
+ 643:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 808              		.loc 1 643 9 discriminator 1 view .LVU251
+ 809 006a 0028     		cmp	r0, #0
+ 810 006c D8D1     		bne	.L48
+ 649:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 811              		.loc 1 649 9 is_stmt 1 view .LVU252
+ 649:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ARM GAS  /tmp/ccxuFpWh.s 			page 29
+
+
+ 812              		.loc 1 649 12 is_stmt 0 view .LVU253
+ 813 006e 0323     		movs	r3, #3
+ 814 0070 43F25801 		movw	r1, #12376
+ 815 0074 2046     		mov	r0, r4
+ 816 0076 03AA     		add	r2, sp, #12
+ 817 0078 FFF7FEFF 		bl	imx335_write_reg
+ 818              	.LVL62:
+ 649:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         {
+ 819              		.loc 1 649 11 discriminator 1 view .LVU254
+ 820 007c 0028     		cmp	r0, #0
+ 821 007e CFD1     		bne	.L48
+ 655:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 822              		.loc 1 655 11 is_stmt 1 view .LVU255
+ 655:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           if(imx335_write_reg(&pObj->Ctx, IMX335_REG_HOLD, &hold, 1) != IMX335_OK)
+ 823              		.loc 1 655 16 is_stmt 0 view .LVU256
+ 824 0080 8DF80700 		strb	r0, [sp, #7]
+ 656:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           {
+ 825              		.loc 1 656 11 is_stmt 1 view .LVU257
+ 656:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           {
+ 826              		.loc 1 656 14 is_stmt 0 view .LVU258
+ 827 0084 2B46     		mov	r3, r5
+ 828 0086 43F20101 		movw	r1, #12289
+ 829 008a 2046     		mov	r0, r4
+ 830 008c 0DF10702 		add	r2, sp, #7
+ 831 0090 FFF7FEFF 		bl	imx335_write_reg
+ 832              	.LVL63:
+ 656:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****           {
+ 833              		.loc 1 656 13 discriminator 1 view .LVU259
+ 834 0094 0038     		subs	r0, r0, #0
+ 835 0096 18BF     		it	ne
+ 836 0098 0120     		movne	r0, #1
+ 837 009a 4042     		rsbs	r0, r0, #0
+ 838              	.LVL64:
+ 665:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 839              		.loc 1 665 3 is_stmt 1 view .LVU260
+ 665:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 840              		.loc 1 665 10 is_stmt 0 view .LVU261
+ 841 009c C2E7     		b	.L45
+ 842              	.L50:
+ 843 009e 00BF     		.align	2
+ 844              	.L49:
+ 845 00a0 7C09ED40 		.word	1089276284
+ 846              		.cfi_endproc
+ 847              	.LFE197:
+ 849              		.section	.text.IMX335_SetFrequency,"ax",%progbits
+ 850              		.align	1
+ 851              		.global	IMX335_SetFrequency
+ 852              		.syntax unified
+ 853              		.thumb
+ 854              		.thumb_func
+ 856              	IMX335_SetFrequency:
+ 857              	.LVL65:
+ 858              	.LFB198:
+ 667:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 668:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 669:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Set the Frequency
+ 670:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ARM GAS  /tmp/ccxuFpWh.s 			page 30
+
+
+ 671:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  frequency in Mhz
+ 672:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 673:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 674:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_SetFrequency(IMX335_Object_t *pObj, int32_t frequency)
+ 675:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 859              		.loc 1 675 1 is_stmt 1 view -0
+ 860              		.cfi_startproc
+ 861              		@ args = 0, pretend = 0, frame = 0
+ 862              		@ frame_needed = 0, uses_anonymous_args = 0
+ 676:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t ret = IMX335_OK;
+ 863              		.loc 1 676 3 view .LVU263
+ 677:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 678:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   switch (frequency)
+ 864              		.loc 1 678 3 view .LVU264
+ 865 0000 0139     		subs	r1, r1, #1
+ 866              	.LVL66:
+ 679:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 680:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_INCK_74MHZ:
+ 681:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, inck_74Mhz_regs, ARRAY_SIZE(inck_74Mhz_regs)) != IMX335_OK)
+ 682:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 683:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 684:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 685:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 686:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_INCK_27MHZ:
+ 687:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, inck_27Mhz_regs, ARRAY_SIZE(inck_27Mhz_regs)) != IMX335_OK)
+ 688:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 689:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 690:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 691:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 692:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_INCK_24MHZ:
+ 693:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, inck_24Mhz_regs, ARRAY_SIZE(inck_24Mhz_regs)) != IMX335_OK)
+ 694:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 695:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 696:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 697:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 698:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_INCK_18MHZ:
+ 699:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, inck_18Mhz_regs, ARRAY_SIZE(inck_18Mhz_regs)) != IMX335_OK)
+ 700:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 701:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 702:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 703:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 704:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     default:
+ 705:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       /* IMX335_INCK_6MHZ */
+ 706:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, inck_6Mhz_regs, ARRAY_SIZE(inck_6Mhz_regs)) != IMX335_OK)
+ 867              		.loc 1 706 10 is_stmt 0 view .LVU265
+ 868 0002 0722     		movs	r2, #7
+ 675:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t ret = IMX335_OK;
+ 869              		.loc 1 675 1 view .LVU266
+ 870 0004 08B5     		push	{r3, lr}
+ 871              		.cfi_def_cfa_offset 8
+ 872              		.cfi_offset 3, -8
+ 873              		.cfi_offset 14, -4
+ 678:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 874              		.loc 1 678 3 view .LVU267
+ 875 0006 0329     		cmp	r1, #3
+ 876 0008 11D8     		bhi	.L52
+ 877 000a DFE801F0 		tbb	[pc, r1]
+ARM GAS  /tmp/ccxuFpWh.s 			page 31
+
+
+ 878              	.L54:
+ 879 000e 0E       		.byte	(.L57-.L54)/2
+ 880 000f 0C       		.byte	(.L56-.L54)/2
+ 881 0010 0A       		.byte	(.L55-.L54)/2
+ 882 0011 02       		.byte	(.L53-.L54)/2
+ 883              		.p2align 1
+ 884              	.L53:
+ 681:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 885              		.loc 1 681 7 is_stmt 1 view .LVU268
+ 681:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 886              		.loc 1 681 10 is_stmt 0 view .LVU269
+ 887 0012 0849     		ldr	r1, .L60
+ 888              	.LVL67:
+ 889              	.L59:
+ 890              		.loc 1 706 10 view .LVU270
+ 891 0014 FFF7FEFF 		bl	IMX335_WriteTable
+ 892              	.LVL68:
+ 893              		.loc 1 706 9 discriminator 1 view .LVU271
+ 894 0018 0038     		subs	r0, r0, #0
+ 895 001a 18BF     		it	ne
+ 896 001c 0120     		movne	r0, #1
+ 897 001e 4042     		rsbs	r0, r0, #0
+ 898              	.LVL69:
+ 707:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 708:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 709:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 710:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 711:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   };
+ 899              		.loc 1 711 4 is_stmt 1 view .LVU272
+ 712:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 713:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 900              		.loc 1 713 3 view .LVU273
+ 714:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 901              		.loc 1 714 1 is_stmt 0 view .LVU274
+ 902 0020 08BD     		pop	{r3, pc}
+ 903              	.LVL70:
+ 904              	.L55:
+ 687:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 905              		.loc 1 687 7 is_stmt 1 view .LVU275
+ 687:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 906              		.loc 1 687 10 is_stmt 0 view .LVU276
+ 907 0022 0549     		ldr	r1, .L60+4
+ 908 0024 F6E7     		b	.L59
+ 909              	.L56:
+ 693:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 910              		.loc 1 693 7 is_stmt 1 view .LVU277
+ 693:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 911              		.loc 1 693 10 is_stmt 0 view .LVU278
+ 912 0026 0549     		ldr	r1, .L60+8
+ 913 0028 F4E7     		b	.L59
+ 914              	.L57:
+ 699:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 915              		.loc 1 699 7 is_stmt 1 view .LVU279
+ 699:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 916              		.loc 1 699 10 is_stmt 0 view .LVU280
+ 917 002a 0549     		ldr	r1, .L60+12
+ 918 002c F2E7     		b	.L59
+ARM GAS  /tmp/ccxuFpWh.s 			page 32
+
+
+ 919              	.L52:
+ 706:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 920              		.loc 1 706 7 is_stmt 1 view .LVU281
+ 706:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 921              		.loc 1 706 10 is_stmt 0 view .LVU282
+ 922 002e 0549     		ldr	r1, .L60+16
+ 923 0030 F0E7     		b	.L59
+ 924              	.L61:
+ 925 0032 00BF     		.align	2
+ 926              	.L60:
+ 927 0034 00000000 		.word	inck_74Mhz_regs
+ 928 0038 00000000 		.word	inck_27Mhz_regs
+ 929 003c 00000000 		.word	inck_24Mhz_regs
+ 930 0040 00000000 		.word	inck_18Mhz_regs
+ 931 0044 00000000 		.word	inck_6Mhz_regs
+ 932              		.cfi_endproc
+ 933              	.LFE198:
+ 935              		.section	.text.IMX335_SetFramerate,"ax",%progbits
+ 936              		.align	1
+ 937              		.global	IMX335_SetFramerate
+ 938              		.syntax unified
+ 939              		.thumb
+ 940              		.thumb_func
+ 942              	IMX335_SetFramerate:
+ 943              	.LVL71:
+ 944              	.LFB199:
+ 715:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 716:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 717:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Set the Framerate
+ 718:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 719:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  framerate 10, 15, 20, 25 or 30fps
+ 720:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 721:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 722:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_SetFramerate(IMX335_Object_t *pObj, int32_t framerate)
+ 723:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 945              		.loc 1 723 1 is_stmt 1 view -0
+ 946              		.cfi_startproc
+ 947              		@ args = 0, pretend = 0, frame = 0
+ 948              		@ frame_needed = 0, uses_anonymous_args = 0
+ 724:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t ret = IMX335_OK;
+ 949              		.loc 1 724 3 view .LVU284
+ 725:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   switch (framerate)
+ 950              		.loc 1 725 3 view .LVU285
+ 951 0000 1429     		cmp	r1, #20
+ 723:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t ret = IMX335_OK;
+ 952              		.loc 1 723 1 is_stmt 0 view .LVU286
+ 953 0002 08B5     		push	{r3, lr}
+ 954              		.cfi_def_cfa_offset 8
+ 955              		.cfi_offset 3, -8
+ 956              		.cfi_offset 14, -4
+ 723:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint32_t ret = IMX335_OK;
+ 957              		.loc 1 723 1 view .LVU287
+ 958 0004 0346     		mov	r3, r0
+ 959              		.loc 1 725 3 view .LVU288
+ 960 0006 19D0     		beq	.L63
+ 961 0008 07DC     		bgt	.L64
+ 962 000a 0A29     		cmp	r1, #10
+ARM GAS  /tmp/ccxuFpWh.s 			page 33
+
+
+ 963 000c 0AD0     		beq	.L65
+ 964 000e 0F29     		cmp	r1, #15
+ 965 0010 11D0     		beq	.L66
+ 966              	.L67:
+ 726:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 727:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case 10:
+ 728:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, framerate_10fps_regs, ARRAY_SIZE(framerate_10fps_regs)) != IMX335_
+ 729:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 730:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 731:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 732:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 733:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case 15:
+ 734:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, framerate_15fps_regs, ARRAY_SIZE(framerate_15fps_regs)) != IMX335_
+ 735:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 736:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 737:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 738:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 739:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case 20:
+ 740:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, framerate_20fps_regs, ARRAY_SIZE(framerate_20fps_regs)) != IMX335_
+ 741:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 742:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****        ret = IMX335_ERROR;
+ 743:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 744:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 745:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case 25:
+ 746:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, framerate_25fps_regs, ARRAY_SIZE(framerate_25fps_regs)) != IMX335_
+ 747:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 748:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 749:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 750:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 751:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     default:
+ 752:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       /* 30fps */
+ 753:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       if(IMX335_WriteTable(pObj, framerate_30fps_regs, ARRAY_SIZE(framerate_30fps_regs)) != IMX335_
+ 967              		.loc 1 753 7 is_stmt 1 view .LVU289
+ 968              		.loc 1 753 10 is_stmt 0 view .LVU290
+ 969 0012 0222     		movs	r2, #2
+ 970 0014 1846     		mov	r0, r3
+ 971              	.LVL72:
+ 972              		.loc 1 753 10 view .LVU291
+ 973 0016 0B49     		ldr	r1, .L71
+ 974              	.LVL73:
+ 975              		.loc 1 753 10 view .LVU292
+ 976 0018 06E0     		b	.L70
+ 977              	.LVL74:
+ 978              	.L64:
+ 725:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 979              		.loc 1 725 3 view .LVU293
+ 980 001a 1929     		cmp	r1, #25
+ 981 001c F9D1     		bne	.L67
+ 746:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 982              		.loc 1 746 7 is_stmt 1 view .LVU294
+ 746:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 983              		.loc 1 746 10 is_stmt 0 view .LVU295
+ 984 001e 0222     		movs	r2, #2
+ 985 0020 0949     		ldr	r1, .L71+4
+ 986              	.LVL75:
+ 746:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 987              		.loc 1 746 10 view .LVU296
+ARM GAS  /tmp/ccxuFpWh.s 			page 34
+
+
+ 988 0022 01E0     		b	.L70
+ 989              	.LVL76:
+ 990              	.L65:
+ 728:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 991              		.loc 1 728 7 is_stmt 1 view .LVU297
+ 728:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 992              		.loc 1 728 10 is_stmt 0 view .LVU298
+ 993 0024 0222     		movs	r2, #2
+ 994 0026 0949     		ldr	r1, .L71+8
+ 995              	.LVL77:
+ 996              	.L70:
+ 997              		.loc 1 753 10 view .LVU299
+ 998 0028 FFF7FEFF 		bl	IMX335_WriteTable
+ 999              	.LVL78:
+ 1000              		.loc 1 753 9 discriminator 1 view .LVU300
+ 1001 002c 0038     		subs	r0, r0, #0
+ 1002 002e 18BF     		it	ne
+ 1003 0030 0120     		movne	r0, #1
+ 1004 0032 4042     		rsbs	r0, r0, #0
+ 1005              	.LVL79:
+ 754:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 755:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****         ret = IMX335_ERROR;
+ 756:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       }
+ 757:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 758:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   };
+ 1006              		.loc 1 758 4 is_stmt 1 view .LVU301
+ 759:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 760:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 1007              		.loc 1 760 3 view .LVU302
+ 761:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 1008              		.loc 1 761 1 is_stmt 0 view .LVU303
+ 1009 0034 08BD     		pop	{r3, pc}
+ 1010              	.LVL80:
+ 1011              	.L66:
+ 734:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1012              		.loc 1 734 7 is_stmt 1 view .LVU304
+ 734:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1013              		.loc 1 734 10 is_stmt 0 view .LVU305
+ 1014 0036 0222     		movs	r2, #2
+ 1015 0038 0549     		ldr	r1, .L71+12
+ 1016              	.LVL81:
+ 734:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1017              		.loc 1 734 10 view .LVU306
+ 1018 003a F5E7     		b	.L70
+ 1019              	.LVL82:
+ 1020              	.L63:
+ 740:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1021              		.loc 1 740 7 is_stmt 1 view .LVU307
+ 740:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1022              		.loc 1 740 10 is_stmt 0 view .LVU308
+ 1023 003c 0222     		movs	r2, #2
+ 1024 003e 0549     		ldr	r1, .L71+16
+ 1025              	.LVL83:
+ 740:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       {
+ 1026              		.loc 1 740 10 view .LVU309
+ 1027 0040 F2E7     		b	.L70
+ 1028              	.L72:
+ARM GAS  /tmp/ccxuFpWh.s 			page 35
+
+
+ 1029 0042 00BF     		.align	2
+ 1030              	.L71:
+ 1031 0044 00000000 		.word	framerate_30fps_regs
+ 1032 0048 00000000 		.word	framerate_25fps_regs
+ 1033 004c 00000000 		.word	framerate_10fps_regs
+ 1034 0050 00000000 		.word	framerate_15fps_regs
+ 1035 0054 00000000 		.word	framerate_20fps_regs
+ 1036              		.cfi_endproc
+ 1037              	.LFE199:
+ 1039              		.section	.text.IMX335_MirrorFlipConfig,"ax",%progbits
+ 1040              		.align	1
+ 1041              		.global	IMX335_MirrorFlipConfig
+ 1042              		.syntax unified
+ 1043              		.thumb
+ 1044              		.thumb_func
+ 1046              	IMX335_MirrorFlipConfig:
+ 1047              	.LVL84:
+ 1048              	.LFB200:
+ 762:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 763:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 764:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Control imx335 camera mirror/vflip.
+ 765:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 766:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  Config To configure mirror, flip, both or none
+ 767:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 768:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 769:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_MirrorFlipConfig(IMX335_Object_t *pObj, uint32_t Config)
+ 770:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 1049              		.loc 1 770 1 is_stmt 1 view -0
+ 1050              		.cfi_startproc
+ 1051              		@ args = 0, pretend = 0, frame = 0
+ 1052              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1053              		@ link register save eliminated.
+ 771:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 1054              		.loc 1 771 3 view .LVU311
+ 772:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 773:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   switch (Config)
+ 1055              		.loc 1 773 3 view .LVU312
+ 1056 0000 0229     		cmp	r1, #2
+ 774:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 775:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_FLIP:
+ 776:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_WriteTable(pObj, mirrorflip_mode_regs[1], ARRAY_SIZE(mirrorflip_mode_regs[1]));
+ 777:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 778:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_MIRROR:
+ 779:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_WriteTable(pObj, mirrorflip_mode_regs[2], ARRAY_SIZE(mirrorflip_mode_regs[2]));
+ 780:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 781:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_MIRROR_FLIP:
+ 782:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_WriteTable(pObj, mirrorflip_mode_regs[3], ARRAY_SIZE(mirrorflip_mode_regs[3]));
+ 783:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 784:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     case IMX335_MIRROR_FLIP_NONE:
+ 785:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     default:
+ 786:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       ret = IMX335_WriteTable(pObj, mirrorflip_mode_regs[0], ARRAY_SIZE(mirrorflip_mode_regs[0]));
+ 1057              		.loc 1 786 13 is_stmt 0 view .LVU313
+ 1058 0002 4FF00A02 		mov	r2, #10
+ 773:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 1059              		.loc 1 773 3 view .LVU314
+ 1060 0006 06D0     		beq	.L74
+ 1061 0008 0329     		cmp	r1, #3
+ARM GAS  /tmp/ccxuFpWh.s 			page 36
+
+
+ 1062 000a 06D0     		beq	.L75
+ 1063 000c 0129     		cmp	r1, #1
+ 1064 000e 06D1     		bne	.L76
+ 776:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1065              		.loc 1 776 7 is_stmt 1 view .LVU315
+ 776:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1066              		.loc 1 776 13 is_stmt 0 view .LVU316
+ 1067 0010 0449     		ldr	r1, .L78
+ 1068              	.LVL85:
+ 1069              	.L77:
+ 1070              		.loc 1 786 13 view .LVU317
+ 1071 0012 FFF7FEBF 		b	IMX335_WriteTable
+ 1072              	.LVL86:
+ 1073              	.L74:
+ 779:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1074              		.loc 1 779 7 is_stmt 1 view .LVU318
+ 779:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1075              		.loc 1 779 13 is_stmt 0 view .LVU319
+ 1076 0016 0449     		ldr	r1, .L78+4
+ 1077              	.LVL87:
+ 779:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1078              		.loc 1 779 13 view .LVU320
+ 1079 0018 FBE7     		b	.L77
+ 1080              	.LVL88:
+ 1081              	.L75:
+ 782:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1082              		.loc 1 782 7 is_stmt 1 view .LVU321
+ 782:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1083              		.loc 1 782 13 is_stmt 0 view .LVU322
+ 1084 001a 0449     		ldr	r1, .L78+8
+ 1085              	.LVL89:
+ 782:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 1086              		.loc 1 782 13 view .LVU323
+ 1087 001c F9E7     		b	.L77
+ 1088              	.LVL90:
+ 1089              	.L76:
+ 1090              		.loc 1 786 7 is_stmt 1 view .LVU324
+ 1091              		.loc 1 786 13 is_stmt 0 view .LVU325
+ 1092 001e 0449     		ldr	r1, .L78+12
+ 1093              	.LVL91:
+ 1094              		.loc 1 786 13 view .LVU326
+ 1095 0020 F7E7     		b	.L77
+ 1096              	.L79:
+ 1097 0022 00BF     		.align	2
+ 1098              	.L78:
+ 1099 0024 28000000 		.word	mirrorflip_mode_regs+40
+ 1100 0028 50000000 		.word	mirrorflip_mode_regs+80
+ 1101 002c 78000000 		.word	mirrorflip_mode_regs+120
+ 1102 0030 00000000 		.word	mirrorflip_mode_regs
+ 1103              		.cfi_endproc
+ 1104              	.LFE200:
+ 1106              		.section	.text.IMX335_SetTestPattern,"ax",%progbits
+ 1107              		.align	1
+ 1108              		.global	IMX335_SetTestPattern
+ 1109              		.syntax unified
+ 1110              		.thumb
+ 1111              		.thumb_func
+ARM GAS  /tmp/ccxuFpWh.s 			page 37
+
+
+ 1113              	IMX335_SetTestPattern:
+ 1114              	.LVL92:
+ 1115              	.LFB201:
+ 787:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       break;
+ 788:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 789:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 790:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 791:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 792:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** /**
+ 793:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @brief  Set the Test Pattern Generator
+ 794:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  pObj  pointer to component object
+ 795:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @param  mode Pattern mode:
+ 796:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *              -1 : Disable
+ 797:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               0 : All 000h
+ 798:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               1 : All FFFh
+ 799:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               2 : All 555h
+ 800:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               3 : All AAAh
+ 801:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               4 : Toggle 555/AAAh
+ 802:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               5 : Toggle AAA/555h
+ 803:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               6 : Toggle 000/555h
+ 804:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               7 : Toggle 555/000h
+ 805:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               8 : Toggle 000/FFFh
+ 806:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               9 : Toggle FFF/000h
+ 807:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               10: Horizontal color bars
+ 808:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   *               11: Vertical color bars
+ 809:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   * @retval Component status
+ 810:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   */
+ 811:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** int32_t IMX335_SetTestPattern(IMX335_Object_t *pObj, int32_t mode)
+ 812:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** {
+ 1116              		.loc 1 812 1 is_stmt 1 view -0
+ 1117              		.cfi_startproc
+ 1118              		@ args = 0, pretend = 0, frame = 8
+ 1119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 813:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 1120              		.loc 1 813 3 view .LVU328
+ 814:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   uint8_t val;
+ 1121              		.loc 1 814 3 view .LVU329
+ 815:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 816:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   if (mode >= 0)
+ 1122              		.loc 1 816 3 view .LVU330
+ 812:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 1123              		.loc 1 812 1 is_stmt 0 view .LVU331
+ 1124 0000 13B5     		push	{r0, r1, r4, lr}
+ 1125              		.cfi_def_cfa_offset 16
+ 1126              		.cfi_offset 4, -8
+ 1127              		.cfi_offset 14, -4
+ 1128              		.loc 1 816 6 view .LVU332
+ 1129 0002 0029     		cmp	r1, #0
+ 812:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   int32_t ret = IMX335_OK;
+ 1130              		.loc 1 812 1 view .LVU333
+ 1131 0004 0446     		mov	r4, r0
+ 1132              		.loc 1 816 6 view .LVU334
+ 1133 0006 15DB     		blt	.L81
+ 817:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 818:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     /* Enable Test Pattern #mode */
+ 819:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     val = mode;
+ 1134              		.loc 1 819 5 is_stmt 1 view .LVU335
+ARM GAS  /tmp/ccxuFpWh.s 			page 38
+
+
+ 1135              		.loc 1 819 9 is_stmt 0 view .LVU336
+ 1136 0008 8DF80710 		strb	r1, [sp, #7]
+ 820:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if (imx335_write_reg(&pObj->Ctx, IMX335_REG_TPG, &val, 1) != IMX335_OK)
+ 1137              		.loc 1 820 5 is_stmt 1 view .LVU337
+ 1138              		.loc 1 820 9 is_stmt 0 view .LVU338
+ 1139 000c 0123     		movs	r3, #1
+ 1140 000e 43F29E21 		movw	r1, #12958
+ 1141              	.LVL93:
+ 1142              		.loc 1 820 9 view .LVU339
+ 1143 0012 0DF10702 		add	r2, sp, #7
+ 1144 0016 1830     		adds	r0, r0, #24
+ 1145              	.LVL94:
+ 1146              		.loc 1 820 9 view .LVU340
+ 1147 0018 FFF7FEFF 		bl	imx335_write_reg
+ 1148              	.LVL95:
+ 1149              		.loc 1 820 8 discriminator 1 view .LVU341
+ 1150 001c 68B9     		cbnz	r0, .L83
+ 821:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 822:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       return IMX335_ERROR;
+ 823:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 824:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if (IMX335_WriteTable(pObj, test_pattern_enable_regs, ARRAY_SIZE(test_pattern_enable_regs)) != 
+ 1151              		.loc 1 824 5 is_stmt 1 view .LVU342
+ 1152              		.loc 1 824 9 is_stmt 0 view .LVU343
+ 1153 001e 0722     		movs	r2, #7
+ 1154 0020 2046     		mov	r0, r4
+ 1155 0022 0749     		ldr	r1, .L85
+ 1156              	.L84:
+ 825:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 826:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       return IMX335_ERROR;
+ 827:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 828:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 829:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   else
+ 830:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   {
+ 831:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     /* Disable Test Pattern */
+ 832:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     if (IMX335_WriteTable(pObj, test_pattern_disable_regs, ARRAY_SIZE(test_pattern_disable_regs)) !
+ 1157              		.loc 1 832 9 view .LVU344
+ 1158 0024 FFF7FEFF 		bl	IMX335_WriteTable
+ 1159              	.LVL96:
+ 1160              		.loc 1 832 8 discriminator 1 view .LVU345
+ 1161 0028 0038     		subs	r0, r0, #0
+ 1162 002a 18BF     		it	ne
+ 1163 002c 0120     		movne	r0, #1
+ 1164 002e 4042     		rsbs	r0, r0, #0
+ 1165              	.L80:
+ 833:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 834:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****       return IMX335_ERROR;
+ 835:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 836:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   }
+ 837:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** 
+ 838:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****   return ret;
+ 839:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c **** }
+ 1166              		.loc 1 839 1 view .LVU346
+ 1167 0030 02B0     		add	sp, sp, #8
+ 1168              		.cfi_remember_state
+ 1169              		.cfi_def_cfa_offset 8
+ 1170              		@ sp needed
+ 1171 0032 10BD     		pop	{r4, pc}
+ARM GAS  /tmp/ccxuFpWh.s 			page 39
+
+
+ 1172              	.LVL97:
+ 1173              	.L81:
+ 1174              		.cfi_restore_state
+ 832:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 1175              		.loc 1 832 5 is_stmt 1 view .LVU347
+ 832:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 1176              		.loc 1 832 9 is_stmt 0 view .LVU348
+ 1177 0034 0722     		movs	r2, #7
+ 1178 0036 0349     		ldr	r1, .L85+4
+ 1179              	.LVL98:
+ 832:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     {
+ 1180              		.loc 1 832 9 view .LVU349
+ 1181 0038 F4E7     		b	.L84
+ 1182              	.LVL99:
+ 1183              	.L83:
+ 822:../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.c ****     }
+ 1184              		.loc 1 822 14 view .LVU350
+ 1185 003a 4FF0FF30 		mov	r0, #-1
+ 1186 003e F7E7     		b	.L80
+ 1187              	.L86:
+ 1188              		.align	2
+ 1189              	.L85:
+ 1190 0040 00000000 		.word	test_pattern_enable_regs
+ 1191 0044 00000000 		.word	test_pattern_disable_regs
+ 1192              		.cfi_endproc
+ 1193              	.LFE201:
+ 1195              		.section	.rodata.test_pattern_disable_regs,"a"
+ 1196              		.align	1
+ 1199              	test_pattern_disable_regs:
+ 1200 0000 4831     		.short	12616
+ 1201 0002 00       		.byte	0
+ 1202 0003 00       		.space	1
+ 1203 0004 8032     		.short	12928
+ 1204 0006 01       		.byte	1
+ 1205 0007 00       		.space	1
+ 1206 0008 9C32     		.short	12956
+ 1207 000a 00       		.byte	0
+ 1208 000b 00       		.space	1
+ 1209 000c A032     		.short	12960
+ 1210 000e 10       		.byte	16
+ 1211 000f 00       		.space	1
+ 1212 0010 0233     		.short	13058
+ 1213 0012 32       		.byte	50
+ 1214 0013 00       		.space	1
+ 1215 0014 0333     		.short	13059
+ 1216 0016 00       		.byte	0
+ 1217 0017 00       		.space	1
+ 1218 0018 6C33     		.short	13164
+ 1219 001a 01       		.byte	1
+ 1220 001b 00       		.space	1
+ 1221              		.section	.rodata.test_pattern_enable_regs,"a"
+ 1222              		.align	1
+ 1225              	test_pattern_enable_regs:
+ 1226 0000 4831     		.short	12616
+ 1227 0002 10       		.byte	16
+ 1228 0003 00       		.space	1
+ 1229 0004 8032     		.short	12928
+ARM GAS  /tmp/ccxuFpWh.s 			page 40
+
+
+ 1230 0006 00       		.byte	0
+ 1231 0007 00       		.space	1
+ 1232 0008 9C32     		.short	12956
+ 1233 000a 01       		.byte	1
+ 1234 000b 00       		.space	1
+ 1235 000c A032     		.short	12960
+ 1236 000e 11       		.byte	17
+ 1237 000f 00       		.space	1
+ 1238 0010 0233     		.short	13058
+ 1239 0012 00       		.byte	0
+ 1240 0013 00       		.space	1
+ 1241 0014 0333     		.short	13059
+ 1242 0016 00       		.byte	0
+ 1243 0017 00       		.space	1
+ 1244 0018 6C33     		.short	13164
+ 1245 001a 00       		.byte	0
+ 1246 001b 00       		.space	1
+ 1247              		.section	.rodata.mirrorflip_mode_regs,"a"
+ 1248              		.align	1
+ 1251              	mirrorflip_mode_regs:
+ 1252 0000 7430     		.short	12404
+ 1253 0002 C8       		.byte	-56
+ 1254 0003 00       		.space	1
+ 1255 0004 7530     		.short	12405
+ 1256 0006 00       		.byte	0
+ 1257 0007 00       		.space	1
+ 1258 0008 4E30     		.short	12366
+ 1259 000a 00       		.byte	0
+ 1260 000b 00       		.space	1
+ 1261 000c 4F30     		.short	12367
+ 1262 000e 00       		.byte	0
+ 1263 000f 00       		.space	1
+ 1264 0010 8130     		.short	12417
+ 1265 0012 02       		.byte	2
+ 1266 0013 00       		.space	1
+ 1267 0014 8330     		.short	12419
+ 1268 0016 02       		.byte	2
+ 1269 0017 00       		.space	1
+ 1270 0018 B630     		.short	12470
+ 1271 001a 00       		.byte	0
+ 1272 001b 00       		.space	1
+ 1273 001c B730     		.short	12471
+ 1274 001e 00       		.byte	0
+ 1275 001f 00       		.space	1
+ 1276 0020 1631     		.short	12566
+ 1277 0022 08       		.byte	8
+ 1278 0023 00       		.space	1
+ 1279 0024 1731     		.short	12567
+ 1280 0026 00       		.byte	0
+ 1281 0027 00       		.space	1
+ 1282 0028 7430     		.short	12404
+ 1283 002a F8       		.byte	-8
+ 1284 002b 00       		.space	1
+ 1285 002c 7530     		.short	12405
+ 1286 002e 0F       		.byte	15
+ 1287 002f 00       		.space	1
+ 1288 0030 4E30     		.short	12366
+ARM GAS  /tmp/ccxuFpWh.s 			page 41
+
+
+ 1289 0032 00       		.byte	0
+ 1290 0033 00       		.space	1
+ 1291 0034 4F30     		.short	12367
+ 1292 0036 01       		.byte	1
+ 1293 0037 00       		.space	1
+ 1294 0038 8130     		.short	12417
+ 1295 003a FE       		.byte	-2
+ 1296 003b 00       		.space	1
+ 1297 003c 8330     		.short	12419
+ 1298 003e FE       		.byte	-2
+ 1299 003f 00       		.space	1
+ 1300 0040 B630     		.short	12470
+ 1301 0042 FA       		.byte	-6
+ 1302 0043 00       		.space	1
+ 1303 0044 B730     		.short	12471
+ 1304 0046 01       		.byte	1
+ 1305 0047 00       		.space	1
+ 1306 0048 1631     		.short	12566
+ 1307 004a 02       		.byte	2
+ 1308 004b 00       		.space	1
+ 1309 004c 1731     		.short	12567
+ 1310 004e 00       		.byte	0
+ 1311 004f 00       		.space	1
+ 1312 0050 7430     		.short	12404
+ 1313 0052 C8       		.byte	-56
+ 1314 0053 00       		.space	1
+ 1315 0054 7530     		.short	12405
+ 1316 0056 00       		.byte	0
+ 1317 0057 00       		.space	1
+ 1318 0058 4E30     		.short	12366
+ 1319 005a 01       		.byte	1
+ 1320 005b 00       		.space	1
+ 1321 005c 4F30     		.short	12367
+ 1322 005e 00       		.byte	0
+ 1323 005f 00       		.space	1
+ 1324 0060 8130     		.short	12417
+ 1325 0062 02       		.byte	2
+ 1326 0063 00       		.space	1
+ 1327 0064 8330     		.short	12419
+ 1328 0066 02       		.byte	2
+ 1329 0067 00       		.space	1
+ 1330 0068 B630     		.short	12470
+ 1331 006a 00       		.byte	0
+ 1332 006b 00       		.space	1
+ 1333 006c B730     		.short	12471
+ 1334 006e 00       		.byte	0
+ 1335 006f 00       		.space	1
+ 1336 0070 1631     		.short	12566
+ 1337 0072 08       		.byte	8
+ 1338 0073 00       		.space	1
+ 1339 0074 1731     		.short	12567
+ 1340 0076 00       		.byte	0
+ 1341 0077 00       		.space	1
+ 1342 0078 7430     		.short	12404
+ 1343 007a F8       		.byte	-8
+ 1344 007b 00       		.space	1
+ 1345 007c 7530     		.short	12405
+ARM GAS  /tmp/ccxuFpWh.s 			page 42
+
+
+ 1346 007e 0F       		.byte	15
+ 1347 007f 00       		.space	1
+ 1348 0080 4E30     		.short	12366
+ 1349 0082 01       		.byte	1
+ 1350 0083 00       		.space	1
+ 1351 0084 4F30     		.short	12367
+ 1352 0086 01       		.byte	1
+ 1353 0087 00       		.space	1
+ 1354 0088 8130     		.short	12417
+ 1355 008a FE       		.byte	-2
+ 1356 008b 00       		.space	1
+ 1357 008c 8330     		.short	12419
+ 1358 008e FE       		.byte	-2
+ 1359 008f 00       		.space	1
+ 1360 0090 B630     		.short	12470
+ 1361 0092 FA       		.byte	-6
+ 1362 0093 00       		.space	1
+ 1363 0094 B730     		.short	12471
+ 1364 0096 01       		.byte	1
+ 1365 0097 00       		.space	1
+ 1366 0098 1631     		.short	12566
+ 1367 009a 02       		.byte	2
+ 1368 009b 00       		.space	1
+ 1369 009c 1731     		.short	12567
+ 1370 009e 00       		.byte	0
+ 1371 009f 00       		.space	1
+ 1372              		.section	.rodata.framerate_30fps_regs,"a"
+ 1373              		.align	1
+ 1376              	framerate_30fps_regs:
+ 1377 0000 3030     		.short	12336
+ 1378 0002 94       		.byte	-108
+ 1379 0003 00       		.space	1
+ 1380 0004 3130     		.short	12337
+ 1381 0006 11       		.byte	17
+ 1382 0007 00       		.space	1
+ 1383              		.section	.rodata.framerate_25fps_regs,"a"
+ 1384              		.align	1
+ 1387              	framerate_25fps_regs:
+ 1388 0000 3030     		.short	12336
+ 1389 0002 1A       		.byte	26
+ 1390 0003 00       		.space	1
+ 1391 0004 3130     		.short	12337
+ 1392 0006 15       		.byte	21
+ 1393 0007 00       		.space	1
+ 1394              		.section	.rodata.framerate_20fps_regs,"a"
+ 1395              		.align	1
+ 1398              	framerate_20fps_regs:
+ 1399 0000 3030     		.short	12336
+ 1400 0002 60       		.byte	96
+ 1401 0003 00       		.space	1
+ 1402 0004 3130     		.short	12337
+ 1403 0006 1A       		.byte	26
+ 1404 0007 00       		.space	1
+ 1405              		.section	.rodata.framerate_15fps_regs,"a"
+ 1406              		.align	1
+ 1409              	framerate_15fps_regs:
+ 1410 0000 3030     		.short	12336
+ARM GAS  /tmp/ccxuFpWh.s 			page 43
+
+
+ 1411 0002 2A       		.byte	42
+ 1412 0003 00       		.space	1
+ 1413 0004 3130     		.short	12337
+ 1414 0006 23       		.byte	35
+ 1415 0007 00       		.space	1
+ 1416              		.section	.rodata.framerate_10fps_regs,"a"
+ 1417              		.align	1
+ 1420              	framerate_10fps_regs:
+ 1421 0000 3030     		.short	12336
+ 1422 0002 C0       		.byte	-64
+ 1423 0003 00       		.space	1
+ 1424 0004 3130     		.short	12337
+ 1425 0006 34       		.byte	52
+ 1426 0007 00       		.space	1
+ 1427              		.section	.rodata.inck_6Mhz_regs,"a"
+ 1428              		.align	1
+ 1431              	inck_6Mhz_regs:
+ 1432 0000 0C30     		.short	12300
+ 1433 0002 0F       		.byte	15
+ 1434 0003 00       		.space	1
+ 1435 0004 0D30     		.short	12301
+ 1436 0006 0B       		.byte	11
+ 1437 0007 00       		.space	1
+ 1438 0008 4C31     		.short	12620
+ 1439 000a C6       		.byte	-58
+ 1440 000b 00       		.space	1
+ 1441 000c 4D31     		.short	12621
+ 1442 000e 00       		.byte	0
+ 1443 000f 00       		.space	1
+ 1444 0010 5A31     		.short	12634
+ 1445 0012 00       		.byte	0
+ 1446 0013 00       		.space	1
+ 1447 0014 6831     		.short	12648
+ 1448 0016 A0       		.byte	-96
+ 1449 0017 00       		.space	1
+ 1450 0018 6A31     		.short	12650
+ 1451 001a 7C       		.byte	124
+ 1452 001b 00       		.space	1
+ 1453              		.section	.rodata.inck_18Mhz_regs,"a"
+ 1454              		.align	1
+ 1457              	inck_18Mhz_regs:
+ 1458 0000 0C30     		.short	12300
+ 1459 0002 2D       		.byte	45
+ 1460 0003 00       		.space	1
+ 1461 0004 0D30     		.short	12301
+ 1462 0006 1F       		.byte	31
+ 1463 0007 00       		.space	1
+ 1464 0008 4C31     		.short	12620
+ 1465 000a 84       		.byte	-124
+ 1466 000b 00       		.space	1
+ 1467 000c 4D31     		.short	12621
+ 1468 000e 00       		.byte	0
+ 1469 000f 00       		.space	1
+ 1470 0010 5A31     		.short	12634
+ 1471 0012 01       		.byte	1
+ 1472 0013 00       		.space	1
+ 1473 0014 6831     		.short	12648
+ARM GAS  /tmp/ccxuFpWh.s 			page 44
+
+
+ 1474 0016 6B       		.byte	107
+ 1475 0017 00       		.space	1
+ 1476 0018 6A31     		.short	12650
+ 1477 001a 7D       		.byte	125
+ 1478 001b 00       		.space	1
+ 1479              		.section	.rodata.inck_24Mhz_regs,"a"
+ 1480              		.align	1
+ 1483              	inck_24Mhz_regs:
+ 1484 0000 0C30     		.short	12300
+ 1485 0002 3B       		.byte	59
+ 1486 0003 00       		.space	1
+ 1487 0004 0D30     		.short	12301
+ 1488 0006 2A       		.byte	42
+ 1489 0007 00       		.space	1
+ 1490 0008 4C31     		.short	12620
+ 1491 000a C6       		.byte	-58
+ 1492 000b 00       		.space	1
+ 1493 000c 4D31     		.short	12621
+ 1494 000e 00       		.byte	0
+ 1495 000f 00       		.space	1
+ 1496 0010 5A31     		.short	12634
+ 1497 0012 02       		.byte	2
+ 1498 0013 00       		.space	1
+ 1499 0014 6831     		.short	12648
+ 1500 0016 A0       		.byte	-96
+ 1501 0017 00       		.space	1
+ 1502 0018 6A31     		.short	12650
+ 1503 001a 7E       		.byte	126
+ 1504 001b 00       		.space	1
+ 1505              		.section	.rodata.inck_27Mhz_regs,"a"
+ 1506              		.align	1
+ 1509              	inck_27Mhz_regs:
+ 1510 0000 0C30     		.short	12300
+ 1511 0002 42       		.byte	66
+ 1512 0003 00       		.space	1
+ 1513 0004 0D30     		.short	12301
+ 1514 0006 2E       		.byte	46
+ 1515 0007 00       		.space	1
+ 1516 0008 4C31     		.short	12620
+ 1517 000a B0       		.byte	-80
+ 1518 000b 00       		.space	1
+ 1519 000c 4D31     		.short	12621
+ 1520 000e 00       		.byte	0
+ 1521 000f 00       		.space	1
+ 1522 0010 5A31     		.short	12634
+ 1523 0012 02       		.byte	2
+ 1524 0013 00       		.space	1
+ 1525 0014 6831     		.short	12648
+ 1526 0016 8F       		.byte	-113
+ 1527 0017 00       		.space	1
+ 1528 0018 6A31     		.short	12650
+ 1529 001a 7E       		.byte	126
+ 1530 001b 00       		.space	1
+ 1531              		.section	.rodata.inck_74Mhz_regs,"a"
+ 1532              		.align	1
+ 1535              	inck_74Mhz_regs:
+ 1536 0000 0C30     		.short	12300
+ARM GAS  /tmp/ccxuFpWh.s 			page 45
+
+
+ 1537 0002 B6       		.byte	-74
+ 1538 0003 00       		.space	1
+ 1539 0004 0D30     		.short	12301
+ 1540 0006 7F       		.byte	127
+ 1541 0007 00       		.space	1
+ 1542 0008 4C31     		.short	12620
+ 1543 000a 80       		.byte	-128
+ 1544 000b 00       		.space	1
+ 1545 000c 4D31     		.short	12621
+ 1546 000e 00       		.byte	0
+ 1547 000f 00       		.space	1
+ 1548 0010 5A31     		.short	12634
+ 1549 0012 03       		.byte	3
+ 1550 0013 00       		.space	1
+ 1551 0014 6831     		.short	12648
+ 1552 0016 68       		.byte	104
+ 1553 0017 00       		.space	1
+ 1554 0018 6A31     		.short	12650
+ 1555 001a 7F       		.byte	127
+ 1556 001b 00       		.space	1
+ 1557              		.section	.rodata.mode_2l_10b_regs,"a"
+ 1558              		.align	1
+ 1561              	mode_2l_10b_regs:
+ 1562 0000 5030     		.short	12368
+ 1563 0002 00       		.byte	0
+ 1564 0003 00       		.space	1
+ 1565 0004 9D31     		.short	12701
+ 1566 0006 00       		.byte	0
+ 1567 0007 00       		.space	1
+ 1568 0008 1C34     		.short	13340
+ 1569 000a FF       		.byte	-1
+ 1570 000b 00       		.space	1
+ 1571 000c 1D34     		.short	13341
+ 1572 000e 01       		.byte	1
+ 1573 000f 00       		.space	1
+ 1574 0010 013A     		.short	14849
+ 1575 0012 01       		.byte	1
+ 1576 0013 00       		.space	1
+ 1577              		.section	.rodata.res_2592_1944_regs,"a"
+ 1578              		.align	1
+ 1581              	res_2592_1944_regs:
+ 1582 0000 0030     		.short	12288
+ 1583 0002 01       		.byte	1
+ 1584 0003 00       		.space	1
+ 1585 0004 0230     		.short	12290
+ 1586 0006 00       		.byte	0
+ 1587 0007 00       		.space	1
+ 1588 0008 0C30     		.short	12300
+ 1589 000a 3B       		.byte	59
+ 1590 000b 00       		.space	1
+ 1591 000c 0D30     		.short	12301
+ 1592 000e 2A       		.byte	42
+ 1593 000f 00       		.space	1
+ 1594 0010 1830     		.short	12312
+ 1595 0012 04       		.byte	4
+ 1596 0013 00       		.space	1
+ 1597 0014 2C30     		.short	12332
+ARM GAS  /tmp/ccxuFpWh.s 			page 46
+
+
+ 1598 0016 3C       		.byte	60
+ 1599 0017 00       		.space	1
+ 1600 0018 2E30     		.short	12334
+ 1601 001a 20       		.byte	32
+ 1602 001b 00       		.space	1
+ 1603 001c 5630     		.short	12374
+ 1604 001e 98       		.byte	-104
+ 1605 001f 00       		.space	1
+ 1606 0020 7430     		.short	12404
+ 1607 0022 C8       		.byte	-56
+ 1608 0023 00       		.space	1
+ 1609 0024 7630     		.short	12406
+ 1610 0026 30       		.byte	48
+ 1611 0027 00       		.space	1
+ 1612 0028 4C30     		.short	12364
+ 1613 002a 00       		.byte	0
+ 1614 002b 00       		.space	1
+ 1615 002c 4C31     		.short	12620
+ 1616 002e C6       		.byte	-58
+ 1617 002f 00       		.space	1
+ 1618 0030 5A31     		.short	12634
+ 1619 0032 02       		.byte	2
+ 1620 0033 00       		.space	1
+ 1621 0034 6831     		.short	12648
+ 1622 0036 A0       		.byte	-96
+ 1623 0037 00       		.space	1
+ 1624 0038 6A31     		.short	12650
+ 1625 003a 7E       		.byte	126
+ 1626 003b 00       		.space	1
+ 1627 003c A131     		.short	12705
+ 1628 003e 00       		.byte	0
+ 1629 003f 00       		.space	1
+ 1630 0040 8832     		.short	12936
+ 1631 0042 21       		.byte	33
+ 1632 0043 00       		.space	1
+ 1633 0044 8A32     		.short	12938
+ 1634 0046 02       		.byte	2
+ 1635 0047 00       		.space	1
+ 1636 0048 1434     		.short	13332
+ 1637 004a 05       		.byte	5
+ 1638 004b 00       		.space	1
+ 1639 004c 1634     		.short	13334
+ 1640 004e 18       		.byte	24
+ 1641 004f 00       		.space	1
+ 1642 0050 4836     		.short	13896
+ 1643 0052 01       		.byte	1
+ 1644 0053 00       		.space	1
+ 1645 0054 4A36     		.short	13898
+ 1646 0056 04       		.byte	4
+ 1647 0057 00       		.space	1
+ 1648 0058 4C36     		.short	13900
+ 1649 005a 04       		.byte	4
+ 1650 005b 00       		.space	1
+ 1651 005c 7836     		.short	13944
+ 1652 005e 01       		.byte	1
+ 1653 005f 00       		.space	1
+ 1654 0060 7C36     		.short	13948
+ARM GAS  /tmp/ccxuFpWh.s 			page 47
+
+
+ 1655 0062 31       		.byte	49
+ 1656 0063 00       		.space	1
+ 1657 0064 7E36     		.short	13950
+ 1658 0066 31       		.byte	49
+ 1659 0067 00       		.space	1
+ 1660 0068 0637     		.short	14086
+ 1661 006a 10       		.byte	16
+ 1662 006b 00       		.space	1
+ 1663 006c 0837     		.short	14088
+ 1664 006e 03       		.byte	3
+ 1665 006f 00       		.space	1
+ 1666 0070 1437     		.short	14100
+ 1667 0072 02       		.byte	2
+ 1668 0073 00       		.space	1
+ 1669 0074 1537     		.short	14101
+ 1670 0076 02       		.byte	2
+ 1671 0077 00       		.space	1
+ 1672 0078 1637     		.short	14102
+ 1673 007a 01       		.byte	1
+ 1674 007b 00       		.space	1
+ 1675 007c 1737     		.short	14103
+ 1676 007e 03       		.byte	3
+ 1677 007f 00       		.space	1
+ 1678 0080 1C37     		.short	14108
+ 1679 0082 3D       		.byte	61
+ 1680 0083 00       		.space	1
+ 1681 0084 1D37     		.short	14109
+ 1682 0086 3F       		.byte	63
+ 1683 0087 00       		.space	1
+ 1684 0088 2C37     		.short	14124
+ 1685 008a 00       		.byte	0
+ 1686 008b 00       		.space	1
+ 1687 008c 2D37     		.short	14125
+ 1688 008e 00       		.byte	0
+ 1689 008f 00       		.space	1
+ 1690 0090 2E37     		.short	14126
+ 1691 0092 46       		.byte	70
+ 1692 0093 00       		.space	1
+ 1693 0094 2F37     		.short	14127
+ 1694 0096 00       		.byte	0
+ 1695 0097 00       		.space	1
+ 1696 0098 3037     		.short	14128
+ 1697 009a 89       		.byte	-119
+ 1698 009b 00       		.space	1
+ 1699 009c 3137     		.short	14129
+ 1700 009e 00       		.byte	0
+ 1701 009f 00       		.space	1
+ 1702 00a0 3237     		.short	14130
+ 1703 00a2 08       		.byte	8
+ 1704 00a3 00       		.space	1
+ 1705 00a4 3337     		.short	14131
+ 1706 00a6 01       		.byte	1
+ 1707 00a7 00       		.space	1
+ 1708 00a8 3437     		.short	14132
+ 1709 00aa FE       		.byte	-2
+ 1710 00ab 00       		.space	1
+ 1711 00ac 3537     		.short	14133
+ARM GAS  /tmp/ccxuFpWh.s 			page 48
+
+
+ 1712 00ae 05       		.byte	5
+ 1713 00af 00       		.space	1
+ 1714 00b0 4037     		.short	14144
+ 1715 00b2 02       		.byte	2
+ 1716 00b3 00       		.space	1
+ 1717 00b4 5D37     		.short	14173
+ 1718 00b6 00       		.byte	0
+ 1719 00b7 00       		.space	1
+ 1720 00b8 5E37     		.short	14174
+ 1721 00ba 00       		.byte	0
+ 1722 00bb 00       		.space	1
+ 1723 00bc 5F37     		.short	14175
+ 1724 00be 11       		.byte	17
+ 1725 00bf 00       		.space	1
+ 1726 00c0 6037     		.short	14176
+ 1727 00c2 01       		.byte	1
+ 1728 00c3 00       		.space	1
+ 1729 00c4 6837     		.short	14184
+ 1730 00c6 1B       		.byte	27
+ 1731 00c7 00       		.space	1
+ 1732 00c8 6937     		.short	14185
+ 1733 00ca 1B       		.byte	27
+ 1734 00cb 00       		.space	1
+ 1735 00cc 6A37     		.short	14186
+ 1736 00ce 1B       		.byte	27
+ 1737 00cf 00       		.space	1
+ 1738 00d0 6B37     		.short	14187
+ 1739 00d2 1B       		.byte	27
+ 1740 00d3 00       		.space	1
+ 1741 00d4 6C37     		.short	14188
+ 1742 00d6 1A       		.byte	26
+ 1743 00d7 00       		.space	1
+ 1744 00d8 6D37     		.short	14189
+ 1745 00da 17       		.byte	23
+ 1746 00db 00       		.space	1
+ 1747 00dc 6E37     		.short	14190
+ 1748 00de 0F       		.byte	15
+ 1749 00df 00       		.space	1
+ 1750 00e0 7637     		.short	14198
+ 1751 00e2 00       		.byte	0
+ 1752 00e3 00       		.space	1
+ 1753 00e4 7737     		.short	14199
+ 1754 00e6 00       		.byte	0
+ 1755 00e7 00       		.space	1
+ 1756 00e8 7837     		.short	14200
+ 1757 00ea 46       		.byte	70
+ 1758 00eb 00       		.space	1
+ 1759 00ec 7937     		.short	14201
+ 1760 00ee 00       		.byte	0
+ 1761 00ef 00       		.space	1
+ 1762 00f0 7A37     		.short	14202
+ 1763 00f2 89       		.byte	-119
+ 1764 00f3 00       		.space	1
+ 1765 00f4 7B37     		.short	14203
+ 1766 00f6 00       		.byte	0
+ 1767 00f7 00       		.space	1
+ 1768 00f8 7C37     		.short	14204
+ARM GAS  /tmp/ccxuFpWh.s 			page 49
+
+
+ 1769 00fa 08       		.byte	8
+ 1770 00fb 00       		.space	1
+ 1771 00fc 7D37     		.short	14205
+ 1772 00fe 01       		.byte	1
+ 1773 00ff 00       		.space	1
+ 1774 0100 7E37     		.short	14206
+ 1775 0102 23       		.byte	35
+ 1776 0103 00       		.space	1
+ 1777 0104 7F37     		.short	14207
+ 1778 0106 02       		.byte	2
+ 1779 0107 00       		.space	1
+ 1780 0108 8037     		.short	14208
+ 1781 010a D9       		.byte	-39
+ 1782 010b 00       		.space	1
+ 1783 010c 8137     		.short	14209
+ 1784 010e 03       		.byte	3
+ 1785 010f 00       		.space	1
+ 1786 0110 8237     		.short	14210
+ 1787 0112 F5       		.byte	-11
+ 1788 0113 00       		.space	1
+ 1789 0114 8337     		.short	14211
+ 1790 0116 06       		.byte	6
+ 1791 0117 00       		.space	1
+ 1792 0118 8437     		.short	14212
+ 1793 011a A5       		.byte	-91
+ 1794 011b 00       		.space	1
+ 1795 011c 8837     		.short	14216
+ 1796 011e 0F       		.byte	15
+ 1797 011f 00       		.space	1
+ 1798 0120 8A37     		.short	14218
+ 1799 0122 D9       		.byte	-39
+ 1800 0123 00       		.space	1
+ 1801 0124 8B37     		.short	14219
+ 1802 0126 03       		.byte	3
+ 1803 0127 00       		.space	1
+ 1804 0128 8C37     		.short	14220
+ 1805 012a EB       		.byte	-21
+ 1806 012b 00       		.space	1
+ 1807 012c 8D37     		.short	14221
+ 1808 012e 05       		.byte	5
+ 1809 012f 00       		.space	1
+ 1810 0130 8E37     		.short	14222
+ 1811 0132 87       		.byte	-121
+ 1812 0133 00       		.space	1
+ 1813 0134 8F37     		.short	14223
+ 1814 0136 06       		.byte	6
+ 1815 0137 00       		.space	1
+ 1816 0138 9037     		.short	14224
+ 1817 013a F5       		.byte	-11
+ 1818 013b 00       		.space	1
+ 1819 013c 9237     		.short	14226
+ 1820 013e 43       		.byte	67
+ 1821 013f 00       		.space	1
+ 1822 0140 9437     		.short	14228
+ 1823 0142 7A       		.byte	122
+ 1824 0143 00       		.space	1
+ 1825 0144 9637     		.short	14230
+ARM GAS  /tmp/ccxuFpWh.s 			page 50
+
+
+ 1826 0146 A1       		.byte	-95
+ 1827 0147 00       		.space	1
+ 1828 0148 B037     		.short	14256
+ 1829 014a 36       		.byte	54
+ 1830 014b 00       		.space	1
+ 1831 014c 003A     		.short	14848
+ 1832 014e 01       		.byte	1
+ 1833 014f 00       		.space	1
+ 1834              		.text
+ 1835              	.Letext0:
+ 1836              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1837              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1838              		.file 4 "../../Middlewares/stm32-mw-camera/sensors/imx335/imx335_reg.h"
+ 1839              		.file 5 "../../Middlewares/stm32-mw-camera/sensors/imx335/imx335.h"
+ARM GAS  /tmp/ccxuFpWh.s 			page 51
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 imx335.c
+     /tmp/ccxuFpWh.s:26     .text.IMX335_ReadRegWrap:00000000 $t
+     /tmp/ccxuFpWh.s:31     .text.IMX335_ReadRegWrap:00000000 IMX335_ReadRegWrap
+     /tmp/ccxuFpWh.s:61     .text.IMX335_WriteRegWrap:00000000 $t
+     /tmp/ccxuFpWh.s:66     .text.IMX335_WriteRegWrap:00000000 IMX335_WriteRegWrap
+     /tmp/ccxuFpWh.s:96     .text.IMX335_WriteTable:00000000 $t
+     /tmp/ccxuFpWh.s:101    .text.IMX335_WriteTable:00000000 IMX335_WriteTable
+     /tmp/ccxuFpWh.s:161    .text.IMX335_RegisterBusIO:00000000 $t
+     /tmp/ccxuFpWh.s:167    .text.IMX335_RegisterBusIO:00000000 IMX335_RegisterBusIO
+     /tmp/ccxuFpWh.s:237    .text.IMX335_RegisterBusIO:00000030 $d
+     /tmp/ccxuFpWh.s:243    .text.IMX335_Init:00000000 $t
+     /tmp/ccxuFpWh.s:249    .text.IMX335_Init:00000000 IMX335_Init
+     /tmp/ccxuFpWh.s:318    .text.IMX335_Init:00000038 $d
+     /tmp/ccxuFpWh.s:1581   .rodata.res_2592_1944_regs:00000000 res_2592_1944_regs
+     /tmp/ccxuFpWh.s:1561   .rodata.mode_2l_10b_regs:00000000 mode_2l_10b_regs
+     /tmp/ccxuFpWh.s:324    .text.IMX335_Start:00000000 $t
+     /tmp/ccxuFpWh.s:330    .text.IMX335_Start:00000000 IMX335_Start
+     /tmp/ccxuFpWh.s:417    .text.IMX335_DeInit:00000000 $t
+     /tmp/ccxuFpWh.s:423    .text.IMX335_DeInit:00000000 IMX335_DeInit
+     /tmp/ccxuFpWh.s:450    .text.IMX335_ReadID:00000000 $t
+     /tmp/ccxuFpWh.s:456    .text.IMX335_ReadID:00000000 IMX335_ReadID
+     /tmp/ccxuFpWh.s:516    .text.IMX335_GetCapabilities:00000000 $t
+     /tmp/ccxuFpWh.s:522    .text.IMX335_GetCapabilities:00000000 IMX335_GetCapabilities
+     /tmp/ccxuFpWh.s:591    .text.IMX335_SetGain:00000000 $t
+     /tmp/ccxuFpWh.s:597    .text.IMX335_SetGain:00000000 IMX335_SetGain
+     /tmp/ccxuFpWh.s:699    .text.IMX335_SetGain:0000006c $d
+     /tmp/ccxuFpWh.s:704    .text.IMX335_SetExposure:00000000 $t
+     /tmp/ccxuFpWh.s:710    .text.IMX335_SetExposure:00000000 IMX335_SetExposure
+     /tmp/ccxuFpWh.s:845    .text.IMX335_SetExposure:000000a0 $d
+     /tmp/ccxuFpWh.s:850    .text.IMX335_SetFrequency:00000000 $t
+     /tmp/ccxuFpWh.s:856    .text.IMX335_SetFrequency:00000000 IMX335_SetFrequency
+     /tmp/ccxuFpWh.s:879    .text.IMX335_SetFrequency:0000000e $d
+     /tmp/ccxuFpWh.s:883    .text.IMX335_SetFrequency:00000012 $t
+     /tmp/ccxuFpWh.s:927    .text.IMX335_SetFrequency:00000034 $d
+     /tmp/ccxuFpWh.s:1535   .rodata.inck_74Mhz_regs:00000000 inck_74Mhz_regs
+     /tmp/ccxuFpWh.s:1509   .rodata.inck_27Mhz_regs:00000000 inck_27Mhz_regs
+     /tmp/ccxuFpWh.s:1483   .rodata.inck_24Mhz_regs:00000000 inck_24Mhz_regs
+     /tmp/ccxuFpWh.s:1457   .rodata.inck_18Mhz_regs:00000000 inck_18Mhz_regs
+     /tmp/ccxuFpWh.s:1431   .rodata.inck_6Mhz_regs:00000000 inck_6Mhz_regs
+     /tmp/ccxuFpWh.s:936    .text.IMX335_SetFramerate:00000000 $t
+     /tmp/ccxuFpWh.s:942    .text.IMX335_SetFramerate:00000000 IMX335_SetFramerate
+     /tmp/ccxuFpWh.s:1031   .text.IMX335_SetFramerate:00000044 $d
+     /tmp/ccxuFpWh.s:1376   .rodata.framerate_30fps_regs:00000000 framerate_30fps_regs
+     /tmp/ccxuFpWh.s:1387   .rodata.framerate_25fps_regs:00000000 framerate_25fps_regs
+     /tmp/ccxuFpWh.s:1420   .rodata.framerate_10fps_regs:00000000 framerate_10fps_regs
+     /tmp/ccxuFpWh.s:1409   .rodata.framerate_15fps_regs:00000000 framerate_15fps_regs
+     /tmp/ccxuFpWh.s:1398   .rodata.framerate_20fps_regs:00000000 framerate_20fps_regs
+     /tmp/ccxuFpWh.s:1040   .text.IMX335_MirrorFlipConfig:00000000 $t
+     /tmp/ccxuFpWh.s:1046   .text.IMX335_MirrorFlipConfig:00000000 IMX335_MirrorFlipConfig
+     /tmp/ccxuFpWh.s:1099   .text.IMX335_MirrorFlipConfig:00000024 $d
+     /tmp/ccxuFpWh.s:1251   .rodata.mirrorflip_mode_regs:00000000 mirrorflip_mode_regs
+     /tmp/ccxuFpWh.s:1107   .text.IMX335_SetTestPattern:00000000 $t
+     /tmp/ccxuFpWh.s:1113   .text.IMX335_SetTestPattern:00000000 IMX335_SetTestPattern
+     /tmp/ccxuFpWh.s:1190   .text.IMX335_SetTestPattern:00000040 $d
+     /tmp/ccxuFpWh.s:1225   .rodata.test_pattern_enable_regs:00000000 test_pattern_enable_regs
+     /tmp/ccxuFpWh.s:1199   .rodata.test_pattern_disable_regs:00000000 test_pattern_disable_regs
+ARM GAS  /tmp/ccxuFpWh.s 			page 52
+
+
+     /tmp/ccxuFpWh.s:1196   .rodata.test_pattern_disable_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1222   .rodata.test_pattern_enable_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1248   .rodata.mirrorflip_mode_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1373   .rodata.framerate_30fps_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1384   .rodata.framerate_25fps_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1395   .rodata.framerate_20fps_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1406   .rodata.framerate_15fps_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1417   .rodata.framerate_10fps_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1428   .rodata.inck_6Mhz_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1454   .rodata.inck_18Mhz_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1480   .rodata.inck_24Mhz_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1506   .rodata.inck_27Mhz_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1532   .rodata.inck_74Mhz_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1558   .rodata.mode_2l_10b_regs:00000000 $d
+     /tmp/ccxuFpWh.s:1578   .rodata.res_2592_1944_regs:00000000 $d
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.imx335_reg.h.54.13b2bb4b7463faf527ee2adbd5473566
+                           .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
+                           .group:00000000 wm4.imx335.h.97.fad55bf2e31aaad2c813472fe1d3dd56
+                           .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.string.h.15.dab3980bf35408a4c507182805e2de3a
+                           .group:00000000 wm4.stddef.h.173.1cea4f16a943c8e875db6791959c3141
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
+
+UNDEFINED SYMBOLS
+imx335_write_reg
+imx335_read_reg

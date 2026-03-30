@@ -1,0 +1,2681 @@
+ARM GAS  /tmp/ccNApPnF.s 			page 1
+
+
+   1              		.arch armv8.1-m.main
+   2              		.fpu fpv5-d16
+   3              		.arch_extension dsp
+   4              		.arch_extension fp
+   5              		.arch_extension fp.dp
+   6              		.arch_extension mve
+   7              		.arch_extension mve.fp
+   8              		.eabi_attribute 5, "cortex-m55"
+   9              		.eabi_attribute 28, 1
+  10              		.eabi_attribute 20, 1
+  11              		.eabi_attribute 21, 1
+  12              		.eabi_attribute 23, 3
+  13              		.eabi_attribute 24, 1
+  14              		.eabi_attribute 25, 1
+  15              		.eabi_attribute 26, 1
+  16              		.eabi_attribute 30, 4
+  17              		.eabi_attribute 34, 1
+  18              		.eabi_attribute 38, 1
+  19              		.eabi_attribute 18, 4
+  20              		.file	"ll_aton_cipher.c"
+  21              		.text
+  22              	.Ltext0:
+  23              		.cfi_sections	.debug_frame
+  24              		.file 1 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c"
+  25              		.section	.text.LL_Streng_EncryptionInit,"ax",%progbits
+  26              		.align	1
+  27              		.global	LL_Streng_EncryptionInit
+  28              		.syntax unified
+  29              		.thumb
+  30              		.thumb_func
+  32              	LL_Streng_EncryptionInit:
+  33              	.LVL0:
+  34              	.LFB332:
+   1:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+   2:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  ******************************************************************************
+   3:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @file    ll_aton_cipher.c
+   4:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @author  SRA Artificial Intelligence & Embedded Architectures
+   5:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief   ATON LL module driver.
+   6:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  ******************************************************************************
+   7:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @attention
+   8:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  *
+   9:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * Copyright (c) 2024 STMicroelectronics.
+  10:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * All rights reserved.
+  11:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  *
+  12:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * This software is licensed under terms that can be found in the LICENSE file
+  13:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * in the root directory of this software component.
+  14:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  *
+  16:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  ******************************************************************************
+  17:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+  18:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  19:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #include "ll_aton_cipher.h"
+  20:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #include "ll_aton.h"
+  21:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #include "ll_aton_platform.h"
+  22:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  23:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM != LL_ATON_PLAT_EC_TRACE)
+  24:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 2
+
+
+  25:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #include "ll_aton_runtime.h"
+  26:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  27:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif
+  28:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  29:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+  30:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  31:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+  32:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief Construct the patch identifier given Stream Engine index and the information about the re
+  33:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * ENCR_MSB) that must be patched.
+  34:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param patch_id array containing the patch identifier (that must be already allocated and large 
+  35:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * will be filled by this function
+  36:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param streng_idx Streaming engine index [0..ATON_STRENG_NUM-1]
+  37:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param lsb_sb is \e true if the ENCR_LSB register must be patched, \e false if the ENCR_MSB regi
+  38:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * grouped
+  39:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+  40:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** void construct_patch_id_streng(char *patch_id, int streng_idx, bool lsb_msb)
+  41:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+  42:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[0] = 'S';
+  43:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[1] = 'E';
+  44:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[2] = '_';
+  45:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[3] = '0' + (streng_idx / 10);
+  46:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[4] = '0' + (streng_idx % 10);
+  47:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[5] = '_';
+  48:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[6] = (lsb_msb ? 'L' : 'M');
+  49:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[7] = 'S';
+  50:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[8] = 'B';
+  51:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   patch_id[9] = '\0';
+  52:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+  53:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  54:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif // #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+  55:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  56:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+  57:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief Configures the Streaming Engine Encryption support
+  58:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param id Streaming engine identifier [0..ATON_STRENG_NUM-1]
+  59:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param LL_Streng_EncryptionStruct Pointer to structure describing encryption parameters
+  60:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note Encryption keys are set in the Bus Interfaces using LL_Busif_SetKeys function
+  61:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note Each Stream Engine is associated to a Bus Interface. Machine descriptor json file describe
+  62:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * grouped
+  63:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+  64:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** int LL_Streng_EncryptionInit(int id, const LL_Streng_EncryptionTypedef *LL_Streng_EncryptionStruct)
+  65:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+  35              		.loc 1 65 1 view -0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  66:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t t;
+  39              		.loc 1 66 3 view .LVU1
+  67:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  68:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if ((id >= ATON_STRENG_NUM) || (!ATON_STRENG_ENCRYPTION_EN(id)))
+  40              		.loc 1 68 3 view .LVU2
+  41              		.loc 1 68 6 is_stmt 0 view .LVU3
+  42 0000 0928     		cmp	r0, #9
+  65:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t t;
+  43              		.loc 1 65 1 view .LVU4
+  44 0002 10B5     		push	{r4, lr}
+  45              		.cfi_def_cfa_offset 8
+  46              		.cfi_offset 4, -8
+ARM GAS  /tmp/ccNApPnF.s 			page 3
+
+
+  47              		.cfi_offset 14, -4
+  48              		.loc 1 68 6 view .LVU5
+  49 0004 1BDC     		bgt	.L3
+  69:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return LL_ATON_INVALID_ID;
+  70:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  71:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = LL_Streng_EncryptionStruct->encryption_id & 0xffffffff;
+  50              		.loc 1 71 3 is_stmt 1 view .LVU6
+  51              		.loc 1 71 33 is_stmt 0 view .LVU7
+  52 0006 D1E90224 		ldrd	r2, r4, [r1, #8]
+  53              	.LVL1:
+  72:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  73:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+  74:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ec_trace_add_patch("SE_ENCRYPTION_ID", 0, 0xffffffff);
+  75:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif
+  76:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  77:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_STRENG_ENCR_LSB_SET(id, t);
+  54              		.loc 1 77 3 is_stmt 1 view .LVU8
+  55              		.loc 1 77 3 view .LVU9
+  56              		.loc 1 77 3 view .LVU10
+  57              		.loc 1 77 3 is_stmt 0 discriminator 1 view .LVU11
+  58 000a 0E4B     		ldr	r3, .L4
+  59 000c 0003     		lsls	r0, r0, #12
+  60              	.LVL2:
+  61              		.loc 1 77 3 discriminator 4 view .LVU12
+  62 000e C250     		str	r2, [r0, r3]
+  63              		.loc 1 77 3 is_stmt 1 view .LVU13
+  64              		.loc 1 77 3 view .LVU14
+  78:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  79:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_DT;
+  65              		.loc 1 79 3 view .LVU15
+  66              	.LVL3:
+  80:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_ID_MSB(t, (LL_Streng_EncryptionStruct->encryption_id >> 32) & 0x7ff)
+  67              		.loc 1 80 3 view .LVU16
+  81:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_EN(t, LL_Streng_EncryptionStruct->enable);
+  68              		.loc 1 81 3 view .LVU17
+  82:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_ROUNDS(t, LL_Streng_EncryptionStruct->rounds);
+  69              		.loc 1 82 3 view .LVU18
+  83:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_KEY_SEL(t, LL_Streng_EncryptionStruct->key_sel);
+  70              		.loc 1 83 3 view .LVU19
+  84:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_INC(t, LL_Streng_EncryptionStruct->increment);
+  71              		.loc 1 84 3 view .LVU20
+  81:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_ROUNDS(t, LL_Streng_EncryptionStruct->rounds);
+  72              		.loc 1 81 7 is_stmt 0 view .LVU21
+  73 0010 0B68     		ldr	r3, [r1]
+  82:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_KEY_SEL(t, LL_Streng_EncryptionStruct->key_sel);
+  74              		.loc 1 82 7 view .LVU22
+  75 0012 0A69     		ldr	r2, [r1, #16]
+  81:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_ROUNDS(t, LL_Streng_EncryptionStruct->rounds);
+  76              		.loc 1 81 7 view .LVU23
+  77 0014 1B03     		lsls	r3, r3, #12
+  82:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_KEY_SEL(t, LL_Streng_EncryptionStruct->key_sel);
+  78              		.loc 1 82 7 view .LVU24
+  79 0016 5203     		lsls	r2, r2, #13
+  80 0018 02F40052 		and	r2, r2, #8192
+  81              	.LVL4:
+  81:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_ROUNDS(t, LL_Streng_EncryptionStruct->rounds);
+  82              		.loc 1 81 7 view .LVU25
+ARM GAS  /tmp/ccNApPnF.s 			page 4
+
+
+  83 001c 03F48053 		and	r3, r3, #4096
+  84              		.loc 1 84 5 view .LVU26
+  85 0020 1343     		orrs	r3, r3, r2
+  86              		.loc 1 84 7 view .LVU27
+  87 0022 8A69     		ldr	r2, [r1, #24]
+  88              	.LVL5:
+  80:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_EN(t, LL_Streng_EncryptionStruct->enable);
+  89              		.loc 1 80 7 view .LVU28
+  90 0024 C4F30A04 		ubfx	r4, r4, #0, #11
+  91              	.LVL6:
+  92              		.loc 1 84 5 view .LVU29
+  93 0028 43EA0243 		orr	r3, r3, r2, lsl #16
+  83:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_STRENG_ENCR_MSB_SET_INC(t, LL_Streng_EncryptionStruct->increment);
+  94              		.loc 1 83 7 view .LVU30
+  95 002c 4A69     		ldr	r2, [r1, #20]
+  96 002e 9203     		lsls	r2, r2, #14
+  97 0030 92B2     		uxth	r2, r2
+  98              		.loc 1 84 5 view .LVU31
+  99 0032 1343     		orrs	r3, r3, r2
+  85:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  86:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+  87:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ec_trace_add_patch("SE_ENCRYPTION_ID", 32, ATON_STRENG_ENCR_MSB_ID_MSB_MASK >> ATON_STRENG_ENCR_M
+  88:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ec_trace_add_patch("SE_ROUNDS", -(int32_t)ATON_STRENG_ENCR_MSB_ROUNDS_LSB,
+  89:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                      ATON_STRENG_ENCR_MSB_ROUNDS_MASK >> ATON_STRENG_ENCR_MSB_ROUNDS_LSB);
+  90:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ec_trace_add_patch("SE_KEY_SEL", -(int32_t)ATON_STRENG_ENCR_MSB_KEY_SEL_LSB,
+  91:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                      ATON_STRENG_ENCR_MSB_KEY_SEL_MASK >> ATON_STRENG_ENCR_MSB_KEY_SEL_LSB);
+  92:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif
+  93:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  94:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_STRENG_ENCR_MSB_SET(id, t);
+ 100              		.loc 1 94 3 discriminator 1 view .LVU32
+ 101 0034 044A     		ldr	r2, .L4+4
+  84:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 102              		.loc 1 84 5 view .LVU33
+ 103 0036 2343     		orrs	r3, r3, r4
+ 104              	.LVL7:
+ 105              		.loc 1 94 3 is_stmt 1 view .LVU34
+ 106              		.loc 1 94 3 view .LVU35
+ 107              		.loc 1 94 3 view .LVU36
+ 108              		.loc 1 94 3 is_stmt 0 discriminator 4 view .LVU37
+ 109 0038 8350     		str	r3, [r0, r2]
+ 110              		.loc 1 94 3 is_stmt 1 view .LVU38
+ 111              		.loc 1 94 3 view .LVU39
+  95:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  96:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   return 0;
+ 112              		.loc 1 96 3 view .LVU40
+ 113              		.loc 1 96 10 is_stmt 0 view .LVU41
+ 114 003a 0020     		movs	r0, #0
+ 115              	.LVL8:
+ 116              	.L1:
+  97:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 117              		.loc 1 97 1 view .LVU42
+ 118 003c 10BD     		pop	{r4, pc}
+ 119              	.LVL9:
+ 120              	.L3:
+  69:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 121              		.loc 1 69 12 view .LVU43
+ 122 003e 4FF0FF30 		mov	r0, #-1
+ARM GAS  /tmp/ccNApPnF.s 			page 5
+
+
+ 123              	.LVL10:
+  69:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 124              		.loc 1 69 12 view .LVU44
+ 125 0042 FBE7     		b	.L1
+ 126              	.L5:
+ 127              		.align	2
+ 128              	.L4:
+ 129 0044 40500E58 		.word	1477333056
+ 130 0048 44500E58 		.word	1477333060
+ 131              		.cfi_endproc
+ 132              	.LFE332:
+ 134              		.section	.text.LL_Busif_SetKeys,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	LL_Busif_SetKeys
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	LL_Busif_SetKeys:
+ 142              	.LVL11:
+ 143              	.LFB333:
+  98:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+  99:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+ 100:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief Configures Bus Interface encryption keys
+ 101:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param id, Bus Interface identifier [0..ATON_BUSIF_NUM-1]
+ 102:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param key Selects key to configure [0..BUSIF_CRYPT_NR_KEYS-1]
+ 103:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param key_low lowest 64 bits of the key
+ 104:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param key_hi highest 64 bits of the key
+ 105:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+ 106:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** int LL_Busif_SetKeys(int id, int key, uint64_t key_low, uint64_t key_hi)
+ 107:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 144              		.loc 1 107 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 8, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+ 109:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   char patch_id[32];
+ 110:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif
+ 111:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 112:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if ((id >= ATON_BUSIF_NUM) || (!ATON_BUSIF_ENCRYPTION_EN(id)) || (key >= BUSIF_CRYPT_NR_KEYS))
+ 148              		.loc 1 112 3 view .LVU46
+ 107:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+ 149              		.loc 1 107 1 is_stmt 0 view .LVU47
+ 150 0000 30B5     		push	{r4, r5, lr}
+ 151              		.cfi_def_cfa_offset 12
+ 152              		.cfi_offset 4, -12
+ 153              		.cfi_offset 5, -8
+ 154              		.cfi_offset 14, -4
+ 155              		.loc 1 112 6 view .LVU48
+ 156 0002 0128     		cmp	r0, #1
+ 107:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
+ 157              		.loc 1 107 1 view .LVU49
+ 158 0004 DDE90354 		ldrd	r5, r4, [sp, #12]
+ 159              		.loc 1 112 6 view .LVU50
+ 160 0008 16DC     		bgt	.L12
+ 161              		.loc 1 112 65 discriminator 1 view .LVU51
+ 162 000a 0129     		cmp	r1, #1
+ 163 000c 14DC     		bgt	.L12
+ARM GAS  /tmp/ccNApPnF.s 			page 6
+
+
+ 113:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return LL_ATON_INVALID_ID;
+ 114:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 115:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if defined(ATON_BUSIF_KEY_SET)
+ 116:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (key == 0)
+ 164              		.loc 1 116 3 is_stmt 1 view .LVU52
+ 165              		.loc 1 116 6 is_stmt 0 view .LVU53
+ 166 000e 51B9     		cbnz	r1, .L8
+ 117:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_31_0_IDX, ATON_BUSIF_0_KEY0_31_0_S, key_low & 0xffffff
+ 167              		.loc 1 118 5 is_stmt 1 view .LVU54
+ 168              		.loc 1 118 5 view .LVU55
+ 169              		.loc 1 118 5 view .LVU56
+ 170              		.loc 1 118 5 is_stmt 0 discriminator 1 view .LVU57
+ 171 0010 0B49     		ldr	r1, .L14
+ 172              	.LVL12:
+ 173              		.loc 1 118 5 discriminator 1 view .LVU58
+ 174 0012 0003     		lsls	r0, r0, #12
+ 175              	.LVL13:
+ 176              		.loc 1 118 5 discriminator 4 view .LVU59
+ 177 0014 4250     		str	r2, [r0, r1]
+ 178              		.loc 1 118 5 is_stmt 1 view .LVU60
+ 179              		.loc 1 118 5 view .LVU61
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 180              		.loc 1 119 5 view .LVU62
+ 181              		.loc 1 119 5 view .LVU63
+ 182              		.loc 1 119 5 view .LVU64
+ 183              		.loc 1 119 5 is_stmt 0 discriminator 1 view .LVU65
+ 184 0016 0B4A     		ldr	r2, .L14+4
+ 185              	.LVL14:
+ 186              		.loc 1 119 5 discriminator 4 view .LVU66
+ 187 0018 8350     		str	r3, [r0, r2]
+ 188              		.loc 1 119 5 is_stmt 1 view .LVU67
+ 189              		.loc 1 119 5 view .LVU68
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 190              		.loc 1 120 5 view .LVU69
+ 191              		.loc 1 120 5 view .LVU70
+ 192              		.loc 1 120 5 view .LVU71
+ 193              		.loc 1 120 5 is_stmt 0 discriminator 1 view .LVU72
+ 194 001a 0B4B     		ldr	r3, .L14+8
+ 195              	.L13:
+ 196              		.loc 1 120 5 discriminator 4 view .LVU73
+ 197 001c C550     		str	r5, [r0, r3]
+ 198              		.loc 1 120 5 is_stmt 1 view .LVU74
+ 199              		.loc 1 120 5 view .LVU75
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 200              		.loc 1 121 5 view .LVU76
+ 201              		.loc 1 121 5 view .LVU77
+ 202              		.loc 1 121 5 view .LVU78
+ 203              		.loc 1 121 5 is_stmt 0 discriminator 1 view .LVU79
+ 204 001e 0433     		adds	r3, r3, #4
+ 205              		.loc 1 121 5 discriminator 4 view .LVU80
+ 206 0020 C450     		str	r4, [r0, r3]
+ 207              		.loc 1 121 5 is_stmt 1 view .LVU81
+ 208              		.loc 1 121 5 view .LVU82
+ 122:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 123:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else if (key == 1)
+ 124:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ARM GAS  /tmp/ccNApPnF.s 			page 7
+
+
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_31_0_IDX, ATON_BUSIF_0_KEY1_31_0_S, key_low & 0xffffff
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 127:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 128:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_127_96_IDX, ATON_BUSIF_0_KEY1_127_96_S, key_hi >> 32);
+ 129:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 130:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ 131:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 132:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return LL_ATON_INVALID_ID;
+ 133:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 134:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #endif // defined(ATON_BUSIF_KEY_SET)
+ 135:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 136:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   return 0;
+ 209              		.loc 1 136 10 is_stmt 0 view .LVU83
+ 210 0022 0020     		movs	r0, #0
+ 211              	.L6:
+ 137:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 212              		.loc 1 137 1 view .LVU84
+ 213 0024 30BD     		pop	{r4, r5, pc}
+ 214              	.LVL15:
+ 215              	.L8:
+ 123:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 216              		.loc 1 123 8 is_stmt 1 view .LVU85
+ 123:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 217              		.loc 1 123 11 is_stmt 0 view .LVU86
+ 218 0026 0129     		cmp	r1, #1
+ 219 0028 06D1     		bne	.L12
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 220              		.loc 1 125 5 is_stmt 1 view .LVU87
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 221              		.loc 1 125 5 view .LVU88
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 222              		.loc 1 125 5 view .LVU89
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 223              		.loc 1 125 5 is_stmt 0 discriminator 1 view .LVU90
+ 224 002a 0849     		ldr	r1, .L14+12
+ 225              	.LVL16:
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 226              		.loc 1 125 5 discriminator 1 view .LVU91
+ 227 002c 0003     		lsls	r0, r0, #12
+ 228              	.LVL17:
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 229              		.loc 1 125 5 discriminator 4 view .LVU92
+ 230 002e 4250     		str	r2, [r0, r1]
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 231              		.loc 1 125 5 is_stmt 1 view .LVU93
+ 125:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_63_32_IDX, ATON_BUSIF_0_KEY1_63_32_S, key_low >> 32);
+ 232              		.loc 1 125 5 view .LVU94
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 233              		.loc 1 126 5 view .LVU95
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 234              		.loc 1 126 5 view .LVU96
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 235              		.loc 1 126 5 view .LVU97
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 236              		.loc 1 126 5 is_stmt 0 discriminator 1 view .LVU98
+ 237 0030 074A     		ldr	r2, .L14+16
+ 238              	.LVL18:
+ARM GAS  /tmp/ccNApPnF.s 			page 8
+
+
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 239              		.loc 1 126 5 discriminator 4 view .LVU99
+ 240 0032 8350     		str	r3, [r0, r2]
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 241              		.loc 1 126 5 is_stmt 1 view .LVU100
+ 126:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_95_64_IDX, ATON_BUSIF_0_KEY1_95_64_S, key_hi & 0xfffff
+ 242              		.loc 1 126 5 view .LVU101
+ 127:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_127_96_IDX, ATON_BUSIF_0_KEY1_127_96_S, key_hi >> 32);
+ 243              		.loc 1 127 5 view .LVU102
+ 127:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_127_96_IDX, ATON_BUSIF_0_KEY1_127_96_S, key_hi >> 32);
+ 244              		.loc 1 127 5 view .LVU103
+ 127:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_127_96_IDX, ATON_BUSIF_0_KEY1_127_96_S, key_hi >> 32);
+ 245              		.loc 1 127 5 view .LVU104
+ 127:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY1_127_96_IDX, ATON_BUSIF_0_KEY1_127_96_S, key_hi >> 32);
+ 246              		.loc 1 127 5 is_stmt 0 discriminator 1 view .LVU105
+ 247 0034 074B     		ldr	r3, .L14+20
+ 248 0036 F1E7     		b	.L13
+ 249              	.LVL19:
+ 250              	.L12:
+ 113:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 251              		.loc 1 113 12 view .LVU106
+ 252 0038 4FF0FF30 		mov	r0, #-1
+ 253              	.LVL20:
+ 113:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 254              		.loc 1 113 12 view .LVU107
+ 255 003c F2E7     		b	.L6
+ 256              	.L15:
+ 257 003e 00BF     		.align	2
+ 258              	.L14:
+ 259 0040 14200E58 		.word	1477320724
+ 260 0044 18200E58 		.word	1477320728
+ 261 0048 1C200E58 		.word	1477320732
+ 262 004c 24200E58 		.word	1477320740
+ 263 0050 28200E58 		.word	1477320744
+ 264 0054 2C200E58 		.word	1477320748
+ 265              		.cfi_endproc
+ 266              	.LFE333:
+ 268              		.section	.text.LL_EpochCtrl_EncryptionInit,"ax",%progbits
+ 269              		.align	1
+ 270              		.global	LL_EpochCtrl_EncryptionInit
+ 271              		.syntax unified
+ 272              		.thumb
+ 273              		.thumb_func
+ 275              	LL_EpochCtrl_EncryptionInit:
+ 276              	.LVL21:
+ 277              	.LFB334:
+ 138:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 139:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+ 140:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief Configures Epoch Controller Encryption support
+ 141:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param id Epoch Controller identifier [0..ATON_EPOCHCTRL_NUM-1]
+ 142:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param conf Pointer to LL_Streng_EncryptionTypedef structure describing Encryption parameters
+ 143:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @retval Error code
+ 144:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note Encryption configuration structure is the same as the Stream Engine one
+ 145:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note Encryption keys are set in the Epoch Controller's Bus Interface using LL_Busif_SetKeys fun
+ 146:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note Epoch Controller Bus Interface ID is ATON_BUSIF_NUM-1
+ 147:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+ 148:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** int LL_EpochCtrl_EncryptionInit(int id, const LL_Streng_EncryptionTypedef *conf)
+ARM GAS  /tmp/ccNApPnF.s 			page 9
+
+
+ 149:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 278              		.loc 1 149 1 is_stmt 1 view -0
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 0
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t t;
+ 282              		.loc 1 150 3 view .LVU109
+ 151:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 152:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if ((id >= ATON_EPOCHCTRL_NUM) || (!ATON_EPOCHCTRL_ENCRYPTION_EN(id)))
+ 283              		.loc 1 152 3 view .LVU110
+ 284              		.loc 1 152 6 is_stmt 0 view .LVU111
+ 285 0000 0028     		cmp	r0, #0
+ 149:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t t;
+ 286              		.loc 1 149 1 view .LVU112
+ 287 0002 10B5     		push	{r4, lr}
+ 288              		.cfi_def_cfa_offset 8
+ 289              		.cfi_offset 4, -8
+ 290              		.cfi_offset 14, -4
+ 291              		.loc 1 152 6 view .LVU113
+ 292 0004 16DC     		bgt	.L18
+ 153:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return LL_ATON_INVALID_ID;
+ 154:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 155:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = conf->encryption_id & 0xffffffff;
+ 293              		.loc 1 155 3 is_stmt 1 view .LVU114
+ 294              		.loc 1 155 11 is_stmt 0 view .LVU115
+ 295 0006 D1E90234 		ldrd	r3, r4, [r1, #8]
+ 296              	.LVL22:
+ 156:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_EPOCHCTRL_ENCR_LSB_SET(id, t);
+ 297              		.loc 1 156 3 is_stmt 1 view .LVU116
+ 298              		.loc 1 156 3 view .LVU117
+ 299              		.loc 1 156 3 view .LVU118
+ 300              		.loc 1 156 3 is_stmt 0 discriminator 4 view .LVU119
+ 301 000a 0C48     		ldr	r0, .L19
+ 302              	.LVL23:
+ 157:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 158:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_DT;
+ 159:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ID_MSB(t, (conf->encryption_id >> 32) & 0x7ff);
+ 160:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_EN(t, conf->enable);
+ 161:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ROUNDS(t, conf->rounds);
+ 303              		.loc 1 161 7 view .LVU120
+ 304 000c 0A69     		ldr	r2, [r1, #16]
+ 156:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_EPOCHCTRL_ENCR_LSB_SET(id, t);
+ 305              		.loc 1 156 3 discriminator 4 view .LVU121
+ 306 000e 0361     		str	r3, [r0, #16]
+ 156:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_EPOCHCTRL_ENCR_LSB_SET(id, t);
+ 307              		.loc 1 156 3 is_stmt 1 view .LVU122
+ 156:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_EPOCHCTRL_ENCR_LSB_SET(id, t);
+ 308              		.loc 1 156 3 view .LVU123
+ 158:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ID_MSB(t, (conf->encryption_id >> 32) & 0x7ff);
+ 309              		.loc 1 158 3 view .LVU124
+ 310              	.LVL24:
+ 159:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_EN(t, conf->enable);
+ 311              		.loc 1 159 3 view .LVU125
+ 160:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ROUNDS(t, conf->rounds);
+ 312              		.loc 1 160 3 view .LVU126
+ 313              		.loc 1 161 3 view .LVU127
+ 162:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_KEY_SEL(t, conf->key_sel);
+ARM GAS  /tmp/ccNApPnF.s 			page 10
+
+
+ 314              		.loc 1 162 3 view .LVU128
+ 160:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ROUNDS(t, conf->rounds);
+ 315              		.loc 1 160 7 is_stmt 0 view .LVU129
+ 316 0010 0B68     		ldr	r3, [r1]
+ 161:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_KEY_SEL(t, conf->key_sel);
+ 317              		.loc 1 161 7 view .LVU130
+ 318 0012 5203     		lsls	r2, r2, #13
+ 160:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ROUNDS(t, conf->rounds);
+ 319              		.loc 1 160 7 view .LVU131
+ 320 0014 1B03     		lsls	r3, r3, #12
+ 161:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_KEY_SEL(t, conf->key_sel);
+ 321              		.loc 1 161 7 view .LVU132
+ 322 0016 02F40052 		and	r2, r2, #8192
+ 160:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_ROUNDS(t, conf->rounds);
+ 323              		.loc 1 160 7 view .LVU133
+ 324 001a 03F48053 		and	r3, r3, #4096
+ 325              		.loc 1 162 5 view .LVU134
+ 326 001e 1343     		orrs	r3, r3, r2
+ 327              		.loc 1 162 7 view .LVU135
+ 328 0020 4A69     		ldr	r2, [r1, #20]
+ 329 0022 9203     		lsls	r2, r2, #14
+ 330 0024 92B2     		uxth	r2, r2
+ 331              		.loc 1 162 5 view .LVU136
+ 332 0026 1343     		orrs	r3, r3, r2
+ 159:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   t = ATON_EPOCHCTRL_ENCR_MSB_SET_EN(t, conf->enable);
+ 333              		.loc 1 159 7 view .LVU137
+ 334 0028 C4F30A02 		ubfx	r2, r4, #0, #11
+ 335              		.loc 1 162 5 view .LVU138
+ 336 002c 1343     		orrs	r3, r3, r2
+ 337              	.LVL25:
+ 163:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_EPOCHCTRL_ENCR_MSB_SET(id, t);
+ 338              		.loc 1 163 3 is_stmt 1 view .LVU139
+ 339              		.loc 1 163 3 view .LVU140
+ 340              		.loc 1 163 3 view .LVU141
+ 341              		.loc 1 163 3 is_stmt 0 discriminator 4 view .LVU142
+ 342 002e 4361     		str	r3, [r0, #20]
+ 343              		.loc 1 163 3 is_stmt 1 view .LVU143
+ 344              		.loc 1 163 3 view .LVU144
+ 164:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 165:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   return 0;
+ 345              		.loc 1 165 3 view .LVU145
+ 346              		.loc 1 165 10 is_stmt 0 view .LVU146
+ 347 0030 0020     		movs	r0, #0
+ 348              	.LVL26:
+ 349              	.L16:
+ 166:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 350              		.loc 1 166 1 view .LVU147
+ 351 0032 10BD     		pop	{r4, pc}
+ 352              	.LVL27:
+ 353              	.L18:
+ 153:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 354              		.loc 1 153 12 view .LVU148
+ 355 0034 4FF0FF30 		mov	r0, #-1
+ 356              	.LVL28:
+ 153:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 357              		.loc 1 153 12 view .LVU149
+ 358 0038 FBE7     		b	.L16
+ARM GAS  /tmp/ccNApPnF.s 			page 11
+
+
+ 359              	.L20:
+ 360 003a 00BF     		.align	2
+ 361              	.L19:
+ 362 003c 00E00F58 		.word	1477435392
+ 363              		.cfi_endproc
+ 364              	.LFE334:
+ 366              		.section	.text.LL_DmaCypherInit,"ax",%progbits
+ 367              		.align	1
+ 368              		.global	LL_DmaCypherInit
+ 369              		.syntax unified
+ 370              		.thumb
+ 371              		.thumb_func
+ 373              	LL_DmaCypherInit:
+ 374              	.LVL29:
+ 375              	.LFB335:
+ 167:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 168:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #if (LL_ATON_PLATFORM != LL_ATON_PLAT_EC_TRACE)
+ 169:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 170:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+ 171:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief  Handles Dma/Cypher data transfer
+ 172:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  cypherInfo: transfer parameters (addresses, keys, ... )
+ 173:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @retval Error code (0: og - -1: ko)
+ 174:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   WARNING: this is an utility function and its usage is not compatible with the ATON runti
+ 175:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   The function uses stream engines 0 and 1
+ 176:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   It uses default (0) values for encryption id and round (12)
+ 177:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+ 178:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** int LL_DmaCypherInit(LL_Cypher_InitTypeDef *cypherInfo)
+ 179:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 376              		.loc 1 179 1 is_stmt 1 view -0
+ 377              		.cfi_startproc
+ 378              		@ args = 0, pretend = 0, frame = 168
+ 379              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t limit;
+ 380              		.loc 1 180 3 view .LVU151
+ 181:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t lastAdd;
+ 381              		.loc 1 181 3 view .LVU152
+ 182:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 183:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (cypherInfo->cypherCacheMask != 0 && cypherInfo->len > CYPHER_CACHE_SIZE)
+ 382              		.loc 1 183 3 view .LVU153
+ 179:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t limit;
+ 383              		.loc 1 179 1 is_stmt 0 view .LVU154
+ 384 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 385              		.cfi_def_cfa_offset 28
+ 386              		.cfi_offset 4, -28
+ 387              		.cfi_offset 5, -24
+ 388              		.cfi_offset 6, -20
+ 389              		.cfi_offset 7, -16
+ 390              		.cfi_offset 8, -12
+ 391              		.cfi_offset 9, -8
+ 392              		.cfi_offset 14, -4
+ 393              		.loc 1 183 6 view .LVU155
+ 394 0004 037B     		ldrb	r3, [r0, #12]	@ zero_extendqisi2
+ 179:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t limit;
+ 395              		.loc 1 179 1 view .LVU156
+ 396 0006 0446     		mov	r4, r0
+ 397 0008 ABB0     		sub	sp, sp, #172
+ 398              		.cfi_def_cfa_offset 200
+ARM GAS  /tmp/ccNApPnF.s 			page 12
+
+
+ 399              		.loc 1 183 6 view .LVU157
+ 400 000a 43B1     		cbz	r3, .L22
+ 401              		.loc 1 183 40 discriminator 1 view .LVU158
+ 402 000c 8368     		ldr	r3, [r0, #8]
+ 403 000e B3F5802F 		cmp	r3, #262144
+ 404 0012 04D9     		bls	.L22
+ 405              	.LVL30:
+ 406              	.L29:
+ 184:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 185:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return (-1);
+ 407              		.loc 1 185 12 view .LVU159
+ 408 0014 4FF0FF30 		mov	r0, #-1
+ 409              	.L21:
+ 186:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 187:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 188:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_Init();
+ 189:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 190:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Use stream engine 0 as source channel */
+ 191:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 192:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   lastAdd = cypherInfo->srcAdd + cypherInfo->len;
+ 193:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 194:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 195:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInitTypeDef dma_in = {.dir = 0,
+ 197:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 198:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_start = 0,
+ 199:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_end = (uint32_t)cypherInfo->len,
+ 200:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_limit = limit,
+ 201:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .raw = 1,
+ 202:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .frame_tot_cnt = 1,
+ 203:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_in = 8,
+ 204:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_out = 8,
+ 205:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_unsigned = 0};
+ 206:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 207:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Use stream engine 0 as destination channel */
+ 208:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 209:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   lastAdd = cypherInfo->dstAdd + cypherInfo->len;
+ 210:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 211:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 212:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInitTypeDef dma_out = {.dir = 1,
+ 214:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 215:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .offset_start = 0,
+ 216:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .offset_end = (uint32_t)cypherInfo->len,
+ 217:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .offset_limit = limit,
+ 218:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .raw = 1,
+ 219:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .frame_tot_cnt = 1,
+ 220:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .nbits_in = 8,
+ 221:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .nbits_out = 8,
+ 222:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .nbits_unsigned = 0};
+ 223:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 224:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (0 != (cypherInfo->cypherCacheMask & CYPHER_CACHE_SRC))
+ 225:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 226:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cacheable = 1;
+ 227:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 228:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 229:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ARM GAS  /tmp/ccNApPnF.s 			page 13
+
+
+ 230:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 231:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cacheable = 0;
+ 232:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 0;
+ 233:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 234:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 235:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (0 != (cypherInfo->cypherCacheMask & CYPHER_CACHE_DST))
+ 236:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 237:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cacheable = 1;
+ 238:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 239:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 240:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ 241:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 242:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cacheable = 0;
+ 243:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 0;
+ 244:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 245:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 246:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Configure stream switch */
+ 247:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const LL_Switch_InitTypeDef switch_init = {LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ST
+ 249:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 250:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0
+ 251:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 252:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Initialize stream engines */
+ 253:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 254:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const LL_ATON_EnableUnits_InitTypeDef dma_units[] = {{{STRENG, 1}}, {{STRENG, 0}}};
+ 255:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 256:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (cypherInfo->cypherEnableMask != 0)
+ 257:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 258:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     if ((cypherInfo->cypherEnableMask & CYPHER_SRC_MASK) != 0)
+ 259:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 260:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       /* Enable encryption on input stream engine */
+ 261:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       dma_in.cipher_en = 1;
+ 262:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 263:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     else if ((cypherInfo->cypherEnableMask & CYPHER_DST_MASK) != 0)
+ 264:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 265:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       /* Enable encryption on output stream engine */
+ 266:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 267:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       dma_out.cipher_en = 1;
+ 268:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 269:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     else
+ 270:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 271:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       return (-1);
+ 272:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 273:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 274:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     /* Set encryption keys into Bus Interface */
+ 275:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 276:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     LL_Busif_SetKeys(0, 0, cypherInfo->busIfKeyLsb, cypherInfo->busIfKeyMsb);
+ 277:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 278:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 279:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_SRC_STRENG_ID, &dma_in, 1);
+ 280:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_DST_STRENG_ID, &dma_out, 1);
+ 281:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 282:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Enable stream switch */
+ 283:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 284:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Switch_Init(&switch_init, 1);
+ 285:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 286:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Start */
+ARM GAS  /tmp/ccNApPnF.s 			page 14
+
+
+ 287:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 288:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_EnableUnits_Init(dma_units, 2);
+ 289:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 290:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Wait for end of transfer */
+ 291:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 292:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const uint32_t dma_wait_mask = 1 << CYPHER_DST_STRENG_ID; // Wait for destination stream engine
+ 293:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 294:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_Wait(dma_wait_mask);
+ 295:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 296:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Disable and deinit */
+ 297:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 298:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_DisableUnits_Init(dma_units, 1);
+ 299:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 300:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Switch_Deinit(&switch_init, 1);
+ 301:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 302:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   return (0);
+ 303:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 410              		.loc 1 303 1 view .LVU160
+ 411 0018 2BB0     		add	sp, sp, #172
+ 412              		.cfi_remember_state
+ 413              		.cfi_def_cfa_offset 28
+ 414              		@ sp needed
+ 415 001a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 416              	.LVL31:
+ 417              	.L22:
+ 418              		.cfi_restore_state
+ 188:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 419              		.loc 1 188 3 is_stmt 1 view .LVU161
+ 420 001e FFF7FEFF 		bl	LL_ATON_Init
+ 421              	.LVL32:
+ 192:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 422              		.loc 1 192 3 view .LVU162
+ 192:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 423              		.loc 1 192 44 is_stmt 0 view .LVU163
+ 424 0022 A768     		ldr	r7, [r4, #8]
+ 192:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 425              		.loc 1 192 23 view .LVU164
+ 426 0024 D4F80080 		ldr	r8, [r4]
+ 427              	.LVL33:
+ 193:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 428              		.loc 1 193 3 is_stmt 1 view .LVU165
+ 429 0028 07F10806 		add	r6, r7, #8
+ 430              	.LVL34:
+ 194:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 431              		.loc 1 194 3 view .LVU166
+ 192:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 432              		.loc 1 192 11 is_stmt 0 view .LVU167
+ 433 002c 08EB0705 		add	r5, r8, r7
+ 434              	.LVL35:
+ 193:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 435              		.loc 1 193 53 view .LVU168
+ 436 0030 05F00705 		and	r5, r5, #7
+ 437              	.LVL36:
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 438              		.loc 1 196 31 view .LVU169
+ 439 0034 4822     		movs	r2, #72
+ 440 0036 0021     		movs	r1, #0
+ARM GAS  /tmp/ccNApPnF.s 			page 15
+
+
+ 193:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 441              		.loc 1 193 9 view .LVU170
+ 442 0038 751B     		subs	r5, r6, r5
+ 443              	.LVL37:
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 444              		.loc 1 196 31 view .LVU171
+ 445 003a 06A8     		add	r0, sp, #24
+ 446 003c FFF7FEFF 		bl	memset
+ 447              	.LVL38:
+ 194:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 448              		.loc 1 194 9 view .LVU172
+ 449 0040 25F00705 		bic	r5, r5, #7
+ 450              	.LVL39:
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 451              		.loc 1 196 3 is_stmt 1 view .LVU173
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 452              		.loc 1 196 31 is_stmt 0 view .LVU174
+ 453 0044 0223     		movs	r3, #2
+ 194:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 454              		.loc 1 194 9 view .LVU175
+ 455 0046 0835     		adds	r5, r5, #8
+ 456              	.LVL40:
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 457              		.loc 1 196 31 view .LVU176
+ 458 0048 CDF81C80 		str	r8, [sp, #28]
+ 459 004c 0A95     		str	r5, [sp, #40]
+ 460 004e 4FF00108 		mov	r8, #1
+ 461              	.LVL41:
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 462              		.loc 1 196 31 view .LVU177
+ 463 0052 40F60805 		movw	r5, #2056
+ 464              	.LVL42:
+ 209:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 465              		.loc 1 209 23 view .LVU178
+ 466 0056 D4F80490 		ldr	r9, [r4, #4]
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 467              		.loc 1 196 31 view .LVU179
+ 468 005a 8DF81830 		strb	r3, [sp, #24]
+ 209:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 469              		.loc 1 209 11 view .LVU180
+ 470 005e 07EB0903 		add	r3, r7, r9
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 471              		.loc 1 213 31 view .LVU181
+ 472 0062 0021     		movs	r1, #0
+ 210:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 473              		.loc 1 210 53 view .LVU182
+ 474 0064 03F00703 		and	r3, r3, #7
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 475              		.loc 1 213 31 view .LVU183
+ 476 0068 4822     		movs	r2, #72
+ 477 006a 18A8     		add	r0, sp, #96
+ 210:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 478              		.loc 1 210 9 view .LVU184
+ 479 006c F61A     		subs	r6, r6, r3
+ 196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)cypherInfo->srcAdd,
+ 480              		.loc 1 196 31 view .LVU185
+ 481 006e 0997     		str	r7, [sp, #36]
+ARM GAS  /tmp/ccNApPnF.s 			page 16
+
+
+ 482 0070 CDF85880 		str	r8, [sp, #88]
+ 483 0074 ADF85C50 		strh	r5, [sp, #92]	@ movhi
+ 209:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)cypherInfo->len + (8 - (lastAdd & 7));
+ 484              		.loc 1 209 3 is_stmt 1 view .LVU186
+ 485              	.LVL43:
+ 210:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 486              		.loc 1 210 3 view .LVU187
+ 211:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 487              		.loc 1 211 3 view .LVU188
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 488              		.loc 1 213 31 is_stmt 0 view .LVU189
+ 489 0078 FFF7FEFF 		bl	memset
+ 490              	.LVL44:
+ 491 007c 0323     		movs	r3, #3
+ 224:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 492              		.loc 1 224 23 view .LVU190
+ 493 007e 227B     		ldrb	r2, [r4, #12]	@ zero_extendqisi2
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 494              		.loc 1 213 31 view .LVU191
+ 495 0080 8DF86030 		strb	r3, [sp, #96]
+ 224:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 496              		.loc 1 224 6 view .LVU192
+ 497 0084 D007     		lsls	r0, r2, #31
+ 226:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 498              		.loc 1 226 22 view .LVU193
+ 499 0086 48BF     		it	mi
+ 500 0088 9DF81930 		ldrbmi	r3, [sp, #25]	@ zero_extendqisi2
+ 211:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 501              		.loc 1 211 9 view .LVU194
+ 502 008c 26F00706 		bic	r6, r6, #7
+ 503              	.LVL45:
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 504              		.loc 1 213 3 is_stmt 1 view .LVU195
+ 226:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 505              		.loc 1 226 22 is_stmt 0 view .LVU196
+ 506 0090 42BF     		ittt	mi
+ 507 0092 23F06003 		bicmi	r3, r3, #96
+ 508 0096 43F06003 		orrmi	r3, r3, #96
+ 509 009a 8DF81930 		strbmi	r3, [sp, #25]
+ 235:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 510              		.loc 1 235 6 view .LVU197
+ 511 009e 9107     		lsls	r1, r2, #30
+ 237:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 512              		.loc 1 237 23 view .LVU198
+ 513 00a0 48BF     		it	mi
+ 514 00a2 9DF86130 		ldrbmi	r3, [sp, #97]	@ zero_extendqisi2
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 515              		.loc 1 248 31 view .LVU199
+ 516 00a6 4FF01002 		mov	r2, #16
+ 237:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 517              		.loc 1 237 23 view .LVU200
+ 518 00aa 44BF     		itt	mi
+ 519 00ac 23F06003 		bicmi	r3, r3, #96
+ 520 00b0 43F06003 		orrmi	r3, r3, #96
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 521              		.loc 1 248 31 view .LVU201
+ 522 00b4 4FF00001 		mov	r1, #0
+ARM GAS  /tmp/ccNApPnF.s 			page 17
+
+
+ 211:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 523              		.loc 1 211 9 view .LVU202
+ 524 00b8 06F10806 		add	r6, r6, #8
+ 525              	.LVL46:
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 526              		.loc 1 248 31 view .LVU203
+ 527 00bc 02A8     		add	r0, sp, #8
+ 237:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 528              		.loc 1 237 23 view .LVU204
+ 529 00be 48BF     		it	mi
+ 530 00c0 8DF86130 		strbmi	r3, [sp, #97]
+ 213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                          .addr_base.i = (uint32_t)cypherInfo->dstAdd,
+ 531              		.loc 1 213 31 view .LVU205
+ 532 00c4 CDF86490 		str	r9, [sp, #100]
+ 533 00c8 1B97     		str	r7, [sp, #108]
+ 534 00ca 1C96     		str	r6, [sp, #112]
+ 535 00cc CDF8A080 		str	r8, [sp, #160]
+ 536 00d0 ADF8A450 		strh	r5, [sp, #164]	@ movhi
+ 224:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 537              		.loc 1 224 3 is_stmt 1 view .LVU206
+ 226:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 538              		.loc 1 226 5 view .LVU207
+ 227:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 539              		.loc 1 227 5 view .LVU208
+ 235:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 540              		.loc 1 235 3 view .LVU209
+ 237:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 541              		.loc 1 237 5 view .LVU210
+ 238:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 542              		.loc 1 238 5 view .LVU211
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 543              		.loc 1 248 3 view .LVU212
+ 248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 544              		.loc 1 248 31 is_stmt 0 view .LVU213
+ 545 00d4 FFF7FEFF 		bl	memset
+ 546              	.LVL47:
+ 547 00d8 0C23     		movs	r3, #12
+ 548 00da 0493     		str	r3, [sp, #16]
+ 549 00dc 0123     		movs	r3, #1
+ 550 00de 8DF81630 		strb	r3, [sp, #22]
+ 254:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 551              		.loc 1 254 3 is_stmt 1 view .LVU214
+ 254:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 552              		.loc 1 254 41 is_stmt 0 view .LVU215
+ 553 00e2 0023     		movs	r3, #0
+ 554 00e4 0122     		movs	r2, #1
+ 555 00e6 8DF80030 		strb	r3, [sp]
+ 556 00ea 8DF80430 		strb	r3, [sp, #4]
+ 557 00ee ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 256:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 558              		.loc 1 256 3 is_stmt 1 view .LVU216
+ 256:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 559              		.loc 1 256 17 is_stmt 0 view .LVU217
+ 560 00f2 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ 254:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 561              		.loc 1 254 41 view .LVU218
+ 562 00f4 ADF80220 		strh	r2, [sp, #2]	@ movhi
+ARM GAS  /tmp/ccNApPnF.s 			page 18
+
+
+ 256:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 563              		.loc 1 256 6 view .LVU219
+ 564 00f8 83B1     		cbz	r3, .L26
+ 258:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 565              		.loc 1 258 5 is_stmt 1 view .LVU220
+ 258:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 566              		.loc 1 258 8 is_stmt 0 view .LVU221
+ 567 00fa DA07     		lsls	r2, r3, #31
+ 568 00fc 2DD5     		bpl	.L27
+ 261:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 569              		.loc 1 261 7 is_stmt 1 view .LVU222
+ 261:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 570              		.loc 1 261 24 is_stmt 0 view .LVU223
+ 571 00fe 9DF81A30 		ldrb	r3, [sp, #26]	@ zero_extendqisi2
+ 572 0102 43F00403 		orr	r3, r3, #4
+ 573 0106 8DF81A30 		strb	r3, [sp, #26]
+ 574              	.L28:
+ 276:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 575              		.loc 1 276 5 is_stmt 1 view .LVU224
+ 576              	.LBB9:
+ 577              	.LBB10:
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 578              		.loc 1 118 5 is_stmt 0 discriminator 4 view .LVU225
+ 579 010a 194B     		ldr	r3, .L45
+ 580              	.LBE10:
+ 581              	.LBE9:
+ 276:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 582              		.loc 1 276 5 view .LVU226
+ 583 010c D4E90450 		ldrd	r5, r0, [r4, #16]
+ 584 0110 D4E90612 		ldrd	r1, r2, [r4, #24]
+ 585              	.LVL48:
+ 586              	.LBB12:
+ 587              	.LBI9:
+ 106:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 588              		.loc 1 106 5 is_stmt 1 view .LVU227
+ 589              	.LBB11:
+ 112:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return LL_ATON_INVALID_ID;
+ 590              		.loc 1 112 3 view .LVU228
+ 116:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 591              		.loc 1 116 3 view .LVU229
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 592              		.loc 1 118 5 view .LVU230
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 593              		.loc 1 118 5 view .LVU231
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 594              		.loc 1 118 5 view .LVU232
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 595              		.loc 1 118 5 is_stmt 0 discriminator 4 view .LVU233
+ 596 0114 5D61     		str	r5, [r3, #20]
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 597              		.loc 1 118 5 is_stmt 1 view .LVU234
+ 118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_63_32_IDX, ATON_BUSIF_0_KEY0_63_32_S, key_low >> 32);
+ 598              		.loc 1 118 5 view .LVU235
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 599              		.loc 1 119 5 view .LVU236
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 600              		.loc 1 119 5 view .LVU237
+ARM GAS  /tmp/ccNApPnF.s 			page 19
+
+
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 601              		.loc 1 119 5 view .LVU238
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 602              		.loc 1 119 5 is_stmt 0 discriminator 4 view .LVU239
+ 603 0116 9861     		str	r0, [r3, #24]
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 604              		.loc 1 119 5 is_stmt 1 view .LVU240
+ 119:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_95_64_IDX, ATON_BUSIF_0_KEY0_95_64_S, key_hi & 0xfffff
+ 605              		.loc 1 119 5 view .LVU241
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 606              		.loc 1 120 5 view .LVU242
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 607              		.loc 1 120 5 view .LVU243
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 608              		.loc 1 120 5 view .LVU244
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 609              		.loc 1 120 5 is_stmt 0 discriminator 4 view .LVU245
+ 610 0118 D961     		str	r1, [r3, #28]
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 611              		.loc 1 120 5 is_stmt 1 view .LVU246
+ 120:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     ATON_BUSIF_KEY_SET(id, ATON_BUSIF_0_KEY0_127_96_IDX, ATON_BUSIF_0_KEY0_127_96_S, key_hi >> 32);
+ 612              		.loc 1 120 5 view .LVU247
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 613              		.loc 1 121 5 view .LVU248
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 614              		.loc 1 121 5 view .LVU249
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 615              		.loc 1 121 5 view .LVU250
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 616              		.loc 1 121 5 is_stmt 0 discriminator 4 view .LVU251
+ 617 011a 1A62     		str	r2, [r3, #32]
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 618              		.loc 1 121 5 is_stmt 1 view .LVU252
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 619              		.loc 1 121 5 view .LVU253
+ 620              	.LVL49:
+ 621              	.L26:
+ 121:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 622              		.loc 1 121 5 is_stmt 0 view .LVU254
+ 623              	.LBE11:
+ 624              	.LBE12:
+ 279:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_DST_STRENG_ID, &dma_out, 1);
+ 625              		.loc 1 279 3 is_stmt 1 view .LVU255
+ 626 011c 0122     		movs	r2, #1
+ 627 011e 06A9     		add	r1, sp, #24
+ 628 0120 0020     		movs	r0, #0
+ 629 0122 FFF7FEFF 		bl	LL_Streng_TensorInit
+ 630              	.LVL50:
+ 280:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 631              		.loc 1 280 3 view .LVU256
+ 632 0126 0122     		movs	r2, #1
+ 633 0128 18A9     		add	r1, sp, #96
+ 634 012a 1046     		mov	r0, r2
+ 635 012c FFF7FEFF 		bl	LL_Streng_TensorInit
+ 636              	.LVL51:
+ 284:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 637              		.loc 1 284 3 view .LVU257
+ARM GAS  /tmp/ccNApPnF.s 			page 20
+
+
+ 638 0130 0121     		movs	r1, #1
+ 639 0132 02A8     		add	r0, sp, #8
+ 640 0134 FFF7FEFF 		bl	LL_Switch_Init
+ 641              	.LVL52:
+ 288:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 642              		.loc 1 288 3 view .LVU258
+ 643 0138 0221     		movs	r1, #2
+ 644 013a 6846     		mov	r0, sp
+ 645 013c FFF7FEFF 		bl	LL_ATON_EnableUnits_Init
+ 646              	.LVL53:
+ 292:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 647              		.loc 1 292 3 view .LVU259
+ 294:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 648              		.loc 1 294 3 view .LVU260
+ 649 0140 0220     		movs	r0, #2
+ 650 0142 FFF7FEFF 		bl	LL_Streng_Wait
+ 651              	.LVL54:
+ 298:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 652              		.loc 1 298 3 view .LVU261
+ 653 0146 0121     		movs	r1, #1
+ 654 0148 6846     		mov	r0, sp
+ 655 014a FFF7FEFF 		bl	LL_ATON_DisableUnits_Init
+ 656              	.LVL55:
+ 300:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 657              		.loc 1 300 3 view .LVU262
+ 658 014e 0121     		movs	r1, #1
+ 659 0150 02A8     		add	r0, sp, #8
+ 660 0152 FFF7FEFF 		bl	LL_Switch_Deinit
+ 661              	.LVL56:
+ 302:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 662              		.loc 1 302 3 view .LVU263
+ 302:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 663              		.loc 1 302 10 is_stmt 0 view .LVU264
+ 664 0156 0020     		movs	r0, #0
+ 665 0158 5EE7     		b	.L21
+ 666              	.LVL57:
+ 667              	.L27:
+ 263:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 668              		.loc 1 263 10 is_stmt 1 view .LVU265
+ 263:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 669              		.loc 1 263 13 is_stmt 0 view .LVU266
+ 670 015a 9B07     		lsls	r3, r3, #30
+ 671 015c 7FF55AAF 		bpl	.L29
+ 267:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 672              		.loc 1 267 7 is_stmt 1 view .LVU267
+ 267:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 673              		.loc 1 267 25 is_stmt 0 view .LVU268
+ 674 0160 9DF86230 		ldrb	r3, [sp, #98]	@ zero_extendqisi2
+ 675 0164 43F00403 		orr	r3, r3, #4
+ 676 0168 8DF86230 		strb	r3, [sp, #98]
+ 677 016c CDE7     		b	.L28
+ 678              	.L46:
+ 679 016e 00BF     		.align	2
+ 680              	.L45:
+ 681 0170 00200E58 		.word	1477320704
+ 682              		.cfi_endproc
+ 683              	.LFE335:
+ARM GAS  /tmp/ccNApPnF.s 			page 21
+
+
+ 685              		.section	.text.LL_ExtDmaCypherInit,"ax",%progbits
+ 686              		.align	1
+ 687              		.global	LL_ExtDmaCypherInit
+ 688              		.syntax unified
+ 689              		.thumb
+ 690              		.thumb_func
+ 692              	LL_ExtDmaCypherInit:
+ 693              	.LVL58:
+ 694              	.LFB336:
+ 304:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 305:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+ 306:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief  Handles Dma/Cypher data transfer with extended parameters
+ 307:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  extCypherInfo: transfer parameters (addresses, keys, ... )
+ 308:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @retval Error code (0: ok - -1: ko)
+ 309:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   WARNING: this is an utility function and its usage is not compatible with the ATON runti
+ 310:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   The function uses stream engines 0 and 1
+ 311:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+ 312:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 313:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** int LL_ExtDmaCypherInit(LL_ExtendedCypher_InitTypeDef *extCypherInfo)
+ 314:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 695              		.loc 1 314 1 is_stmt 1 view -0
+ 696              		.cfi_startproc
+ 697              		@ args = 0, pretend = 0, frame = 200
+ 698              		@ frame_needed = 0, uses_anonymous_args = 0
+ 315:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->cypherCacheMask != 0 && extCypherInfo->transferSize > CYPHER_CACHE_SIZE)
+ 699              		.loc 1 315 3 view .LVU270
+ 314:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->cypherCacheMask != 0 && extCypherInfo->transferSize > CYPHER_CACHE_SIZE)
+ 700              		.loc 1 314 1 is_stmt 0 view .LVU271
+ 701 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 702              		.cfi_def_cfa_offset 36
+ 703              		.cfi_offset 4, -36
+ 704              		.cfi_offset 5, -32
+ 705              		.cfi_offset 6, -28
+ 706              		.cfi_offset 7, -24
+ 707              		.cfi_offset 8, -20
+ 708              		.cfi_offset 9, -16
+ 709              		.cfi_offset 10, -12
+ 710              		.cfi_offset 11, -8
+ 711              		.cfi_offset 14, -4
+ 712              		.loc 1 315 20 view .LVU272
+ 713 0004 90F80C80 		ldrb	r8, [r0, #12]	@ zero_extendqisi2
+ 314:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->cypherCacheMask != 0 && extCypherInfo->transferSize > CYPHER_CACHE_SIZE)
+ 714              		.loc 1 314 1 view .LVU273
+ 715 0008 0446     		mov	r4, r0
+ 716              		.loc 1 315 59 discriminator 1 view .LVU274
+ 717 000a 8568     		ldr	r5, [r0, #8]
+ 314:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->cypherCacheMask != 0 && extCypherInfo->transferSize > CYPHER_CACHE_SIZE)
+ 718              		.loc 1 314 1 view .LVU275
+ 719 000c B3B0     		sub	sp, sp, #204
+ 720              		.cfi_def_cfa_offset 240
+ 721              		.loc 1 315 6 view .LVU276
+ 722 000e B8F1000F 		cmp	r8, #0
+ 723 0012 07D0     		beq	.L48
+ 724              		.loc 1 315 43 discriminator 1 view .LVU277
+ 725 0014 B5F5802F 		cmp	r5, #262144
+ 726 0018 04D9     		bls	.L48
+ 727              	.LVL59:
+ARM GAS  /tmp/ccNApPnF.s 			page 22
+
+
+ 728              	.L51:
+ 316:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 317:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     return (-1);
+ 729              		.loc 1 317 12 view .LVU278
+ 730 001a 4FF0FF30 		mov	r0, #-1
+ 731              	.L47:
+ 318:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 319:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 320:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Add frames check */
+ 321:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 322:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t frameNumber;
+ 323:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t frameSize;
+ 324:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t limit;
+ 325:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t lastAdd;
+ 326:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 327:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->incrementStep != 0)
+ 328:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     if ((extCypherInfo->transferSize % extCypherInfo->frameSize) != 0)
+ 330:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 331:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       return (-1);
+ 332:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 333:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 334:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     frameSize = extCypherInfo->frameSize;
+ 335:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     frameNumber = extCypherInfo->transferSize / extCypherInfo->frameSize;
+ 336:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 337:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ 338:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 339:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     frameSize = extCypherInfo->transferSize;
+ 340:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     frameNumber = 1;
+ 341:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 342:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   lastAdd = extCypherInfo->srcAdd + extCypherInfo->transferSize;
+ 344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 345:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 346:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 347:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Use stream engine 0 as source channel */
+ 348:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInitTypeDef dma_in = {.dir = 0,
+ 350:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 351:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_start = 0,
+ 352:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_end = frameSize,
+ 353:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .offset_limit = limit,
+ 354:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .raw = 1,
+ 355:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .frame_tot_cnt = frameNumber,
+ 356:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .frame_offset = frameSize,
+ 357:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_in = 8,
+ 358:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_out = 8,
+ 359:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .nbits_unsigned = 0};
+ 360:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 361:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Use stream engine 1 as destination channel:
+ 362:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****      same configuration except the direction, the address and the limit */
+ 363:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 364:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInitTypeDef dma_out = dma_in;
+ 365:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   lastAdd = extCypherInfo->dstAdd + extCypherInfo->transferSize;
+ 367:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 368:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ARM GAS  /tmp/ccNApPnF.s 			page 23
+
+
+ 369:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 370:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.dir = 1;
+ 371:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.addr_base.i = (uint32_t)extCypherInfo->dstAdd;
+ 372:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.offset_limit = limit;
+ 373:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 374:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (0 != (extCypherInfo->cypherCacheMask & CYPHER_CACHE_SRC))
+ 375:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 376:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cacheable = 1;
+ 377:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 378:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 379:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ 380:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 381:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cacheable = 0;
+ 382:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 0;
+ 383:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 384:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 385:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (0 != (extCypherInfo->cypherCacheMask & CYPHER_CACHE_DST))
+ 386:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cacheable = 1;
+ 388:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 389:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 390:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   else
+ 391:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 392:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cacheable = 0;
+ 393:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 0;
+ 394:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 395:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 396:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Configure stream switch */
+ 397:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const LL_Switch_InitTypeDef switch_init = {LL_Switch_Init_Dest() = ATONN_DSTPORT(STRSWITCH, 0, ST
+ 399:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 400:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Context(0) = 1, LL_Switch_Init_Frames(0
+ 401:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 402:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Initialize stream engines */
+ 403:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 404:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const LL_ATON_EnableUnits_InitTypeDef dma_units[] = {{{STRENG, 1}}, {{STRENG, 0}}};
+ 405:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 406:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (extCypherInfo->cypherEnableMask != 0)
+ 407:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 408:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     if ((extCypherInfo->cypherEnableMask & CYPHER_SRC_MASK) != 0)
+ 409:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 410:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       /* Enable encryption on input stream engine */
+ 411:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       dma_in.cipher_en = 1;
+ 412:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 413:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     else if ((extCypherInfo->cypherEnableMask & CYPHER_DST_MASK) != 0)
+ 414:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 415:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       /* Enable encryption on output stream engine */
+ 416:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 417:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       dma_out.cipher_en = 1;
+ 418:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 419:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     else
+ 420:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 421:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       return (-1);
+ 422:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 423:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 424:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     /* Check parameters */
+ 425:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 24
+
+
+ 426:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     if (extCypherInfo->keySel > 1 || extCypherInfo->roundNumber > 1)
+ 427:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 428:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       return (-1);
+ 429:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 430:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 431:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 432:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 433:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Stream engines configuration */
+ 434:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 435:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_SRC_STRENG_ID, &dma_in, 1);
+ 436:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_DST_STRENG_ID, &dma_out, 1);
+ 437:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 438:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Encryption setup */
+ 439:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   if (dma_in.cipher_en == 1 || dma_out.cipher_en == 1)
+ 441:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 442:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     LL_Streng_EncryptionTypedef dmaCypherInfo;
+ 443:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 444:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.enable = 1;
+ 445:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.encryption_id = extCypherInfo->encryptionId;
+ 446:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.key_sel = extCypherInfo->keySel;
+ 447:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.rounds = extCypherInfo->roundNumber;
+ 448:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.increment = extCypherInfo->incrementStep;
+ 449:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 450:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     if (dma_in.cipher_en == 1)
+ 451:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 452:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       LL_Streng_EncryptionInit(CYPHER_SRC_STRENG_ID, &dmaCypherInfo);
+ 453:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 454:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     else
+ 455:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 456:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       LL_Streng_EncryptionInit(CYPHER_DST_STRENG_ID, &dmaCypherInfo);
+ 457:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 458:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 459:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 460:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 461:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Enable stream switch */
+ 462:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 463:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Switch_Init(&switch_init, 1);
+ 464:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 465:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Start */
+ 466:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 467:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_EnableUnits_Init(dma_units, 2);
+ 468:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 469:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Set wait mask for destination engine */
+ 470:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 471:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   const uint32_t dma_wait_mask = 1 << CYPHER_DST_STRENG_ID;
+ 472:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 473:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Wait for end of transfer */
+ 474:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 475:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_Wait(dma_wait_mask);
+ 476:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 477:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Clear interrupt at stream engine level */
+ 478:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 479:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t strengIrqs = ATON_STRENG_IRQ_GET(CYPHER_DST_STRENG_ID);
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_STRENG_IRQ_SET(
+ 481:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 482:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       strengIrqs); /* Acknowledge ATON interrupt source (i.e. stream engine #i) - could be more fin
+ARM GAS  /tmp/ccNApPnF.s 			page 25
+
+
+ 483:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 484:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Data Synchronization Barrier */
+ 485:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 486:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_DSB();
+ 487:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 488:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Clear interrupt at interrupt controller level */
+ 489:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_INTCTRL_INTCLR_SET(0, 1 << CYPHER_DST_STRENG_ID);
+ 491:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 492:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_DSB();
+ 493:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 494:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Disable and deinit */
+ 495:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 496:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ATON_DisableUnits_Init(dma_units, 2);
+ 497:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 498:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Switch_Deinit(&switch_init, 1);
+ 499:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 500:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   return (0);
+ 501:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 732              		.loc 1 501 1 view .LVU279
+ 733 001e 33B0     		add	sp, sp, #204
+ 734              		.cfi_remember_state
+ 735              		.cfi_def_cfa_offset 36
+ 736              		@ sp needed
+ 737 0020 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 738              	.LVL60:
+ 739              	.L48:
+ 740              		.cfi_restore_state
+ 322:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t frameSize;
+ 741              		.loc 1 322 3 is_stmt 1 view .LVU280
+ 323:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t limit;
+ 742              		.loc 1 323 3 view .LVU281
+ 324:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   uint32_t lastAdd;
+ 743              		.loc 1 324 3 view .LVU282
+ 325:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 744              		.loc 1 325 3 view .LVU283
+ 327:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 745              		.loc 1 327 3 view .LVU284
+ 327:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 746              		.loc 1 327 6 is_stmt 0 view .LVU285
+ 747 0024 E38B     		ldrh	r3, [r4, #30]
+ 748 0026 002B     		cmp	r3, #0
+ 749 0028 00F0A480 		beq	.L62
+ 329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 750              		.loc 1 329 5 is_stmt 1 view .LVU286
+ 329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 751              		.loc 1 329 53 is_stmt 0 view .LVU287
+ 752 002c D4F818A0 		ldr	r10, [r4, #24]
+ 329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 753              		.loc 1 329 38 view .LVU288
+ 754 0030 B5FBFAF9 		udiv	r9, r5, r10
+ 755 0034 0AFB1953 		mls	r3, r10, r9, r5
+ 329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 756              		.loc 1 329 8 view .LVU289
+ 757 0038 002B     		cmp	r3, #0
+ 758 003a EED1     		bne	.L51
+ 759              	.L50:
+ARM GAS  /tmp/ccNApPnF.s 			page 26
+
+
+ 760              	.LVL61:
+ 343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 761              		.loc 1 343 3 is_stmt 1 view .LVU290
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 762              		.loc 1 349 31 is_stmt 0 view .LVU291
+ 763 003c 4822     		movs	r2, #72
+ 764 003e 0021     		movs	r1, #0
+ 765 0040 0EA8     		add	r0, sp, #56
+ 766              	.LVL62:
+ 343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 767              		.loc 1 343 26 view .LVU292
+ 768 0042 D4F800B0 		ldr	fp, [r4]
+ 769              	.LVL63:
+ 344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 770              		.loc 1 344 3 is_stmt 1 view .LVU293
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 771              		.loc 1 349 31 is_stmt 0 view .LVU294
+ 772 0046 FFF7FEFF 		bl	memset
+ 773              	.LVL64:
+ 774 004a 0223     		movs	r3, #2
+ 775 004c 8DF83830 		strb	r3, [sp, #56]
+ 776 0050 40F60803 		movw	r3, #2056
+ 343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 777              		.loc 1 343 11 view .LVU295
+ 778 0054 0BEB0506 		add	r6, fp, r5
+ 779              	.LVL65:
+ 343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 780              		.loc 1 343 11 view .LVU296
+ 781 0058 05F10807 		add	r7, r5, #8
+ 782              	.LVL66:
+ 345:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 783              		.loc 1 345 3 is_stmt 1 view .LVU297
+ 344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 784              		.loc 1 344 65 is_stmt 0 view .LVU298
+ 785 005c 06F00706 		and	r6, r6, #7
+ 786              	.LVL67:
+ 344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 787              		.loc 1 344 9 view .LVU299
+ 788 0060 BE1B     		subs	r6, r7, r6
+ 789              	.LVL68:
+ 345:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 790              		.loc 1 345 9 view .LVU300
+ 791 0062 26F00706 		bic	r6, r6, #7
+ 792              	.LVL69:
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 793              		.loc 1 349 3 is_stmt 1 view .LVU301
+ 364:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 794              		.loc 1 364 31 is_stmt 0 view .LVU302
+ 795 0066 4822     		movs	r2, #72
+ 796 0068 0EA9     		add	r1, sp, #56
+ 345:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 797              		.loc 1 345 9 view .LVU303
+ 798 006a 0836     		adds	r6, r6, #8
+ 799              	.LVL70:
+ 364:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 800              		.loc 1 364 31 view .LVU304
+ 801 006c 20A8     		add	r0, sp, #128
+ARM GAS  /tmp/ccNApPnF.s 			page 27
+
+
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 802              		.loc 1 349 31 view .LVU305
+ 803 006e ADF87C30 		strh	r3, [sp, #124]	@ movhi
+ 364:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 804              		.loc 1 364 3 is_stmt 1 view .LVU306
+ 349:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                         .addr_base.i = (uint32_t)extCypherInfo->srcAdd,
+ 805              		.loc 1 349 31 is_stmt 0 view .LVU307
+ 806 0072 CDF83CB0 		str	fp, [sp, #60]
+ 807 0076 CDF844A0 		str	r10, [sp, #68]
+ 808 007a 1296     		str	r6, [sp, #72]
+ 809 007c CDF860A0 		str	r10, [sp, #96]
+ 810 0080 CDF87890 		str	r9, [sp, #120]
+ 364:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 811              		.loc 1 364 31 view .LVU308
+ 812 0084 FFF7FEFF 		bl	memcpy
+ 813              	.LVL71:
+ 366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 814              		.loc 1 366 3 is_stmt 1 view .LVU309
+ 370:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.addr_base.i = (uint32_t)extCypherInfo->dstAdd;
+ 815              		.loc 1 370 15 is_stmt 0 view .LVU310
+ 816 0088 9DF88030 		ldrb	r3, [sp, #128]	@ zero_extendqisi2
+ 374:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 817              		.loc 1 374 6 view .LVU311
+ 818 008c 18F0010F 		tst	r8, #1
+ 370:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.addr_base.i = (uint32_t)extCypherInfo->dstAdd;
+ 819              		.loc 1 370 15 view .LVU312
+ 820 0090 43F00103 		orr	r3, r3, #1
+ 821 0094 8DF88030 		strb	r3, [sp, #128]
+ 376:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 822              		.loc 1 376 22 view .LVU313
+ 823 0098 18BF     		it	ne
+ 824 009a 9DF83930 		ldrbne	r3, [sp, #57]	@ zero_extendqisi2
+ 366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 825              		.loc 1 366 26 view .LVU314
+ 826 009e 6268     		ldr	r2, [r4, #4]
+ 827              	.LVL72:
+ 367:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 828              		.loc 1 367 3 is_stmt 1 view .LVU315
+ 368:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 829              		.loc 1 368 3 view .LVU316
+ 376:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 830              		.loc 1 376 22 is_stmt 0 view .LVU317
+ 831 00a0 1EBF     		ittt	ne
+ 832 00a2 23F06003 		bicne	r3, r3, #96
+ 833 00a6 43F06003 		orrne	r3, r3, #96
+ 834 00aa 8DF83930 		strbne	r3, [sp, #57]
+ 366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit = (uint32_t)extCypherInfo->transferSize + (8 - (lastAdd & 7));
+ 835              		.loc 1 366 11 view .LVU318
+ 836 00ae 1544     		add	r5, r5, r2
+ 837              	.LVL73:
+ 385:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 838              		.loc 1 385 6 view .LVU319
+ 839 00b0 18F0020F 		tst	r8, #2
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 840              		.loc 1 387 23 view .LVU320
+ 841 00b4 18BF     		it	ne
+ 842 00b6 9DF88130 		ldrbne	r3, [sp, #129]	@ zero_extendqisi2
+ARM GAS  /tmp/ccNApPnF.s 			page 28
+
+
+ 367:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 843              		.loc 1 367 65 view .LVU321
+ 844 00ba 05F00705 		and	r5, r5, #7
+ 845              	.LVL74:
+ 367:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   limit += (8 - (limit & 7));
+ 846              		.loc 1 367 9 view .LVU322
+ 847 00be A7EB0507 		sub	r7, r7, r5
+ 848              	.LVL75:
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 849              		.loc 1 387 23 view .LVU323
+ 850 00c2 18BF     		it	ne
+ 851 00c4 23F06003 		bicne	r3, r3, #96
+ 368:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 852              		.loc 1 368 9 view .LVU324
+ 853 00c8 27F00707 		bic	r7, r7, #7
+ 854              	.LVL76:
+ 370:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.addr_base.i = (uint32_t)extCypherInfo->dstAdd;
+ 855              		.loc 1 370 3 is_stmt 1 view .LVU325
+ 371:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.offset_limit = limit;
+ 856              		.loc 1 371 3 view .LVU326
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 857              		.loc 1 387 23 is_stmt 0 view .LVU327
+ 858 00cc 18BF     		it	ne
+ 859 00ce 43F06003 		orrne	r3, r3, #96
+ 371:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   dma_out.offset_limit = limit;
+ 860              		.loc 1 371 23 view .LVU328
+ 861 00d2 2192     		str	r2, [sp, #132]
+ 372:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 862              		.loc 1 372 3 is_stmt 1 view .LVU329
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 863              		.loc 1 398 31 is_stmt 0 view .LVU330
+ 864 00d4 4FF00001 		mov	r1, #0
+ 865 00d8 4FF01002 		mov	r2, #16
+ 368:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 866              		.loc 1 368 9 view .LVU331
+ 867 00dc 07F10807 		add	r7, r7, #8
+ 868              	.LVL77:
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 869              		.loc 1 398 31 view .LVU332
+ 870 00e0 02A8     		add	r0, sp, #8
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 871              		.loc 1 387 23 view .LVU333
+ 872 00e2 18BF     		it	ne
+ 873 00e4 8DF88130 		strbne	r3, [sp, #129]
+ 372:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 874              		.loc 1 372 24 view .LVU334
+ 875 00e8 2497     		str	r7, [sp, #144]
+ 374:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 876              		.loc 1 374 3 is_stmt 1 view .LVU335
+ 376:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_in.cache_allocate = 1;
+ 877              		.loc 1 376 5 view .LVU336
+ 377:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 878              		.loc 1 377 5 view .LVU337
+ 385:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 879              		.loc 1 385 3 view .LVU338
+ 387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dma_out.cache_allocate = 1;
+ 880              		.loc 1 387 5 view .LVU339
+ARM GAS  /tmp/ccNApPnF.s 			page 29
+
+
+ 388:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   }
+ 881              		.loc 1 388 5 view .LVU340
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 882              		.loc 1 398 3 view .LVU341
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 883              		.loc 1 398 31 is_stmt 0 view .LVU342
+ 884 00ea FFF7FEFF 		bl	memset
+ 885              	.LVL78:
+ 398:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                                              LL_Switch_Init_Source(0) = ATONN_SRCPORT(STRSWITCH, 0,
+ 886              		.loc 1 398 31 view .LVU343
+ 887 00ee 0C23     		movs	r3, #12
+ 888 00f0 0493     		str	r3, [sp, #16]
+ 889 00f2 0123     		movs	r3, #1
+ 890 00f4 8DF81630 		strb	r3, [sp, #22]
+ 404:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 891              		.loc 1 404 3 is_stmt 1 view .LVU344
+ 404:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 892              		.loc 1 404 41 is_stmt 0 view .LVU345
+ 893 00f8 0023     		movs	r3, #0
+ 894 00fa 0122     		movs	r2, #1
+ 895 00fc 8DF80030 		strb	r3, [sp]
+ 896 0100 8DF80430 		strb	r3, [sp, #4]
+ 897 0104 ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 406:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 898              		.loc 1 406 3 is_stmt 1 view .LVU346
+ 406:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 899              		.loc 1 406 20 is_stmt 0 view .LVU347
+ 900 0108 637B     		ldrb	r3, [r4, #13]	@ zero_extendqisi2
+ 404:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 901              		.loc 1 404 41 view .LVU348
+ 902 010a ADF80220 		strh	r2, [sp, #2]	@ movhi
+ 406:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 903              		.loc 1 406 6 view .LVU349
+ 904 010e ABBB     		cbnz	r3, .L54
+ 905              	.L59:
+ 435:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_Streng_TensorInit(CYPHER_DST_STRENG_ID, &dma_out, 1);
+ 906              		.loc 1 435 3 is_stmt 1 view .LVU350
+ 907 0110 0122     		movs	r2, #1
+ 908 0112 0EA9     		add	r1, sp, #56
+ 909 0114 0020     		movs	r0, #0
+ 910 0116 FFF7FEFF 		bl	LL_Streng_TensorInit
+ 911              	.LVL79:
+ 436:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 912              		.loc 1 436 3 view .LVU351
+ 913 011a 0122     		movs	r2, #1
+ 914 011c 20A9     		add	r1, sp, #128
+ 915 011e 1046     		mov	r0, r2
+ 916 0120 FFF7FEFF 		bl	LL_Streng_TensorInit
+ 917              	.LVL80:
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 918              		.loc 1 440 3 view .LVU352
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 919              		.loc 1 440 24 is_stmt 0 view .LVU353
+ 920 0124 9DF83A30 		ldrb	r3, [sp, #58]	@ zero_extendqisi2
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 921              		.loc 1 440 29 discriminator 1 view .LVU354
+ 922 0128 9DF88220 		ldrb	r2, [sp, #130]	@ zero_extendqisi2
+ARM GAS  /tmp/ccNApPnF.s 			page 30
+
+
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 923              		.loc 1 440 24 view .LVU355
+ 924 012c 03F00401 		and	r1, r3, #4
+ 440:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   {
+ 925              		.loc 1 440 29 discriminator 1 view .LVU356
+ 926 0130 1343     		orrs	r3, r3, r2
+ 927 0132 5807     		lsls	r0, r3, #29
+ 928 0134 3CD4     		bmi	.L55
+ 929              	.L56:
+ 463:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 930              		.loc 1 463 3 is_stmt 1 view .LVU357
+ 931 0136 0121     		movs	r1, #1
+ 932 0138 02A8     		add	r0, sp, #8
+ 933 013a FFF7FEFF 		bl	LL_Switch_Init
+ 934              	.LVL81:
+ 467:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 935              		.loc 1 467 3 view .LVU358
+ 936 013e 0221     		movs	r1, #2
+ 937 0140 6846     		mov	r0, sp
+ 938 0142 FFF7FEFF 		bl	LL_ATON_EnableUnits_Init
+ 939              	.LVL82:
+ 471:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 940              		.loc 1 471 3 view .LVU359
+ 475:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 941              		.loc 1 475 3 view .LVU360
+ 942 0146 0220     		movs	r0, #2
+ 943 0148 FFF7FEFF 		bl	LL_Streng_Wait
+ 944              	.LVL83:
+ 479:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_STRENG_IRQ_SET(
+ 945              		.loc 1 479 3 view .LVU361
+ 479:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   ATON_STRENG_IRQ_SET(
+ 946              		.loc 1 479 12 is_stmt 0 view .LVU362
+ 947 014c 224B     		ldr	r3, .L76
+ 948 014e DA6B     		ldr	r2, [r3, #60]
+ 949              	.LVL84:
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 950              		.loc 1 480 3 is_stmt 1 view .LVU363
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 951              		.loc 1 480 3 view .LVU364
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 952              		.loc 1 480 3 view .LVU365
+ 953 0150 DA63     		str	r2, [r3, #60]
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 954              		.loc 1 480 3 view .LVU366
+ 480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****       CYPHER_DST_STRENG_ID,
+ 955              		.loc 1 480 3 view .LVU367
+ 486:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 956              		.loc 1 486 3 view .LVU368
+ 957              	.LBB13:
+ 958              	.LBI13:
+ 959              		.file 2 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V6.0.0
+   5:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     27. July 2024
+   6:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+ARM GAS  /tmp/ccNApPnF.s 			page 31
+
+
+   7:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /*
+   8:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
+   9:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  10:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  12:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  16:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  18:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  24:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  25:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  28:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC system_header   /* treat file as system include file */
+  29:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  30:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #include <arm_acle.h>
+  31:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  32:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
+  33:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
+  34:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
+  35:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  36:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  37:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  38:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  39:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+  40:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  41:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  42:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
+  43:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  44:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  45:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
+  46:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  47:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE
+  48:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
+  49:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  50:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  51:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN                            __attribute__((__noreturn__))
+  52:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  53:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   CMSIS_DEPRECATED
+  54:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define CMSIS_DEPRECATED                       __attribute__((deprecated))
+  55:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  56:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  57:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
+  58:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  59:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+  60:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
+  61:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  62:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  63:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                               __attribute__((packed, aligned(1)))
+ARM GAS  /tmp/ccNApPnF.s 			page 32
+
+
+  64:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  65:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  66:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+  67:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  68:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
+  69:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+  70:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  71:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_WRITE
+  72:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  73:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  74:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  75:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  76:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  77:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
+  78:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  79:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_READ
+  80:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  81:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  82:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  83:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  84:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  85:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
+  86:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  87:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
+  88:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  89:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  90:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  91:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  92:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  93:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
+  94:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  95:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_READ
+  96:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  97:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  98:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  99:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+ 100:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 101:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
+ 102:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 103:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+ 104:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)                           __attribute__((aligned(x)))
+ 105:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 106:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
+ 107:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
+ 108:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 109:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __COMPILER_BARRIER
+ 110:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+ 111:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 112:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __NO_INIT
+ 113:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_INIT                              __attribute__ ((section (".noinit")))
+ 114:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 115:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __ALIAS
+ 116:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIAS(x)                             __attribute__ ((alias(x)))
+ 117:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 118:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 119:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 120:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ARM GAS  /tmp/ccNApPnF.s 			page 33
+
+
+ 121:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
+ 122:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 123:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ 124:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 125:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 126:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 127:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 128:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 129:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 130:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 131:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 132:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #else
+ 133:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 134:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 135:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 136:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 137:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 138:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 139:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
+ 140:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 141:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 142:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __NOP()         __ASM volatile ("nop")
+ 143:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 144:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 145:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 146:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 147:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 148:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 149:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFI()         __ASM volatile ("wfi":::"memory")
+ 150:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 151:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 152:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 153:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Event
+ 154:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 155:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 156:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 157:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFE()         __ASM volatile ("wfe":::"memory")
+ 158:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 159:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 160:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 161:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Send Event
+ 162:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 163:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 164:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** #define __SEV()         __ASM volatile ("sev")
+ 165:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 166:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 167:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 168:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 169:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 170:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 171:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
+ 172:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 173:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __ISB(void)
+ 174:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 175:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 176:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 177:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 34
+
+
+ 178:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 179:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 180:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 181:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 182:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 183:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __DSB(void)
+ 960              		.loc 2 184 27 view .LVU369
+ 961              	.LBB14:
+ 185:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 186:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 962              		.loc 2 186 3 view .LVU370
+ 963              		.syntax unified
+ 964              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 965 0152 BFF34F8F 		dsb 0xF
+ 966              	@ 0 "" 2
+ 967              		.thumb
+ 968              		.syntax unified
+ 969              	.LBE14:
+ 970              	.LBE13:
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 971              		.loc 1 490 3 view .LVU371
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 972              		.loc 1 490 3 view .LVU372
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 973              		.loc 1 490 3 view .LVU373
+ 974 0156 0221     		movs	r1, #2
+ 975 0158 A3F5A043 		sub	r3, r3, #20480
+ 976 015c 1961     		str	r1, [r3, #16]
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 977              		.loc 1 490 3 view .LVU374
+ 490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 978              		.loc 1 490 3 view .LVU375
+ 492:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 979              		.loc 1 492 3 view .LVU376
+ 980              	.LBB15:
+ 981              	.LBI15:
+ 184:../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 982              		.loc 2 184 27 view .LVU377
+ 983              	.LBB16:
+ 984              		.loc 2 186 3 view .LVU378
+ 985              		.syntax unified
+ 986              	@ 186 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 987 015e BFF34F8F 		dsb 0xF
+ 988              	@ 0 "" 2
+ 989              		.thumb
+ 990              		.syntax unified
+ 991              	.LBE16:
+ 992              	.LBE15:
+ 496:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 993              		.loc 1 496 3 view .LVU379
+ 994 0162 6846     		mov	r0, sp
+ 995 0164 FFF7FEFF 		bl	LL_ATON_DisableUnits_Init
+ 996              	.LVL85:
+ 498:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 997              		.loc 1 498 3 view .LVU380
+ 998 0168 0121     		movs	r1, #1
+ARM GAS  /tmp/ccNApPnF.s 			page 35
+
+
+ 999 016a 02A8     		add	r0, sp, #8
+ 1000 016c FFF7FEFF 		bl	LL_Switch_Deinit
+ 1001              	.LVL86:
+ 500:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 1002              		.loc 1 500 3 view .LVU381
+ 500:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 1003              		.loc 1 500 10 is_stmt 0 view .LVU382
+ 1004 0170 0020     		movs	r0, #0
+ 1005 0172 54E7     		b	.L47
+ 1006              	.LVL87:
+ 1007              	.L62:
+ 339:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     frameNumber = 1;
+ 1008              		.loc 1 339 15 view .LVU383
+ 1009 0174 AA46     		mov	r10, r5
+ 340:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   } /* endif */
+ 1010              		.loc 1 340 17 view .LVU384
+ 1011 0176 4FF00109 		mov	r9, #1
+ 1012 017a 5FE7     		b	.L50
+ 1013              	.LVL88:
+ 1014              	.L54:
+ 408:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1015              		.loc 1 408 5 is_stmt 1 view .LVU385
+ 408:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1016              		.loc 1 408 8 is_stmt 0 view .LVU386
+ 1017 017c DA07     		lsls	r2, r3, #31
+ 1018 017e 0DD5     		bpl	.L57
+ 411:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 1019              		.loc 1 411 7 is_stmt 1 view .LVU387
+ 411:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 1020              		.loc 1 411 24 is_stmt 0 view .LVU388
+ 1021 0180 9DF83A30 		ldrb	r3, [sp, #58]	@ zero_extendqisi2
+ 1022 0184 43F00403 		orr	r3, r3, #4
+ 1023 0188 8DF83A30 		strb	r3, [sp, #58]
+ 1024              	.L58:
+ 426:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1025              		.loc 1 426 5 is_stmt 1 view .LVU389
+ 426:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1026              		.loc 1 426 8 is_stmt 0 view .LVU390
+ 1027 018c 237F     		ldrb	r3, [r4, #28]	@ zero_extendqisi2
+ 1028 018e 012B     		cmp	r3, #1
+ 1029 0190 3FF643AF 		bhi	.L51
+ 426:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1030              		.loc 1 426 35 discriminator 1 view .LVU391
+ 1031 0194 637F     		ldrb	r3, [r4, #29]	@ zero_extendqisi2
+ 1032 0196 012B     		cmp	r3, #1
+ 1033 0198 BAD9     		bls	.L59
+ 1034 019a 3EE7     		b	.L51
+ 1035              	.L57:
+ 413:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1036              		.loc 1 413 10 is_stmt 1 view .LVU392
+ 413:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1037              		.loc 1 413 13 is_stmt 0 view .LVU393
+ 1038 019c 9B07     		lsls	r3, r3, #30
+ 1039 019e 7FF53CAF 		bpl	.L51
+ 417:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 1040              		.loc 1 417 7 is_stmt 1 view .LVU394
+ 417:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ARM GAS  /tmp/ccNApPnF.s 			page 36
+
+
+ 1041              		.loc 1 417 25 is_stmt 0 view .LVU395
+ 1042 01a2 9DF88230 		ldrb	r3, [sp, #130]	@ zero_extendqisi2
+ 1043 01a6 43F00403 		orr	r3, r3, #4
+ 1044 01aa 8DF88230 		strb	r3, [sp, #130]
+ 1045 01ae EDE7     		b	.L58
+ 1046              	.L55:
+ 1047              	.LBB17:
+ 442:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 1048              		.loc 1 442 5 is_stmt 1 view .LVU396
+ 444:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.encryption_id = extCypherInfo->encryptionId;
+ 1049              		.loc 1 444 5 view .LVU397
+ 444:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.encryption_id = extCypherInfo->encryptionId;
+ 1050              		.loc 1 444 26 is_stmt 0 view .LVU398
+ 1051 01b0 0120     		movs	r0, #1
+ 445:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.key_sel = extCypherInfo->keySel;
+ 1052              		.loc 1 445 33 view .LVU399
+ 1053 01b2 D4E90423 		ldrd	r2, [r4, #16]
+ 1054 01b6 CDE90823 		strd	r2, [sp, #32]
+ 446:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.rounds = extCypherInfo->roundNumber;
+ 1055              		.loc 1 446 42 view .LVU400
+ 1056 01ba 237F     		ldrb	r3, [r4, #28]	@ zero_extendqisi2
+ 444:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.encryption_id = extCypherInfo->encryptionId;
+ 1057              		.loc 1 444 26 view .LVU401
+ 1058 01bc 0690     		str	r0, [sp, #24]
+ 445:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.key_sel = extCypherInfo->keySel;
+ 1059              		.loc 1 445 5 is_stmt 1 view .LVU402
+ 446:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.rounds = extCypherInfo->roundNumber;
+ 1060              		.loc 1 446 5 view .LVU403
+ 446:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.rounds = extCypherInfo->roundNumber;
+ 1061              		.loc 1 446 42 is_stmt 0 view .LVU404
+ 1062 01be 0B93     		str	r3, [sp, #44]
+ 447:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.increment = extCypherInfo->incrementStep;
+ 1063              		.loc 1 447 5 is_stmt 1 view .LVU405
+ 447:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     dmaCypherInfo.increment = extCypherInfo->incrementStep;
+ 1064              		.loc 1 447 41 is_stmt 0 view .LVU406
+ 1065 01c0 637F     		ldrb	r3, [r4, #29]	@ zero_extendqisi2
+ 1066 01c2 0A93     		str	r3, [sp, #40]
+ 448:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 1067              		.loc 1 448 5 is_stmt 1 view .LVU407
+ 448:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 1068              		.loc 1 448 44 is_stmt 0 view .LVU408
+ 1069 01c4 E38B     		ldrh	r3, [r4, #30]
+ 1070 01c6 0C93     		str	r3, [sp, #48]
+ 450:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1071              		.loc 1 450 5 is_stmt 1 view .LVU409
+ 450:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     {
+ 1072              		.loc 1 450 8 is_stmt 0 view .LVU410
+ 1073 01c8 21B1     		cbz	r1, .L60
+ 452:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     }
+ 1074              		.loc 1 452 7 is_stmt 1 view .LVU411
+ 1075 01ca 0020     		movs	r0, #0
+ 1076 01cc 06A9     		add	r1, sp, #24
+ 1077              	.L75:
+ 456:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 1078              		.loc 1 456 7 is_stmt 0 view .LVU412
+ 1079 01ce FFF7FEFF 		bl	LL_Streng_EncryptionInit
+ 1080              	.LVL89:
+ARM GAS  /tmp/ccNApPnF.s 			page 37
+
+
+ 1081 01d2 B0E7     		b	.L56
+ 1082              	.L60:
+ 456:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****     } /* endif */
+ 1083              		.loc 1 456 7 is_stmt 1 view .LVU413
+ 1084 01d4 06A9     		add	r1, sp, #24
+ 1085 01d6 FAE7     		b	.L75
+ 1086              	.L77:
+ 1087              		.align	2
+ 1088              	.L76:
+ 1089 01d8 00600E58 		.word	1477337088
+ 1090              	.LBE17:
+ 1091              		.cfi_endproc
+ 1092              	.LFE336:
+ 1094              		.section	.rodata.LL_ATON_DecryptAndCopy.str1.1,"aMS",%progbits,1
+ 1095              	.LC0:
+ 1096 0000 6E65775F 		.ascii	"new_owner != __ll_current_aton_ip_owner\000"
+ 1096      6F776E65 
+ 1096      7220213D 
+ 1096      205F5F6C 
+ 1096      6C5F6375 
+ 1097              	.LC1:
+ 1098 0028 2E2E2F2E 		.ascii	"../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_"
+ 1098      2E2F4D69 
+ 1098      64646C65 
+ 1098      77617265 
+ 1098      732F7374 
+ 1099 005b 72756E74 		.ascii	"runtime.h\000"
+ 1099      696D652E 
+ 1099      6800
+ 1100              	.LC2:
+ 1101 0065 5F5F6C6C 		.ascii	"__ll_current_aton_ip_owner == ((void *)0)\000"
+ 1101      5F637572 
+ 1101      72656E74 
+ 1101      5F61746F 
+ 1101      6E5F6970 
+ 1102              	.LC3:
+ 1103 008f 5F5F6C6C 		.ascii	"__ll_current_wait_mask == 0\000"
+ 1103      5F637572 
+ 1103      72656E74 
+ 1103      5F776169 
+ 1103      745F6D61 
+ 1104              	.LC4:
+ 1105 00ab 63757272 		.ascii	"current_owner == __ll_current_aton_ip_owner\000"
+ 1105      656E745F 
+ 1105      6F776E65 
+ 1105      72203D3D 
+ 1105      205F5F6C 
+ 1106              		.section	.text.LL_ATON_DecryptAndCopy,"ax",%progbits
+ 1107              		.align	1
+ 1108              		.global	LL_ATON_DecryptAndCopy
+ 1109              		.syntax unified
+ 1110              		.thumb
+ 1111              		.thumb_func
+ 1113              	LL_ATON_DecryptAndCopy:
+ 1114              	.LVL90:
+ 1115              	.LFB337:
+ 502:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 38
+
+
+ 503:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** #define STRENG_WEIGHT_ENCRYPTION_ROUNDS_12 0
+ 504:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** /**
+ 505:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @brief  Handles Dma/Cypher data transfer with extended parameters
+ 506:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  encr_params = encryption parameters
+ 507:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  dst = transfer destination address
+ 508:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  src = transfer source address
+ 509:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @param  size = bytes to transfer
+ 510:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @retval None
+ 511:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  * @note   WARNING: this is an utility function and its usage is not compatible with the ATON runti
+ 512:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****  */
+ 513:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 514:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** void LL_ATON_DecryptAndCopy(const LL_Streng_EncryptionTypedef *encr_params, uint64_t *dst, const ui
+ 515:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****                             uint32_t size)
+ 516:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** {
+ 1116              		.loc 1 516 1 view -0
+ 1117              		.cfi_startproc
+ 1118              		@ args = 0, pretend = 0, frame = 32
+ 1119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 517:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ExtendedCypher_InitTypeDef extCypherInfo;
+ 1120              		.loc 1 517 3 view .LVU415
+ 518:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 519:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Fill the data structure */
+ 520:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 521:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.srcAdd = (uint32_t)(uintptr_t)src;
+ 1121              		.loc 1 521 3 view .LVU416
+ 516:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ExtendedCypher_InitTypeDef extCypherInfo;
+ 1122              		.loc 1 516 1 is_stmt 0 view .LVU417
+ 1123 0000 30B5     		push	{r4, r5, lr}
+ 1124              		.cfi_def_cfa_offset 12
+ 1125              		.cfi_offset 4, -12
+ 1126              		.cfi_offset 5, -8
+ 1127              		.cfi_offset 14, -4
+ 522:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.dstAdd = (uint32_t)(uintptr_t)dst;
+ 523:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.transferSize = size;
+ 524:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherCacheMask = CYPHER_CACHE_NONE; /* Do not use cache */
+ 525:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherEnableMask = CYPHER_SRC_MASK;  /* Decrypt using source address */
+ 526:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 527:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Set default values */
+ 528:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 529:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.encryptionId = encr_params->encryption_id;
+ 1128              		.loc 1 529 30 view .LVU418
+ 1129 0002 D0E90245 		ldrd	r4, [r0, #8]
+ 516:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ExtendedCypher_InitTypeDef extCypherInfo;
+ 1130              		.loc 1 516 1 view .LVU419
+ 1131 0006 89B0     		sub	sp, sp, #36
+ 1132              		.cfi_def_cfa_offset 48
+ 522:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.dstAdd = (uint32_t)(uintptr_t)dst;
+ 1133              		.loc 1 522 24 view .LVU420
+ 1134 0008 CDE90021 		strd	r2, r1, [sp]
+ 523:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherCacheMask = CYPHER_CACHE_NONE; /* Do not use cache */
+ 1135              		.loc 1 523 3 is_stmt 1 view .LVU421
+ 524:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherEnableMask = CYPHER_SRC_MASK;  /* Decrypt using source address */
+ 1136              		.loc 1 524 33 is_stmt 0 view .LVU422
+ 1137 000c 4FF48072 		mov	r2, #256
+ 1138              	.LVL91:
+ 523:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherCacheMask = CYPHER_CACHE_NONE; /* Do not use cache */
+ 1139              		.loc 1 523 30 view .LVU423
+ARM GAS  /tmp/ccNApPnF.s 			page 39
+
+
+ 1140 0010 0293     		str	r3, [sp, #8]
+ 524:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherEnableMask = CYPHER_SRC_MASK;  /* Decrypt using source address */
+ 1141              		.loc 1 524 3 is_stmt 1 view .LVU424
+ 525:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 1142              		.loc 1 525 3 view .LVU425
+ 530:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.frameSize = size;
+ 1143              		.loc 1 530 27 is_stmt 0 view .LVU426
+ 1144 0012 0693     		str	r3, [sp, #24]
+ 531:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.keySel = encr_params->key_sel;
+ 1145              		.loc 1 531 24 view .LVU427
+ 1146 0014 4369     		ldr	r3, [r0, #20]
+ 1147              	.LVL92:
+ 529:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.frameSize = size;
+ 1148              		.loc 1 529 30 view .LVU428
+ 1149 0016 CDE90445 		strd	r4, [sp, #16]
+ 1150              		.loc 1 531 24 view .LVU429
+ 1151 001a 8DF81C30 		strb	r3, [sp, #28]
+ 532:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.roundNumber = encr_params->rounds;
+ 1152              		.loc 1 532 29 view .LVU430
+ 1153 001e 0369     		ldr	r3, [r0, #16]
+ 1154              	.LBB22:
+ 1155              	.LBB23:
+ 1156              		.file 3 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h"
+   1:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** /**
+   2:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  ******************************************************************************
+   3:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * @file    ll_aton_runtime.h
+   4:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * @author  SRA Artificial Intelligence & Embedded Architectures
+   5:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * @brief   Header file of ATON LL runtime.
+   6:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * @note    ATON LL runtime currently assumes a single network run
+   7:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  ******************************************************************************
+   8:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * @attention
+   9:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  *
+  10:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * Copyright (c) 2024 STMicroelectronics.
+  11:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * All rights reserved.
+  12:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  *
+  13:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * This software is licensed under terms that can be found in the LICENSE file
+  14:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * in the root directory of this software component.
+  15:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  *
+  17:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  ******************************************************************************
+  18:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****  */
+  19:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  20:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #ifndef __LL_ATON_RUNTIME_H
+  21:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #define __LL_ATON_RUNTIME_H
+  22:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  23:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #ifdef __cplusplus
+  24:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** extern "C"
+  25:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** {
+  26:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #endif
+  27:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  28:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #include <stdint.h>
+  29:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #include <stdio.h>
+  30:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #include <stdlib.h>
+  31:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  32:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #include "ll_aton_rt_user_api.h"
+  33:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #include "ll_aton_util.h"
+  34:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 40
+
+
+  35:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   /*** Helper Functions ***/
+  36:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  37:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   static inline void __ll_set_aton_owner(NN_Instance_TypeDef *new_owner)
+  38:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   {
+  39:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     extern NN_Instance_TypeDef *volatile __ll_current_aton_ip_owner;
+  40:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_ASSERT(new_owner != __ll_current_aton_ip_owner);
+ 1157              		.loc 3 40 5 view .LVU431
+ 1158 0020 194C     		ldr	r4, .L85
+ 1159              	.LBE23:
+ 1160              	.LBE22:
+ 1161              		.loc 1 532 29 view .LVU432
+ 1162 0022 8DF81D30 		strb	r3, [sp, #29]
+ 533:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.incrementStep = encr_params->increment;
+ 1163              		.loc 1 533 31 view .LVU433
+ 1164 0026 8369     		ldr	r3, [r0, #24]
+ 524:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.cypherEnableMask = CYPHER_SRC_MASK;  /* Decrypt using source address */
+ 1165              		.loc 1 524 33 view .LVU434
+ 1166 0028 ADF80C20 		strh	r2, [sp, #12]	@ movhi
+ 529:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.frameSize = size;
+ 1167              		.loc 1 529 3 is_stmt 1 view .LVU435
+ 530:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.keySel = encr_params->key_sel;
+ 1168              		.loc 1 530 3 view .LVU436
+ 531:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.roundNumber = encr_params->rounds;
+ 1169              		.loc 1 531 3 view .LVU437
+ 532:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   extCypherInfo.incrementStep = encr_params->increment;
+ 1170              		.loc 1 532 3 view .LVU438
+ 1171              		.loc 1 533 3 view .LVU439
+ 1172              		.loc 1 533 31 is_stmt 0 view .LVU440
+ 1173 002c ADF81E30 		strh	r3, [sp, #30]	@ movhi
+ 534:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 535:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   /* Decrypt and copy in a fake instance environment */
+ 536:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** 
+ 537:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   __ll_set_aton_owner((NN_Instance_TypeDef *)0xFFFFFFFF);
+ 1174              		.loc 1 537 3 is_stmt 1 view .LVU441
+ 1175              	.LBB26:
+ 1176              	.LBI22:
+  37:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   {
+ 1177              		.loc 3 37 22 view .LVU442
+ 1178              	.LVL93:
+ 1179              	.LBB24:
+  39:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_ASSERT(new_owner != __ll_current_aton_ip_owner);
+ 1180              		.loc 3 39 5 view .LVU443
+ 1181              		.loc 3 40 5 view .LVU444
+ 1182 0030 2368     		ldr	r3, [r4]
+ 1183 0032 0133     		adds	r3, r3, #1
+ 1184 0034 05D1     		bne	.L79
+ 1185              		.loc 3 40 5 is_stmt 0 discriminator 1 view .LVU445
+ 1186 0036 2821     		movs	r1, #40
+ 1187              	.LVL94:
+ 1188              		.loc 3 40 5 discriminator 1 view .LVU446
+ 1189 0038 144B     		ldr	r3, .L85+4
+ 1190 003a 154A     		ldr	r2, .L85+8
+ 1191              	.LVL95:
+ 1192              	.L84:
+  41:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  42:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_OSAL_LOCK_ATON();
+  43:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+ARM GAS  /tmp/ccNApPnF.s 			page 41
+
+
+  44:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_ASSERT(__ll_current_aton_ip_owner == NULL);
+ 1193              		.loc 3 44 5 discriminator 1 view .LVU447
+ 1194 003c 1548     		ldr	r0, .L85+12
+ 1195 003e FFF7FEFF 		bl	__assert_func
+ 1196              	.LVL96:
+ 1197              	.L79:
+  42:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+ 1198              		.loc 3 42 29 is_stmt 1 view .LVU448
+ 1199              		.loc 3 44 5 view .LVU449
+ 1200 0042 2368     		ldr	r3, [r4]
+ 1201 0044 1BB1     		cbz	r3, .L80
+ 1202              		.loc 3 44 5 is_stmt 0 discriminator 1 view .LVU450
+ 1203 0046 2C21     		movs	r1, #44
+ 1204              	.LVL97:
+ 1205              		.loc 3 44 5 discriminator 1 view .LVU451
+ 1206 0048 134B     		ldr	r3, .L85+16
+ 1207 004a 114A     		ldr	r2, .L85+8
+ 1208 004c F6E7     		b	.L84
+ 1209              	.LVL98:
+ 1210              	.L80:
+  45:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  46:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #ifndef NDEBUG
+  47:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     extern uint32_t volatile __ll_current_wait_mask;
+ 1211              		.loc 3 47 5 is_stmt 1 view .LVU452
+  48:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_ASSERT(__ll_current_wait_mask == 0);
+ 1212              		.loc 3 48 5 view .LVU453
+ 1213 004e 134D     		ldr	r5, .L85+20
+ 1214 0050 2B68     		ldr	r3, [r5]
+ 1215 0052 1BB1     		cbz	r3, .L81
+ 1216              		.loc 3 48 5 is_stmt 0 discriminator 1 view .LVU454
+ 1217 0054 3021     		movs	r1, #48
+ 1218              	.LVL99:
+ 1219              		.loc 3 48 5 discriminator 1 view .LVU455
+ 1220 0056 124B     		ldr	r3, .L85+24
+ 1221 0058 0D4A     		ldr	r2, .L85+8
+ 1222 005a EFE7     		b	.L84
+ 1223              	.LVL100:
+ 1224              	.L81:
+  49:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #endif // !NDEBUG
+  50:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  51:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     __ll_current_aton_ip_owner = new_owner;
+ 1225              		.loc 3 51 5 is_stmt 1 view .LVU456
+ 1226              		.loc 3 51 32 is_stmt 0 view .LVU457
+ 1227 005c 4FF0FF33 		mov	r3, #-1
+ 1228              	.LBE24:
+ 1229              	.LBE26:
+ 538:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   LL_ExtDmaCypherInit(&extCypherInfo);
+ 1230              		.loc 1 538 3 view .LVU458
+ 1231 0060 6846     		mov	r0, sp
+ 1232              	.LVL101:
+ 1233              	.LBB27:
+ 1234              	.LBB25:
+ 1235              		.loc 3 51 32 view .LVU459
+ 1236 0062 2360     		str	r3, [r4]
+ 1237              	.LVL102:
+ 1238              		.loc 3 51 32 view .LVU460
+ 1239              	.LBE25:
+ARM GAS  /tmp/ccNApPnF.s 			page 42
+
+
+ 1240              	.LBE27:
+ 1241              		.loc 1 538 3 is_stmt 1 view .LVU461
+ 1242 0064 FFF7FEFF 		bl	LL_ExtDmaCypherInit
+ 1243              	.LVL103:
+ 539:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c ****   __ll_clear_aton_owner((NN_Instance_TypeDef *)0xFFFFFFFF, false);
+ 1244              		.loc 1 539 3 view .LVU462
+ 1245              	.LBB28:
+ 1246              	.LBI28:
+  52:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   }
+  53:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  54:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   static inline void __ll_clear_aton_owner(NN_Instance_TypeDef *current_owner, bool reset_mask)
+ 1247              		.loc 3 54 22 view .LVU463
+ 1248              	.LBB29:
+  55:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   {
+  56:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     extern NN_Instance_TypeDef *volatile __ll_current_aton_ip_owner;
+ 1249              		.loc 3 56 5 view .LVU464
+  57:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_ASSERT(current_owner == __ll_current_aton_ip_owner);
+ 1250              		.loc 3 57 5 view .LVU465
+ 1251 0068 2368     		ldr	r3, [r4]
+ 1252 006a 0133     		adds	r3, r3, #1
+ 1253 006c 03D0     		beq	.L82
+ 1254              		.loc 3 57 5 is_stmt 0 discriminator 1 view .LVU466
+ 1255 006e 3921     		movs	r1, #57
+ 1256 0070 0C4B     		ldr	r3, .L85+28
+ 1257 0072 0D4A     		ldr	r2, .L85+32
+ 1258 0074 E2E7     		b	.L84
+ 1259              	.L82:
+  58:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  59:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #ifndef NDEBUG
+  60:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     extern uint32_t volatile __ll_current_wait_mask;
+ 1260              		.loc 3 60 5 is_stmt 1 view .LVU467
+  61:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     if (reset_mask && (__ll_current_wait_mask != 0))
+ 1261              		.loc 3 61 5 view .LVU468
+  62:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     {
+  63:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****       LL_ATON_PRINTF("WARNING: performing a hard-reset of debug wait-mask!\n");
+  64:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****       __ll_current_wait_mask = 0;
+  65:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     }
+  66:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     else
+  67:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     {
+  68:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****       LL_ATON_ASSERT(__ll_current_wait_mask == 0);
+ 1262              		.loc 3 68 7 view .LVU469
+ 1263 0076 2B68     		ldr	r3, [r5]
+ 1264 0078 1BB1     		cbz	r3, .L83
+ 1265              		.loc 3 68 7 is_stmt 0 discriminator 1 view .LVU470
+ 1266 007a 4421     		movs	r1, #68
+ 1267 007c 084B     		ldr	r3, .L85+24
+ 1268 007e 0A4A     		ldr	r2, .L85+32
+ 1269 0080 DCE7     		b	.L84
+ 1270              	.L83:
+  69:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     }
+  70:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #else  // !NDEBUG
+  71:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****   LL_ATON_LIB_UNUSED(reset_mask);
+  72:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** #endif // !NDEBUG
+  73:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h **** 
+  74:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     __ll_current_aton_ip_owner = NULL;
+ 1271              		.loc 3 74 5 is_stmt 1 view .LVU471
+ 1272              		.loc 3 74 32 is_stmt 0 view .LVU472
+ARM GAS  /tmp/ccNApPnF.s 			page 43
+
+
+ 1273 0082 2360     		str	r3, [r4]
+  75:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_runtime.h ****     LL_ATON_OSAL_UNLOCK_ATON();
+ 1274              		.loc 3 75 31 is_stmt 1 view .LVU473
+ 1275              	.LVL104:
+ 1276              		.loc 3 75 31 is_stmt 0 view .LVU474
+ 1277              	.LBE29:
+ 1278              	.LBE28:
+ 540:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.c **** }
+ 1279              		.loc 1 540 1 view .LVU475
+ 1280 0084 09B0     		add	sp, sp, #36
+ 1281              		.cfi_def_cfa_offset 12
+ 1282              		@ sp needed
+ 1283 0086 30BD     		pop	{r4, r5, pc}
+ 1284              	.L86:
+ 1285              		.align	2
+ 1286              	.L85:
+ 1287 0088 00000000 		.word	__ll_current_aton_ip_owner
+ 1288 008c 00000000 		.word	.LC0
+ 1289 0090 00000000 		.word	__func__.1
+ 1290 0094 28000000 		.word	.LC1
+ 1291 0098 65000000 		.word	.LC2
+ 1292 009c 00000000 		.word	__ll_current_wait_mask
+ 1293 00a0 8F000000 		.word	.LC3
+ 1294 00a4 AB000000 		.word	.LC4
+ 1295 00a8 00000000 		.word	__func__.0
+ 1296              		.cfi_endproc
+ 1297              	.LFE337:
+ 1299              		.section	.rodata.__func__.0,"a"
+ 1302              	__func__.0:
+ 1303 0000 5F5F6C6C 		.ascii	"__ll_clear_aton_owner\000"
+ 1303      5F636C65 
+ 1303      61725F61 
+ 1303      746F6E5F 
+ 1303      6F776E65 
+ 1304              		.section	.rodata.__func__.1,"a"
+ 1307              	__func__.1:
+ 1308 0000 5F5F6C6C 		.ascii	"__ll_set_aton_owner\000"
+ 1308      5F736574 
+ 1308      5F61746F 
+ 1308      6E5F6F77 
+ 1308      6E657200 
+ 1309              		.text
+ 1310              	.Letext0:
+ 1311              		.file 4 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1312              		.file 5 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1313              		.file 6 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_cipher.h"
+ 1314              		.file 7 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h"
+ 1315              		.file 8 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_NN_interface.h"
+ 1316              		.file 9 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1317              		.file 10 "<built-in>"
+ARM GAS  /tmp/ccNApPnF.s 			page 44
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ll_aton_cipher.c
+     /tmp/ccNApPnF.s:26     .text.LL_Streng_EncryptionInit:00000000 $t
+     /tmp/ccNApPnF.s:32     .text.LL_Streng_EncryptionInit:00000000 LL_Streng_EncryptionInit
+     /tmp/ccNApPnF.s:129    .text.LL_Streng_EncryptionInit:00000044 $d
+     /tmp/ccNApPnF.s:135    .text.LL_Busif_SetKeys:00000000 $t
+     /tmp/ccNApPnF.s:141    .text.LL_Busif_SetKeys:00000000 LL_Busif_SetKeys
+     /tmp/ccNApPnF.s:259    .text.LL_Busif_SetKeys:00000040 $d
+     /tmp/ccNApPnF.s:269    .text.LL_EpochCtrl_EncryptionInit:00000000 $t
+     /tmp/ccNApPnF.s:275    .text.LL_EpochCtrl_EncryptionInit:00000000 LL_EpochCtrl_EncryptionInit
+     /tmp/ccNApPnF.s:362    .text.LL_EpochCtrl_EncryptionInit:0000003c $d
+     /tmp/ccNApPnF.s:367    .text.LL_DmaCypherInit:00000000 $t
+     /tmp/ccNApPnF.s:373    .text.LL_DmaCypherInit:00000000 LL_DmaCypherInit
+     /tmp/ccNApPnF.s:681    .text.LL_DmaCypherInit:00000170 $d
+     /tmp/ccNApPnF.s:686    .text.LL_ExtDmaCypherInit:00000000 $t
+     /tmp/ccNApPnF.s:692    .text.LL_ExtDmaCypherInit:00000000 LL_ExtDmaCypherInit
+     /tmp/ccNApPnF.s:1089   .text.LL_ExtDmaCypherInit:000001d8 $d
+     /tmp/ccNApPnF.s:1107   .text.LL_ATON_DecryptAndCopy:00000000 $t
+     /tmp/ccNApPnF.s:1113   .text.LL_ATON_DecryptAndCopy:00000000 LL_ATON_DecryptAndCopy
+     /tmp/ccNApPnF.s:1287   .text.LL_ATON_DecryptAndCopy:00000088 $d
+     /tmp/ccNApPnF.s:1307   .rodata.__func__.1:00000000 __func__.1
+     /tmp/ccNApPnF.s:1302   .rodata.__func__.0:00000000 __func__.0
+                           .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
+                           .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
+                           .group:00000000 wm4.features.h.33.d554620bb17bd3b714c3fb5c268772bc
+                           .group:00000000 wm4._default_types.h.15.247e5cd201eca3442cbf5404108c4935
+                           .group:00000000 wm4._intsup.h.10.48bafbb683905c4daa4565a85aeeb264
+                           .group:00000000 wm4._stdint.h.10.c24fa3af3bc1706662bb5593a907e841
+                           .group:00000000 wm4.stdint.h.23.d53047a68f4a85177f80b422d52785ed
+                           .group:00000000 wm4.ll_aton_cipher.h.76.ff2673481a54f380465fbfa1042d4abf
+                           .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
+                           .group:00000000 wm4.ll_aton_attributes.h.20.26d469460cb32db5740effdc8cc403f3
+                           .group:00000000 wm4.ll_aton_config.h.20.27cfa9f6f5afc4105991355367358a39
+                           .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
+                           .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
+                           .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
+                           .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
+                           .group:00000000 wm4.assert.h.11.db24e541f16414db224bf986d21017e2
+                           .group:00000000 wm4.errno.h.2.ba016d646105af6cad23be83630b6a3f
+                           .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
+                           .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
+                           .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
+                           .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
+                           .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
+                           .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
+                           .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a
+                           .group:00000000 wm4.errno.h.18.87873c1c5b242e8a4fdc43daa9aad824
+                           .group:00000000 wm4.stdio.h.27.3fc80220048df77954e38daec3bb9670
+                           .group:00000000 wm4.stddef.h.173.1cea4f16a943c8e875db6791959c3141
+                           .group:00000000 wm4.stdarg.h.34.3a23a216c0c293b3d2ea2e89281481e6
+                           .group:00000000 wm4.stdio.h.47.dc31ec4674d7bcb103c9f08809549f45
+                           .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
+                           .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
+                           .group:00000000 wm4.ll_aton_util.h.34.9098eaa90d3d72b819973556e3e5fe44
+                           .group:00000000 wm4.ll_aton_osal.h.20.08c7c488030992aa35928699d77c6f6e
+                           .group:00000000 wm4.ll_aton_platform.h.20.8f1d4e7781c282794886ffdd00ccd30b
+                           .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
+ARM GAS  /tmp/ccNApPnF.s 			page 45
+
+
+                           .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
+                           .group:00000000 wm4.cmsis_version.h.30.d128735bf87720f7436b74fefeb5043c
+                           .group:00000000 wm4.core_cm55.h.67.25006a3ce7048d64bcddd2996d5fac93
+                           .group:00000000 wm4.arm_acle.h.28.a0697f530ff2dbf8c463bef049b82760
+                           .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
+                           .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
+                           .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
+                           .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230
+                           .group:00000000 wm4.armv8m_pmu.h.24.6ded195d2625055391fd378c0e1d2519
+                           .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
+                           .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
+                           .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+                           .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
+                           .group:00000000 wm4.ll_aton_platform.h.205.098bebcb126012e5dfc0544db0a7d4c8
+                           .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
+                           .group:00000000 wm4.inttypes.h.14.b28deb26920e51e0da310220ef0f9003
+                           .group:00000000 wm4.inttypes.h.28.684aa7736e7ecc9a6ffc44acc61c7a90
+                           .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
+                           .group:00000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
+                           .group:00000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
+                           .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
+                           .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
+                           .group:00000000 wm4.ATONidxs.h.16.969ebf3fd32e13543179e6907b3869c9
+                           .group:00000000 wm4.ATON.h.19.0bce86f27eb7ac354272c44c1804cd24
+                           .group:00000000 wm4.ll_aton_rcompat.h.22.4788366561a5f8dfb37661f794bdd403
+                           .group:00000000 wm4.ll_aton_platform.h.279.2fa1ab569e6816db5b603cc3ef09d875
+                           .group:00000000 wm4.ll_aton.h.44.a69cab2c3dfd65cb5a1024375349aaea
+                           .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+                           .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
+                           .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
+                           .group:00000000 wm4.ll_aton_rt_user_api.h.71.52957347efa02883c6e8b1a7f756d297
+
+UNDEFINED SYMBOLS
+LL_ATON_Init
+memset
+LL_Streng_TensorInit
+LL_Switch_Init
+LL_ATON_EnableUnits_Init
+LL_Streng_Wait
+LL_ATON_DisableUnits_Init
+LL_Switch_Deinit
+memcpy
+__assert_func
+__ll_current_aton_ip_owner
+__ll_current_wait_mask
