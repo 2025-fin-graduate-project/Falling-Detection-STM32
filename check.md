@@ -148,3 +148,13 @@ Erasing external memory sectors [56 96]
 Download in Progress:
 [==================================================] 100%
 ```
+
+  lsusb에도 ST-LINK 장치가 보이지 않습니다. 보드를 STM32N6570-DK Development mode로 두고 ST-LINK USB-C 포트에 연결한 뒤 아래 순서로 다시 실행하면 됩니다:
+
+  cd Application/STM32N6570-DK
+  make flash_weights
+  make flash_tcn_weights
+  make flash
+
+  현재 코드/서명 쪽 문제는 아니고, PC에서 보드/ST-LINK가 감지되지 않는 상태입니다.
+

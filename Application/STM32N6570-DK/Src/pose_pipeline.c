@@ -323,6 +323,24 @@ void PosePipeline_Process(PosePipeline_t *s,
                            float32_t dt,
                            PoseFeatureVec_t *out)
 {
+    /* --- Step 1: Person presence gate ----------------------------- */
+    uint32_t visible = 0;
+    for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
+    {
+        if (kp_raw[i].proba >= POSE_OUTLIER_HIGH_THRESH)
+            visible++;
+    }
+
+    if (visible < POSE_MIN_VISIBLE_KP)
+    {
+        s->no_person_count++;
+        if (s->no_person_count >= POSE_NO_PERSON_RESET_FRAMES)
+            PosePipeline_Init(s);  /* 필터 상태 + 윈도우 전체 리셋 */
+        if (out) out->valid = 0;
+        return;  /* window push 생략 */
+    }
+    s->no_person_count = 0;
+
     /* --- Working buffers ------------------------------------------ */
     float32_t filt_x[POSE_KP_COUNT];
     float32_t filt_y[POSE_KP_COUNT];

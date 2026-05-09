@@ -19,8 +19,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32n6xx_hal.h"
 #include "stm32n6xx_it.h"
-
 #include "cmw_camera.h"
+#include <string.h>
+
+extern UART_HandleTypeDef huart1;
+
+static void fault_print(const char *msg)
+{
+  HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+}
 
 /**
   * @brief   This function handles NMI exception.
@@ -38,10 +45,8 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+  fault_print("\r\n[FAULT] HardFault!\r\n");
+  while (1) {}
 }
 
 /**
@@ -51,10 +56,8 @@ void HardFault_Handler(void)
   */
 void MemManage_Handler(void)
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+  fault_print("\r\n[FAULT] MemManage!\r\n");
+  while (1) {}
 }
 
 /**
@@ -64,10 +67,8 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+  fault_print("\r\n[FAULT] BusFault!\r\n");
+  while (1) {}
 }
 
 /**
@@ -77,10 +78,8 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+  fault_print("\r\n[FAULT] UsageFault!\r\n");
+  while (1) {}
 }
 
 /**
@@ -90,10 +89,8 @@ void UsageFault_Handler(void)
   */
 void SecureFault_Handler(void)
 {
-  /* Go to infinite loop when Secure Fault exception occurs */
-  while (1)
-  {
-  }
+  fault_print("\r\n[FAULT] SecureFault!\r\n");
+  while (1) {}
 }
 
 /**

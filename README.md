@@ -19,6 +19,7 @@ This README provides an overview of the application. Additional documentation is
 - [Hardware Support](#hardware-support)
 - [Tools Version](#tools-version)
 - [Boot Modes](#boot-modes)
+- [실행 방법 요약](#실행-방법-요약)
 - [Quickstart using stm32ai-modelzoo-services](#quickstart-using-stm32ai-modelzoo-services)
 - [Quickstart using Prebuilt Binaries](#quickstart-using-prebuilt-binaries)
   - [Programming with STM32CubeProgrammer UI](#how-to-program-hex-files-using-stm32cubeprogrammer-ui)
@@ -46,6 +47,7 @@ This README provides an overview of the application. Additional documentation is
 - [Neural-ART: Description and Operation](Doc/Neural-ART-Description-and-Operation.md)
 - [Deploying your Quantized Model](Doc/Deploy-your-Quantized-Model.md)
 - [Programming Hex Files with STM32CubeProgrammer](Doc/Program-Hex-Files-STM32CubeProgrammer.md)
+- [Korean Run Guide](Doc/Run-Guide-KO.md)
 
 ---
 
@@ -117,6 +119,71 @@ Boot from Flash: used to boot firmware from external flash.
 | -------------    | -------------                                                                |-----------------                                                                 |
 | Boot from flash  | ![STM32N6570-DK Boot from flash](_htmresc/STM32N6570-DK_Boot_from_flash.png) | ![NUCLEO-N657X0-Q Boot from flash](_htmresc/NUCLEO-N657X0-Q_Boot_from_flash.png) |
 | Development mode | ![STM32N6570-DK Development mode](_htmresc/STM32N6570-DK_Dev_mode.png)       | ![NUCLEO-N657X0-Q Development mode](_htmresc/NUCLEO-N657X0-Q_Dev_mode.png)       |
+
+---
+
+## 실행 방법 요약
+
+자세한 한국어 실행 절차는 [Doc/Run-Guide-KO.md](Doc/Run-Guide-KO.md)를 참고한다.
+
+### 1. 사전 빌드 바이너리로 바로 실행
+
+소스 수정 없이 보드에서 바로 확인하려면 다음 순서로 진행한다.
+
+1. 보드를 [Development mode](#boot-modes)로 설정한다.
+2. STM32CubeProgrammer 또는 `STM32_Programmer_CLI`로 보드에 맞는 `.hex` 파일을 기록한다.
+   - STM32N6570-DK: `Binary/STM32N6570-DK/STM32N6570-DK_GettingStarted_PoseEstimation.hex`
+   - NUCLEO USB/UVC: `Binary/NUCLEO-N657X0-Q/USB-UVC-Display/NUCLEO-N657X0-Q_GettingStarted_PoseEstimation-uvc.hex`
+   - NUCLEO SPI: `Binary/NUCLEO-N657X0-Q/SPI-Display/NUCLEO-N657X0-Q_GettingStarted_PoseEstimation-spi.hex`
+3. 보드를 [Boot from flash](#boot-modes) 모드로 변경한다.
+4. 보드 전원을 껐다 켠다.
+5. STM32N6570-DK 또는 NUCLEO SPI는 보드/디스플레이 화면을 확인한다. NUCLEO USB/UVC는 USB OTG 포트 CN8을 PC에 연결하고 PC 카메라 앱을 실행한다.
+
+### 2. 소스 빌드 후 실행
+
+소스를 수정한 뒤 실행하려면 보드별 애플리케이션 디렉토리에서 빌드, 서명, 플래시를 수행한다.
+
+STM32N6570-DK:
+
+```bash
+cd Application/STM32N6570-DK
+make -j8
+make sign
+make flash_weights
+make flash_tcn_weights
+make flash
+```
+
+NUCLEO-N657X0-Q USB/UVC:
+
+```bash
+cd Application/NUCLEO-N657X0-Q
+make -j8
+make sign
+make flash_weights
+make flash
+```
+
+NUCLEO-N657X0-Q SPI:
+
+```bash
+cd Application/NUCLEO-N657X0-Q
+make -j8 SCR_LIB_SCREEN_ITF=SPI
+make sign SCR_LIB_SCREEN_ITF=SPI
+make flash_weights SCR_LIB_SCREEN_ITF=SPI
+make flash SCR_LIB_SCREEN_ITF=SPI
+```
+
+실행 순서는 동일하다.
+
+1. 플래시 전 보드를 Development mode로 둔다.
+2. 위 명령을 실행한다.
+3. 플래시 후 보드를 Boot from flash mode로 변경한다.
+4. 전원을 껐다 켠다.
+
+`make flash_weights`는 MoveNet 가중치를 기록하고, `make flash_tcn_weights`는 낙상 감지 TCN 가중치를 기록한다. 모델을 바꾸지 않았다면 각 가중치는 최초 1회만 실행하면 된다. `make flash`는 서명된 애플리케이션만 `0x70100000`에 기록한다.
+
+STM32N6570-DK 실행 화면에는 60프레임 윈도우가 채워지기 전 `Fall detector warming <n>/60`이 표시된다. 이후 TCN 출력이 연결되면 `NORMAL` 또는 `FALL`과 함께 fall/normal score, TCN inference time이 표시된다.
 
 ---
 

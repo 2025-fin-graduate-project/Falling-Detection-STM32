@@ -45,7 +45,7 @@
 #define AI_SPE_MOVENET_POSTPROC_HEATMAP_HEIGHT       (STAI_NETWORK_IN_1_HEIGHT/4)
 
 /* Post processing values */
-#define AI_POSE_PP_CONF_THRESHOLD           (0.005f)
+#define AI_POSE_PP_CONF_THRESHOLD           (0.20f)
 #define AI_POSE_PP_POSE_KEYPOINTS_NB        (17)
 
 #define USE_BINDINGS

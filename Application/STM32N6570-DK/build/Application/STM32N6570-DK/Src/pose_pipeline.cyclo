@@ -1,4 +1,4 @@
 Src/pose_pipeline.c:314:6:PosePipeline_Init	1
-Src/pose_pipeline.c:321:6:PosePipeline_Process	25
-Src/pose_pipeline.c:401:6:PosePipeline_GetWindowFeaturesFirst	4
-Src/pose_pipeline.c:420:9:PosePipeline_WindowFull	1
+Src/pose_pipeline.c:321:6:PosePipeline_Process	29
+Src/pose_pipeline.c:419:6:PosePipeline_GetWindowFeaturesFirst	4
+Src/pose_pipeline.c:438:9:PosePipeline_WindowFull	1

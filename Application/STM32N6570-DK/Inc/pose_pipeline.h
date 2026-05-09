@@ -30,6 +30,12 @@ extern "C" {
 #define POSE_WINDOW_SIZE    60      /* timesteps for TCN (15 fps x 4 s) */
 
 /* ------------------------------------------------------------------ */
+/* Person presence gate  (Step 1)                                       */
+/* ------------------------------------------------------------------ */
+#define POSE_MIN_VISIBLE_KP         5   /* HIGH_THRESH 이상 키포인트 최소 수 */
+#define POSE_NO_PERSON_RESET_FRAMES 15  /* 연속 미감지 프레임 수 (15fps → 1초) */
+
+/* ------------------------------------------------------------------ */
 /* Outlier rejection parameters  (Step 2)                               */
 /* ------------------------------------------------------------------ */
 #define POSE_OUTLIER_HIGH_THRESH        0.40f
@@ -104,8 +110,11 @@ typedef struct {
 
     /* Circular sliding window for TCN */
     float32_t win_buf[POSE_WINDOW_SIZE][POSE_FEATURE_COUNT];
-    uint32_t  win_head;   /* next write index                    */
-    uint32_t  win_count;  /* number of valid frames stored so far */
+    uint32_t  win_head;         /* next write index                    */
+    uint32_t  win_count;        /* number of valid frames stored so far */
+
+    /* Person presence gate */
+    uint32_t  no_person_count;  /* 연속으로 사람 미감지된 프레임 수 */
 } PosePipeline_t;
 
 /* ------------------------------------------------------------------ */

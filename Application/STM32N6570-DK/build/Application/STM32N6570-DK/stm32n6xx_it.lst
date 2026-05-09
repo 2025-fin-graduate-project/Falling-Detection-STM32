@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccWkMnB1.s 			page 1
+ARM GAS  /tmp/ccyOXc6k.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -25,15 +25,14 @@ ARM GAS  /tmp/ccWkMnB1.s 			page 1
   22              	.Ltext0:
   23              		.cfi_sections	.debug_frame
   24              		.file 1 "Src/stm32n6xx_it.c"
-  25              		.section	.text.NMI_Handler,"ax",%progbits
+  25              		.section	.text.fault_print,"ax",%progbits
   26              		.align	1
-  27              		.global	NMI_Handler
-  28              		.syntax unified
-  29              		.thumb
-  30              		.thumb_func
-  32              	NMI_Handler:
-  33              	.LFB897:
-  34              		.cfi_startproc
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  31              	fault_print:
+  32              	.LVL0:
+  33              	.LFB884:
    1:Src/stm32n6xx_it.c ****  /**
    2:Src/stm32n6xx_it.c ****  ******************************************************************************
    3:Src/stm32n6xx_it.c ****  * @file    stm32n6xx_it.c
@@ -55,472 +54,638 @@ ARM GAS  /tmp/ccWkMnB1.s 			page 1
   19:Src/stm32n6xx_it.c **** /* Includes ------------------------------------------------------------------*/
   20:Src/stm32n6xx_it.c **** #include "stm32n6xx_hal.h"
   21:Src/stm32n6xx_it.c **** #include "stm32n6xx_it.h"
-  22:Src/stm32n6xx_it.c **** 
-  23:Src/stm32n6xx_it.c **** #include "cmw_camera.h"
+  22:Src/stm32n6xx_it.c **** #include "cmw_camera.h"
+  23:Src/stm32n6xx_it.c **** #include <string.h>
   24:Src/stm32n6xx_it.c **** 
-ARM GAS  /tmp/ccWkMnB1.s 			page 2
+  25:Src/stm32n6xx_it.c **** extern UART_HandleTypeDef huart1;
+ARM GAS  /tmp/ccyOXc6k.s 			page 2
 
 
-  25:Src/stm32n6xx_it.c **** /**
-  26:Src/stm32n6xx_it.c ****   * @brief   This function handles NMI exception.
-  27:Src/stm32n6xx_it.c ****   * @param  None
-  28:Src/stm32n6xx_it.c ****   * @retval None
-  29:Src/stm32n6xx_it.c ****   */
-  30:Src/stm32n6xx_it.c **** void NMI_Handler(void)
-  35              		.loc 1 30 6 view -0
+  26:Src/stm32n6xx_it.c **** 
+  27:Src/stm32n6xx_it.c **** static void fault_print(const char *msg)
+  28:Src/stm32n6xx_it.c **** {
+  34              		.loc 1 28 1 view -0
+  35              		.cfi_startproc
   36              		@ args = 0, pretend = 0, frame = 0
   37              		@ frame_needed = 0, uses_anonymous_args = 0
-  38              		@ link register save eliminated.
-  39 0000 7047     		bx	lr
-  40              		.cfi_endproc
-  41              	.LFE897:
-  43              		.section	.text.HardFault_Handler,"ax",%progbits
-  44              		.align	1
-  45              		.global	HardFault_Handler
-  46              		.syntax unified
-  47              		.thumb
-  48              		.thumb_func
-  50              	HardFault_Handler:
-  51              	.LFB885:
-  31:Src/stm32n6xx_it.c **** {
-  32:Src/stm32n6xx_it.c **** }
-  33:Src/stm32n6xx_it.c **** 
-  34:Src/stm32n6xx_it.c **** /**
-  35:Src/stm32n6xx_it.c ****   * @brief  This function handles Hard Fault exception.
-  36:Src/stm32n6xx_it.c ****   * @param  None
-  37:Src/stm32n6xx_it.c ****   * @retval None
-  38:Src/stm32n6xx_it.c ****   */
-  39:Src/stm32n6xx_it.c **** void HardFault_Handler(void)
-  40:Src/stm32n6xx_it.c **** {
-  52              		.loc 1 40 1 view -0
-  53              		.cfi_startproc
-  54              		@ Volatile: function does not return.
-  55              		@ args = 0, pretend = 0, frame = 0
-  56              		@ frame_needed = 0, uses_anonymous_args = 0
-  57              		@ link register save eliminated.
-  58              	.L3:
-  41:Src/stm32n6xx_it.c ****   /* Go to infinite loop when Hard Fault exception occurs */
-  42:Src/stm32n6xx_it.c ****   while (1)
-  59              		.loc 1 42 3 view .LVU2
-  43:Src/stm32n6xx_it.c ****   {
-  44:Src/stm32n6xx_it.c ****   }
-  60              		.loc 1 44 3 view .LVU3
-  42:Src/stm32n6xx_it.c ****   {
-  61              		.loc 1 42 9 view .LVU4
-  62 0000 FEE7     		b	.L3
-  63              		.cfi_endproc
-  64              	.LFE885:
-  66              		.section	.text.MemManage_Handler,"ax",%progbits
-  67              		.align	1
-  68              		.global	MemManage_Handler
-  69              		.syntax unified
-  70              		.thumb
-  71              		.thumb_func
-  73              	MemManage_Handler:
-  74              	.LFB886:
-ARM GAS  /tmp/ccWkMnB1.s 			page 3
+  29:Src/stm32n6xx_it.c ****   HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+  38              		.loc 1 29 3 view .LVU1
+  28:Src/stm32n6xx_it.c ****   HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+  39              		.loc 1 28 1 is_stmt 0 view .LVU2
+  40 0000 10B5     		push	{r4, lr}
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 4, -8
+  43              		.cfi_offset 14, -4
+  28:Src/stm32n6xx_it.c ****   HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+  44              		.loc 1 28 1 view .LVU3
+  45 0002 0446     		mov	r4, r0
+  46              		.loc 1 29 46 view .LVU4
+  47 0004 FFF7FEFF 		bl	strlen
+  48              	.LVL1:
+  49              		.loc 1 29 3 discriminator 1 view .LVU5
+  50 0008 2146     		mov	r1, r4
+  30:Src/stm32n6xx_it.c **** }
+  51              		.loc 1 30 1 view .LVU6
+  52 000a BDE81040 		pop	{r4, lr}
+  53              		.cfi_restore 14
+  54              		.cfi_restore 4
+  55              		.cfi_def_cfa_offset 0
+  56              	.LVL2:
+  29:Src/stm32n6xx_it.c ****   HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+  57              		.loc 1 29 3 discriminator 1 view .LVU7
+  58 000e 82B2     		uxth	r2, r0
+  59 0010 41F28833 		movw	r3, #5000
+  60 0014 0148     		ldr	r0, .L2
+  61 0016 FFF7FEBF 		b	HAL_UART_Transmit
+  62              	.LVL3:
+  63              	.L3:
+  29:Src/stm32n6xx_it.c ****   HAL_UART_Transmit(&huart1, (uint8_t *)msg, strlen(msg), 5000);
+  64              		.loc 1 29 3 discriminator 1 view .LVU8
+  65 001a 00BF     		.align	2
+  66              	.L2:
+  67 001c 00000000 		.word	huart1
+  68              		.cfi_endproc
+  69              	.LFE884:
+  71              		.section	.text.NMI_Handler,"ax",%progbits
+  72              		.align	1
+  73              		.global	NMI_Handler
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	NMI_Handler:
+  79              	.LFB898:
+  80              		.cfi_startproc
+  31:Src/stm32n6xx_it.c **** 
+  32:Src/stm32n6xx_it.c **** /**
+  33:Src/stm32n6xx_it.c ****   * @brief   This function handles NMI exception.
+ARM GAS  /tmp/ccyOXc6k.s 			page 3
 
 
-  45:Src/stm32n6xx_it.c **** }
-  46:Src/stm32n6xx_it.c **** 
-  47:Src/stm32n6xx_it.c **** /**
-  48:Src/stm32n6xx_it.c ****   * @brief  This function handles Memory Manage exception.
-  49:Src/stm32n6xx_it.c ****   * @param  None
-  50:Src/stm32n6xx_it.c ****   * @retval None
-  51:Src/stm32n6xx_it.c ****   */
-  52:Src/stm32n6xx_it.c **** void MemManage_Handler(void)
-  53:Src/stm32n6xx_it.c **** {
-  75              		.loc 1 53 1 view -0
-  76              		.cfi_startproc
-  77              		@ Volatile: function does not return.
-  78              		@ args = 0, pretend = 0, frame = 0
-  79              		@ frame_needed = 0, uses_anonymous_args = 0
-  80              		@ link register save eliminated.
-  81              	.L5:
-  54:Src/stm32n6xx_it.c ****   /* Go to infinite loop when Memory Manage exception occurs */
-  55:Src/stm32n6xx_it.c ****   while (1)
-  82              		.loc 1 55 3 view .LVU6
-  56:Src/stm32n6xx_it.c ****   {
-  57:Src/stm32n6xx_it.c ****   }
-  83              		.loc 1 57 3 view .LVU7
-  55:Src/stm32n6xx_it.c ****   {
-  84              		.loc 1 55 9 view .LVU8
-  85 0000 FEE7     		b	.L5
+  34:Src/stm32n6xx_it.c ****   * @param  None
+  35:Src/stm32n6xx_it.c ****   * @retval None
+  36:Src/stm32n6xx_it.c ****   */
+  37:Src/stm32n6xx_it.c **** void NMI_Handler(void)
+  81              		.loc 1 37 6 is_stmt 1 view -0
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85 0000 7047     		bx	lr
   86              		.cfi_endproc
-  87              	.LFE886:
-  89              		.section	.text.BusFault_Handler,"ax",%progbits
-  90              		.align	1
-  91              		.global	BusFault_Handler
-  92              		.syntax unified
-  93              		.thumb
-  94              		.thumb_func
-  96              	BusFault_Handler:
-  97              	.LFB887:
-  58:Src/stm32n6xx_it.c **** }
-  59:Src/stm32n6xx_it.c **** 
-  60:Src/stm32n6xx_it.c **** /**
-  61:Src/stm32n6xx_it.c ****   * @brief  This function handles Bus Fault exception.
-  62:Src/stm32n6xx_it.c ****   * @param  None
-  63:Src/stm32n6xx_it.c ****   * @retval None
-  64:Src/stm32n6xx_it.c ****   */
-  65:Src/stm32n6xx_it.c **** void BusFault_Handler(void)
-  66:Src/stm32n6xx_it.c **** {
-  98              		.loc 1 66 1 view -0
-  99              		.cfi_startproc
- 100              		@ Volatile: function does not return.
- 101              		@ args = 0, pretend = 0, frame = 0
- 102              		@ frame_needed = 0, uses_anonymous_args = 0
- 103              		@ link register save eliminated.
- 104              	.L7:
-  67:Src/stm32n6xx_it.c ****   /* Go to infinite loop when Bus Fault exception occurs */
-  68:Src/stm32n6xx_it.c ****   while (1)
- 105              		.loc 1 68 3 view .LVU10
-  69:Src/stm32n6xx_it.c ****   {
-  70:Src/stm32n6xx_it.c ****   }
- 106              		.loc 1 70 3 view .LVU11
-ARM GAS  /tmp/ccWkMnB1.s 			page 4
+  87              	.LFE898:
+  89              		.section	.rodata.HardFault_Handler.str1.1,"aMS",%progbits,1
+  90              	.LC0:
+  91 0000 0D0A5B46 		.ascii	"\015\012[FAULT] HardFault!\015\012\000"
+  91      41554C54 
+  91      5D204861 
+  91      72644661 
+  91      756C7421 
+  92              		.section	.text.HardFault_Handler,"ax",%progbits
+  93              		.align	1
+  94              		.global	HardFault_Handler
+  95              		.syntax unified
+  96              		.thumb
+  97              		.thumb_func
+  99              	HardFault_Handler:
+ 100              	.LFB886:
+  38:Src/stm32n6xx_it.c **** {
+  39:Src/stm32n6xx_it.c **** }
+  40:Src/stm32n6xx_it.c **** 
+  41:Src/stm32n6xx_it.c **** /**
+  42:Src/stm32n6xx_it.c ****   * @brief  This function handles Hard Fault exception.
+  43:Src/stm32n6xx_it.c ****   * @param  None
+  44:Src/stm32n6xx_it.c ****   * @retval None
+  45:Src/stm32n6xx_it.c ****   */
+  46:Src/stm32n6xx_it.c **** void HardFault_Handler(void)
+  47:Src/stm32n6xx_it.c **** {
+ 101              		.loc 1 47 1 view -0
+ 102              		.cfi_startproc
+ 103              		@ Volatile: function does not return.
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+  48:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] HardFault!\r\n");
+ 106              		.loc 1 48 3 view .LVU11
+  47:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] HardFault!\r\n");
+ 107              		.loc 1 47 1 is_stmt 0 view .LVU12
+ 108 0000 08B5     		push	{r3, lr}
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 3, -8
+ 111              		.cfi_offset 14, -4
+ 112              		.loc 1 48 3 view .LVU13
+ 113 0002 0248     		ldr	r0, .L7
+ 114 0004 FFF7FEFF 		bl	fault_print
+ 115              	.LVL4:
+ 116              	.L6:
+  49:Src/stm32n6xx_it.c ****   while (1) {}
+ 117              		.loc 1 49 3 is_stmt 1 view .LVU14
+ 118              		.loc 1 49 14 view .LVU15
+ARM GAS  /tmp/ccyOXc6k.s 			page 4
 
 
-  68:Src/stm32n6xx_it.c ****   {
- 107              		.loc 1 68 9 view .LVU12
- 108 0000 FEE7     		b	.L7
- 109              		.cfi_endproc
- 110              	.LFE887:
- 112              		.section	.text.UsageFault_Handler,"ax",%progbits
- 113              		.align	1
- 114              		.global	UsageFault_Handler
- 115              		.syntax unified
- 116              		.thumb
- 117              		.thumb_func
- 119              	UsageFault_Handler:
- 120              	.LFB888:
-  71:Src/stm32n6xx_it.c **** }
-  72:Src/stm32n6xx_it.c **** 
-  73:Src/stm32n6xx_it.c **** /**
-  74:Src/stm32n6xx_it.c ****   * @brief  This function handles Usage Fault exception.
-  75:Src/stm32n6xx_it.c ****   * @param  None
-  76:Src/stm32n6xx_it.c ****   * @retval None
-  77:Src/stm32n6xx_it.c ****   */
-  78:Src/stm32n6xx_it.c **** void UsageFault_Handler(void)
-  79:Src/stm32n6xx_it.c **** {
- 121              		.loc 1 79 1 view -0
- 122              		.cfi_startproc
- 123              		@ Volatile: function does not return.
- 124              		@ args = 0, pretend = 0, frame = 0
- 125              		@ frame_needed = 0, uses_anonymous_args = 0
- 126              		@ link register save eliminated.
- 127              	.L9:
-  80:Src/stm32n6xx_it.c ****   /* Go to infinite loop when Usage Fault exception occurs */
-  81:Src/stm32n6xx_it.c ****   while (1)
- 128              		.loc 1 81 3 view .LVU14
-  82:Src/stm32n6xx_it.c ****   {
-  83:Src/stm32n6xx_it.c ****   }
- 129              		.loc 1 83 3 view .LVU15
-  81:Src/stm32n6xx_it.c ****   {
- 130              		.loc 1 81 9 view .LVU16
- 131 0000 FEE7     		b	.L9
- 132              		.cfi_endproc
- 133              	.LFE888:
- 135              		.section	.text.SecureFault_Handler,"ax",%progbits
- 136              		.align	1
- 137              		.global	SecureFault_Handler
- 138              		.syntax unified
- 139              		.thumb
- 140              		.thumb_func
- 142              	SecureFault_Handler:
- 143              	.LFB889:
-  84:Src/stm32n6xx_it.c **** }
-  85:Src/stm32n6xx_it.c **** 
-  86:Src/stm32n6xx_it.c **** /**
-  87:Src/stm32n6xx_it.c ****   * @brief  This function handles Secure Fault exception.
-  88:Src/stm32n6xx_it.c ****   * @param  None
-  89:Src/stm32n6xx_it.c ****   * @retval None
-  90:Src/stm32n6xx_it.c ****   */
-  91:Src/stm32n6xx_it.c **** void SecureFault_Handler(void)
-  92:Src/stm32n6xx_it.c **** {
-ARM GAS  /tmp/ccWkMnB1.s 			page 5
+ 119              		.loc 1 49 9 view .LVU16
+ 120 0008 FEE7     		b	.L6
+ 121              	.L8:
+ 122 000a 00BF     		.align	2
+ 123              	.L7:
+ 124 000c 00000000 		.word	.LC0
+ 125              		.cfi_endproc
+ 126              	.LFE886:
+ 128              		.section	.rodata.MemManage_Handler.str1.1,"aMS",%progbits,1
+ 129              	.LC1:
+ 130 0000 0D0A5B46 		.ascii	"\015\012[FAULT] MemManage!\015\012\000"
+ 130      41554C54 
+ 130      5D204D65 
+ 130      6D4D616E 
+ 130      61676521 
+ 131              		.section	.text.MemManage_Handler,"ax",%progbits
+ 132              		.align	1
+ 133              		.global	MemManage_Handler
+ 134              		.syntax unified
+ 135              		.thumb
+ 136              		.thumb_func
+ 138              	MemManage_Handler:
+ 139              	.LFB887:
+  50:Src/stm32n6xx_it.c **** }
+  51:Src/stm32n6xx_it.c **** 
+  52:Src/stm32n6xx_it.c **** /**
+  53:Src/stm32n6xx_it.c ****   * @brief  This function handles Memory Manage exception.
+  54:Src/stm32n6xx_it.c ****   * @param  None
+  55:Src/stm32n6xx_it.c ****   * @retval None
+  56:Src/stm32n6xx_it.c ****   */
+  57:Src/stm32n6xx_it.c **** void MemManage_Handler(void)
+  58:Src/stm32n6xx_it.c **** {
+ 140              		.loc 1 58 1 view -0
+ 141              		.cfi_startproc
+ 142              		@ Volatile: function does not return.
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+  59:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] MemManage!\r\n");
+ 145              		.loc 1 59 3 view .LVU18
+  58:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] MemManage!\r\n");
+ 146              		.loc 1 58 1 is_stmt 0 view .LVU19
+ 147 0000 08B5     		push	{r3, lr}
+ 148              		.cfi_def_cfa_offset 8
+ 149              		.cfi_offset 3, -8
+ 150              		.cfi_offset 14, -4
+ 151              		.loc 1 59 3 view .LVU20
+ 152 0002 0248     		ldr	r0, .L11
+ 153 0004 FFF7FEFF 		bl	fault_print
+ 154              	.LVL5:
+ 155              	.L10:
+  60:Src/stm32n6xx_it.c ****   while (1) {}
+ 156              		.loc 1 60 3 is_stmt 1 view .LVU21
+ 157              		.loc 1 60 14 view .LVU22
+ 158              		.loc 1 60 9 view .LVU23
+ 159 0008 FEE7     		b	.L10
+ 160              	.L12:
+ 161 000a 00BF     		.align	2
+ARM GAS  /tmp/ccyOXc6k.s 			page 5
 
 
- 144              		.loc 1 92 1 view -0
- 145              		.cfi_startproc
- 146              		@ Volatile: function does not return.
- 147              		@ args = 0, pretend = 0, frame = 0
- 148              		@ frame_needed = 0, uses_anonymous_args = 0
- 149              		@ link register save eliminated.
- 150              	.L11:
-  93:Src/stm32n6xx_it.c ****   /* Go to infinite loop when Secure Fault exception occurs */
-  94:Src/stm32n6xx_it.c ****   while (1)
- 151              		.loc 1 94 3 view .LVU18
-  95:Src/stm32n6xx_it.c ****   {
-  96:Src/stm32n6xx_it.c ****   }
- 152              		.loc 1 96 3 view .LVU19
-  94:Src/stm32n6xx_it.c ****   {
- 153              		.loc 1 94 9 view .LVU20
- 154 0000 FEE7     		b	.L11
- 155              		.cfi_endproc
- 156              	.LFE889:
- 158              		.section	.text.SVC_Handler,"ax",%progbits
- 159              		.align	1
- 160              		.global	SVC_Handler
- 161              		.syntax unified
- 162              		.thumb
- 163              		.thumb_func
- 165              	SVC_Handler:
- 166              	.LFB890:
-  97:Src/stm32n6xx_it.c **** }
-  98:Src/stm32n6xx_it.c **** 
-  99:Src/stm32n6xx_it.c **** /**
- 100:Src/stm32n6xx_it.c ****   * @brief  This function handles SVCall exception.
- 101:Src/stm32n6xx_it.c ****   * @param  None
- 102:Src/stm32n6xx_it.c ****   * @retval None
- 103:Src/stm32n6xx_it.c ****   */
- 104:Src/stm32n6xx_it.c **** void SVC_Handler(void)
- 105:Src/stm32n6xx_it.c **** {
- 167              		.loc 1 105 1 view -0
- 168              		.cfi_startproc
- 169              		@ args = 0, pretend = 0, frame = 0
- 170              		@ frame_needed = 0, uses_anonymous_args = 0
- 171              		@ link register save eliminated.
- 106:Src/stm32n6xx_it.c **** }
- 172              		.loc 1 106 1 view .LVU22
- 173 0000 7047     		bx	lr
- 174              		.cfi_endproc
- 175              	.LFE890:
- 177              		.section	.text.DebugMon_Handler,"ax",%progbits
- 178              		.align	1
- 179              		.global	DebugMon_Handler
- 180              		.syntax unified
- 181              		.thumb
- 182              		.thumb_func
- 184              	DebugMon_Handler:
- 185              	.LFB891:
- 107:Src/stm32n6xx_it.c **** 
- 108:Src/stm32n6xx_it.c **** /**
- 109:Src/stm32n6xx_it.c ****   * @brief  This function handles Debug Monitor exception.
- 110:Src/stm32n6xx_it.c ****   * @param  None
-ARM GAS  /tmp/ccWkMnB1.s 			page 6
+ 162              	.L11:
+ 163 000c 00000000 		.word	.LC1
+ 164              		.cfi_endproc
+ 165              	.LFE887:
+ 167              		.section	.rodata.BusFault_Handler.str1.1,"aMS",%progbits,1
+ 168              	.LC2:
+ 169 0000 0D0A5B46 		.ascii	"\015\012[FAULT] BusFault!\015\012\000"
+ 169      41554C54 
+ 169      5D204275 
+ 169      73466175 
+ 169      6C74210D 
+ 170              		.section	.text.BusFault_Handler,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	BusFault_Handler
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 177              	BusFault_Handler:
+ 178              	.LFB888:
+  61:Src/stm32n6xx_it.c **** }
+  62:Src/stm32n6xx_it.c **** 
+  63:Src/stm32n6xx_it.c **** /**
+  64:Src/stm32n6xx_it.c ****   * @brief  This function handles Bus Fault exception.
+  65:Src/stm32n6xx_it.c ****   * @param  None
+  66:Src/stm32n6xx_it.c ****   * @retval None
+  67:Src/stm32n6xx_it.c ****   */
+  68:Src/stm32n6xx_it.c **** void BusFault_Handler(void)
+  69:Src/stm32n6xx_it.c **** {
+ 179              		.loc 1 69 1 view -0
+ 180              		.cfi_startproc
+ 181              		@ Volatile: function does not return.
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+  70:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] BusFault!\r\n");
+ 184              		.loc 1 70 3 view .LVU25
+  69:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] BusFault!\r\n");
+ 185              		.loc 1 69 1 is_stmt 0 view .LVU26
+ 186 0000 08B5     		push	{r3, lr}
+ 187              		.cfi_def_cfa_offset 8
+ 188              		.cfi_offset 3, -8
+ 189              		.cfi_offset 14, -4
+ 190              		.loc 1 70 3 view .LVU27
+ 191 0002 0248     		ldr	r0, .L15
+ 192 0004 FFF7FEFF 		bl	fault_print
+ 193              	.LVL6:
+ 194              	.L14:
+  71:Src/stm32n6xx_it.c ****   while (1) {}
+ 195              		.loc 1 71 3 is_stmt 1 view .LVU28
+ 196              		.loc 1 71 14 view .LVU29
+ 197              		.loc 1 71 9 view .LVU30
+ 198 0008 FEE7     		b	.L14
+ 199              	.L16:
+ 200 000a 00BF     		.align	2
+ 201              	.L15:
+ 202 000c 00000000 		.word	.LC2
+ 203              		.cfi_endproc
+ 204              	.LFE888:
+ARM GAS  /tmp/ccyOXc6k.s 			page 6
 
 
- 111:Src/stm32n6xx_it.c ****   * @retval None
- 112:Src/stm32n6xx_it.c ****   */
- 113:Src/stm32n6xx_it.c **** void DebugMon_Handler(void)
- 114:Src/stm32n6xx_it.c **** {
- 186              		.loc 1 114 1 view -0
- 187              		.cfi_startproc
- 188              		@ Volatile: function does not return.
- 189              		@ args = 0, pretend = 0, frame = 0
- 190              		@ frame_needed = 0, uses_anonymous_args = 0
- 191              		@ link register save eliminated.
- 192              	.L14:
- 115:Src/stm32n6xx_it.c ****   while (1)
- 193              		.loc 1 115 3 view .LVU24
- 116:Src/stm32n6xx_it.c ****   {
- 117:Src/stm32n6xx_it.c ****   }
- 194              		.loc 1 117 3 view .LVU25
- 115:Src/stm32n6xx_it.c ****   while (1)
- 195              		.loc 1 115 9 view .LVU26
- 196 0000 FEE7     		b	.L14
- 197              		.cfi_endproc
- 198              	.LFE891:
- 200              		.section	.text.PendSV_Handler,"ax",%progbits
- 201              		.align	1
- 202              		.global	PendSV_Handler
- 203              		.syntax unified
- 204              		.thumb
- 205              		.thumb_func
- 207              	PendSV_Handler:
- 208              	.LFB892:
- 118:Src/stm32n6xx_it.c **** }
- 119:Src/stm32n6xx_it.c **** 
- 120:Src/stm32n6xx_it.c **** /**
- 121:Src/stm32n6xx_it.c ****   * @brief  This function handles PendSVC exception.
- 122:Src/stm32n6xx_it.c ****   * @param  None
- 123:Src/stm32n6xx_it.c ****   * @retval None
- 124:Src/stm32n6xx_it.c ****   */
- 125:Src/stm32n6xx_it.c **** void PendSV_Handler(void)
- 126:Src/stm32n6xx_it.c **** {
- 209              		.loc 1 126 1 view -0
- 210              		.cfi_startproc
- 211              		@ Volatile: function does not return.
- 212              		@ args = 0, pretend = 0, frame = 0
- 213              		@ frame_needed = 0, uses_anonymous_args = 0
- 214              		@ link register save eliminated.
- 215              	.L16:
- 127:Src/stm32n6xx_it.c ****   while (1)
- 216              		.loc 1 127 3 view .LVU28
- 128:Src/stm32n6xx_it.c ****   {
- 129:Src/stm32n6xx_it.c ****   }
- 217              		.loc 1 129 3 view .LVU29
- 127:Src/stm32n6xx_it.c ****   while (1)
- 218              		.loc 1 127 9 view .LVU30
- 219 0000 FEE7     		b	.L16
- 220              		.cfi_endproc
- 221              	.LFE892:
- 223              		.section	.text.SysTick_Handler,"ax",%progbits
- 224              		.align	1
-ARM GAS  /tmp/ccWkMnB1.s 			page 7
+ 206              		.section	.rodata.UsageFault_Handler.str1.1,"aMS",%progbits,1
+ 207              	.LC3:
+ 208 0000 0D0A5B46 		.ascii	"\015\012[FAULT] UsageFault!\015\012\000"
+ 208      41554C54 
+ 208      5D205573 
+ 208      61676546 
+ 208      61756C74 
+ 209              		.section	.text.UsageFault_Handler,"ax",%progbits
+ 210              		.align	1
+ 211              		.global	UsageFault_Handler
+ 212              		.syntax unified
+ 213              		.thumb
+ 214              		.thumb_func
+ 216              	UsageFault_Handler:
+ 217              	.LFB889:
+  72:Src/stm32n6xx_it.c **** }
+  73:Src/stm32n6xx_it.c **** 
+  74:Src/stm32n6xx_it.c **** /**
+  75:Src/stm32n6xx_it.c ****   * @brief  This function handles Usage Fault exception.
+  76:Src/stm32n6xx_it.c ****   * @param  None
+  77:Src/stm32n6xx_it.c ****   * @retval None
+  78:Src/stm32n6xx_it.c ****   */
+  79:Src/stm32n6xx_it.c **** void UsageFault_Handler(void)
+  80:Src/stm32n6xx_it.c **** {
+ 218              		.loc 1 80 1 view -0
+ 219              		.cfi_startproc
+ 220              		@ Volatile: function does not return.
+ 221              		@ args = 0, pretend = 0, frame = 0
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+  81:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] UsageFault!\r\n");
+ 223              		.loc 1 81 3 view .LVU32
+  80:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] UsageFault!\r\n");
+ 224              		.loc 1 80 1 is_stmt 0 view .LVU33
+ 225 0000 08B5     		push	{r3, lr}
+ 226              		.cfi_def_cfa_offset 8
+ 227              		.cfi_offset 3, -8
+ 228              		.cfi_offset 14, -4
+ 229              		.loc 1 81 3 view .LVU34
+ 230 0002 0248     		ldr	r0, .L19
+ 231 0004 FFF7FEFF 		bl	fault_print
+ 232              	.LVL7:
+ 233              	.L18:
+  82:Src/stm32n6xx_it.c ****   while (1) {}
+ 234              		.loc 1 82 3 is_stmt 1 view .LVU35
+ 235              		.loc 1 82 14 view .LVU36
+ 236              		.loc 1 82 9 view .LVU37
+ 237 0008 FEE7     		b	.L18
+ 238              	.L20:
+ 239 000a 00BF     		.align	2
+ 240              	.L19:
+ 241 000c 00000000 		.word	.LC3
+ 242              		.cfi_endproc
+ 243              	.LFE889:
+ 245              		.section	.rodata.SecureFault_Handler.str1.1,"aMS",%progbits,1
+ 246              	.LC4:
+ 247 0000 0D0A5B46 		.ascii	"\015\012[FAULT] SecureFault!\015\012\000"
+ 247      41554C54 
+ARM GAS  /tmp/ccyOXc6k.s 			page 7
 
 
- 225              		.global	SysTick_Handler
- 226              		.syntax unified
- 227              		.thumb
- 228              		.thumb_func
- 230              	SysTick_Handler:
- 231              	.LFB893:
- 130:Src/stm32n6xx_it.c **** }
- 131:Src/stm32n6xx_it.c **** 
- 132:Src/stm32n6xx_it.c **** /**
- 133:Src/stm32n6xx_it.c ****   * @brief  This function handles SysTick Handler.
- 134:Src/stm32n6xx_it.c ****   * @param  None
- 135:Src/stm32n6xx_it.c ****   * @retval None
- 136:Src/stm32n6xx_it.c ****   */
- 137:Src/stm32n6xx_it.c **** void SysTick_Handler(void)
- 138:Src/stm32n6xx_it.c **** {
- 232              		.loc 1 138 1 view -0
- 233              		.cfi_startproc
- 234              		@ args = 0, pretend = 0, frame = 0
- 235              		@ frame_needed = 0, uses_anonymous_args = 0
- 236              		@ link register save eliminated.
- 139:Src/stm32n6xx_it.c ****   HAL_IncTick();
- 237              		.loc 1 139 3 view .LVU32
- 238 0000 FFF7FEBF 		b	HAL_IncTick
- 239              	.LVL0:
- 240              		.cfi_endproc
- 241              	.LFE893:
- 243              		.section	.text.CSI_IRQHandler,"ax",%progbits
- 244              		.align	1
- 245              		.global	CSI_IRQHandler
- 246              		.syntax unified
- 247              		.thumb
- 248              		.thumb_func
- 250              	CSI_IRQHandler:
- 251              	.LFB894:
- 140:Src/stm32n6xx_it.c **** }
- 141:Src/stm32n6xx_it.c **** 
- 142:Src/stm32n6xx_it.c **** /******************************************************************************/
- 143:Src/stm32n6xx_it.c **** /*                 STM32N6xx Peripherals Interrupt Handlers                   */
- 144:Src/stm32n6xx_it.c **** /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
- 145:Src/stm32n6xx_it.c **** /*  available peripheral interrupt handler's name please refer to the startup */
- 146:Src/stm32n6xx_it.c **** /*  file (startup_stm32n6xx.s).                                               */
- 147:Src/stm32n6xx_it.c **** /******************************************************************************/
- 148:Src/stm32n6xx_it.c **** void CSI_IRQHandler(void)
- 149:Src/stm32n6xx_it.c **** {
- 252              		.loc 1 149 1 view -0
- 253              		.cfi_startproc
- 254              		@ args = 0, pretend = 0, frame = 0
- 255              		@ frame_needed = 0, uses_anonymous_args = 0
- 150:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
- 256              		.loc 1 150 3 view .LVU34
- 149:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
- 257              		.loc 1 149 1 is_stmt 0 view .LVU35
- 258 0000 08B5     		push	{r3, lr}
- 259              		.cfi_def_cfa_offset 8
- 260              		.cfi_offset 3, -8
- 261              		.cfi_offset 14, -4
- 262              		.loc 1 150 42 view .LVU36
-ARM GAS  /tmp/ccWkMnB1.s 			page 8
+ 247      5D205365 
+ 247      63757265 
+ 247      4661756C 
+ 248              		.section	.text.SecureFault_Handler,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	SecureFault_Handler
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 255              	SecureFault_Handler:
+ 256              	.LFB890:
+  83:Src/stm32n6xx_it.c **** }
+  84:Src/stm32n6xx_it.c **** 
+  85:Src/stm32n6xx_it.c **** /**
+  86:Src/stm32n6xx_it.c ****   * @brief  This function handles Secure Fault exception.
+  87:Src/stm32n6xx_it.c ****   * @param  None
+  88:Src/stm32n6xx_it.c ****   * @retval None
+  89:Src/stm32n6xx_it.c ****   */
+  90:Src/stm32n6xx_it.c **** void SecureFault_Handler(void)
+  91:Src/stm32n6xx_it.c **** {
+ 257              		.loc 1 91 1 view -0
+ 258              		.cfi_startproc
+ 259              		@ Volatile: function does not return.
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+  92:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] SecureFault!\r\n");
+ 262              		.loc 1 92 3 view .LVU39
+  91:Src/stm32n6xx_it.c ****   fault_print("\r\n[FAULT] SecureFault!\r\n");
+ 263              		.loc 1 91 1 is_stmt 0 view .LVU40
+ 264 0000 08B5     		push	{r3, lr}
+ 265              		.cfi_def_cfa_offset 8
+ 266              		.cfi_offset 3, -8
+ 267              		.cfi_offset 14, -4
+ 268              		.loc 1 92 3 view .LVU41
+ 269 0002 0248     		ldr	r0, .L23
+ 270 0004 FFF7FEFF 		bl	fault_print
+ 271              	.LVL8:
+ 272              	.L22:
+  93:Src/stm32n6xx_it.c ****   while (1) {}
+ 273              		.loc 1 93 3 is_stmt 1 view .LVU42
+ 274              		.loc 1 93 14 view .LVU43
+ 275              		.loc 1 93 9 view .LVU44
+ 276 0008 FEE7     		b	.L22
+ 277              	.L24:
+ 278 000a 00BF     		.align	2
+ 279              	.L23:
+ 280 000c 00000000 		.word	.LC4
+ 281              		.cfi_endproc
+ 282              	.LFE890:
+ 284              		.section	.text.SVC_Handler,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	SVC_Handler
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	SVC_Handler:
+ 292              	.LFB891:
+ARM GAS  /tmp/ccyOXc6k.s 			page 8
 
 
- 263 0002 FFF7FEFF 		bl	CMW_CAMERA_GetDCMIPPHandle
- 264              	.LVL1:
- 151:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
- 265              		.loc 1 151 3 is_stmt 1 view .LVU37
- 152:Src/stm32n6xx_it.c **** }
- 266              		.loc 1 152 1 is_stmt 0 view .LVU38
- 267 0006 BDE80840 		pop	{r3, lr}
- 268              		.cfi_restore 14
- 269              		.cfi_restore 3
- 270              		.cfi_def_cfa_offset 0
- 151:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
- 271              		.loc 1 151 3 view .LVU39
- 272 000a FFF7FEBF 		b	HAL_DCMIPP_CSI_IRQHandler
- 273              	.LVL2:
- 151:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
- 274              		.loc 1 151 3 view .LVU40
- 275              		.cfi_endproc
- 276              	.LFE894:
- 278              		.section	.text.DCMIPP_IRQHandler,"ax",%progbits
- 279              		.align	1
- 280              		.global	DCMIPP_IRQHandler
- 281              		.syntax unified
- 282              		.thumb
- 283              		.thumb_func
- 285              	DCMIPP_IRQHandler:
- 286              	.LFB895:
- 153:Src/stm32n6xx_it.c **** 
- 154:Src/stm32n6xx_it.c **** void DCMIPP_IRQHandler(void)
- 155:Src/stm32n6xx_it.c **** {
- 287              		.loc 1 155 1 is_stmt 1 view -0
- 288              		.cfi_startproc
- 289              		@ args = 0, pretend = 0, frame = 0
- 290              		@ frame_needed = 0, uses_anonymous_args = 0
- 156:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
- 291              		.loc 1 156 3 view .LVU42
- 155:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
- 292              		.loc 1 155 1 is_stmt 0 view .LVU43
- 293 0000 08B5     		push	{r3, lr}
- 294              		.cfi_def_cfa_offset 8
- 295              		.cfi_offset 3, -8
- 296              		.cfi_offset 14, -4
- 297              		.loc 1 156 42 view .LVU44
- 298 0002 FFF7FEFF 		bl	CMW_CAMERA_GetDCMIPPHandle
- 299              	.LVL3:
- 157:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
- 300              		.loc 1 157 3 is_stmt 1 view .LVU45
- 158:Src/stm32n6xx_it.c **** }
- 301              		.loc 1 158 1 is_stmt 0 view .LVU46
- 302 0006 BDE80840 		pop	{r3, lr}
- 303              		.cfi_restore 14
- 304              		.cfi_restore 3
- 305              		.cfi_def_cfa_offset 0
- 157:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
- 306              		.loc 1 157 3 view .LVU47
- 307 000a FFF7FEBF 		b	HAL_DCMIPP_IRQHandler
- 308              	.LVL4:
- 157:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
-ARM GAS  /tmp/ccWkMnB1.s 			page 9
+  94:Src/stm32n6xx_it.c **** }
+  95:Src/stm32n6xx_it.c **** 
+  96:Src/stm32n6xx_it.c **** /**
+  97:Src/stm32n6xx_it.c ****   * @brief  This function handles SVCall exception.
+  98:Src/stm32n6xx_it.c ****   * @param  None
+  99:Src/stm32n6xx_it.c ****   * @retval None
+ 100:Src/stm32n6xx_it.c ****   */
+ 101:Src/stm32n6xx_it.c **** void SVC_Handler(void)
+ 102:Src/stm32n6xx_it.c **** {
+ 293              		.loc 1 102 1 view -0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297              		@ link register save eliminated.
+ 103:Src/stm32n6xx_it.c **** }
+ 298              		.loc 1 103 1 view .LVU46
+ 299 0000 7047     		bx	lr
+ 300              		.cfi_endproc
+ 301              	.LFE891:
+ 303              		.section	.text.DebugMon_Handler,"ax",%progbits
+ 304              		.align	1
+ 305              		.global	DebugMon_Handler
+ 306              		.syntax unified
+ 307              		.thumb
+ 308              		.thumb_func
+ 310              	DebugMon_Handler:
+ 311              	.LFB892:
+ 104:Src/stm32n6xx_it.c **** 
+ 105:Src/stm32n6xx_it.c **** /**
+ 106:Src/stm32n6xx_it.c ****   * @brief  This function handles Debug Monitor exception.
+ 107:Src/stm32n6xx_it.c ****   * @param  None
+ 108:Src/stm32n6xx_it.c ****   * @retval None
+ 109:Src/stm32n6xx_it.c ****   */
+ 110:Src/stm32n6xx_it.c **** void DebugMon_Handler(void)
+ 111:Src/stm32n6xx_it.c **** {
+ 312              		.loc 1 111 1 view -0
+ 313              		.cfi_startproc
+ 314              		@ Volatile: function does not return.
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              		@ link register save eliminated.
+ 318              	.L27:
+ 112:Src/stm32n6xx_it.c ****   while (1)
+ 319              		.loc 1 112 3 view .LVU48
+ 113:Src/stm32n6xx_it.c ****   {
+ 114:Src/stm32n6xx_it.c ****   }
+ 320              		.loc 1 114 3 view .LVU49
+ 112:Src/stm32n6xx_it.c ****   while (1)
+ 321              		.loc 1 112 9 view .LVU50
+ 322 0000 FEE7     		b	.L27
+ 323              		.cfi_endproc
+ 324              	.LFE892:
+ 326              		.section	.text.PendSV_Handler,"ax",%progbits
+ 327              		.align	1
+ 328              		.global	PendSV_Handler
+ 329              		.syntax unified
+ 330              		.thumb
+ARM GAS  /tmp/ccyOXc6k.s 			page 9
 
 
- 309              		.loc 1 157 3 view .LVU48
- 310              		.cfi_endproc
- 311              	.LFE895:
- 313              		.text
- 314              	.Letext0:
- 315              		.file 2 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 316              		.file 3 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 317              		.file 4 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
- 318              		.file 5 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dcmipp.h"
- 319              		.file 6 "../../Middlewares/stm32-mw-camera/cmw_camera.h"
- 320              		.file 7 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h"
-ARM GAS  /tmp/ccWkMnB1.s 			page 10
+ 331              		.thumb_func
+ 333              	PendSV_Handler:
+ 334              	.LFB893:
+ 115:Src/stm32n6xx_it.c **** }
+ 116:Src/stm32n6xx_it.c **** 
+ 117:Src/stm32n6xx_it.c **** /**
+ 118:Src/stm32n6xx_it.c ****   * @brief  This function handles PendSVC exception.
+ 119:Src/stm32n6xx_it.c ****   * @param  None
+ 120:Src/stm32n6xx_it.c ****   * @retval None
+ 121:Src/stm32n6xx_it.c ****   */
+ 122:Src/stm32n6xx_it.c **** void PendSV_Handler(void)
+ 123:Src/stm32n6xx_it.c **** {
+ 335              		.loc 1 123 1 view -0
+ 336              		.cfi_startproc
+ 337              		@ Volatile: function does not return.
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340              		@ link register save eliminated.
+ 341              	.L29:
+ 124:Src/stm32n6xx_it.c ****   while (1)
+ 342              		.loc 1 124 3 view .LVU52
+ 125:Src/stm32n6xx_it.c ****   {
+ 126:Src/stm32n6xx_it.c ****   }
+ 343              		.loc 1 126 3 view .LVU53
+ 124:Src/stm32n6xx_it.c ****   while (1)
+ 344              		.loc 1 124 9 view .LVU54
+ 345 0000 FEE7     		b	.L29
+ 346              		.cfi_endproc
+ 347              	.LFE893:
+ 349              		.section	.text.SysTick_Handler,"ax",%progbits
+ 350              		.align	1
+ 351              		.global	SysTick_Handler
+ 352              		.syntax unified
+ 353              		.thumb
+ 354              		.thumb_func
+ 356              	SysTick_Handler:
+ 357              	.LFB894:
+ 127:Src/stm32n6xx_it.c **** }
+ 128:Src/stm32n6xx_it.c **** 
+ 129:Src/stm32n6xx_it.c **** /**
+ 130:Src/stm32n6xx_it.c ****   * @brief  This function handles SysTick Handler.
+ 131:Src/stm32n6xx_it.c ****   * @param  None
+ 132:Src/stm32n6xx_it.c ****   * @retval None
+ 133:Src/stm32n6xx_it.c ****   */
+ 134:Src/stm32n6xx_it.c **** void SysTick_Handler(void)
+ 135:Src/stm32n6xx_it.c **** {
+ 358              		.loc 1 135 1 view -0
+ 359              		.cfi_startproc
+ 360              		@ args = 0, pretend = 0, frame = 0
+ 361              		@ frame_needed = 0, uses_anonymous_args = 0
+ 362              		@ link register save eliminated.
+ 136:Src/stm32n6xx_it.c ****   HAL_IncTick();
+ 363              		.loc 1 136 3 view .LVU56
+ 364 0000 FFF7FEBF 		b	HAL_IncTick
+ 365              	.LVL9:
+ 366              		.cfi_endproc
+ 367              	.LFE894:
+ARM GAS  /tmp/ccyOXc6k.s 			page 10
+
+
+ 369              		.section	.text.CSI_IRQHandler,"ax",%progbits
+ 370              		.align	1
+ 371              		.global	CSI_IRQHandler
+ 372              		.syntax unified
+ 373              		.thumb
+ 374              		.thumb_func
+ 376              	CSI_IRQHandler:
+ 377              	.LFB895:
+ 137:Src/stm32n6xx_it.c **** }
+ 138:Src/stm32n6xx_it.c **** 
+ 139:Src/stm32n6xx_it.c **** /******************************************************************************/
+ 140:Src/stm32n6xx_it.c **** /*                 STM32N6xx Peripherals Interrupt Handlers                   */
+ 141:Src/stm32n6xx_it.c **** /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
+ 142:Src/stm32n6xx_it.c **** /*  available peripheral interrupt handler's name please refer to the startup */
+ 143:Src/stm32n6xx_it.c **** /*  file (startup_stm32n6xx.s).                                               */
+ 144:Src/stm32n6xx_it.c **** /******************************************************************************/
+ 145:Src/stm32n6xx_it.c **** void CSI_IRQHandler(void)
+ 146:Src/stm32n6xx_it.c **** {
+ 378              		.loc 1 146 1 view -0
+ 379              		.cfi_startproc
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
+ 382              		.loc 1 147 3 view .LVU58
+ 146:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
+ 383              		.loc 1 146 1 is_stmt 0 view .LVU59
+ 384 0000 08B5     		push	{r3, lr}
+ 385              		.cfi_def_cfa_offset 8
+ 386              		.cfi_offset 3, -8
+ 387              		.cfi_offset 14, -4
+ 388              		.loc 1 147 42 view .LVU60
+ 389 0002 FFF7FEFF 		bl	CMW_CAMERA_GetDCMIPPHandle
+ 390              	.LVL10:
+ 148:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
+ 391              		.loc 1 148 3 is_stmt 1 view .LVU61
+ 149:Src/stm32n6xx_it.c **** }
+ 392              		.loc 1 149 1 is_stmt 0 view .LVU62
+ 393 0006 BDE80840 		pop	{r3, lr}
+ 394              		.cfi_restore 14
+ 395              		.cfi_restore 3
+ 396              		.cfi_def_cfa_offset 0
+ 148:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
+ 397              		.loc 1 148 3 view .LVU63
+ 398 000a FFF7FEBF 		b	HAL_DCMIPP_CSI_IRQHandler
+ 399              	.LVL11:
+ 148:Src/stm32n6xx_it.c ****   HAL_DCMIPP_CSI_IRQHandler(hcamera_dcmipp);
+ 400              		.loc 1 148 3 view .LVU64
+ 401              		.cfi_endproc
+ 402              	.LFE895:
+ 404              		.section	.text.DCMIPP_IRQHandler,"ax",%progbits
+ 405              		.align	1
+ 406              		.global	DCMIPP_IRQHandler
+ 407              		.syntax unified
+ 408              		.thumb
+ 409              		.thumb_func
+ 411              	DCMIPP_IRQHandler:
+ 412              	.LFB896:
+ARM GAS  /tmp/ccyOXc6k.s 			page 11
+
+
+ 150:Src/stm32n6xx_it.c **** 
+ 151:Src/stm32n6xx_it.c **** void DCMIPP_IRQHandler(void)
+ 152:Src/stm32n6xx_it.c **** {
+ 413              		.loc 1 152 1 is_stmt 1 view -0
+ 414              		.cfi_startproc
+ 415              		@ args = 0, pretend = 0, frame = 0
+ 416              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
+ 417              		.loc 1 153 3 view .LVU66
+ 152:Src/stm32n6xx_it.c ****   DCMIPP_HandleTypeDef *hcamera_dcmipp = CMW_CAMERA_GetDCMIPPHandle();
+ 418              		.loc 1 152 1 is_stmt 0 view .LVU67
+ 419 0000 08B5     		push	{r3, lr}
+ 420              		.cfi_def_cfa_offset 8
+ 421              		.cfi_offset 3, -8
+ 422              		.cfi_offset 14, -4
+ 423              		.loc 1 153 42 view .LVU68
+ 424 0002 FFF7FEFF 		bl	CMW_CAMERA_GetDCMIPPHandle
+ 425              	.LVL12:
+ 154:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
+ 426              		.loc 1 154 3 is_stmt 1 view .LVU69
+ 155:Src/stm32n6xx_it.c **** }
+ 427              		.loc 1 155 1 is_stmt 0 view .LVU70
+ 428 0006 BDE80840 		pop	{r3, lr}
+ 429              		.cfi_restore 14
+ 430              		.cfi_restore 3
+ 431              		.cfi_def_cfa_offset 0
+ 154:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
+ 432              		.loc 1 154 3 view .LVU71
+ 433 000a FFF7FEBF 		b	HAL_DCMIPP_IRQHandler
+ 434              	.LVL13:
+ 154:Src/stm32n6xx_it.c ****   HAL_DCMIPP_IRQHandler(hcamera_dcmipp);
+ 435              		.loc 1 154 3 view .LVU72
+ 436              		.cfi_endproc
+ 437              	.LFE896:
+ 439              		.text
+ 440              	.Letext0:
+ 441              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 442              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 443              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 444              		.file 5 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
+ 445              		.file 6 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_def.h"
+ 446              		.file 7 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma.h"
+ 447              		.file 8 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma_ex.h"
+ 448              		.file 9 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dcmipp.h"
+ 449              		.file 10 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_uart.h"
+ 450              		.file 11 "../../Middlewares/stm32-mw-camera/cmw_camera.h"
+ 451              		.file 12 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ 452              		.file 13 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h"
+ARM GAS  /tmp/ccyOXc6k.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32n6xx_it.c
-     /tmp/ccWkMnB1.s:26     .text.NMI_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:32     .text.NMI_Handler:00000000 NMI_Handler
-     /tmp/ccWkMnB1.s:44     .text.HardFault_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:50     .text.HardFault_Handler:00000000 HardFault_Handler
-     /tmp/ccWkMnB1.s:67     .text.MemManage_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:73     .text.MemManage_Handler:00000000 MemManage_Handler
-     /tmp/ccWkMnB1.s:90     .text.BusFault_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:96     .text.BusFault_Handler:00000000 BusFault_Handler
-     /tmp/ccWkMnB1.s:113    .text.UsageFault_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:119    .text.UsageFault_Handler:00000000 UsageFault_Handler
-     /tmp/ccWkMnB1.s:136    .text.SecureFault_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:142    .text.SecureFault_Handler:00000000 SecureFault_Handler
-     /tmp/ccWkMnB1.s:159    .text.SVC_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:165    .text.SVC_Handler:00000000 SVC_Handler
-     /tmp/ccWkMnB1.s:178    .text.DebugMon_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:184    .text.DebugMon_Handler:00000000 DebugMon_Handler
-     /tmp/ccWkMnB1.s:201    .text.PendSV_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:207    .text.PendSV_Handler:00000000 PendSV_Handler
-     /tmp/ccWkMnB1.s:224    .text.SysTick_Handler:00000000 $t
-     /tmp/ccWkMnB1.s:230    .text.SysTick_Handler:00000000 SysTick_Handler
-     /tmp/ccWkMnB1.s:244    .text.CSI_IRQHandler:00000000 $t
-     /tmp/ccWkMnB1.s:250    .text.CSI_IRQHandler:00000000 CSI_IRQHandler
-     /tmp/ccWkMnB1.s:279    .text.DCMIPP_IRQHandler:00000000 $t
-     /tmp/ccWkMnB1.s:285    .text.DCMIPP_IRQHandler:00000000 DCMIPP_IRQHandler
+     /tmp/ccyOXc6k.s:26     .text.fault_print:00000000 $t
+     /tmp/ccyOXc6k.s:31     .text.fault_print:00000000 fault_print
+     /tmp/ccyOXc6k.s:67     .text.fault_print:0000001c $d
+     /tmp/ccyOXc6k.s:72     .text.NMI_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:78     .text.NMI_Handler:00000000 NMI_Handler
+     /tmp/ccyOXc6k.s:93     .text.HardFault_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:99     .text.HardFault_Handler:00000000 HardFault_Handler
+     /tmp/ccyOXc6k.s:124    .text.HardFault_Handler:0000000c $d
+     /tmp/ccyOXc6k.s:132    .text.MemManage_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:138    .text.MemManage_Handler:00000000 MemManage_Handler
+     /tmp/ccyOXc6k.s:163    .text.MemManage_Handler:0000000c $d
+     /tmp/ccyOXc6k.s:171    .text.BusFault_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:177    .text.BusFault_Handler:00000000 BusFault_Handler
+     /tmp/ccyOXc6k.s:202    .text.BusFault_Handler:0000000c $d
+     /tmp/ccyOXc6k.s:210    .text.UsageFault_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:216    .text.UsageFault_Handler:00000000 UsageFault_Handler
+     /tmp/ccyOXc6k.s:241    .text.UsageFault_Handler:0000000c $d
+     /tmp/ccyOXc6k.s:249    .text.SecureFault_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:255    .text.SecureFault_Handler:00000000 SecureFault_Handler
+     /tmp/ccyOXc6k.s:280    .text.SecureFault_Handler:0000000c $d
+     /tmp/ccyOXc6k.s:285    .text.SVC_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:291    .text.SVC_Handler:00000000 SVC_Handler
+     /tmp/ccyOXc6k.s:304    .text.DebugMon_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:310    .text.DebugMon_Handler:00000000 DebugMon_Handler
+     /tmp/ccyOXc6k.s:327    .text.PendSV_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:333    .text.PendSV_Handler:00000000 PendSV_Handler
+     /tmp/ccyOXc6k.s:350    .text.SysTick_Handler:00000000 $t
+     /tmp/ccyOXc6k.s:356    .text.SysTick_Handler:00000000 SysTick_Handler
+     /tmp/ccyOXc6k.s:370    .text.CSI_IRQHandler:00000000 $t
+     /tmp/ccyOXc6k.s:376    .text.CSI_IRQHandler:00000000 CSI_IRQHandler
+     /tmp/ccyOXc6k.s:405    .text.DCMIPP_IRQHandler:00000000 $t
+     /tmp/ccyOXc6k.s:411    .text.DCMIPP_IRQHandler:00000000 DCMIPP_IRQHandler
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
                            .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
@@ -544,6 +709,9 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.core_cm55.h.4477.396e822ef855bcfb932819ad48de1c4c
                            .group:00000000 wm4.armv7m_cachel1.h.24.936dd92d6e204a8d0b17d5e4ea4a356e
                            .group:00000000 wm4.stm32n657xx.h.575.78d331c417ec710388ced647138f735f
+ARM GAS  /tmp/ccyOXc6k.s 			page 13
+
+
                            .group:00000000 wm4.stm32n6xx.h.116.b4247d9785590e7c5ec9234ffb2153bf
                            .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
                            .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
@@ -552,9 +720,6 @@ DEFINED SYMBOLS
                            .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
                            .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
                            .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
-ARM GAS  /tmp/ccWkMnB1.s 			page 11
-
-
                            .group:00000000 wm4.stddef.h.173.4903093a50a8482cb062b176ea61fac3
                            .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
                            .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
@@ -604,6 +769,9 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stdio.h.2.4aa87247282eca6c8f36f9de33d8df1a
                            .group:00000000 wm4.stdio.h.87.a1e20d2651f9bfb66e51bfbe849db00a
                            .group:00000000 wm4.stdlib.h.13.4ed386f5c1a80d71e72172885d946ef2
+ARM GAS  /tmp/ccyOXc6k.s 			page 14
+
+
                            .group:00000000 wm4.alloca.h.8.dfc0c703c47ec3e69746825b17d9e66d
                            .group:00000000 wm4.stdlib.h.56.f4862cfbf4363a1db01842d5bdf72c18
                            .group:00000000 wm4.string.h.8.c4b8571ce60dff2817f43fec8b86aecd
@@ -612,10 +780,10 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.isp_core.h.110.8c4344a3506ac8fadc31ee17c3f6f7d7
                            .group:00000000 wm4.cmw_camera.h.33.3e21b0797a1f24d8d61aeb33a948c5cd
 
-ARM GAS  /tmp/ccWkMnB1.s 			page 12
-
-
 UNDEFINED SYMBOLS
+strlen
+HAL_UART_Transmit
+huart1
 HAL_IncTick
 CMW_CAMERA_GetDCMIPPHandle
 HAL_DCMIPP_CSI_IRQHandler

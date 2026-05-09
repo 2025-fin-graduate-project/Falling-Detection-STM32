@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccvY9UY7.s 			page 1
+ARM GAS  /tmp/ccOjehkw.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
   22:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****       enabling should be taken into account in order to manage the peripheral read/write
   23:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****       from/to registers.
   24:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****       (+) This delay depends on the peripheral mapping.
-ARM GAS  /tmp/ccvY9UY7.s 			page 2
+ARM GAS  /tmp/ccOjehkw.s 			page 2
 
 
   25:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****         (++) AHB & APB peripherals, 1 dummy read is necessary
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
   79:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5                            RCC_BUSENR_AHB5EN
   80:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1                            RCC_BUSENR_APB1EN
   81:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB2                            RCC_BUSENR_APB2EN
-ARM GAS  /tmp/ccvY9UY7.s 			page 3
+ARM GAS  /tmp/ccOjehkw.s 			page 3
 
 
   82:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB3                            RCC_BUSENR_APB3EN
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  136:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #else
  137:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_CRYP
  138:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #endif /* CRYP */
-ARM GAS  /tmp/ccvY9UY7.s 			page 4
+ARM GAS  /tmp/ccOjehkw.s 			page 4
 
 
  139:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_HASH           RCC_AHB3ENR_HASHEN
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  193:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_DMA2D             RCC_AHB5ENR_DMA2DEN
  194:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_ETH1              RCC_AHB5ENR_ETH1EN
  195:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_ETH1MAC           RCC_AHB5ENR_ETH1MACEN
-ARM GAS  /tmp/ccvY9UY7.s 			page 5
+ARM GAS  /tmp/ccOjehkw.s 			page 5
 
 
  196:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_ETH1TX            RCC_AHB5ENR_ETH1TXEN
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  250:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_SPI2           RCC_APB1ENR1_SPI2EN
  251:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_SPI3           RCC_APB1ENR1_SPI3EN
  252:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM2           RCC_APB1ENR1_TIM2EN
-ARM GAS  /tmp/ccvY9UY7.s 			page 6
+ARM GAS  /tmp/ccOjehkw.s 			page 6
 
 
  253:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_TIM3           RCC_APB1ENR1_TIM3EN
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  307:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_SPI5           RCC_APB2ENR_SPI5EN
  308:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM1           RCC_APB2ENR_TIM1EN
  309:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM8           RCC_APB2ENR_TIM8EN
-ARM GAS  /tmp/ccvY9UY7.s 			page 7
+ARM GAS  /tmp/ccOjehkw.s 			page 7
 
 
  310:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB2_GRP1_PERIPH_TIM9           RCC_APB2ENR_TIM9EN
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  364:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @}
  365:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
  366:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
-ARM GAS  /tmp/ccvY9UY7.s 			page 8
+ARM GAS  /tmp/ccOjehkw.s 			page 8
 
 
  367:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /** @defgroup BUS_LL_EC_APB5_GRP1_PERIPH  APB5 GRP1 PERIPH
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  421:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSENSR      ACLKNCENS     LL_BUS_EnableClock\n
  422:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSENSR      AHBMENS       LL_BUS_EnableClock\n
  423:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSENSR      AHB1ENS       LL_BUS_EnableClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 9
+ARM GAS  /tmp/ccOjehkw.s 			page 9
 
 
  424:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSENSR      AHB2ENS       LL_BUS_EnableClock\n
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  478:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2
  479:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3
  480:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4
-ARM GAS  /tmp/ccvY9UY7.s 			page 10
+ARM GAS  /tmp/ccOjehkw.s 			page 10
 
 
  481:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  535:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSLPENSR    AHB1LPENS     LL_BUS_EnableClockLowPower\n
  536:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSLPENSR    AHB2LPENS     LL_BUS_EnableClockLowPower\n
  537:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSLPENSR    AHB3LPENS     LL_BUS_EnableClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 11
+ARM GAS  /tmp/ccOjehkw.s 			page 11
 
 
  538:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSLPENSR    AHB4LPENS     LL_BUS_EnableClockLowPower\n
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  592:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4
  593:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5
  594:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1
-ARM GAS  /tmp/ccvY9UY7.s 			page 12
+ARM GAS  /tmp/ccOjehkw.s 			page 12
 
 
  595:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB2
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  649:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
  650:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
  651:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Enable memories clock.
-ARM GAS  /tmp/ccvY9UY7.s 			page 13
+ARM GAS  /tmp/ccOjehkw.s 			page 13
 
 
  652:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @rmtoll MEMENSR      AXISRAM1ENS   LL_MEM_EnableClock\n
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  706:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AXISRAM4
  707:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AXISRAM5
  708:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AXISRAM6
-ARM GAS  /tmp/ccvY9UY7.s 			page 14
+ARM GAS  /tmp/ccOjehkw.s 			page 14
 
 
  709:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AHBSRAM1
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  763:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENSR    AXISRAM6LPENS LL_MEM_EnableClockLowPower\n
  764:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENSR    AHBSRAM1LPENS LL_MEM_EnableClockLowPower\n
  765:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENSR    AHBSRAM2LPENS LL_MEM_EnableClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 15
+ARM GAS  /tmp/ccOjehkw.s 			page 15
 
 
  766:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENSR    BKPSRAMLPENS  LL_MEM_EnableClockLowPower\n
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  820:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_VENCRAM
  821:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
  822:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
-ARM GAS  /tmp/ccvY9UY7.s 			page 16
+ARM GAS  /tmp/ccOjehkw.s 			page 16
 
 
  823:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE uint32_t LL_MEM_IsEnabledClockLowPower(uint32_t Memories)
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  877:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
  878:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
  879:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)
-ARM GAS  /tmp/ccvY9UY7.s 			page 17
+ARM GAS  /tmp/ccOjehkw.s 			page 17
 
 
  880:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  934:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
  935:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_GPDMA1
  936:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_ADC12
-ARM GAS  /tmp/ccvY9UY7.s 			page 18
+ARM GAS  /tmp/ccOjehkw.s 			page 18
 
 
  937:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  991:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @}
  992:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
  993:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
-ARM GAS  /tmp/ccvY9UY7.s 			page 19
+ARM GAS  /tmp/ccOjehkw.s 			page 19
 
 
  994:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /** @defgroup BUS_LL_EF_AHB2 AHB2
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1048:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
 1049:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
 1050:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
-ARM GAS  /tmp/ccvY9UY7.s 			page 20
+ARM GAS  /tmp/ccOjehkw.s 			page 20
 
 
 1051:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Force AHB2 peripherals reset.
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1105:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB2LPENR    MDF1LPEN      LL_AHB2_GRP1_IsEnabledClockLowPower\n
 1106:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB2LPENR    ADF1LPEN      LL_AHB2_GRP1_IsEnabledClockLowPower
 1107:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
-ARM GAS  /tmp/ccvY9UY7.s 			page 21
+ARM GAS  /tmp/ccOjehkw.s 			page 21
 
 
 1108:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2_GRP1_PERIPH_RAMCFG
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1162:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         (*) value not defined in all devices.
 1163:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
 1164:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
-ARM GAS  /tmp/ccvY9UY7.s 			page 22
+ARM GAS  /tmp/ccOjehkw.s 			page 22
 
 
 1165:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE void LL_AHB3_GRP1_EnableClock(uint32_t Periphs)
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1219:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_RISAF
 1220:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_IAC
 1221:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *
-ARM GAS  /tmp/ccvY9UY7.s 			page 23
+ARM GAS  /tmp/ccOjehkw.s 			page 23
 
 
 1222:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         (*) value not defined in all devices.
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1276:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
 1277:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
 1278:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
-ARM GAS  /tmp/ccvY9UY7.s 			page 24
+ARM GAS  /tmp/ccOjehkw.s 			page 24
 
 
 1279:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Enable AHB3 peripherals clock during Low Power mode.
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1333:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE uint32_t LL_AHB3_GRP1_IsEnabledClockLowPower(uint32_t Periphs)
 1334:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
 1335:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   return ((READ_BIT(RCC->AHB3LPENR, Periphs) == Periphs) ? 1UL : 0UL);
-ARM GAS  /tmp/ccvY9UY7.s 			page 25
+ARM GAS  /tmp/ccOjehkw.s 			page 25
 
 
 1336:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1390:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
 1391:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOA
 1392:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOB
-ARM GAS  /tmp/ccvY9UY7.s 			page 26
+ARM GAS  /tmp/ccOjehkw.s 			page 26
 
 
 1393:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOC
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
   67              		.section	.text.BSP_GetVersion,"ax",%progbits
   68              		.align	1
   69              		.global	BSP_GetVersion
-ARM GAS  /tmp/ccvY9UY7.s 			page 27
+ARM GAS  /tmp/ccOjehkw.s 			page 27
 
 
   70              		.syntax unified
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
   50:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   * @{
   51:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   */
   52:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** static void BUTTON_USER1_EXTI_Callback(void);
-ARM GAS  /tmp/ccvY9UY7.s 			page 28
+ARM GAS  /tmp/ccOjehkw.s 			page 28
 
 
   53:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** static void BUTTON_TAMP_EXTI_Callback(void);
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  107:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  108:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** static const IRQn_Type BUTTON_IRQn[BUTTONn] =
  109:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** {
-ARM GAS  /tmp/ccvY9UY7.s 			page 29
+ARM GAS  /tmp/ccOjehkw.s 			page 29
 
 
  110:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   BUTTON_USER1_EXTI_IRQn,
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
   89              		.cfi_endproc
   90              	.LFE884:
   92              		.section	.rodata.BSP_GetBoardName.str1.1,"aMS",%progbits,1
-ARM GAS  /tmp/ccvY9UY7.s 			page 30
+ARM GAS  /tmp/ccOjehkw.s 			page 30
 
 
   93              	.LC4:
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  165:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** const uint8_t* BSP_GetBoardID(void)
  166:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** {
  132              		.loc 1 166 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccvY9UY7.s 			page 31
+ARM GAS  /tmp/ccOjehkw.s 			page 31
 
 
  133              		.cfi_startproc
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  176 0008 FFF7FEFF 		bl	LL_AHB4_GRP1_EnableClock
  177              	.LVL3:
  179:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   GPIO_InitTypeDef  gpio_init_structure = {0};
-ARM GAS  /tmp/ccvY9UY7.s 			page 32
+ARM GAS  /tmp/ccOjehkw.s 			page 32
 
 
  178              		.loc 1 179 3 is_stmt 1 view .LVU24
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  220              	.LFE887:
  222              		.section	.text.BSP_LED_On,"ax",%progbits
  223              		.align	1
-ARM GAS  /tmp/ccvY9UY7.s 			page 33
+ARM GAS  /tmp/ccOjehkw.s 			page 33
 
 
  224              		.global	BSP_LED_On
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  236:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  237:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  238:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** /**
-ARM GAS  /tmp/ccvY9UY7.s 			page 34
+ARM GAS  /tmp/ccOjehkw.s 			page 34
 
 
  239:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   * @brief  DeInit LEDs.
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  248              	.LVL9:
  249              	.L17:
  250              		.loc 1 276 5 is_stmt 1 view .LVU44
-ARM GAS  /tmp/ccvY9UY7.s 			page 35
+ARM GAS  /tmp/ccOjehkw.s 			page 35
 
 
  251 000c 0022     		movs	r2, #0
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  289              		.loc 1 293 5 view .LVU50
  290 0004 0221     		movs	r1, #2
  291 0006 0448     		ldr	r0, .L24
-ARM GAS  /tmp/ccvY9UY7.s 			page 36
+ARM GAS  /tmp/ccOjehkw.s 			page 36
 
 
  292              	.LVL13:
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  204:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   {
  339              		.loc 1 204 3 view .LVU60
  340 0002 0446     		mov	r4, r0
-ARM GAS  /tmp/ccvY9UY7.s 			page 37
+ARM GAS  /tmp/ccOjehkw.s 			page 37
 
 
  199:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   int32_t ret = BSP_ERROR_NONE;
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  381 002a 0193     		str	r3, [sp, #4]
  225:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     gpio_init_structure.Pull = GPIO_NOPULL;
  382              		.loc 1 225 5 is_stmt 1 view .LVU75
-ARM GAS  /tmp/ccvY9UY7.s 			page 38
+ARM GAS  /tmp/ccOjehkw.s 			page 38
 
 
  226:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  429              		.loc 1 248 1 is_stmt 1 view -0
  430              		.cfi_startproc
  431              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccvY9UY7.s 			page 39
+ARM GAS  /tmp/ccOjehkw.s 			page 39
 
 
  432              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  299:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** }
  300:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  301:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** /**
-ARM GAS  /tmp/ccvY9UY7.s 			page 40
+ARM GAS  /tmp/ccOjehkw.s 			page 40
 
 
  302:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   * @brief  Toggles the selected LED.
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  513              		@ frame_needed = 0, uses_anonymous_args = 0
  323:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   uint32_t ret;
  514              		.loc 1 323 3 view .LVU99
-ARM GAS  /tmp/ccvY9UY7.s 			page 41
+ARM GAS  /tmp/ccOjehkw.s 			page 41
 
 
  324:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  558              		.section	.text.BSP_PB_Init,"ax",%progbits
  559              		.align	1
  560              		.global	BSP_PB_Init
-ARM GAS  /tmp/ccvY9UY7.s 			page 42
+ARM GAS  /tmp/ccOjehkw.s 			page 42
 
 
  561              		.syntax unified
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  595              		.loc 1 352 3 is_stmt 1 view .LVU120
  353:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****                                                             BUTTON_TAMP_EXTI_Callback};
  354:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   static uint32_t              BSP_BUTTON_PRIO [BUTTONn] = {BSP_BUTTON_USER1_IT_PRIORITY,
-ARM GAS  /tmp/ccvY9UY7.s 			page 43
+ARM GAS  /tmp/ccOjehkw.s 			page 43
 
 
  596              		.loc 1 354 3 view .LVU121
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  626 0030 53F82400 		ldr	r0, [r3, r4, lsl #2]
  375:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     HAL_GPIO_Init(BUTTON_PORT [Button], &gpio_init_structure);
  627              		.loc 1 375 30 view .LVU137
-ARM GAS  /tmp/ccvY9UY7.s 			page 44
+ARM GAS  /tmp/ccOjehkw.s 			page 44
 
 
  628 0034 0295     		str	r5, [sp, #8]
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  653              		.loc 1 382 5 is_stmt 1 view .LVU144
  382:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  654              		.loc 1 382 30 is_stmt 0 view .LVU145
-ARM GAS  /tmp/ccvY9UY7.s 			page 45
+ARM GAS  /tmp/ccOjehkw.s 			page 45
 
 
  655 0048 4FF40413 		mov	r3, #2162688
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  696              	.LVL49:
  391:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  697              		.loc 1 391 5 is_stmt 1 view .LVU159
-ARM GAS  /tmp/ccvY9UY7.s 			page 46
+ARM GAS  /tmp/ccOjehkw.s 			page 46
 
 
  698 0090 2846     		mov	r0, r5
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  736 0000 38B5     		push	{r3, r4, r5, lr}
  737              		.cfi_def_cfa_offset 16
  738              		.cfi_offset 3, -16
-ARM GAS  /tmp/ccvY9UY7.s 			page 47
+ARM GAS  /tmp/ccOjehkw.s 			page 47
 
 
  739              		.cfi_offset 4, -12
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  426:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   * @brief  Returns the selected button state.
  427:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   * @param  Button Button to be checked
  428:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   *          This parameter can be one of the following values:
-ARM GAS  /tmp/ccvY9UY7.s 			page 48
+ARM GAS  /tmp/ccOjehkw.s 			page 48
 
 
  429:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   *            @arg  BUTTON_USER1: User1 Push Button
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  825              		.loc 1 444 1 is_stmt 1 view -0
  826              		.cfi_startproc
  827              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccvY9UY7.s 			page 49
+ARM GAS  /tmp/ccOjehkw.s 			page 49
 
 
  828              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  856              		.cfi_startproc
  857              		@ args = 0, pretend = 0, frame = 0
  858              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccvY9UY7.s 			page 50
+ARM GAS  /tmp/ccOjehkw.s 			page 50
 
 
  859              		@ link register save eliminated.
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  905              		.loc 1 454 3 view .LVU191
  453:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   BSP_PB_Callback(BUTTON_USER1);
  906              		.loc 1 453 1 is_stmt 0 view .LVU192
-ARM GAS  /tmp/ccvY9UY7.s 			page 51
+ARM GAS  /tmp/ccOjehkw.s 			page 51
 
 
  907 0000 08B5     		push	{r3, lr}
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  509:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****         return BSP_ERROR_MSP_FAILURE;
  510:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****       }
  511:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     }
-ARM GAS  /tmp/ccvY9UY7.s 			page 52
+ARM GAS  /tmp/ccOjehkw.s 			page 52
 
 
  512:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  944 0002 0128     		cmp	r0, #1
  547:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   int32_t ret = BSP_ERROR_NONE;
  945              		.loc 1 547 1 view .LVU200
-ARM GAS  /tmp/ccvY9UY7.s 			page 53
+ARM GAS  /tmp/ccOjehkw.s 			page 53
 
 
  946 0004 86B0     		sub	sp, sp, #24
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  580:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   int32_t ret = BSP_ERROR_NONE;
  581:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  582:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   if(COM >= COMn)
-ARM GAS  /tmp/ccvY9UY7.s 			page 54
+ARM GAS  /tmp/ccOjehkw.s 			page 54
 
 
  583:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   {
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  637:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     {
  638:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****       IsComMspCbValid[COM] = 1U;
  639:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     }
-ARM GAS  /tmp/ccvY9UY7.s 			page 55
+ARM GAS  /tmp/ccOjehkw.s 			page 55
 
 
  640:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   }
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  694:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   */
  695:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** #if (USE_BSP_COM_FEATURE > 0)
  696:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
-ARM GAS  /tmp/ccvY9UY7.s 			page 56
+ARM GAS  /tmp/ccOjehkw.s 			page 56
 
 
  697:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** /**
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  751:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   uint16_t         COM_TX_PIN[COMn]  = {COM1_TX_PIN, COM2_TX_PIN};
  752:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   uint16_t         COM_RX_PIN[COMn]  = {COM1_RX_PIN, COM2_RX_PIN};
  753:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   uint8_t          COM_TX_AF[COMn]   = {COM1_TX_AF, COM2_TX_AF};
-ARM GAS  /tmp/ccvY9UY7.s 			page 57
+ARM GAS  /tmp/ccOjehkw.s 			page 57
 
 
  754:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   uint8_t          COM_RX_AF[COMn]   = {COM1_RX_AF, COM2_RX_AF};
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  976              		.loc 1 801 20 view .LVU213
  977 0022 0492     		str	r2, [sp, #16]
  800:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   GPIO_TypeDef    *COM_RX_PORT[COMn] = {COM1_RX_GPIO_PORT, COM2_RX_GPIO_PORT};
-ARM GAS  /tmp/ccvY9UY7.s 			page 58
+ARM GAS  /tmp/ccOjehkw.s 			page 58
 
 
  978              		.loc 1 800 20 view .LVU214
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1012              	.LVL70:
  822:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   HAL_GPIO_DeInit(COM_RX_PORT[COM], COM_RX_PIN[COM]);
  1013              		.loc 1 822 3 is_stmt 1 view .LVU228
-ARM GAS  /tmp/ccvY9UY7.s 			page 59
+ARM GAS  /tmp/ccOjehkw.s 			page 59
 
 
  1014              		.loc 1 822 47 is_stmt 0 view .LVU229
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1450:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
 1451:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   return ((READ_BIT(RCC->AHB4ENR, Periphs) == Periphs) ? 1UL : 0UL);
 1452:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
-ARM GAS  /tmp/ccvY9UY7.s 			page 60
+ARM GAS  /tmp/ccOjehkw.s 			page 60
 
 
 1453:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1507:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4RSTSR     BKPRAMRSTS     LL_AHB4_GRP1_ForceReset
 1508:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
 1509:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOA
-ARM GAS  /tmp/ccvY9UY7.s 			page 61
+ARM GAS  /tmp/ccOjehkw.s 			page 61
 
 
 1510:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOB
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1564:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
 1565:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   WRITE_REG(RCC->AHB4RSTCR, Periphs);
 1566:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
-ARM GAS  /tmp/ccvY9UY7.s 			page 62
+ARM GAS  /tmp/ccOjehkw.s 			page 62
 
 
 1567:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1621:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENR     GPIOOLPEN      LL_AHB4_GRP1_IsEnabledClockLowPower\n
 1622:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENR     GPIOPLPEN      LL_AHB4_GRP1_IsEnabledClockLowPower\n
 1623:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENR     GPIOQLPEN      LL_AHB4_GRP1_IsEnabledClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 63
+ARM GAS  /tmp/ccOjehkw.s 			page 63
 
 
 1624:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENR     PWRLPEN        LL_AHB4_GRP1_IsEnabledClockLowPower\n
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1678:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_CRC
 1679:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
 1680:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
-ARM GAS  /tmp/ccvY9UY7.s 			page 64
+ARM GAS  /tmp/ccOjehkw.s 			page 64
 
 
 1681:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE void LL_AHB4_GRP1_DisableClockLowPower(uint32_t Periphs)
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1735:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE1 (*)
 1736:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE2 (*)
 1737:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE3 (*)
-ARM GAS  /tmp/ccvY9UY7.s 			page 65
+ARM GAS  /tmp/ccOjehkw.s 			page 65
 
 
 1738:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE4 (*)
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1792:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5ENR      NPUEN         LL_AHB5_GRP1_IsEnabledClock
 1793:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
 1794:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_HPDMA1
-ARM GAS  /tmp/ccvY9UY7.s 			page 66
+ARM GAS  /tmp/ccOjehkw.s 			page 66
 
 
 1795:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_DMA2D
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1849:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5ENCR     ETH1MACENC    LL_AHB5_GRP1_DisableClock\n
 1850:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5ENCR     ETH1TXENC     LL_AHB5_GRP1_DisableClock\n
 1851:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5ENCR     ETH1RXENC     LL_AHB5_GRP1_DisableClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 67
+ARM GAS  /tmp/ccOjehkw.s 			page 67
 
 
 1852:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5ENCR     ETH1ENC       LL_AHB5_GRP1_DisableClock\n
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1906:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTSR    XSPI2RSTS       LL_AHB5_GRP1_ForceReset\n
 1907:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTSR    XSPIMRSTS       LL_AHB5_GRP1_ForceReset\n
 1908:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTSR    XSPI3RSTS       LL_AHB5_GRP1_ForceReset\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 68
+ARM GAS  /tmp/ccOjehkw.s 			page 68
 
 
 1909:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTSR    GFXMMURSTS      LL_AHB5_GRP1_ForceReset\n
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 1963:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTCR    GFXMMURSTC      LL_AHB5_GRP1_ReleaseReset\n
 1964:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTCR    GPU2DRSTC       LL_AHB5_GRP1_ReleaseReset\n
 1965:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTCR    OTG1PHYCTLRSTC  LL_AHB5_GRP1_ReleaseReset\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 69
+ARM GAS  /tmp/ccOjehkw.s 			page 69
 
 
 1966:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5RSTCR    OTG2PHYCTLRSTC  LL_AHB5_GRP1_ReleaseReset\n
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2020:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENSR   MCE4LPENS     LL_AHB5_GRP1_EnableClockLowPower\n (*)
 2021:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENSR   GFXMMULPENS   LL_AHB5_GRP1_EnableClockLowPower\n
 2022:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENSR   GPU2DLPENS    LL_AHB5_GRP1_EnableClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 70
+ARM GAS  /tmp/ccOjehkw.s 			page 70
 
 
 2023:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENSR   ETH1MACLPENS  LL_AHB5_GRP1_EnableClockLowPower\n
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2077:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENR    DMA2DLPEN     LL_AHB5_GRP1_IsEnabledClockLowPower\n
 2078:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENR    JPEGLPEN      LL_AHB5_GRP1_IsEnabledClockLowPower\n
 2079:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENR    FMCLPEN       LL_AHB5_GRP1_IsEnabledClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 71
+ARM GAS  /tmp/ccOjehkw.s 			page 71
 
 
 2080:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB5LPENR    XSPI1LPEN     LL_AHB5_GRP1_IsEnabledClockLowPower\n
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2134:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
 2135:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE uint32_t LL_AHB5_GRP1_IsEnabledClockLowPower(uint32_t Periphs)
 2136:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
-ARM GAS  /tmp/ccvY9UY7.s 			page 72
+ARM GAS  /tmp/ccOjehkw.s 			page 72
 
 
 2137:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   return ((READ_BIT(RCC->AHB5LPENR, Periphs) == Periphs) ? 1UL : 0UL);
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2191:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTG1
 2192:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTG2
 2193:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTGPHY1
-ARM GAS  /tmp/ccvY9UY7.s 			page 73
+ARM GAS  /tmp/ccOjehkw.s 			page 73
 
 
 2194:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTGPHY2
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2248:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_I3C2
 2249:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_LPTIM1
 2250:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_SPDIFRX1
-ARM GAS  /tmp/ccvY9UY7.s 			page 74
+ARM GAS  /tmp/ccOjehkw.s 			page 74
 
 
 2251:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_SPI2
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2305:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENR1     I2C2EN        LL_APB1_GRP1_IsEnabledClock\n
 2306:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENR1     I2C3EN        LL_APB1_GRP1_IsEnabledClock\n
 2307:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENR1     I3C1EN        LL_APB1_GRP1_IsEnabledClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 75
+ARM GAS  /tmp/ccOjehkw.s 			page 75
 
 
 2308:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENR1     I3C2EN        LL_APB1_GRP1_IsEnabledClock\n
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2362:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENCR1    SPDIFRX1ENC   LL_APB1_GRP1_DisableClock\n
 2363:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENCR1    USART2ENC     LL_APB1_GRP1_DisableClock\n
 2364:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENCR1    USART3ENC     LL_APB1_GRP1_DisableClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 76
+ARM GAS  /tmp/ccOjehkw.s 			page 76
 
 
 2365:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1ENCR1    UART4ENC      LL_APB1_GRP1_DisableClock\n
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2419:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTSR1   LPTIM1RSTS    LL_APB1_GRP1_ForceReset\n
 2420:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTSR1   TIM10RSTS     LL_APB1_GRP1_ForceReset\n
 2421:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTSR1   TIM11RSTS     LL_APB1_GRP1_ForceReset\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 77
+ARM GAS  /tmp/ccOjehkw.s 			page 77
 
 
 2422:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTSR1   SPI2RSTS      LL_APB1_GRP1_ForceReset\n
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2476:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTCR1   TIM6RSTC      LL_APB1_GRP1_ReleaseReset\n
 2477:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTCR1   TIM7RSTC      LL_APB1_GRP1_ReleaseReset\n
 2478:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTCR1   TIM12RSTC     LL_APB1_GRP1_ReleaseReset\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 78
+ARM GAS  /tmp/ccOjehkw.s 			page 78
 
 
 2479:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1RSTCR1   TIM13RSTC     LL_APB1_GRP1_ReleaseReset\n
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2533:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Enable APB1 peripherals clock during Low Power mode.
 2534:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @rmtoll APB1LPENSR1  TIM2LPENS     LL_APB1_GRP1_EnableClockLowPower\n
 2535:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1LPENSR1  TIM3LPENS     LL_APB1_GRP1_EnableClockLowPower\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 79
+ARM GAS  /tmp/ccOjehkw.s 			page 79
 
 
 2536:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB1LPENSR1  TIM4LPENS     LL_APB1_GRP1_EnableClockLowPower\n
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2590:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
 2591:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE void LL_APB1_GRP1_EnableClockLowPower(uint32_t Periphs)
 2592:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
-ARM GAS  /tmp/ccvY9UY7.s 			page 80
+ARM GAS  /tmp/ccOjehkw.s 			page 80
 
 
 2593:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   __IO uint32_t tmpreg;
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2647:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM12
 2648:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM13
 2649:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM14
-ARM GAS  /tmp/ccvY9UY7.s 			page 81
+ARM GAS  /tmp/ccOjehkw.s 			page 81
 
 
 2650:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_USART2
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2704:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM3
 2705:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM4
 2706:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM5
-ARM GAS  /tmp/ccvY9UY7.s 			page 82
+ARM GAS  /tmp/ccOjehkw.s 			page 82
 
 
 2707:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP1_PERIPH_TIM6
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2761:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   return ((READ_BIT(RCC->APB1ENR2, Periphs) == Periphs) ? 1UL : 0UL);
 2762:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
 2763:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
-ARM GAS  /tmp/ccvY9UY7.s 			page 83
+ARM GAS  /tmp/ccOjehkw.s 			page 83
 
 
 2764:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2818:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP2_PERIPH_FDCAN
 2819:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP2_PERIPH_MDIOS
 2820:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB1_GRP2_PERIPH_UCPD1
-ARM GAS  /tmp/ccvY9UY7.s 			page 84
+ARM GAS  /tmp/ccOjehkw.s 			page 84
 
 
 2821:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2875:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENSR     TIM8ENS       LL_APB2_GRP1_EnableClock\n
 2876:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENSR     USART1ENS     LL_APB2_GRP1_EnableClock\n
 2877:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENSR     USART6ENS     LL_APB2_GRP1_EnableClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 85
+ARM GAS  /tmp/ccOjehkw.s 			page 85
 
 
 2878:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENSR     UART9ENS      LL_APB2_GRP1_EnableClock\n
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2932:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENR      TIM9EN        LL_APB2_GRP1_IsEnabledClock\n
 2933:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENR      SPI5EN        LL_APB2_GRP1_IsEnabledClock\n
 2934:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENR      SAI1EN        LL_APB2_GRP1_IsEnabledClock\n
-ARM GAS  /tmp/ccvY9UY7.s 			page 86
+ARM GAS  /tmp/ccOjehkw.s 			page 86
 
 
 2935:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         APB2ENR      SAI2EN        LL_APB2_GRP1_IsEnabledClock
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
 2989:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB2_GRP1_PERIPH_TIM17
 2990:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB2_GRP1_PERIPH_TIM18
 2991:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB2_GRP1_PERIPH_USART1
-ARM GAS  /tmp/ccvY9UY7.s 			page 87
+ARM GAS  /tmp/ccOjehkw.s 			page 87
 
 
 2992:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_APB2_GRP1_PERIPH_USART6
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1069              	.L70:
  828:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     case COM2:
  829:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****       COM2_CLK_DISABLE();
-ARM GAS  /tmp/ccvY9UY7.s 			page 88
+ARM GAS  /tmp/ccOjehkw.s 			page 88
 
 
  1070              		.loc 1 829 7 is_stmt 1 view .LVU243
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1117              		.thumb_func
  1119              	MX_USART1_Init:
  1120              	.LVL80:
-ARM GAS  /tmp/ccvY9UY7.s 			page 89
+ARM GAS  /tmp/ccOjehkw.s 			page 89
 
 
  1121              	.LFB903:
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  714:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c **** 
  1158              		.loc 1 714 28 is_stmt 0 view .LVU269
  1159 001e 4FF40042 		mov	r2, #32768
-ARM GAS  /tmp/ccvY9UY7.s 			page 90
+ARM GAS  /tmp/ccOjehkw.s 			page 90
 
 
  1160 0022 C261     		str	r2, [r0, #28]
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1203              		.loc 1 732 30 is_stmt 0 view .LVU282
  1204 000e 4A89     		ldrh	r2, [r1, #10]
  1205 0010 0261     		str	r2, [r0, #16]
-ARM GAS  /tmp/ccvY9UY7.s 			page 91
+ARM GAS  /tmp/ccOjehkw.s 			page 91
 
 
  733:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   huart->Init.StopBits     = (uint32_t)COM_Init->StopBits;
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  492:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   {
  1249              		.loc 1 492 3 view .LVU296
  489:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   int32_t ret = BSP_ERROR_NONE;
-ARM GAS  /tmp/ccvY9UY7.s 			page 92
+ARM GAS  /tmp/ccOjehkw.s 			page 92
 
 
  1250              		.loc 1 489 1 is_stmt 0 view .LVU297
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1291              		.loc 1 748 3 view .LVU310
  749:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   GPIO_TypeDef    *COM_RX_PORT[COMn] = {COM1_RX_GPIO_PORT, COM2_RX_GPIO_PORT};
  1292              		.loc 1 749 3 view .LVU311
-ARM GAS  /tmp/ccvY9UY7.s 			page 93
+ARM GAS  /tmp/ccOjehkw.s 			page 93
 
 
  749:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   GPIO_TypeDef    *COM_RX_PORT[COMn] = {COM1_RX_GPIO_PORT, COM2_RX_GPIO_PORT};
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1329              	.LVL89:
  763:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     COM1_CLK_ENABLE();
  1330              		.loc 1 763 5 is_stmt 1 view .LVU330
-ARM GAS  /tmp/ccvY9UY7.s 			page 94
+ARM GAS  /tmp/ccOjehkw.s 			page 94
 
 
  1331 0050 FFF7FEFF 		bl	LL_AHB4_GRP1_EnableClock
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  784:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****   HAL_GPIO_Init(COM_TX_PORT[COM], &GPIO_Init);
  1368              		.loc 1 784 23 is_stmt 0 view .LVU348
  1369 0070 0723     		movs	r3, #7
-ARM GAS  /tmp/ccvY9UY7.s 			page 95
+ARM GAS  /tmp/ccOjehkw.s 			page 95
 
 
  1370 0072 0D93     		str	r3, [sp, #52]
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1409 00a8 3946     		mov	r1, r7
  1410 00aa 2846     		mov	r0, r5
  516:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****       {
-ARM GAS  /tmp/ccvY9UY7.s 			page 96
+ARM GAS  /tmp/ccOjehkw.s 			page 96
 
 
  1411              		.loc 1 516 10 view .LVU364
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1453              		.loc 1 770 5 view .LVU376
  1454 00ca FFF7FEFF 		bl	LL_AHB4_GRP1_EnableClock
  1455              	.LVL102:
-ARM GAS  /tmp/ccvY9UY7.s 			page 97
+ARM GAS  /tmp/ccOjehkw.s 			page 97
 
 
  771:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****     COM2_CLK_ENABLE();
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1496              	.LVL106:
  1497              	.L88:
  523:../../STM32Cube_FW_N6/Drivers/BSP/STM32N6570-DK/stm32n6570_discovery.c ****       {
-ARM GAS  /tmp/ccvY9UY7.s 			page 98
+ARM GAS  /tmp/ccOjehkw.s 			page 98
 
 
  1498              		.loc 1 523 12 is_stmt 1 view .LVU391
@@ -5878,7 +5878,7 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1555              		.align	1
  1558              	BUTTON_PIN:
  1559 0000 0020     		.short	8192
-ARM GAS  /tmp/ccvY9UY7.s 			page 99
+ARM GAS  /tmp/ccOjehkw.s 			page 99
 
 
  1560 0002 0100     		.short	1
@@ -5924,8 +5924,8 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1604              		.text
  1605              	.Letext0:
  1606              		.file 3 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
- 1607              		.file 4 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 1608              		.file 5 "/home/min/snap/code/229/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 1607              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 1608              		.file 5 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
  1609              		.file 6 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_def.h"
  1610              		.file 7 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_gpio.h"
  1611              		.file 8 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma.h"
@@ -5936,99 +5936,99 @@ ARM GAS  /tmp/ccvY9UY7.s 			page 1
  1616              		.file 13 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cortex.h"
  1617              		.file 14 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_pwr_ex.h"
  1618              		.file 15 "<built-in>"
-ARM GAS  /tmp/ccvY9UY7.s 			page 100
+ARM GAS  /tmp/ccOjehkw.s 			page 100
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32n6570_discovery.c
-     /tmp/ccvY9UY7.s:26     .text.LL_AHB4_GRP1_EnableClock:00000000 $t
-     /tmp/ccvY9UY7.s:31     .text.LL_AHB4_GRP1_EnableClock:00000000 LL_AHB4_GRP1_EnableClock
-     /tmp/ccvY9UY7.s:63     .text.LL_AHB4_GRP1_EnableClock:00000014 $d
-     /tmp/ccvY9UY7.s:68     .text.BSP_GetVersion:00000000 $t
-     /tmp/ccvY9UY7.s:74     .text.BSP_GetVersion:00000000 BSP_GetVersion
-     /tmp/ccvY9UY7.s:88     .text.BSP_GetVersion:00000004 $d
-     /tmp/ccvY9UY7.s:96     .text.BSP_GetBoardName:00000000 $t
-     /tmp/ccvY9UY7.s:102    .text.BSP_GetBoardName:00000000 BSP_GetBoardName
-     /tmp/ccvY9UY7.s:116    .text.BSP_GetBoardName:00000004 $d
-     /tmp/ccvY9UY7.s:124    .text.BSP_GetBoardID:00000000 $t
-     /tmp/ccvY9UY7.s:130    .text.BSP_GetBoardID:00000000 BSP_GetBoardID
-     /tmp/ccvY9UY7.s:144    .text.BSP_GetBoardID:00000004 $d
-     /tmp/ccvY9UY7.s:149    .text.BSP_SMPS_Init:00000000 $t
-     /tmp/ccvY9UY7.s:155    .text.BSP_SMPS_Init:00000000 BSP_SMPS_Init
-     /tmp/ccvY9UY7.s:218    .text.BSP_SMPS_Init:00000034 $d
-     /tmp/ccvY9UY7.s:223    .text.BSP_LED_On:00000000 $t
-     /tmp/ccvY9UY7.s:229    .text.BSP_LED_On:00000000 BSP_LED_On
-     /tmp/ccvY9UY7.s:260    .text.BSP_LED_On:00000018 $d
-     /tmp/ccvY9UY7.s:266    .text.BSP_LED_Off:00000000 $t
-     /tmp/ccvY9UY7.s:272    .text.BSP_LED_Off:00000000 BSP_LED_Off
-     /tmp/ccvY9UY7.s:311    .text.BSP_LED_Off:00000018 $d
-     /tmp/ccvY9UY7.s:317    .text.BSP_LED_Init:00000000 $t
-     /tmp/ccvY9UY7.s:323    .text.BSP_LED_Init:00000000 BSP_LED_Init
-     /tmp/ccvY9UY7.s:414    .text.BSP_LED_Init:00000050 $d
-     /tmp/ccvY9UY7.s:1572   .rodata.LED_PIN:00000000 LED_PIN
-     /tmp/ccvY9UY7.s:1579   .rodata.LED_PORT:00000000 LED_PORT
-     /tmp/ccvY9UY7.s:420    .text.BSP_LED_DeInit:00000000 $t
-     /tmp/ccvY9UY7.s:426    .text.BSP_LED_DeInit:00000000 BSP_LED_DeInit
-     /tmp/ccvY9UY7.s:463    .text.BSP_LED_DeInit:0000001c $d
-     /tmp/ccvY9UY7.s:469    .text.BSP_LED_Toggle:00000000 $t
-     /tmp/ccvY9UY7.s:475    .text.BSP_LED_Toggle:00000000 BSP_LED_Toggle
-     /tmp/ccvY9UY7.s:495    .text.BSP_LED_Toggle:00000010 $d
-     /tmp/ccvY9UY7.s:501    .text.BSP_LED_GetState:00000000 $t
-     /tmp/ccvY9UY7.s:507    .text.BSP_LED_GetState:00000000 BSP_LED_GetState
-     /tmp/ccvY9UY7.s:553    .text.BSP_LED_GetState:00000020 $d
-     /tmp/ccvY9UY7.s:559    .text.BSP_PB_Init:00000000 $t
-     /tmp/ccvY9UY7.s:565    .text.BSP_PB_Init:00000000 BSP_PB_Init
-     /tmp/ccvY9UY7.s:709    .text.BSP_PB_Init:000000a0 $d
-     /tmp/ccvY9UY7.s:1558   .rodata.BUTTON_PIN:00000000 BUTTON_PIN
-     /tmp/ccvY9UY7.s:1565   .rodata.BUTTON_PORT:00000000 BUTTON_PORT
-     /tmp/ccvY9UY7.s:1602   .bss.hpb_exti:00000000 hpb_exti
-     /tmp/ccvY9UY7.s:1544   .rodata.BUTTON_EXTI_LINE.2:00000000 BUTTON_EXTI_LINE.2
-     /tmp/ccvY9UY7.s:1537   .rodata.ButtonCallback.1:00000000 ButtonCallback.1
-     /tmp/ccvY9UY7.s:1551   .rodata.BUTTON_IRQn:00000000 BUTTON_IRQn
-     /tmp/ccvY9UY7.s:1530   .rodata.BSP_BUTTON_PRIO.0:00000000 BSP_BUTTON_PRIO.0
-     /tmp/ccvY9UY7.s:720    .text.BSP_PB_DeInit:00000000 $t
-     /tmp/ccvY9UY7.s:726    .text.BSP_PB_DeInit:00000000 BSP_PB_DeInit
-     /tmp/ccvY9UY7.s:770    .text.BSP_PB_DeInit:00000024 $d
-     /tmp/ccvY9UY7.s:777    .text.BSP_PB_GetState:00000000 $t
-     /tmp/ccvY9UY7.s:783    .text.BSP_PB_GetState:00000000 BSP_PB_GetState
-     /tmp/ccvY9UY7.s:810    .text.BSP_PB_GetState:00000014 $d
-     /tmp/ccvY9UY7.s:816    .text.BSP_PB_IRQHandler:00000000 $t
-     /tmp/ccvY9UY7.s:822    .text.BSP_PB_IRQHandler:00000000 BSP_PB_IRQHandler
-     /tmp/ccvY9UY7.s:841    .text.BSP_PB_IRQHandler:0000000c $d
-     /tmp/ccvY9UY7.s:846    .text.BSP_PB_Callback:00000000 $t
-ARM GAS  /tmp/ccvY9UY7.s 			page 101
+     /tmp/ccOjehkw.s:26     .text.LL_AHB4_GRP1_EnableClock:00000000 $t
+     /tmp/ccOjehkw.s:31     .text.LL_AHB4_GRP1_EnableClock:00000000 LL_AHB4_GRP1_EnableClock
+     /tmp/ccOjehkw.s:63     .text.LL_AHB4_GRP1_EnableClock:00000014 $d
+     /tmp/ccOjehkw.s:68     .text.BSP_GetVersion:00000000 $t
+     /tmp/ccOjehkw.s:74     .text.BSP_GetVersion:00000000 BSP_GetVersion
+     /tmp/ccOjehkw.s:88     .text.BSP_GetVersion:00000004 $d
+     /tmp/ccOjehkw.s:96     .text.BSP_GetBoardName:00000000 $t
+     /tmp/ccOjehkw.s:102    .text.BSP_GetBoardName:00000000 BSP_GetBoardName
+     /tmp/ccOjehkw.s:116    .text.BSP_GetBoardName:00000004 $d
+     /tmp/ccOjehkw.s:124    .text.BSP_GetBoardID:00000000 $t
+     /tmp/ccOjehkw.s:130    .text.BSP_GetBoardID:00000000 BSP_GetBoardID
+     /tmp/ccOjehkw.s:144    .text.BSP_GetBoardID:00000004 $d
+     /tmp/ccOjehkw.s:149    .text.BSP_SMPS_Init:00000000 $t
+     /tmp/ccOjehkw.s:155    .text.BSP_SMPS_Init:00000000 BSP_SMPS_Init
+     /tmp/ccOjehkw.s:218    .text.BSP_SMPS_Init:00000034 $d
+     /tmp/ccOjehkw.s:223    .text.BSP_LED_On:00000000 $t
+     /tmp/ccOjehkw.s:229    .text.BSP_LED_On:00000000 BSP_LED_On
+     /tmp/ccOjehkw.s:260    .text.BSP_LED_On:00000018 $d
+     /tmp/ccOjehkw.s:266    .text.BSP_LED_Off:00000000 $t
+     /tmp/ccOjehkw.s:272    .text.BSP_LED_Off:00000000 BSP_LED_Off
+     /tmp/ccOjehkw.s:311    .text.BSP_LED_Off:00000018 $d
+     /tmp/ccOjehkw.s:317    .text.BSP_LED_Init:00000000 $t
+     /tmp/ccOjehkw.s:323    .text.BSP_LED_Init:00000000 BSP_LED_Init
+     /tmp/ccOjehkw.s:414    .text.BSP_LED_Init:00000050 $d
+     /tmp/ccOjehkw.s:1572   .rodata.LED_PIN:00000000 LED_PIN
+     /tmp/ccOjehkw.s:1579   .rodata.LED_PORT:00000000 LED_PORT
+     /tmp/ccOjehkw.s:420    .text.BSP_LED_DeInit:00000000 $t
+     /tmp/ccOjehkw.s:426    .text.BSP_LED_DeInit:00000000 BSP_LED_DeInit
+     /tmp/ccOjehkw.s:463    .text.BSP_LED_DeInit:0000001c $d
+     /tmp/ccOjehkw.s:469    .text.BSP_LED_Toggle:00000000 $t
+     /tmp/ccOjehkw.s:475    .text.BSP_LED_Toggle:00000000 BSP_LED_Toggle
+     /tmp/ccOjehkw.s:495    .text.BSP_LED_Toggle:00000010 $d
+     /tmp/ccOjehkw.s:501    .text.BSP_LED_GetState:00000000 $t
+     /tmp/ccOjehkw.s:507    .text.BSP_LED_GetState:00000000 BSP_LED_GetState
+     /tmp/ccOjehkw.s:553    .text.BSP_LED_GetState:00000020 $d
+     /tmp/ccOjehkw.s:559    .text.BSP_PB_Init:00000000 $t
+     /tmp/ccOjehkw.s:565    .text.BSP_PB_Init:00000000 BSP_PB_Init
+     /tmp/ccOjehkw.s:709    .text.BSP_PB_Init:000000a0 $d
+     /tmp/ccOjehkw.s:1558   .rodata.BUTTON_PIN:00000000 BUTTON_PIN
+     /tmp/ccOjehkw.s:1565   .rodata.BUTTON_PORT:00000000 BUTTON_PORT
+     /tmp/ccOjehkw.s:1602   .bss.hpb_exti:00000000 hpb_exti
+     /tmp/ccOjehkw.s:1544   .rodata.BUTTON_EXTI_LINE.2:00000000 BUTTON_EXTI_LINE.2
+     /tmp/ccOjehkw.s:1537   .rodata.ButtonCallback.1:00000000 ButtonCallback.1
+     /tmp/ccOjehkw.s:1551   .rodata.BUTTON_IRQn:00000000 BUTTON_IRQn
+     /tmp/ccOjehkw.s:1530   .rodata.BSP_BUTTON_PRIO.0:00000000 BSP_BUTTON_PRIO.0
+     /tmp/ccOjehkw.s:720    .text.BSP_PB_DeInit:00000000 $t
+     /tmp/ccOjehkw.s:726    .text.BSP_PB_DeInit:00000000 BSP_PB_DeInit
+     /tmp/ccOjehkw.s:770    .text.BSP_PB_DeInit:00000024 $d
+     /tmp/ccOjehkw.s:777    .text.BSP_PB_GetState:00000000 $t
+     /tmp/ccOjehkw.s:783    .text.BSP_PB_GetState:00000000 BSP_PB_GetState
+     /tmp/ccOjehkw.s:810    .text.BSP_PB_GetState:00000014 $d
+     /tmp/ccOjehkw.s:816    .text.BSP_PB_IRQHandler:00000000 $t
+     /tmp/ccOjehkw.s:822    .text.BSP_PB_IRQHandler:00000000 BSP_PB_IRQHandler
+     /tmp/ccOjehkw.s:841    .text.BSP_PB_IRQHandler:0000000c $d
+     /tmp/ccOjehkw.s:846    .text.BSP_PB_Callback:00000000 $t
+ARM GAS  /tmp/ccOjehkw.s 			page 101
 
 
-     /tmp/ccvY9UY7.s:852    .text.BSP_PB_Callback:00000000 BSP_PB_Callback
-     /tmp/ccvY9UY7.s:867    .text.BUTTON_TAMP_EXTI_Callback:00000000 $t
-     /tmp/ccvY9UY7.s:872    .text.BUTTON_TAMP_EXTI_Callback:00000000 BUTTON_TAMP_EXTI_Callback
-     /tmp/ccvY9UY7.s:894    .text.BUTTON_USER1_EXTI_Callback:00000000 $t
-     /tmp/ccvY9UY7.s:899    .text.BUTTON_USER1_EXTI_Callback:00000000 BUTTON_USER1_EXTI_Callback
-     /tmp/ccvY9UY7.s:921    .text.BSP_COM_DeInit:00000000 $t
-     /tmp/ccvY9UY7.s:927    .text.BSP_COM_DeInit:00000000 BSP_COM_DeInit
-     /tmp/ccvY9UY7.s:1102   .text.BSP_COM_DeInit:00000098 $d
-     /tmp/ccvY9UY7.s:1587   .data.COM_UART:00000000 COM_UART
-     /tmp/ccvY9UY7.s:1595   .bss.hcom_uart:00000000 hcom_uart
-     /tmp/ccvY9UY7.s:1113   .text.MX_USART1_Init:00000000 $t
-     /tmp/ccvY9UY7.s:1119   .text.MX_USART1_Init:00000000 MX_USART1_Init
-     /tmp/ccvY9UY7.s:1169   .text.MX_USART1_Init:00000028 $d
-     /tmp/ccvY9UY7.s:1174   .text.MX_USART2_Init:00000000 $t
-     /tmp/ccvY9UY7.s:1180   .text.MX_USART2_Init:00000000 MX_USART2_Init
-     /tmp/ccvY9UY7.s:1230   .text.MX_USART2_Init:00000028 $d
-     /tmp/ccvY9UY7.s:1235   .text.BSP_COM_Init:00000000 $t
-     /tmp/ccvY9UY7.s:1241   .text.BSP_COM_Init:00000000 BSP_COM_Init
-     /tmp/ccvY9UY7.s:1516   .text.BSP_COM_Init:000000f8 $d
-     /tmp/ccvY9UY7.s:1527   .rodata.BSP_BUTTON_PRIO.0:00000000 $d
-     /tmp/ccvY9UY7.s:1534   .rodata.ButtonCallback.1:00000000 $d
-     /tmp/ccvY9UY7.s:1541   .rodata.BUTTON_EXTI_LINE.2:00000000 $d
-     /tmp/ccvY9UY7.s:1548   .rodata.BUTTON_IRQn:00000000 $d
-     /tmp/ccvY9UY7.s:1555   .rodata.BUTTON_PIN:00000000 $d
-     /tmp/ccvY9UY7.s:1562   .rodata.BUTTON_PORT:00000000 $d
-     /tmp/ccvY9UY7.s:1569   .rodata.LED_PIN:00000000 $d
-     /tmp/ccvY9UY7.s:1576   .rodata.LED_PORT:00000000 $d
-     /tmp/ccvY9UY7.s:1584   .data.COM_UART:00000000 $d
-     /tmp/ccvY9UY7.s:1592   .bss.hcom_uart:00000000 $d
-     /tmp/ccvY9UY7.s:1599   .bss.hpb_exti:00000000 $d
+     /tmp/ccOjehkw.s:852    .text.BSP_PB_Callback:00000000 BSP_PB_Callback
+     /tmp/ccOjehkw.s:867    .text.BUTTON_TAMP_EXTI_Callback:00000000 $t
+     /tmp/ccOjehkw.s:872    .text.BUTTON_TAMP_EXTI_Callback:00000000 BUTTON_TAMP_EXTI_Callback
+     /tmp/ccOjehkw.s:894    .text.BUTTON_USER1_EXTI_Callback:00000000 $t
+     /tmp/ccOjehkw.s:899    .text.BUTTON_USER1_EXTI_Callback:00000000 BUTTON_USER1_EXTI_Callback
+     /tmp/ccOjehkw.s:921    .text.BSP_COM_DeInit:00000000 $t
+     /tmp/ccOjehkw.s:927    .text.BSP_COM_DeInit:00000000 BSP_COM_DeInit
+     /tmp/ccOjehkw.s:1102   .text.BSP_COM_DeInit:00000098 $d
+     /tmp/ccOjehkw.s:1587   .data.COM_UART:00000000 COM_UART
+     /tmp/ccOjehkw.s:1595   .bss.hcom_uart:00000000 hcom_uart
+     /tmp/ccOjehkw.s:1113   .text.MX_USART1_Init:00000000 $t
+     /tmp/ccOjehkw.s:1119   .text.MX_USART1_Init:00000000 MX_USART1_Init
+     /tmp/ccOjehkw.s:1169   .text.MX_USART1_Init:00000028 $d
+     /tmp/ccOjehkw.s:1174   .text.MX_USART2_Init:00000000 $t
+     /tmp/ccOjehkw.s:1180   .text.MX_USART2_Init:00000000 MX_USART2_Init
+     /tmp/ccOjehkw.s:1230   .text.MX_USART2_Init:00000028 $d
+     /tmp/ccOjehkw.s:1235   .text.BSP_COM_Init:00000000 $t
+     /tmp/ccOjehkw.s:1241   .text.BSP_COM_Init:00000000 BSP_COM_Init
+     /tmp/ccOjehkw.s:1516   .text.BSP_COM_Init:000000f8 $d
+     /tmp/ccOjehkw.s:1527   .rodata.BSP_BUTTON_PRIO.0:00000000 $d
+     /tmp/ccOjehkw.s:1534   .rodata.ButtonCallback.1:00000000 $d
+     /tmp/ccOjehkw.s:1541   .rodata.BUTTON_EXTI_LINE.2:00000000 $d
+     /tmp/ccOjehkw.s:1548   .rodata.BUTTON_IRQn:00000000 $d
+     /tmp/ccOjehkw.s:1555   .rodata.BUTTON_PIN:00000000 $d
+     /tmp/ccOjehkw.s:1562   .rodata.BUTTON_PORT:00000000 $d
+     /tmp/ccOjehkw.s:1569   .rodata.LED_PIN:00000000 $d
+     /tmp/ccOjehkw.s:1576   .rodata.LED_PORT:00000000 $d
+     /tmp/ccOjehkw.s:1584   .data.COM_UART:00000000 $d
+     /tmp/ccOjehkw.s:1592   .bss.hcom_uart:00000000 $d
+     /tmp/ccOjehkw.s:1599   .bss.hpb_exti:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
                            .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
@@ -6056,7 +6056,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
                            .group:00000000 wm4.newlib.h.7.decd5b9657e2c5df625d9eac6e10520c
                            .group:00000000 wm4.ieeefp.h.77.99029d7b8220a2cd73dd257e2bbe825d
-ARM GAS  /tmp/ccvY9UY7.s 			page 102
+ARM GAS  /tmp/ccOjehkw.s 			page 102
 
 
                            .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
@@ -6116,7 +6116,7 @@ HAL_PWREx_EnableVddIO2
 HAL_GPIO_DeInit
 HAL_GPIO_TogglePin
 HAL_GPIO_ReadPin
-ARM GAS  /tmp/ccvY9UY7.s 			page 103
+ARM GAS  /tmp/ccOjehkw.s 			page 103
 
 
 memset
