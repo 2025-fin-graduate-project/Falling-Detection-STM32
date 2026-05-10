@@ -26,6 +26,7 @@
 #include "pose_pipeline.h"
 #include <string.h>
 #include <math.h>
+#include <stdint.h>
 
 /* ------------------------------------------------------------------ */
 /* Internal helpers                                                     */
@@ -40,138 +41,150 @@ static inline float32_t kp_dist(float32_t x0, float32_t y0,
     return sqrtf(dx * dx + dy * dy);
 }
 
-/**
- * Compute torso length from shoulder and hip keypoints.
- * Uses average of two cross-diagonal distances (left_shoulder↔right_hip,
- * right_shoulder↔left_hip) for robustness.
- * Falls back to a fixed fraction of the image diagonal if keypoints are
- * unavailable.
- */
-static float32_t compute_torso_length(const spe_pp_outBuffer_t *kp)
+static inline float32_t clamp01(float32_t v)
 {
-    float32_t len = 0.0f;
-    uint32_t n = 0;
+    if (!isfinite(v))
+        return 0.0f;
+    if (v < 0.0f)
+        return 0.0f;
+    if (v > 1.0f)
+        return 1.0f;
+    return v;
+}
 
-    /* cross-diagonal 1: left_shoulder (5) → right_hip (12) */
-    if (kp[POSE_KP_LEFT_SHOULDER].proba  >= POSE_OUTLIER_LOW_THRESH &&
-        kp[POSE_KP_RIGHT_HIP].proba      >= POSE_OUTLIER_LOW_THRESH)
+/**
+ * Compute torso length as in preprocessing_pipeline.ipynb Step 2:
+ * distance between shoulder midpoint and hip midpoint.
+ */
+static float32_t compute_torso_length(const spe_pp_outBuffer_t *kp, float32_t previous)
+{
+    if ((kp[POSE_KP_LEFT_SHOULDER].proba  >= POSE_OUTLIER_HIGH_THRESH) &&
+        (kp[POSE_KP_RIGHT_SHOULDER].proba >= POSE_OUTLIER_HIGH_THRESH) &&
+        (kp[POSE_KP_LEFT_HIP].proba       >= POSE_OUTLIER_HIGH_THRESH) &&
+        (kp[POSE_KP_RIGHT_HIP].proba      >= POSE_OUTLIER_HIGH_THRESH))
     {
-        len += kp_dist(kp[POSE_KP_LEFT_SHOULDER].x_center,
-                       kp[POSE_KP_LEFT_SHOULDER].y_center,
-                       kp[POSE_KP_RIGHT_HIP].x_center,
-                       kp[POSE_KP_RIGHT_HIP].y_center);
-        n++;
-    }
-    /* cross-diagonal 2: right_shoulder (6) → left_hip (11) */
-    if (kp[POSE_KP_RIGHT_SHOULDER].proba >= POSE_OUTLIER_LOW_THRESH &&
-        kp[POSE_KP_LEFT_HIP].proba       >= POSE_OUTLIER_LOW_THRESH)
-    {
-        len += kp_dist(kp[POSE_KP_RIGHT_SHOULDER].x_center,
-                       kp[POSE_KP_RIGHT_SHOULDER].y_center,
-                       kp[POSE_KP_LEFT_HIP].x_center,
-                       kp[POSE_KP_LEFT_HIP].y_center);
-        n++;
+        float32_t shoulder_x = (kp[POSE_KP_LEFT_SHOULDER].x_center + kp[POSE_KP_RIGHT_SHOULDER].x_center) * 0.5f;
+        float32_t shoulder_y = (kp[POSE_KP_LEFT_SHOULDER].y_center + kp[POSE_KP_RIGHT_SHOULDER].y_center) * 0.5f;
+        float32_t hip_x = (kp[POSE_KP_LEFT_HIP].x_center + kp[POSE_KP_RIGHT_HIP].x_center) * 0.5f;
+        float32_t hip_y = (kp[POSE_KP_LEFT_HIP].y_center + kp[POSE_KP_RIGHT_HIP].y_center) * 0.5f;
+        float32_t len = kp_dist(shoulder_x, shoulder_y, hip_x, hip_y);
+        return (len > 0.05f) ? len : 0.05f;
     }
 
-    if (n > 0)
-        return len / (float32_t)n;
-
-    /* Fallback: ~10% of normalised diagonal */
-    return 0.10f;
+    return (previous > 0.0f) ? previous : 0.20f;
 }
 
 /* ------------------------------------------------------------------ */
 /* Step 2 – Outlier rejection                                           */
 /* ------------------------------------------------------------------ */
 
-/**
- * Process one keypoint through the outlier rejection stage.
- *
- * @param st       Per-keypoint state (updated).
- * @param raw      Raw keypoint from postprocess.
- * @param torso_l  Current torso length (normalised).
- * @param out_x    Accepted x output.
- * @param out_y    Accepted y output.
- * @param out_p    Accepted confidence output.
- * @return         1 if output is valid, 0 if invalid (no hold available).
- */
-static uint8_t outlier_process(OutlierKP_t *st,
-                                const spe_pp_outBuffer_t *raw,
-                                float32_t torso_l,
-                                float32_t *out_x,
-                                float32_t *out_y,
-                                float32_t *out_p)
+static uint32_t notebook_outlier_process(PosePipeline_t *s,
+                                          const spe_pp_outBuffer_t kp[POSE_KP_COUNT],
+                                          spe_pp_outBuffer_t out[POSE_KP_COUNT])
 {
-    float32_t x = raw->x_center;
-    float32_t y = raw->y_center;
-    float32_t p = raw->proba;
+    uint8_t temp_valid[POSE_KP_COUNT] = {0};
+    uint8_t final_valid[POSE_KP_COUNT] = {0};
+    float32_t temp_x[POSE_KP_COUNT];
+    float32_t temp_y[POSE_KP_COUNT];
+    uint32_t temp_count = 0;
+    float32_t speed_limit;
+    float32_t consistency_limit;
 
-    uint8_t accepted = 0;
+    s->torso_length = compute_torso_length(kp, s->torso_length);
+    speed_limit = s->torso_length * POSE_OUTLIER_MAX_SPEED_RATIO;
+    consistency_limit = s->torso_length * POSE_OUTLIER_CONSISTENCY_RATIO;
 
-    /* --- confidence gating ---------------------------------------- */
-    if (p >= POSE_OUTLIER_HIGH_THRESH)
+    for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
-        /* Definitely visible: apply geometric checks */
-        accepted = 1;
+        if (kp[i].proba < POSE_OUTLIER_LOW_THRESH)
+            continue;
+
+        if (s->outlier[i].last_valid)
+        {
+            float32_t d = kp_dist(kp[i].x_center, kp[i].y_center,
+                                  s->outlier[i].last_x, s->outlier[i].last_y);
+            if (d <= speed_limit)
+            {
+                temp_valid[i] = 1u;
+            }
+        }
+        else if (kp[i].proba >= POSE_OUTLIER_INITIAL_THRESH)
+        {
+            temp_valid[i] = 1u;
+        }
+
+        if (temp_valid[i])
+        {
+            temp_x[i] = kp[i].x_center;
+            temp_y[i] = kp[i].y_center;
+            temp_count++;
+        }
     }
-    else if (p >= POSE_OUTLIER_INITIAL_THRESH)
+
+    if (temp_count >= POSE_MIN_VISIBLE_KP)
     {
-        /* Borderline: accept only if geometric checks pass */
-        accepted = 1; /* will be revoked below if checks fail */
+        float32_t centroid_x = 0.0f;
+        float32_t centroid_y = 0.0f;
+
+        for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
+        {
+            if (temp_valid[i])
+            {
+                centroid_x += temp_x[i];
+                centroid_y += temp_y[i];
+            }
+        }
+        centroid_x /= (float32_t)temp_count;
+        centroid_y /= (float32_t)temp_count;
+
+        for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
+        {
+            if (temp_valid[i] &&
+                (kp_dist(temp_x[i], temp_y[i], centroid_x, centroid_y) <= consistency_limit))
+            {
+                final_valid[i] = 1u;
+            }
+        }
     }
     else
     {
-        /* Below minimum threshold – reject immediately */
-        goto reject;
+        memcpy(final_valid, temp_valid, sizeof(final_valid));
     }
 
-    /* --- geometric checks (only when there is history) ------------- */
-    if (st->last_valid)
+    uint32_t accepted_count = 0;
+    for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
-        float32_t d = kp_dist(x, y, st->last_x, st->last_y);
-
-        /* Speed check */
-        if (d > POSE_OUTLIER_MAX_SPEED_RATIO * torso_l)
+        if (final_valid[i])
         {
-            accepted = 0;
-        }
+            s->outlier[i].last_x = kp[i].x_center;
+            s->outlier[i].last_y = kp[i].y_center;
+            s->outlier[i].last_proba = kp[i].proba;
+            s->outlier[i].last_valid = 1u;
+            s->outlier[i].hold_count = 0u;
 
-        /* Consistency / radius check */
-        if (d > POSE_OUTLIER_CONSISTENCY_RATIO * torso_l)
+            out[i] = kp[i];
+            accepted_count++;
+        }
+        else if (s->outlier[i].last_valid &&
+                 (s->outlier[i].hold_count <= POSE_OUTLIER_MAX_HOLD_FRAMES))
         {
-            accepted = 0;
+            s->outlier[i].hold_count++;
+            out[i].x_center = s->outlier[i].last_x;
+            out[i].y_center = s->outlier[i].last_y;
+            out[i].proba = kp[i].proba;
+        }
+        else
+        {
+            s->outlier[i].last_valid = 0u;
+            if (s->outlier[i].hold_count < UINT8_MAX)
+                s->outlier[i].hold_count++;
+            out[i].x_center = 0.5f;
+            out[i].y_center = 0.5f;
+            out[i].proba = 0.0f;
         }
     }
 
-    if (accepted)
-    {
-        st->last_x     = x;
-        st->last_y     = y;
-        st->last_proba = p;
-        st->last_valid  = 1;
-        st->hold_count  = 0;
-        *out_x = x;
-        *out_y = y;
-        *out_p = p;
-        return 1;
-    }
-
-reject:
-    /* Hold last valid position */
-    if (st->last_valid && st->hold_count < POSE_OUTLIER_MAX_HOLD_FRAMES)
-    {
-        st->hold_count++;
-        *out_x = st->last_x;
-        *out_y = st->last_y;
-        *out_p = st->last_proba;
-        return 1;
-    }
-
-    /* Exceed hold window or never had a valid position */
-    *out_x = 0.5f;
-    *out_y = 0.5f;
-    *out_p = 0.0f;
-    return 0;
+    return accepted_count;
 }
 
 /* ------------------------------------------------------------------ */
@@ -323,36 +336,52 @@ void PosePipeline_Process(PosePipeline_t *s,
                            float32_t dt,
                            PoseFeatureVec_t *out)
 {
-    /* --- Step 1: Person presence gate ----------------------------- */
-    uint32_t visible = 0;
+    if (out)
+        out->valid = 0;
+
+    if ((s == NULL) || (kp_raw == NULL))
+        return;
+
+    if (!isfinite(dt) || dt <= 1e-6f)
+        dt = 1.0f / 15.0f;
+    if (dt > 1.0f)
+        dt = 1.0f;
+
+    spe_pp_outBuffer_t kp[POSE_KP_COUNT];
     for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
-        if (kp_raw[i].proba >= POSE_OUTLIER_HIGH_THRESH)
-            visible++;
+        kp[i].x_center = clamp01(kp_raw[i].x_center);
+        kp[i].y_center = clamp01(kp_raw[i].y_center);
+        kp[i].proba = clamp01(kp_raw[i].proba);
     }
-
-    if (visible < POSE_MIN_VISIBLE_KP)
-    {
-        s->no_person_count++;
-        if (s->no_person_count >= POSE_NO_PERSON_RESET_FRAMES)
-            PosePipeline_Init(s);  /* 필터 상태 + 윈도우 전체 리셋 */
-        if (out) out->valid = 0;
-        return;  /* window push 생략 */
-    }
-    s->no_person_count = 0;
 
     /* --- Working buffers ------------------------------------------ */
     float32_t filt_x[POSE_KP_COUNT];
     float32_t filt_y[POSE_KP_COUNT];
     float32_t filt_p[POSE_KP_COUNT];
+    spe_pp_outBuffer_t filtered_kp[POSE_KP_COUNT];
 
-    /* --- Step 2: Outlier rejection -------------------------------- */
-    float32_t torso_l = compute_torso_length(kp_raw);
+    /* --- Step 2: notebook-style outlier rejection and hold -------- */
+    uint32_t accepted_count = notebook_outlier_process(s, kp, filtered_kp);
+    if (accepted_count == 0U)
+    {
+        s->no_person_count++;
+        if (s->no_person_count >= POSE_NO_PERSON_RESET_FRAMES)
+        {
+            PosePipeline_Init(s);
+            return;
+        }
+    }
+    else
+    {
+        s->no_person_count = 0U;
+    }
 
     for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
-        outlier_process(&s->outlier[i], &kp_raw[i], torso_l,
-                        &filt_x[i], &filt_y[i], &filt_p[i]);
+        filt_x[i] = filtered_kp[i].x_center;
+        filt_y[i] = filtered_kp[i].y_center;
+        filt_p[i] = filtered_kp[i].proba;
     }
 
     /* --- Step 3: 1-Euro filter ------------------------------------ */
@@ -361,10 +390,19 @@ void PosePipeline_Process(PosePipeline_t *s,
 
     for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
-        euro_process(&s->euro[i],
-                     filt_x[i], filt_y[i],
-                     dt,
-                     &smooth_x[i], &smooth_y[i]);
+        if (filt_p[i] > 0.0f)
+        {
+            euro_process(&s->euro[i],
+                         filt_x[i], filt_y[i],
+                         dt,
+                         &smooth_x[i], &smooth_y[i]);
+        }
+        else
+        {
+            s->euro[i].initialized = 0u;
+            smooth_x[i] = 0.5f;
+            smooth_y[i] = 0.5f;
+        }
     }
 
     /* --- Step 4: Feature extraction ------------------------------- */
@@ -397,6 +435,7 @@ void PosePipeline_Process(PosePipeline_t *s,
         features[i * 3 + 1] = smooth_x[i];
         features[i * 3 + 2] = filt_p[i];
     }
+
     features[POSE_KP_COUNT * 3 + 0] = hssc_x;
     features[POSE_KP_COUNT * 3 + 1] = hssc_y;
     features[POSE_KP_COUNT * 3 + 2] = vhssc;

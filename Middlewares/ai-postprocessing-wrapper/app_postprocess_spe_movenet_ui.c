@@ -19,7 +19,6 @@
 
 #include "app_postprocess.h"
 #include "app_config.h"
-#include <assert.h>
 #include <string.h>
 
 
@@ -53,8 +52,8 @@ static void movenet_decode_layout_int8(const int8_t *input,
       }
     }
 
-    output[keypoint].x_center = ((best_index % height) + 0.5f) / height;
-    output[keypoint].y_center = ((best_index / height) + 0.5f) / width;
+    output[keypoint].x_center = ((best_index % width) + 0.5f) / width;
+    output[keypoint].y_center = ((best_index / width) + 0.5f) / height;
     output[keypoint].proba = params->raw_scale * (float32_t)((int32_t)best_raw - (int32_t)params->raw_zero_point);
   }
 }
@@ -102,21 +101,33 @@ int32_t app_postprocess_init(void *params_postprocess, stai_network_info *NN_Inf
   int32_t error = AI_SPE_POSTPROCESS_ERROR_NO;
   spe_movenet_pp_static_param_t *params = (spe_movenet_pp_static_param_t *) params_postprocess;
 
+  if ((params == NULL) || (NN_Info == NULL) || (NN_Info->n_outputs != 1))
+  {
+    return AI_SPE_POSTPROCESS_ERROR_BAD_HW;
+  }
+
   params->raw_scale = NN_Info->outputs[0].scale.data[0];
   params->raw_zero_point = NN_Info->outputs[0].zeropoint.data[0];
-  params->heatmap_width = AI_SPE_MOVENET_POSTPROC_HEATMAP_WIDTH;
-  params->heatmap_height = AI_SPE_MOVENET_POSTPROC_HEATMAP_HEIGHT;
+  params->heatmap_width = STAI_NETWORK_OUT_1_WIDTH;
+  params->heatmap_height = STAI_NETWORK_OUT_1_HEIGHT;
   params->nb_keypoints = AI_POSE_PP_POSE_KEYPOINTS_NB;
+
+  if ((params->heatmap_width == 0U) ||
+      (params->heatmap_height == 0U) ||
+      (params->nb_keypoints != STAI_NETWORK_OUT_1_CHANNEL) ||
+      (STAI_NETWORK_OUT_1_SIZE_BYTES != (params->heatmap_width * params->heatmap_height * params->nb_keypoints)))
+  {
+    return AI_SPE_POSTPROCESS_ERROR_BAD_HW;
+  }
+
   error = spe_movenet_pp_reset(params);
   return error;
 }
 
 int32_t app_postprocess_run(void *pInput[], int nb_input, void *pOutput, void *pInput_param)
 {
-  assert(nb_input == 1);
   spe_pp_out_t *pPoseOutput = (spe_pp_out_t *) pOutput;
   spe_movenet_pp_static_param_t *params = (spe_movenet_pp_static_param_t *) pInput_param;
-  int8_t *input = (int8_t *)pInput[0];
   spe_pp_outBuffer_t channel_last_detections[AI_POSE_PP_POSE_KEYPOINTS_NB];
   spe_pp_outBuffer_t channel_first_detections[AI_POSE_PP_POSE_KEYPOINTS_NB];
   uint32_t channel_last_spread;
@@ -124,10 +135,23 @@ int32_t app_postprocess_run(void *pInput[], int nb_input, void *pOutput, void *p
   float32_t channel_last_confidence;
   float32_t channel_first_confidence;
 
-  pPoseOutput->pOutBuff = out_detections;
+  if (pPoseOutput != NULL)
+  {
+    pPoseOutput->pOutBuff = out_detections;
+  }
 
-  movenet_decode_layout_int8(input, channel_last_detections, params, 1);
-  movenet_decode_layout_int8(input, channel_first_detections, params, 0);
+  if ((nb_input != 1) ||
+      (pInput == NULL) ||
+      (pInput[0] == NULL) ||
+      (pPoseOutput == NULL) ||
+      (params == NULL))
+  {
+    memset(out_detections, 0, sizeof(out_detections));
+    return AI_SPE_POSTPROCESS_ERROR_BAD_HW;
+  }
+
+  movenet_decode_layout_int8((const int8_t *)pInput[0], channel_last_detections, params, 1);
+  movenet_decode_layout_int8((const int8_t *)pInput[0], channel_first_detections, params, 0);
 
   channel_last_spread = movenet_layout_spread_score(channel_last_detections, params);
   channel_first_spread = movenet_layout_spread_score(channel_first_detections, params);

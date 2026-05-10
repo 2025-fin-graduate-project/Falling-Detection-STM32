@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccTTGPm7.s 			page 1
+ARM GAS  /tmp/ccisU4dJ.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   23:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
   24:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #include "ll_aton.h"
   25:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #include "ll_aton_caches_interface.h"
-ARM GAS  /tmp/ccTTGPm7.s 			page 2
+ARM GAS  /tmp/ccisU4dJ.s 			page 2
 
 
   26:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #include "ll_aton_util.h"
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   80:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ASSERT_ATONN_DSTPORT(STRSWITCH, 0, STRENG, 2, 0);
   81:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
   82:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 3
+ARM GAS  /tmp/ccisU4dJ.s 			page 3
 
 
   83:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  137:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** /**
  138:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @brief Starts watchdog
  139:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @param timeout Watchdog timeout in cycles
-ARM GAS  /tmp/ccTTGPm7.s 			page 4
+ARM GAS  /tmp/ccisU4dJ.s 			page 4
 
 
  140:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @retval ATON Error code
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  194:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CLKCTRL_BGATES1_SET(0, 0xffffffff);
  195:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 5
+ARM GAS  /tmp/ccisU4dJ.s 			page 5
 
 
  197:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   /* Check that RTL and ATON.h match. Only check first unit */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  251:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  252:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   /* Enable Bus Interfaces */
  253:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   for (i = 0; i < ATON_BUSIF_NUM; i++)
-ARM GAS  /tmp/ccTTGPm7.s 			page 6
+ARM GAS  /tmp/ccisU4dJ.s 			page 6
 
 
  254:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  308:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     unitType = LL_ATON_EnableUnits_InitStruct[i].unit.unit_type;
  309:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     unitId = LL_ATON_EnableUnits_InitStruct[i].unit.unit_num;
  310:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 7
+ARM GAS  /tmp/ccisU4dJ.s 			page 7
 
 
  311:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     switch (unitType)
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  365:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     default:
  367:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
-ARM GAS  /tmp/ccTTGPm7.s 			page 8
+ARM GAS  /tmp/ccisU4dJ.s 			page 8
 
 
  368:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     }
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  422:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #ifdef ATON_ARITH_NUM
  423:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     case ARITH:
  424:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DISABLE(ARITH, unitId);
-ARM GAS  /tmp/ccTTGPm7.s 			page 9
+ARM GAS  /tmp/ccisU4dJ.s 			page 9
 
 
  425:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ARITH_CLKB_CLK(unitId));
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  479:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     LL_ATON_ASSERT(checkWatchdog() == 0);
  480:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  481:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   } while (enableFlags);
-ARM GAS  /tmp/ccTTGPm7.s 			page 10
+ARM GAS  /tmp/ccisU4dJ.s 			page 10
 
 
  482:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  536:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int nbits_out = conf->nbits_out;
  537:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int nbits_in = conf->nbits_in;
  538:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 11
+ARM GAS  /tmp/ccisU4dJ.s 			page 11
 
 
  539:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   // case 0: bus -> stream --> in_bits > out_bits -> use FRONT_GAP
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  593:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     if (conf->mem_lsb)
  594:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t_streng_strd = ATON_STRENG_STRD_SET_FGAP(t_streng_strd, (nbits_out - nbits_in));
  595:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     else
-ARM GAS  /tmp/ccTTGPm7.s 			page 12
+ARM GAS  /tmp/ccisU4dJ.s 			page 12
 
 
  596:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t_streng_strd = ATON_STRENG_STRD_SET_BGAP(t_streng_strd, (nbits_out - nbits_in));
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  650:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t = conf->frame_count;
  651:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     else
  652:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
-ARM GAS  /tmp/ccTTGPm7.s 			page 13
+ARM GAS  /tmp/ccisU4dJ.s 			page 13
 
 
  653:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       // N.B. end - start must contain padding if nbits_in is not power of two
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  707:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     // NOTE: limiter is to be set to last accessible byte address
  708:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     // ATON_STRENG_LIMITADDR_SET(id, (conf->addr_limit.i - 1));
  709:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     ATON_REG_WRITE_RELOC(((volatile uint32_t *)(uintptr_t)ATON_STRENG_LIMITADDR_ADDR(id)), conf->ad
-ARM GAS  /tmp/ccTTGPm7.s 			page 14
+ARM GAS  /tmp/ccisU4dJ.s 			page 14
 
 
  710:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****                          conf->offset_limit - 1);
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  764:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   if (ATON_STRENG_ENCRYPTION_EN(id))
  765:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
  766:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_STRENG_ENCR_MSB_DT;
-ARM GAS  /tmp/ccTTGPm7.s 			page 15
+ARM GAS  /tmp/ccisU4dJ.s 			page 15
 
 
  767:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_STRENG_ENCR_MSB_SET_EN(t, conf->cipher_en);
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  821:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** /**
  822:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @brief Sets external trigger signal to low. Used to synchronize with external units, e.g.: HSP
  823:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @param irq Interrupt line used as trigger signal
-ARM GAS  /tmp/ccTTGPm7.s 			page 16
+ARM GAS  /tmp/ccisU4dJ.s 			page 16
 
 
  824:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @note uses Epoch Controller noack interrupt as irq source
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  878:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_SRCPORT(STRSWITCH, 0, ARITH, 0, 0) + au_num;
  879:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
  880:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 17
+ARM GAS  /tmp/ccisU4dJ.s 			page 17
 
 
  881:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_POOL_NUM)
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  935:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  936:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_ACTIV_NUM)
  937:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     case ACTIV:
-ARM GAS  /tmp/ccTTGPm7.s 			page 18
+ARM GAS  /tmp/ccisU4dJ.s 			page 18
 
 
  938:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_ASSERT(port == 0);
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  992:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_STRSWITCH_CTRL_SET_EN(t, 1);
  993:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_STRSWITCH_CTRL_SET(0, t);
  994:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 19
+ARM GAS  /tmp/ccisU4dJ.s 			page 19
 
 
  995:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   for (i = 0; i < n; i++)
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1049:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  */
 1050:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** int LL_Switch_Deinit(const LL_Switch_InitTypeDef *LL_Switch_InitStruct, int n)
 1051:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** {
-ARM GAS  /tmp/ccTTGPm7.s 			page 20
+ARM GAS  /tmp/ccisU4dJ.s 			page 20
 
 
 1052:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int i;
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1106:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @param  n Number of entries in configuration array
 1107:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  * @retval Error code
 1108:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****  */
-ARM GAS  /tmp/ccTTGPm7.s 			page 21
+ARM GAS  /tmp/ccisU4dJ.s 			page 21
 
 
 1109:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** int LL_SwitchVC_Init_NoReset(const LL_SwitchVC_InitTypeDef *LL_SwitchVC_InitStruct, int n)
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1163:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 1164:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   for (i = 0; i < n; i++)
 1165:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
-ARM GAS  /tmp/ccTTGPm7.s 			page 22
+ARM GAS  /tmp/ccisU4dJ.s 			page 22
 
 
 1166:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     /* Compute target destination configuration register */
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   43 0000 0346     		mov	r3, r0
 1210:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_DECUN_CTRL_SET(id, ctrl_val);
   44              		.loc 1 1210 3 view .LVU5
-ARM GAS  /tmp/ccTTGPm7.s 			page 23
+ARM GAS  /tmp/ccisU4dJ.s 			page 23
 
 
   45 0002 012B     		cmp	r3, #1
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   93              		.cfi_startproc
   94              		@ args = 0, pretend = 0, frame = 0
   95              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccTTGPm7.s 			page 24
+ARM GAS  /tmp/ccisU4dJ.s 			page 24
 
 
   96              		@ link register save eliminated.
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  147              		.align	1
  148              		.weak	checkWatchdog
  149              		.syntax unified
-ARM GAS  /tmp/ccTTGPm7.s 			page 25
+ARM GAS  /tmp/ccisU4dJ.s 			page 25
 
 
  150              		.thumb
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  186      4800
  187              	.LC11:
  188 00ba 41435449 		.ascii	"ACTIV\000"
-ARM GAS  /tmp/ccTTGPm7.s 			page 26
+ARM GAS  /tmp/ccisU4dJ.s 			page 26
 
 
  188      5600
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  167:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   uint32_t t;
  227              		.loc 1 167 1 is_stmt 0 view .LVU41
  228 0000 10B5     		push	{r4, lr}
-ARM GAS  /tmp/ccTTGPm7.s 			page 27
+ARM GAS  /tmp/ccisU4dJ.s 			page 27
 
 
  229              		.cfi_def_cfa_offset 8
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  176:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  268              		.loc 1 176 3 view .LVU57
  269 0016 1A60     		str	r2, [r3]
-ARM GAS  /tmp/ccTTGPm7.s 			page 28
+ARM GAS  /tmp/ccisU4dJ.s 			page 28
 
 
  176:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  302              	.LVL10:
  303              	.L10:
  187:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 29
+ARM GAS  /tmp/ccisU4dJ.s 			page 29
 
 
  304              		.loc 1 187 3 is_stmt 1 view .LVU80
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  342              		.loc 1 205 3 discriminator 1 view .LVU96
  343 0056 002C     		cmp	r4, #0
  344 0058 FCD0     		beq	.L13
-ARM GAS  /tmp/ccTTGPm7.s 			page 30
+ARM GAS  /tmp/ccisU4dJ.s 			page 30
 
 
  205:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  385              		.loc 1 213 36 is_stmt 1 view .LVU111
  217:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 31
+ARM GAS  /tmp/ccisU4dJ.s 			page 31
 
 
  386              		.loc 1 217 3 discriminator 1 view .LVU112
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  425              		.loc 1 225 3 discriminator 2 view .LVU127
  426 00be 43F22023 		movw	r3, #12832
  427 00c2 A2B2     		uxth	r2, r4
-ARM GAS  /tmp/ccTTGPm7.s 			page 32
+ARM GAS  /tmp/ccisU4dJ.s 			page 32
 
 
  428 00c4 9A42     		cmp	r2, r3
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  467              		.loc 1 248 3 discriminator 1 view .LVU143
  468 00f4 5C68     		ldr	r4, [r3, #4]
-ARM GAS  /tmp/ccTTGPm7.s 			page 33
+ARM GAS  /tmp/ccisU4dJ.s 			page 33
 
 
  469              	.LVL21:
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  510 0130 0522     		movs	r2, #5
  511 0132 0021     		movs	r1, #0
  512 0134 CDE90521 		strd	r2, r1, [sp, #20]
-ARM GAS  /tmp/ccTTGPm7.s 			page 34
+ARM GAS  /tmp/ccisU4dJ.s 			page 34
 
 
  513 0138 1D22     		movs	r2, #29
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  559 0184 C4F30322 		ubfx	r2, r4, #8, #4
  560 0188 0392     		str	r2, [sp, #12]
  561 018a C4F30332 		ubfx	r2, r4, #12, #4
-ARM GAS  /tmp/ccTTGPm7.s 			page 35
+ARM GAS  /tmp/ccisU4dJ.s 			page 35
 
 
  562 018e 0292     		str	r2, [sp, #8]
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  606 01c6 0522     		movs	r2, #5
  607 01c8 4FF0010C 		mov	ip, #1
  608 01cc CDE9052C 		strd	r2, ip, [sp, #20]
-ARM GAS  /tmp/ccTTGPm7.s 			page 36
+ARM GAS  /tmp/ccisU4dJ.s 			page 36
 
 
  609 01d0 1722     		movs	r2, #23
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  654 0212 0122     		movs	r2, #1
  655 0214 CDE90522 		strd	r2, r2, [sp, #20]
  656 0218 1C22     		movs	r2, #28
-ARM GAS  /tmp/ccTTGPm7.s 			page 37
+ARM GAS  /tmp/ccisU4dJ.s 			page 37
 
 
  657 021a 0492     		str	r2, [sp, #16]
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  702 025c 0020     		movs	r0, #0
  703 025e CDE90520 		strd	r2, r0, [sp, #20]
  704 0262 1A22     		movs	r2, #26
-ARM GAS  /tmp/ccTTGPm7.s 			page 38
+ARM GAS  /tmp/ccisU4dJ.s 			page 38
 
 
  705 0264 0492     		str	r2, [sp, #16]
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  755 02e0 AF000000 		.word	.LC9
  756 02e4 B4000000 		.word	.LC10
  757              	.L87:
-ARM GAS  /tmp/ccTTGPm7.s 			page 39
+ARM GAS  /tmp/ccisU4dJ.s 			page 39
 
 
  213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  803 032e E5E7     		b	.L20
  804              	.L88:
  217:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 40
+ARM GAS  /tmp/ccisU4dJ.s 			page 40
 
 
  805              		.loc 1 217 3 is_stmt 1 discriminator 3 view .LVU206
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  851 0378 E4E7     		b	.L22
  852              	.L89:
  221:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 41
+ARM GAS  /tmp/ccisU4dJ.s 			page 41
 
 
  853              		.loc 1 221 3 is_stmt 1 discriminator 3 view .LVU215
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  899              	.L90:
  225:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  900              		.loc 1 225 3 is_stmt 1 discriminator 3 view .LVU224
-ARM GAS  /tmp/ccTTGPm7.s 			page 42
+ARM GAS  /tmp/ccisU4dJ.s 			page 42
 
 
  901 03c2 FFF7FEFF 		bl	__errno
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  947              	.L91:
  244:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  948              		.loc 1 244 3 is_stmt 1 discriminator 3 view .LVU233
-ARM GAS  /tmp/ccTTGPm7.s 			page 43
+ARM GAS  /tmp/ccisU4dJ.s 			page 43
 
 
  949 040e FFF7FEFF 		bl	__errno
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  995              	.L92:
  246:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  996              		.loc 1 246 3 is_stmt 1 discriminator 3 view .LVU242
-ARM GAS  /tmp/ccTTGPm7.s 			page 44
+ARM GAS  /tmp/ccisU4dJ.s 			page 44
 
 
  997 045a FFF7FEFF 		bl	__errno
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  248:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  1043              		.loc 1 248 3 is_stmt 1 discriminator 3 view .LVU251
  1044 04a2 FFF7FEFF 		bl	__errno
-ARM GAS  /tmp/ccTTGPm7.s 			page 45
+ARM GAS  /tmp/ccisU4dJ.s 			page 45
 
 
  1045              	.LVL90:
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  250:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  1091              		.loc 1 250 3 discriminator 5 view .LVU260
  1092 04ec 0A4B     		ldr	r3, .L99+20
-ARM GAS  /tmp/ccTTGPm7.s 			page 46
+ARM GAS  /tmp/ccisU4dJ.s 			page 46
 
 
  1093 04ee 1FE6     		b	.L34
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1125 04fa A2F50052 		sub	r2, r2, #8192
  1126 04fe 1360     		str	r3, [r2]
  259:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 47
+ARM GAS  /tmp/ccisU4dJ.s 			page 47
 
 
  1127              		.loc 1 259 3 view .LVU283
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1174 0000 0020     		movs	r0, #0
  1175 0002 074B     		ldr	r3, .L102
  1176 0004 1860     		str	r0, [r3]
-ARM GAS  /tmp/ccTTGPm7.s 			page 48
+ARM GAS  /tmp/ccisU4dJ.s 			page 48
 
 
  273:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1208 0016 9860     		str	r0, [r3, #8]
  282:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CLKCTRL_AGATES1_SET(0, 0);
  1209              		.loc 1 282 3 view .LVU316
-ARM GAS  /tmp/ccTTGPm7.s 			page 49
+ARM GAS  /tmp/ccisU4dJ.s 			page 49
 
 
  282:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CLKCTRL_AGATES1_SET(0, 0);
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1248              	.LFB305:
  301:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int i;
  1249              		.loc 1 301 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccTTGPm7.s 			page 50
+ARM GAS  /tmp/ccisU4dJ.s 			page 50
 
 
  1250              		.cfi_startproc
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1290 001a 10F82410 		ldrb	r1, [r0, r4, lsl #2]	@ zero_extendqisi2
  309:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  1291              		.loc 1 309 12 view .LVU350
-ARM GAS  /tmp/ccTTGPm7.s 			page 51
+ARM GAS  /tmp/ccisU4dJ.s 			page 51
 
 
  1292 001e 35F82430 		ldrh	r3, [r5, r4, lsl #2]
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1335 0042 032B     		cmp	r3, #3
  1336 0044 56F82310 		ldr	r1, [r6, r3, lsl #2]
  1337 0048 8FBF     		iteee	hi
-ARM GAS  /tmp/ccTTGPm7.s 			page 52
+ARM GAS  /tmp/ccisU4dJ.s 			page 52
 
 
  1338 004a 0023     		movhi	r3, #0
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1376 0062 03F5B023 		add	r3, r3, #360448
  1377              	.LVL117:
  335:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
-ARM GAS  /tmp/ccTTGPm7.s 			page 53
+ARM GAS  /tmp/ccisU4dJ.s 			page 53
 
 
  1378              		.loc 1 335 7 discriminator 1 view .LVU378
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1419 0080 03F5B023 		add	r3, r3, #360448
  1420              	.LVL125:
  347:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
-ARM GAS  /tmp/ccTTGPm7.s 			page 54
+ARM GAS  /tmp/ccisU4dJ.s 			page 54
 
 
  1421              		.loc 1 347 7 discriminator 1 view .LVU392
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1460              		.loc 1 362 7 view .LVU407
  362:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
  1461              		.loc 1 362 7 view .LVU408
-ARM GAS  /tmp/ccTTGPm7.s 			page 55
+ARM GAS  /tmp/ccisU4dJ.s 			page 55
 
 
  362:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  463:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   uint32_t enableFlags;
  1506              		.loc 1 463 3 view .LVU417
  464:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 56
+ARM GAS  /tmp/ccisU4dJ.s 			page 56
 
 
  1507              		.loc 1 464 3 view .LVU418
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1545              		.loc 1 475 9 is_stmt 1 view .LVU434
  475:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
  1546              		.loc 1 475 25 is_stmt 0 discriminator 1 view .LVU435
-ARM GAS  /tmp/ccTTGPm7.s 			page 57
+ARM GAS  /tmp/ccisU4dJ.s 			page 57
 
 
  1547 001a 1303     		lsls	r3, r2, #12
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1588 0048 002C     		cmp	r4, #0
  1589 004a DFD1     		bne	.L140
  483:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** }
-ARM GAS  /tmp/ccTTGPm7.s 			page 58
+ARM GAS  /tmp/ccisU4dJ.s 			page 58
 
 
  1590              		.loc 1 483 3 view .LVU449
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1636 0014 03EB8003 		addls	r3, r3, r0, lsl #2
  816:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_INTCTRL_INTSET_SET(0, (1 << ATON_INTCTRL_0_INTSET_EPOCHCTRL_0_1_IDX));
  1637              		.loc 1 816 3 discriminator 4 view .LVU460
-ARM GAS  /tmp/ccTTGPm7.s 			page 59
+ARM GAS  /tmp/ccisU4dJ.s 			page 59
 
 
  1638 0018 1960     		str	r1, [r3]
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1680              		.loc 1 827 1 is_stmt 1 view -0
  1681              		.cfi_startproc
  1682              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccTTGPm7.s 			page 60
+ARM GAS  /tmp/ccisU4dJ.s 			page 60
 
 
  1683              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1720      20313000 
  1721              	.LC23:
  1722 0022 61755F6E 		.ascii	"au_num < 4\000"
-ARM GAS  /tmp/ccTTGPm7.s 			page 61
+ARM GAS  /tmp/ccisU4dJ.s 			page 61
 
 
  1722      756D203C 
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  848:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_ASSERT(au_num < ATON_STRENG_NUM);
  1765              		.loc 1 848 7 discriminator 1 view .LVU496
  1766 0014 3E48     		ldr	r0, .L187+8
-ARM GAS  /tmp/ccTTGPm7.s 			page 62
+ARM GAS  /tmp/ccisU4dJ.s 			page 62
 
 
  1767 0016 FFF7FEFF 		bl	__assert_func
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1812              		.loc 1 850 62 is_stmt 0 view .LVU505
  1813 0044 1846     		mov	r0, r3
  1814              	.LVL165:
-ARM GAS  /tmp/ccTTGPm7.s 			page 63
+ARM GAS  /tmp/ccisU4dJ.s 			page 63
 
 
  849:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_SRCPORT(STRSWITCH, 0, STRENG, 0, 0) + au_num;
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  856:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_SRCPORT(STRSWITCH, 0, CONVACC, 0, 0) + au_num;
  1855              		.loc 1 856 7 discriminator 1 view .LVU520
  1856 006e D1E7     		b	.L186
-ARM GAS  /tmp/ccTTGPm7.s 			page 64
+ARM GAS  /tmp/ccisU4dJ.s 			page 64
 
 
  1857              	.LVL174:
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  869:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_ASSERT(au_num < ATON_ACTIV_NUM);
  1897              		.loc 1 869 7 discriminator 1 view .LVU535
  1898 0096 1D4A     		ldr	r2, .L187+4
-ARM GAS  /tmp/ccTTGPm7.s 			page 65
+ARM GAS  /tmp/ccisU4dJ.s 			page 65
 
 
  1899              	.LVL182:
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  877:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_SRCPORT(STRSWITCH, 0, ARITH, 0, 0) + au_num;
  1939              		.loc 1 877 7 view .LVU550
  1940 00be B1D9     		bls	.L160
-ARM GAS  /tmp/ccTTGPm7.s 			page 66
+ARM GAS  /tmp/ccisU4dJ.s 			page 66
 
 
  877:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_SRCPORT(STRSWITCH, 0, ARITH, 0, 0) + au_num;
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  1981              	.LVL198:
  1982              	.L166:
  886:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
-ARM GAS  /tmp/ccTTGPm7.s 			page 67
+ARM GAS  /tmp/ccisU4dJ.s 			page 67
 
 
  1983              		.loc 1 886 7 is_stmt 1 view .LVU565
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2025 0110 05000000 		.word	.LC4
  2026 0114 0C000000 		.word	.LC21
  2027 0118 16000000 		.word	.LC22
-ARM GAS  /tmp/ccTTGPm7.s 			page 68
+ARM GAS  /tmp/ccisU4dJ.s 			page 68
 
 
  2028 011c 22000000 		.word	.LC23
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2072              		.loc 1 909 3 discriminator 1 view .LVU585
  2073 0010 444B     		ldr	r3, .L218
  2074              	.LVL212:
-ARM GAS  /tmp/ccTTGPm7.s 			page 69
+ARM GAS  /tmp/ccisU4dJ.s 			page 69
 
 
  909:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   switch (sut)
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2120 003e 3A4A     		ldr	r2, .L218+4
  2121              	.LVL220:
  917:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_ASSERT(au_num < ATON_STRENG_NUM);
-ARM GAS  /tmp/ccTTGPm7.s 			page 70
+ARM GAS  /tmp/ccisU4dJ.s 			page 70
 
 
  2122              		.loc 1 917 7 discriminator 1 view .LVU595
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2164              	.L205:
  925:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_DSTPORT(STRSWITCH, 0, CONVACC, 0, 0) + (0x4 * (3 * au_num + port));
  2165              		.loc 1 925 7 is_stmt 1 view .LVU608
-ARM GAS  /tmp/ccTTGPm7.s 			page 71
+ARM GAS  /tmp/ccisU4dJ.s 			page 71
 
 
  2166 0066 032B     		cmp	r3, #3
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  932:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_DSTPORT(STRSWITCH, 0, DECUN, 0, 0) + (0x4 * (2 * au_num + port));
  2207              		.loc 1 932 7 is_stmt 1 view .LVU622
  2208 008c 012B     		cmp	r3, #1
-ARM GAS  /tmp/ccTTGPm7.s 			page 72
+ARM GAS  /tmp/ccisU4dJ.s 			page 72
 
 
  2209 008e 04D9     		bls	.L208
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2249 00b6 40F2AB31 		movw	r1, #939
  2250 00ba 224B     		ldr	r3, .L218+32
  2251              	.LVL245:
-ARM GAS  /tmp/ccTTGPm7.s 			page 73
+ARM GAS  /tmp/ccisU4dJ.s 			page 73
 
 
  939:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       return ATONN_CONST_DSTPORT(STRSWITCH, 0, ACTIV, 0, 0) + (0x4 * au_num);
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  947:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
  2293              		.loc 1 947 7 is_stmt 1 view .LVU650
  947:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       break;
-ARM GAS  /tmp/ccTTGPm7.s 			page 74
+ARM GAS  /tmp/ccisU4dJ.s 			page 74
 
 
  2294              		.loc 1 947 61 is_stmt 0 view .LVU651
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2334              		.loc 1 958 7 view .LVU665
  2335 0106 40F2BE31 		movw	r1, #958
  2336 010a 0F4B     		ldr	r3, .L218+36
-ARM GAS  /tmp/ccTTGPm7.s 			page 75
+ARM GAS  /tmp/ccisU4dJ.s 			page 75
 
 
  2337              	.LVL260:
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2380 0140 09000000 		.word	.LC26
  2381 0144 2D000000 		.word	.LC24
  2382 0148 A5000000 		.word	.LC7
-ARM GAS  /tmp/ccTTGPm7.s 			page 76
+ARM GAS  /tmp/ccisU4dJ.s 			page 76
 
 
  2383              		.cfi_endproc
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  993:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  2424              		.loc 1 993 3 view .LVU692
  2425 0012 114A     		ldr	r2, .L224
-ARM GAS  /tmp/ccTTGPm7.s 			page 77
+ARM GAS  /tmp/ccisU4dJ.s 			page 77
 
 
  2426 0014 1360     		str	r3, [r2]
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2462 003c 02F1B042 		add	r2, r2, #1476395008
 1007:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #else
  2463              		.loc 1 1007 7 view .LVU710
-ARM GAS  /tmp/ccTTGPm7.s 			page 78
+ARM GAS  /tmp/ccisU4dJ.s 			page 78
 
 
  2464 0040 43EA0463 		orr	r3, r3, r4, lsl #24
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2505              		.cfi_startproc
  2506              		@ args = 0, pretend = 0, frame = 0
  2507              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccTTGPm7.s 			page 79
+ARM GAS  /tmp/ccisU4dJ.s 			page 79
 
 
 1032:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1039:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  2541              		.loc 1 1039 3 view .LVU747
 1039:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 80
+ARM GAS  /tmp/ccisU4dJ.s 			page 80
 
 
  2542              		.loc 1 1039 3 is_stmt 0 discriminator 3 view .LVU748
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2585              		.loc 1 1052 3 view .LVU761
 1053:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  2586              		.loc 1 1053 3 view .LVU762
-ARM GAS  /tmp/ccTTGPm7.s 			page 81
+ARM GAS  /tmp/ccisU4dJ.s 			page 81
 
 
 1055:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2626              	.LVL283:
 1061:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   }
  2627              		.loc 1 1061 5 is_stmt 1 view .LVU777
-ARM GAS  /tmp/ccTTGPm7.s 			page 82
+ARM GAS  /tmp/ccisU4dJ.s 			page 82
 
 
 1061:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   }
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2670              		.loc 1 1097 3 view .LVU790
 1098:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  2671              		.loc 1 1098 1 is_stmt 0 view .LVU791
-ARM GAS  /tmp/ccTTGPm7.s 			page 83
+ARM GAS  /tmp/ccisU4dJ.s 			page 83
 
 
  2672 0018 0020     		movs	r0, #0
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2710              	.LFE317:
  2712              		.section	.text.LL_EpochCtrl_Init,"ax",%progbits
  2713              		.align	1
-ARM GAS  /tmp/ccTTGPm7.s 			page 84
+ARM GAS  /tmp/ccisU4dJ.s 			page 84
 
 
  2714              		.global	LL_EpochCtrl_Init
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1260:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
 1261:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
 1262:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     }
-ARM GAS  /tmp/ccTTGPm7.s 			page 85
+ARM GAS  /tmp/ccisU4dJ.s 			page 85
 
 
 1263:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1317:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     for (i = 0, k = 0; i < CBsize; i += 6)
 1318:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
 1319:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       uint32_t temp = CBp[i] | (CBp[i + 1] << 8) | (CBp[i + 2] << 16) | (CBp[i + 3] << 24);
-ARM GAS  /tmp/ccTTGPm7.s 			page 86
+ARM GAS  /tmp/ccisU4dJ.s 			page 86
 
 
 1320:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1374:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 1375:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   if (conf->nCWperCV == 1)
 1376:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
-ARM GAS  /tmp/ccTTGPm7.s 			page 87
+ARM GAS  /tmp/ccisU4dJ.s 			page 87
 
 
 1377:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     uint16_t *CBp = (uint16_t *)conf->CBs_vector.p;
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1431:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
 1432:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         ctrl_val = decun_inc_page_addr(id, ctrl_val);
 1433:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
-ARM GAS  /tmp/ccTTGPm7.s 			page 88
+ARM GAS  /tmp/ccisU4dJ.s 			page 88
 
 
 1434:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1488:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
 1489:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
 1490:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       temp = CBp[i + 4] | (CBp[i + 5] << 16);
-ARM GAS  /tmp/ccTTGPm7.s 			page 89
+ARM GAS  /tmp/ccisU4dJ.s 			page 89
 
 
 1491:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1545:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
 1546:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       uint32_t temp = CBp[i];
 1547:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
-ARM GAS  /tmp/ccTTGPm7.s 			page 90
+ARM GAS  /tmp/ccisU4dJ.s 			page 90
 
 
 1548:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       temp = CBp[i + 1];
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1602:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_DECUN_DFORMAT_SET_CV8(t, conf->nFormatBytes & 0x1);
 1603:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_DECUN_DFORMAT_SET(id, t);
 1604:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 91
+ARM GAS  /tmp/ccisU4dJ.s 			page 91
 
 
 1605:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_DECUN_FFORMAT_DT;
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1659:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
 1660:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return LL_ATON_INVALID_PARAM;
 1661:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   }
-ARM GAS  /tmp/ccTTGPm7.s 			page 92
+ARM GAS  /tmp/ccisU4dJ.s 			page 92
 
 
 1662:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1716:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_FFORMAT_SET_WIDTH(t, conf->fWidth * conf->batchDepth);
 1717:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_FFORMAT_SET_HEIGHT(t, conf->fHeight);
 1718:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CONVACC_FFORMAT_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 93
+ARM GAS  /tmp/ccisU4dJ.s 			page 93
 
 
 1719:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1773:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 1774:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_SAMPLE_DT;
 1775:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_SAMPLE_SET_TPAD(t, p_top);
-ARM GAS  /tmp/ccTTGPm7.s 			page 94
+ARM GAS  /tmp/ccisU4dJ.s 			page 94
 
 
 1776:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_SAMPLE_SET_BPAD(t, p_bot);
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1830:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   /* If hardware supports it (e.g.: 4CA2P), manage Batch Depths not fitting 8 bits */
 1831:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_CONVACC_ZFBIAS_SET_ZFLEFTMSB)
 1832:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_ZFBIAS_SET_ZFLEFTMSB(t, (z_left * conf->batchDepth) >> ATON_CONVACC_ZFRAME_LEFT_
-ARM GAS  /tmp/ccTTGPm7.s 			page 95
+ARM GAS  /tmp/ccisU4dJ.s 			page 95
 
 
 1833:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_ZFBIAS_SET_ZFRIGHTMSB(t, (z_right * conf->batchDepth) >> ATON_CONVACC_ZFRAME_RIG
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1887:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FROUND(t, conf->rounding_f);
 1888:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FSAT(t, (conf->saturation_f != 0));
 1889:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FRNDMODE(t, conf->round_mode_f);
-ARM GAS  /tmp/ccTTGPm7.s 			page 96
+ARM GAS  /tmp/ccisU4dJ.s 			page 96
 
 
 1890:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FOBYTES(t, conf->outbytes_f);
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1944:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
 1945:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         t = ATON_ACTIV_ROM0_DT;
 1946:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         t = ATON_ACTIV_ROM0_SET_ENTRY(t, R0p[i]);
-ARM GAS  /tmp/ccTTGPm7.s 			page 97
+ARM GAS  /tmp/ccisU4dJ.s 			page 97
 
 
 1947:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         ATON_ACTIV_ROM0_SET(id, i, t);
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2001:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return ATON_ARITHOP_MIN_X_Y;
 2002:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   case ARITH_MAX:
 2003:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return ATON_ARITHOP_MAX_X_Y;
-ARM GAS  /tmp/ccTTGPm7.s 			page 98
+ARM GAS  /tmp/ccisU4dJ.s 			page 98
 
 
 2004:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   case ARITH_MUL:
@@ -5878,7 +5878,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2058:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 2059:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_CTRL_DT;
 2060:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_ARITH_CTRL_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 99
+ARM GAS  /tmp/ccisU4dJ.s 			page 99
 
 
 2061:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -5938,7 +5938,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2115:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_COEFFB_SET_B(t, conf->B_scalar);
 2116:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_ARITH_COEFFB_SET(id, t);
 2117:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 100
+ARM GAS  /tmp/ccisU4dJ.s 			page 100
 
 
 2118:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #ifdef ATON_ARITH_CLIPRANGE_SET
@@ -5998,7 +5998,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2172:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 2173:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t = ATON_ARITH_INCOFFSET_SET_VAL(0, 1);
 2174:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_ARITH_INCOFFSET_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 101
+ARM GAS  /tmp/ccisU4dJ.s 			page 101
 
 
 2175:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -6058,7 +6058,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2229:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     int bitcnt_A = 0;
 2230:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     int bitcnt_B = 0;
 2231:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     int bitcnt_C = 0;
-ARM GAS  /tmp/ccTTGPm7.s 			page 102
+ARM GAS  /tmp/ccisU4dJ.s 			page 102
 
 
 2232:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     int mem_idx_num = ATON_ARITH_COEFF_AB_IDX_MAX - ATON_ARITH_COEFF_AB_IDX_MIN + 1;
@@ -6118,7 +6118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2286:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   case POOL_AVG:
 2287:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return ATON_POOLTYPE_AVG_POOLING;
 2288:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   case POOL_GMAX:
-ARM GAS  /tmp/ccTTGPm7.s 			page 103
+ARM GAS  /tmp/ccisU4dJ.s 			page 103
 
 
 2289:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return ATON_POOLTYPE_GMAX_POOLING;
@@ -6178,7 +6178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2343:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
 2344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_CTRL_SET_CROPEN(t, crop_en);
 2345:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_POOL_CTRL_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 104
+ARM GAS  /tmp/ccisU4dJ.s 			page 104
 
 
 2346:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -6238,7 +6238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2400:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   /* Configure cropping if needed */
 2401:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_XCROP_DT;
 2402:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   if (conf->leftCrop > 0)
-ARM GAS  /tmp/ccTTGPm7.s 			page 105
+ARM GAS  /tmp/ccisU4dJ.s 			page 105
 
 
 2403:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_POOL_XCROP_SET_LCROP(t, conf->leftCrop * conf->batchSize);
@@ -6298,7 +6298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2734              	.LBB42:
  2735              	.LBI42:
 2445:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 106
+ARM GAS  /tmp/ccisU4dJ.s 			page 106
 
 
 2446:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   /* Configure CTRL register */
@@ -6358,7 +6358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2500:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
 2501:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   } while (enableFlags);
 2502:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 107
+ARM GAS  /tmp/ccisU4dJ.s 			page 107
 
 
 2503:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   return LL_ATON_OK;
@@ -6418,7 +6418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2448:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_EPOCHCTRL_CTRL_SET(id, t);
  2766              		.loc 1 2448 7 is_stmt 0 view .LVU830
  2767 000e 0B79     		ldrb	r3, [r1, #4]	@ zero_extendqisi2
-ARM GAS  /tmp/ccTTGPm7.s 			page 108
+ARM GAS  /tmp/ccisU4dJ.s 			page 108
 
 
 2449:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -6478,7 +6478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2802              	.L243:
 2442:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  2803              		.loc 1 2442 12 view .LVU851
-ARM GAS  /tmp/ccTTGPm7.s 			page 109
+ARM GAS  /tmp/ccisU4dJ.s 			page 109
 
 
  2804 0028 4FF0FF30 		mov	r0, #-1
@@ -6538,7 +6538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2849 000a 1A68     		ldr	r2, [r3]
  2850              	.LVL304:
 2470:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_EPOCHCTRL_IRQ_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 110
+ARM GAS  /tmp/ccisU4dJ.s 			page 110
 
 
  2851              		.loc 1 2470 3 is_stmt 1 view .LVU863
@@ -6598,7 +6598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2893              		.cfi_offset 5, -12
  2894              		.cfi_offset 6, -8
  2895              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccTTGPm7.s 			page 111
+ARM GAS  /tmp/ccisU4dJ.s 			page 111
 
 
 2482:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int i;
@@ -6658,7 +6658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  2932 0020 40F6C311 		movw	r1, #2499
  2933 0024 054B     		ldr	r3, .L260+8
  2934 0026 064A     		ldr	r2, .L260+12
-ARM GAS  /tmp/ccTTGPm7.s 			page 112
+ARM GAS  /tmp/ccisU4dJ.s 			page 112
 
 
  2935 0028 0648     		ldr	r0, .L260+16
@@ -6718,7 +6718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2515:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif // ATON_EPOCHCTRL_NUM
  2982              		.loc 1 2515 1 view .LVU905
  2983 0006 7047     		bx	lr
-ARM GAS  /tmp/ccTTGPm7.s 			page 113
+ARM GAS  /tmp/ccisU4dJ.s 			page 113
 
 
  2984              		.cfi_endproc
@@ -6778,7 +6778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3034              		.loc 1 2523 5 view .LVU916
  3035              		.loc 1 2523 5 view .LVU917
  3036 001c 0A61     		str	r2, [r1, #16]
-ARM GAS  /tmp/ccTTGPm7.s 			page 114
+ARM GAS  /tmp/ccisU4dJ.s 			page 114
 
 
  3037              		.loc 1 2523 5 view .LVU918
@@ -6838,7 +6838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3081              		.cfi_offset 10, -12
  3082              		.cfi_offset 11, -8
  3083              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccTTGPm7.s 			page 115
+ARM GAS  /tmp/ccisU4dJ.s 			page 115
 
 
  502:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return LL_ATON_INVALID_ID;
@@ -6898,7 +6898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3122              		.loc 1 513 11 is_stmt 0 view .LVU943
  3123 0020 94F84460 		ldrb	r6, [r4, #68]	@ zero_extendqisi2
  3124              	.LVL328:
-ARM GAS  /tmp/ccTTGPm7.s 			page 116
+ARM GAS  /tmp/ccisU4dJ.s 			page 116
 
 
  513:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return -1;
@@ -6958,7 +6958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  521:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #else
  3160              		.loc 1 521 7 view .LVU963
  3161 0048 C7F38002 		ubfx	r2, r7, #2, #1
-ARM GAS  /tmp/ccTTGPm7.s 			page 117
+ARM GAS  /tmp/ccisU4dJ.s 			page 117
 
 
  530:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_STRENG_CTRL_SET_SIGNEXT(t, conf->align_right == 1 && conf->nbits_unsigned == 0);
@@ -7018,7 +7018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  550:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  3200              		.loc 1 550 68 view .LVU980
  3201 0094 17F0010E 		ands	lr, r7, #1
-ARM GAS  /tmp/ccTTGPm7.s 			page 118
+ARM GAS  /tmp/ccisU4dJ.s 			page 118
 
 
  531:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -7078,7 +7078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  557:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t_streng_strd = ATON_STRENG_STRD_SET_FGAP(t_streng_strd, (nbits_in - nbits_out));
  3238              		.loc 1 557 8 view .LVU999
  3239 00b8 3806     		lsls	r0, r7, #24
-ARM GAS  /tmp/ccTTGPm7.s 			page 119
+ARM GAS  /tmp/ccisU4dJ.s 			page 119
 
 
  3240              	.LVL340:
@@ -7138,7 +7138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  566:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     in_bits[2] = nbits_in > 16 ? _LL_min(8, nbits_in - 16) : 0;
  3279              		.loc 1 566 58 discriminator 1 view .LVU1015
  3280 00e2 0839     		suble	r1, r1, #8
-ARM GAS  /tmp/ccTTGPm7.s 			page 120
+ARM GAS  /tmp/ccisU4dJ.s 			page 120
 
 
  3281              	.LVL347:
@@ -7198,7 +7198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3319              	.LVL352:
  641:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  3320              		.loc 1 641 3 is_stmt 1 view .LVU1032
-ARM GAS  /tmp/ccTTGPm7.s 			page 121
+ARM GAS  /tmp/ccisU4dJ.s 			page 121
 
 
  641:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -7258,7 +7258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3356              		.loc 1 647 6 view .LVU1051
  3357 0134 40F19E80 		bpl	.L283
  649:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t = conf->frame_count;
-ARM GAS  /tmp/ccTTGPm7.s 			page 122
+ARM GAS  /tmp/ccisU4dJ.s 			page 122
 
 
  3358              		.loc 1 649 5 is_stmt 1 view .LVU1052
@@ -7318,7 +7318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   42:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** 
   43:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** /* LL ATON error codes */
   44:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** #define LL_ATON_OK            (0)
-ARM GAS  /tmp/ccTTGPm7.s 			page 123
+ARM GAS  /tmp/ccisU4dJ.s 			page 123
 
 
   45:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** #define LL_ATON_INVALID_ID    (-1)
@@ -7378,7 +7378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   99:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     RECBUF,
  100:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****   };
  101:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 124
+ARM GAS  /tmp/ccisU4dJ.s 			page 124
 
 
  102:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****   typedef struct
@@ -7438,7 +7438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  156:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     ll_aton_pointer LUT_vector;  /**< Address of LUT coefficients table */
  157:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned ROM0_nbytes;        /**< Length of ROM0 table */
  158:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned ROM1_nbytes;        /**< Length of ROM1 table */
-ARM GAS  /tmp/ccTTGPm7.s 			page 125
+ARM GAS  /tmp/ccisU4dJ.s 			page 125
 
 
  159:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned char shift_b;       /**< Optional left shift to be applied to coefficient B */
@@ -7498,7 +7498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** 
  214:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****   /**
  215:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****    *	@brief Arithmetic unit Accelerator configuration structure
-ARM GAS  /tmp/ccTTGPm7.s 			page 126
+ARM GAS  /tmp/ccisU4dJ.s 			page 126
 
 
  216:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****    */
@@ -7558,7 +7558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  270:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****    */
  271:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h **** 
  272:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****   typedef enum
-ARM GAS  /tmp/ccTTGPm7.s 			page 127
+ARM GAS  /tmp/ccisU4dJ.s 			page 127
 
 
  273:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****   {
@@ -7618,7 +7618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  327:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned short fstatcnt;           /**< Number of frames before next reload of feature stationa
  328:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     LL_Convacc_Afilt_Mode afilt_mode;  /**< Accumulator port filter mode. See LL_Convacc_Afilt_Mode
  329:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned char afilt_tot;           /**< Total number of accumulation tensors */
-ARM GAS  /tmp/ccTTGPm7.s 			page 128
+ARM GAS  /tmp/ccisU4dJ.s 			page 128
 
 
  330:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned char afilt_first;         /**< First accumulation tensor */
@@ -7678,7 +7678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  384:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned short batchSize;  /**< Batch size */
  385:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned char shift_f;     /**< Input feature data shift */
  386:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned char shift_o;     /**< Optional right shift to apply the average pooling output */
-ARM GAS  /tmp/ccTTGPm7.s 			page 129
+ARM GAS  /tmp/ccisU4dJ.s 			page 129
 
 
  387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned dualLine : 1;     /**< Enable dual line, allows each linebuffer line to work as 2 line
@@ -7738,7 +7738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  441:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned mem_lsb : 1;         /**< For when nbits_in != nbits_out to decide which bits are read
  442:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****                                    *   (default msb) */
  443:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned sync_with_other : 1; /**< Enable synchronizations signals between engines */
-ARM GAS  /tmp/ccTTGPm7.s 			page 130
+ARM GAS  /tmp/ccisU4dJ.s 			page 130
 
 
  444:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.h ****     unsigned nbits_unsigned : 1;  /**< Disable sign extension */
@@ -7798,7 +7798,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3372              	.LBE53:
  3373              	.LBE52:
  654:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     }
-ARM GAS  /tmp/ccTTGPm7.s 			page 131
+ARM GAS  /tmp/ccisU4dJ.s 			page 131
 
 
  3374              		.loc 1 654 72 discriminator 1 view .LVU1059
@@ -7858,7 +7858,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  698:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  3413              		.loc 1 698 7 view .LVU1076
  3414 015a 6FF30F01 		bfc	r1, #0, #16
-ARM GAS  /tmp/ccTTGPm7.s 			page 132
+ARM GAS  /tmp/ccisU4dJ.s 			page 132
 
 
  681:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -7918,7 +7918,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3447              		.loc 1 700 3 view .LVU1098
  700:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  3448              		.loc 1 700 3 view .LVU1099
-ARM GAS  /tmp/ccTTGPm7.s 			page 133
+ARM GAS  /tmp/ccisU4dJ.s 			page 133
 
 
  700:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -7978,7 +7978,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3482              	.LVL365:
  3483              	.L288:
  709:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****                          conf->offset_limit - 1);
-ARM GAS  /tmp/ccTTGPm7.s 			page 134
+ARM GAS  /tmp/ccisU4dJ.s 			page 134
 
 
  3484              		.loc 1 709 5 is_stmt 1 view .LVU1121
@@ -8038,7 +8038,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3517 01a2 C1F38205 		ubfx	r5, r1, #2, #3
  721:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  3518              		.loc 1 721 22 view .LVU1143
-ARM GAS  /tmp/ccTTGPm7.s 			page 135
+ARM GAS  /tmp/ccisU4dJ.s 			page 135
 
 
  3519 01a6 2B43     		orrs	r3, r3, r5
@@ -8098,7 +8098,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  725:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
  3558              		.loc 1 725 3 is_stmt 1 view .LVU1159
  738:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_STRENG_EVENT_SET_EN_ILLCFG(t, 1); // Enable Illegal Configuration interrupt
-ARM GAS  /tmp/ccTTGPm7.s 			page 136
+ARM GAS  /tmp/ccisU4dJ.s 			page 136
 
 
  3559              		.loc 1 738 3 view .LVU1160
@@ -8158,7 +8158,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  759:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_STRENG_CID_CACHE_SET(id, t_streng_cid_cache);
  3592              		.loc 1 759 3 view .LVU1182
  759:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_STRENG_CID_CACHE_SET(id, t_streng_cid_cache);
-ARM GAS  /tmp/ccTTGPm7.s 			page 137
+ARM GAS  /tmp/ccisU4dJ.s 			page 137
 
 
  3593              		.loc 1 759 3 view .LVU1183
@@ -8218,7 +8218,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3624              		.loc 1 769 5 view .LVU1206
  769:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   }
  3625              		.loc 1 769 5 is_stmt 0 discriminator 1 view .LVU1207
-ARM GAS  /tmp/ccTTGPm7.s 			page 138
+ARM GAS  /tmp/ccisU4dJ.s 			page 138
 
 
  3626 0206 2E4B     		ldr	r3, .L313+32
@@ -8278,7 +8278,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3663              		.loc 1 601 5 is_stmt 1 view .LVU1224
  601:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     out_bits[1] = nbits_out > 8 ? _LL_min(8, nbits_out - 8) : 0;
  3664              		.loc 1 601 19 is_stmt 0 view .LVU1225
-ARM GAS  /tmp/ccTTGPm7.s 			page 139
+ARM GAS  /tmp/ccisU4dJ.s 			page 139
 
 
  3665 0228 082B     		cmp	r3, #8
@@ -8338,7 +8338,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3704 0254 51E7     		b	.L312
  3705              	.LVL387:
  3706              	.L293:
-ARM GAS  /tmp/ccTTGPm7.s 			page 140
+ARM GAS  /tmp/ccisU4dJ.s 			page 140
 
 
  566:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     in_bits[2] = nbits_in > 16 ? _LL_min(8, nbits_in - 16) : 0;
@@ -8398,7 +8398,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  662:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     ATON_STRENG_FSIZE_SET(id, t);
  3748              		.loc 1 662 9 is_stmt 0 view .LVU1254
  3749 0274 D4E906C3 		ldrd	ip, r3, [r4, #24]
-ARM GAS  /tmp/ccTTGPm7.s 			page 141
+ARM GAS  /tmp/ccisU4dJ.s 			page 141
 
 
  665:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     // if line_offset is left=0 then it's computed from the standard geometry of lines and batch
@@ -8458,7 +8458,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3784              		.loc 1 677 7 view .LVU1274
  3785 0294 43EA0143 		orr	r3, r3, r1, lsl #16
  671:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t_streng_cid_cache = t;
-ARM GAS  /tmp/ccTTGPm7.s 			page 142
+ARM GAS  /tmp/ccisU4dJ.s 			page 142
 
 
  3786              		.loc 1 671 9 view .LVU1275
@@ -8518,7 +8518,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  786:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return LL_ATON_INVALID_ID;
  3832              		.loc 1 786 3 view .LVU1286
  786:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return LL_ATON_INVALID_ID;
-ARM GAS  /tmp/ccTTGPm7.s 			page 143
+ARM GAS  /tmp/ccisU4dJ.s 			page 143
 
 
  3833              		.loc 1 786 6 is_stmt 0 view .LVU1287
@@ -8578,7 +8578,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3870 0020 43EA0213 		orr	r3, r3, r2, lsl #4
  3871              	.LVL403:
  795:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 144
+ARM GAS  /tmp/ccisU4dJ.s 			page 144
 
 
  3872              		.loc 1 795 3 is_stmt 1 view .LVU1305
@@ -8638,7 +8638,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3905 0034 38BD     		pop	{r3, r4, r5, pc}
  3906              	.LVL407:
  3907              	.L317:
-ARM GAS  /tmp/ccTTGPm7.s 			page 145
+ARM GAS  /tmp/ccisU4dJ.s 			page 145
 
 
  787:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -8698,7 +8698,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  3953              		.cfi_offset 11, -8
  3954              		.cfi_offset 14, -4
 1567:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   uint32_t t;
-ARM GAS  /tmp/ccTTGPm7.s 			page 146
+ARM GAS  /tmp/ccisU4dJ.s 			page 146
 
 
  3955              		.loc 1 1567 1 view .LVU1334
@@ -8758,7 +8758,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1578:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  3991              		.loc 1 1578 3 is_stmt 1 view .LVU1353
 1578:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 147
+ARM GAS  /tmp/ccisU4dJ.s 			page 147
 
 
  3992              		.loc 1 1578 3 view .LVU1354
@@ -8818,7 +8818,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4029              		.loc 1 1596 5 view .LVU1371
  4030 004a 1343     		orrs	r3, r3, r2
 1595:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_DECUN_BFORMAT_SET_OSAM(t, conf->nRCWlastCV);
-ARM GAS  /tmp/ccTTGPm7.s 			page 148
+ARM GAS  /tmp/ccisU4dJ.s 			page 148
 
 
  4031              		.loc 1 1595 7 view .LVU1372
@@ -8878,7 +8878,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4069              		.loc 1 1214 13 view .LVU1388
  4070              	.LBB113:
 1216:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   unsigned i, k;
-ARM GAS  /tmp/ccTTGPm7.s 			page 149
+ARM GAS  /tmp/ccisU4dJ.s 			page 149
 
 
  4071              		.loc 1 1216 3 view .LVU1389
@@ -8938,7 +8938,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4107              	.LVL426:
 1228:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
  4108              		.loc 1 1228 7 is_stmt 1 view .LVU1408
-ARM GAS  /tmp/ccTTGPm7.s 			page 150
+ARM GAS  /tmp/ccisU4dJ.s 			page 150
 
 
 1228:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
@@ -8998,7 +8998,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4147              	.LBB97:
 1255:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  4148              		.loc 1 1255 7 discriminator 1 view .LVU1425
-ARM GAS  /tmp/ccTTGPm7.s 			page 151
+ARM GAS  /tmp/ccisU4dJ.s 			page 151
 
 
  4149 00b2 DFF8C4B2 		ldr	fp, .L392+16
@@ -9058,7 +9058,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1259:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
  4187              		.loc 1 1259 20 view .LVU1442
  4188 00da 0146     		mov	r1, r0
-ARM GAS  /tmp/ccTTGPm7.s 			page 152
+ARM GAS  /tmp/ccisU4dJ.s 			page 152
 
 
  4189              	.LVL436:
@@ -9118,7 +9118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4226              		.loc 1 1270 50 view .LVU1459
  4227 00f8 42EA0C22 		orr	r2, r2, ip, lsl #8
 1270:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
-ARM GAS  /tmp/ccTTGPm7.s 			page 153
+ARM GAS  /tmp/ccisU4dJ.s 			page 153
 
 
  4228              		.loc 1 1270 26 view .LVU1460
@@ -9178,7 +9178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4265              	.L335:
 1276:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
  4266              		.loc 1 1276 11 view .LVU1478
-ARM GAS  /tmp/ccTTGPm7.s 			page 154
+ARM GAS  /tmp/ccisU4dJ.s 			page 154
 
 
  4267              	.LBE100:
@@ -9238,7 +9238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4307              		.loc 1 1283 26 is_stmt 1 discriminator 1 view .LVU1492
  4308 0144 CB45     		cmp	fp, r9
  4309 0146 3CD1     		bne	.L342
-ARM GAS  /tmp/ccTTGPm7.s 			page 155
+ARM GAS  /tmp/ccisU4dJ.s 			page 155
 
 
  4310              	.LVL451:
@@ -9298,7 +9298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4347              		.loc 1 1354 77 view .LVU1509
  4348 0170 99F803C0 		ldrb	ip, [r9, #3]	@ zero_extendqisi2
 1354:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
-ARM GAS  /tmp/ccTTGPm7.s 			page 156
+ARM GAS  /tmp/ccisU4dJ.s 			page 156
 
 
  4349              		.loc 1 1354 71 view .LVU1510
@@ -9358,7 +9358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1358:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  4385              		.loc 1 1358 7 discriminator 4 view .LVU1529
  4386 01a0 4CF80B20 		str	r2, [ip, fp]
-ARM GAS  /tmp/ccTTGPm7.s 			page 157
+ARM GAS  /tmp/ccisU4dJ.s 			page 157
 
 
 1358:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
@@ -9418,7 +9418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4424              	.LVL465:
  4425              	.L342:
 1352:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
-ARM GAS  /tmp/ccTTGPm7.s 			page 158
+ARM GAS  /tmp/ccisU4dJ.s 			page 158
 
 
  4426              		.loc 1 1352 26 discriminator 1 view .LVU1547
@@ -9478,7 +9478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4462              		.loc 1 1291 11 is_stmt 0 view .LVU1565
  4463 01de 019B     		ldr	r3, [sp, #4]
  4464              	.LVL471:
-ARM GAS  /tmp/ccTTGPm7.s 			page 159
+ARM GAS  /tmp/ccisU4dJ.s 			page 159
 
 
 1291:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
@@ -9538,7 +9538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4502              		.loc 1 1300 26 view .LVU1582
  4503 0200 99F800C0 		ldrb	ip, [r9]	@ zero_extendqisi2
 1300:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
-ARM GAS  /tmp/ccTTGPm7.s 			page 160
+ARM GAS  /tmp/ccisU4dJ.s 			page 160
 
 
  4504              		.loc 1 1300 50 view .LVU1583
@@ -9598,7 +9598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1306:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
  4539              		.loc 1 1306 10 is_stmt 0 view .LVU1603
  4540 022a 06D1     		bne	.L344
-ARM GAS  /tmp/ccTTGPm7.s 			page 161
+ARM GAS  /tmp/ccisU4dJ.s 			page 161
 
 
 1308:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
@@ -9658,7 +9658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4579 024a 7FF47DAF 		bne	.L343
  4580              	.LBB109:
 1332:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     for (i = 0, k = 0; i < CBsize / 2; i += 3)
-ARM GAS  /tmp/ccTTGPm7.s 			page 162
+ARM GAS  /tmp/ccisU4dJ.s 			page 162
 
 
  4581              		.loc 1 1332 5 is_stmt 1 view .LVU1620
@@ -9718,7 +9718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1336:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  4620              		.loc 1 1336 7 is_stmt 0 discriminator 4 view .LVU1636
  4621 0276 4BF83230 		str	r3, [fp, r2, lsl #3]
-ARM GAS  /tmp/ccTTGPm7.s 			page 163
+ARM GAS  /tmp/ccisU4dJ.s 			page 163
 
 
 1336:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
@@ -9778,7 +9778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4657              	.LVL495:
 1344:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
  4658              		.loc 1 1344 9 is_stmt 1 view .LVU1656
-ARM GAS  /tmp/ccTTGPm7.s 			page 164
+ARM GAS  /tmp/ccisU4dJ.s 			page 164
 
 
  4659              	.L348:
@@ -9838,7 +9838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4697              	.LBB118:
 1381:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  4698              		.loc 1 1381 7 discriminator 1 view .LVU1673
-ARM GAS  /tmp/ccTTGPm7.s 			page 165
+ARM GAS  /tmp/ccisU4dJ.s 			page 165
 
 
  4699 02b0 DFF8C4B0 		ldr	fp, .L392+16
@@ -9898,7 +9898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4736              		.loc 1 1385 20 view .LVU1690
  4737 02d8 0146     		mov	r1, r0
  4738              	.LVL505:
-ARM GAS  /tmp/ccTTGPm7.s 			page 166
+ARM GAS  /tmp/ccisU4dJ.s 			page 166
 
 
 1386:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
@@ -9958,7 +9958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4778 02f8 59F8042B 		ldr	r2, [r9], #4
  4779              	.LVL511:
 1410:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
-ARM GAS  /tmp/ccTTGPm7.s 			page 167
+ARM GAS  /tmp/ccisU4dJ.s 			page 167
 
 
  4780              		.loc 1 1410 7 is_stmt 1 view .LVU1706
@@ -10018,7 +10018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1422:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     for (i = 0, k = 0; i < CBsize; i += 3)
  4817              		.loc 1 1422 5 is_stmt 1 view .LVU1724
  4818              	.LVL516:
-ARM GAS  /tmp/ccTTGPm7.s 			page 168
+ARM GAS  /tmp/ccisU4dJ.s 			page 168
 
 
 1423:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
@@ -10078,7 +10078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1428:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  4856              		.loc 1 1428 7 is_stmt 1 view .LVU1742
 1428:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
-ARM GAS  /tmp/ccTTGPm7.s 			page 169
+ARM GAS  /tmp/ccisU4dJ.s 			page 169
 
 
  4857              		.loc 1 1428 7 view .LVU1743
@@ -10138,7 +10138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4894              	.LVL526:
 1423:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
  4895              		.loc 1 1423 38 is_stmt 0 discriminator 2 view .LVU1761
-ARM GAS  /tmp/ccTTGPm7.s 			page 170
+ARM GAS  /tmp/ccisU4dJ.s 			page 170
 
 
  4896 0360 08F10608 		add	r8, r8, #6
@@ -10198,7 +10198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  4938 0396 BFF44FAE 		bcs	.L346
  4939              	.LBB128:
 1442:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_DECUN_MEM_LOW_SET(id, k, temp);
-ARM GAS  /tmp/ccTTGPm7.s 			page 171
+ARM GAS  /tmp/ccisU4dJ.s 			page 171
 
 
  4940              		.loc 1 1442 7 view .LVU1774
@@ -10258,7 +10258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1449:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
  4975              		.loc 1 1449 20 is_stmt 0 view .LVU1794
  4976 03ba FFF7FEFF 		bl	decun_inc_page_addr
-ARM GAS  /tmp/ccTTGPm7.s 			page 172
+ARM GAS  /tmp/ccisU4dJ.s 			page 172
 
 
  4977              	.LVL536:
@@ -10318,7 +10318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5016 03da D4F80C80 		ldr	r8, [r4, #12]
  5017 03de BB44     		add	fp, fp, r7
  5018              	.LVL543:
-ARM GAS  /tmp/ccTTGPm7.s 			page 173
+ARM GAS  /tmp/ccisU4dJ.s 			page 173
 
 
  5019              	.L370:
@@ -10378,7 +10378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5054              		.loc 1 1462 7 is_stmt 1 view .LVU1828
 1463:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       temp = CBp[i + 4];
  5055              		.loc 1 1463 7 view .LVU1829
-ARM GAS  /tmp/ccTTGPm7.s 			page 174
+ARM GAS  /tmp/ccisU4dJ.s 			page 174
 
 
  5056              	.LVL547:
@@ -10438,7 +10438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5092              	.LVL553:
 1470:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
  5093              		.loc 1 1470 9 is_stmt 1 view .LVU1848
-ARM GAS  /tmp/ccTTGPm7.s 			page 175
+ARM GAS  /tmp/ccisU4dJ.s 			page 175
 
 
 1470:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
@@ -10498,7 +10498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5133              		.loc 1 1504 7 discriminator 1 view .LVU1863
  5134 0448 BB44     		add	fp, fp, r7
  5135              	.LVL560:
-ARM GAS  /tmp/ccTTGPm7.s 			page 176
+ARM GAS  /tmp/ccisU4dJ.s 			page 176
 
 
  5136              	.L374:
@@ -10558,7 +10558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1509:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       k++;
  5171              		.loc 1 1509 7 view .LVU1883
 1510:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       if (k == mem_idx_num)
-ARM GAS  /tmp/ccTTGPm7.s 			page 177
+ARM GAS  /tmp/ccisU4dJ.s 			page 177
 
 
  5172              		.loc 1 1510 8 is_stmt 0 view .LVU1884
@@ -10618,7 +10618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5209              		.loc 1 1501 42 is_stmt 1 discriminator 2 view .LVU1901
  5210 048a 0333     		adds	r3, r3, #3
  5211              	.LVL572:
-ARM GAS  /tmp/ccTTGPm7.s 			page 178
+ARM GAS  /tmp/ccisU4dJ.s 			page 178
 
 
 1501:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
@@ -10678,7 +10678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5251              	.LVL576:
 1525:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       temp = CBp[i + 2] | (CBp[i + 3] << 16);
  5252              		.loc 1 1525 7 is_stmt 1 view .LVU1917
-ARM GAS  /tmp/ccTTGPm7.s 			page 179
+ARM GAS  /tmp/ccisU4dJ.s 			page 179
 
 
 1525:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       temp = CBp[i + 2] | (CBp[i + 3] << 16);
@@ -10738,7 +10738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5287              		.loc 1 1530 7 is_stmt 0 discriminator 4 view .LVU1937
  5288 04da D000     		lsls	r0, r2, #3
  5289 04dc 0830     		adds	r0, r0, #8
-ARM GAS  /tmp/ccTTGPm7.s 			page 180
+ARM GAS  /tmp/ccisU4dJ.s 			page 180
 
 
  5290 04de 00EB0B0E 		add	lr, r0, fp
@@ -10798,7 +10798,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1537:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
  5326              		.loc 1 1537 9 is_stmt 1 view .LVU1956
 1537:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       }
-ARM GAS  /tmp/ccTTGPm7.s 			page 181
+ARM GAS  /tmp/ccisU4dJ.s 			page 181
 
 
  5327              		.loc 1 1537 11 is_stmt 0 view .LVU1957
@@ -10858,7 +10858,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5367              		.loc 1 1547 7 discriminator 1 view .LVU1971
  5368              	.LBE140:
 1544:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
-ARM GAS  /tmp/ccTTGPm7.s 			page 182
+ARM GAS  /tmp/ccisU4dJ.s 			page 182
 
 
  5369              		.loc 1 1544 26 is_stmt 1 discriminator 1 view .LVU1972
@@ -10918,7 +10918,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1553:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
  5405              		.loc 1 1553 20 view .LVU1991
  5406 054a 0193     		str	r3, [sp, #4]
-ARM GAS  /tmp/ccTTGPm7.s 			page 183
+ARM GAS  /tmp/ccisU4dJ.s 			page 183
 
 
 1553:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         k = 0;
@@ -10978,7 +10978,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5445              		.loc 1 1603 3 is_stmt 1 view .LVU2007
 1603:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  5446              		.loc 1 1603 3 view .LVU2008
-ARM GAS  /tmp/ccTTGPm7.s 			page 184
+ARM GAS  /tmp/ccisU4dJ.s 			page 184
 
 
 1603:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -11038,7 +11038,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5483              	.LVL611:
 1571:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  5484              		.loc 1 1571 12 view .LVU2027
-ARM GAS  /tmp/ccTTGPm7.s 			page 185
+ARM GAS  /tmp/ccisU4dJ.s 			page 185
 
 
  5485 057e F9E7     		b	.L320
@@ -11098,7 +11098,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1627:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  5532              		.loc 1 1627 3 discriminator 4 view .LVU2037
  5533 0010 FFF7FEFF 		bl	LL_ATON_EnableClock
-ARM GAS  /tmp/ccTTGPm7.s 			page 186
+ARM GAS  /tmp/ccisU4dJ.s 			page 186
 
 
  5534              	.LVL614:
@@ -11158,7 +11158,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5571              		.loc 1 1630 7 view .LVU2054
  5572 005e 8CF0010C 		eor	ip, ip, #1
 1631:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_CTRL_SET_GEN1SUM(t, (conf->accumulate_gen_first != 0));
-ARM GAS  /tmp/ccTTGPm7.s 			page 187
+ARM GAS  /tmp/ccisU4dJ.s 			page 187
 
 
  5573              		.loc 1 1631 7 view .LVU2055
@@ -11218,7 +11218,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5607 0086 00F02A81 		beq	.L418
 1655:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_CONVACC_CTRL_SET_FSTAT)
  5608              		.loc 1 1655 3 is_stmt 1 view .LVU2076
-ARM GAS  /tmp/ccTTGPm7.s 			page 188
+ARM GAS  /tmp/ccisU4dJ.s 			page 188
 
 
 1655:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_CONVACC_CTRL_SET_FSTAT)
@@ -11278,7 +11278,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5645              		.loc 1 1678 5 is_stmt 1 view .LVU2094
  5646              	.LVL619:
 1679:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_CONVACC_AFILT_SET_FIRST(t, conf->afilt_first);
-ARM GAS  /tmp/ccTTGPm7.s 			page 189
+ARM GAS  /tmp/ccisU4dJ.s 			page 189
 
 
  5647              		.loc 1 1679 5 view .LVU2095
@@ -11338,7 +11338,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1687:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_CONVACC_KFILT_SET_TOT(t, conf->kfilt_tot);
  5682              		.loc 1 1687 5 is_stmt 1 view .LVU2115
  5683              	.LVL622:
-ARM GAS  /tmp/ccTTGPm7.s 			page 190
+ARM GAS  /tmp/ccisU4dJ.s 			page 190
 
 
 1688:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_CONVACC_KFILT_SET_FIRST(t, conf->kfilt_first);
@@ -11398,7 +11398,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5715              		.loc 1 1708 3 view .LVU2138
 1703:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  5716              		.loc 1 1703 7 is_stmt 0 view .LVU2139
-ARM GAS  /tmp/ccTTGPm7.s 			page 191
+ARM GAS  /tmp/ccisU4dJ.s 			page 191
 
 
  5717 00f8 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
@@ -11458,7 +11458,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5754              		.loc 1 1707 5 view .LVU2156
  5755 0132 0343     		orrs	r3, r3, r0
  5756              	.LVL628:
-ARM GAS  /tmp/ccTTGPm7.s 			page 192
+ARM GAS  /tmp/ccisU4dJ.s 			page 192
 
 
 1709:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_DFORMAT_SET_RAW(t, conf->raw_o);
@@ -11518,7 +11518,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5792              		.loc 1 1713 3 is_stmt 0 discriminator 1 view .LVU2175
  5793 0158 6549     		ldr	r1, .L437+12
 1731:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int p_bot = (conf->bot_padding < conf->kernelHeight ? conf->bot_padding : conf->kernelHeight - 1)
-ARM GAS  /tmp/ccTTGPm7.s 			page 193
+ARM GAS  /tmp/ccisU4dJ.s 			page 193
 
 
  5794              		.loc 1 1731 20 view .LVU2176
@@ -11578,7 +11578,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1721:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_KFORMAT_SET_HEIGHT(t, conf->kernelHeight);
  5828              		.loc 1 1721 3 view .LVU2197
 1724:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CONVACC_KFORMAT_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 194
+ARM GAS  /tmp/ccisU4dJ.s 			page 194
 
 
  5829              		.loc 1 1724 5 is_stmt 0 view .LVU2198
@@ -11638,7 +11638,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5863 0192 01F1FF37 		add	r7, r1, #-1
  5864 0196 2CBF     		ite	cs
  5865 0198 BC46     		movcs	ip, r7
-ARM GAS  /tmp/ccTTGPm7.s 			page 195
+ARM GAS  /tmp/ccisU4dJ.s 			page 195
 
 
  5866 019a C446     		movcc	ip, r8
@@ -11698,7 +11698,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5904 01c2 4FF0020C 		movge	ip, #2
  5905              	.LVL643:
 1737:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   p_left = (p_left <= 2 ? p_left : 2);
-ARM GAS  /tmp/ccTTGPm7.s 			page 196
+ARM GAS  /tmp/ccisU4dJ.s 			page 196
 
 
  5906              		.loc 1 1737 9 view .LVU2235
@@ -11758,7 +11758,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5947              		.loc 1 1758 28 view .LVU2248
  5948 01f2 9E46     		mov	lr, r3
  5949              	.LVL652:
-ARM GAS  /tmp/ccTTGPm7.s 			page 197
+ARM GAS  /tmp/ccisU4dJ.s 			page 197
 
 
 1758:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -11818,7 +11818,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  5986 0210 5FFA89F9 		uxtb	r9, r9
 1762:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int z_left = (conf->left_padding - p_left);
  5987              		.loc 1 1762 7 view .LVU2267
-ARM GAS  /tmp/ccTTGPm7.s 			page 198
+ARM GAS  /tmp/ccisU4dJ.s 			page 198
 
 
  5988 0214 AAEB070A 		sub	r10, r10, r7
@@ -11878,7 +11878,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1780:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if defined(ATON_CONVACC_SAMPLE_SET_FSTATCNT)
  6022              		.loc 1 1780 3 view .LVU2288
 1779:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_CONVACC_SAMPLE_SET_VSTRD(t, conf->vstride);
-ARM GAS  /tmp/ccTTGPm7.s 			page 199
+ARM GAS  /tmp/ccisU4dJ.s 			page 199
 
 
  6023              		.loc 1 1779 7 is_stmt 0 view .LVU2289
@@ -11938,7 +11938,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6061 0268 43EA0703 		orr	r3, r3, r7
  6062 026c 43EA0103 		orr	r3, r3, r1
  6063              	.LVL669:
-ARM GAS  /tmp/ccTTGPm7.s 			page 200
+ARM GAS  /tmp/ccisU4dJ.s 			page 200
 
 
 1782:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_CONVACC_SAMPLE_SET_FSTATCNT(t, conf->fstatcnt);
@@ -11998,7 +11998,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1792:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CONVACC_FHCROP_SET(id, t);
  6099              		.loc 1 1792 5 is_stmt 1 view .LVU2325
 1792:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CONVACC_FHCROP_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 201
+ARM GAS  /tmp/ccisU4dJ.s 			page 201
 
 
  6100              		.loc 1 1792 9 is_stmt 0 view .LVU2326
@@ -12058,7 +12058,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6136 02aa 174A     		ldr	r2, .L437+36
 1800:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   // LL_ATON_PRINTF("c_t=%d c_b=%d c_l=%d c_r=%d\n",conf->top_crop,conf->bot_crop,conf->left_crop  
  6137              		.loc 1 1800 3 discriminator 4 view .LVU2345
-ARM GAS  /tmp/ccTTGPm7.s 			page 202
+ARM GAS  /tmp/ccisU4dJ.s 			page 202
 
 
  6138 02ac B350     		str	r3, [r6, r2]
@@ -12118,7 +12118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6172              	.LVL681:
 1836:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
  6173              		.loc 1 1836 3 is_stmt 1 view .LVU2366
-ARM GAS  /tmp/ccTTGPm7.s 			page 203
+ARM GAS  /tmp/ccisU4dJ.s 			page 203
 
 
 1836:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -12178,7 +12178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6211              	.LVL690:
  6212              	.L412:
 1799:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_CONVACC_FVCROP_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 204
+ARM GAS  /tmp/ccisU4dJ.s 			page 204
 
 
  6213              		.loc 1 1799 7 view .LVU2384
@@ -12238,7 +12238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1875:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   uint32_t t;
  6263              		.loc 1 1875 1 view .LVU2391
  6264 0002 F8B5     		push	{r3, r4, r5, r6, r7, lr}
-ARM GAS  /tmp/ccTTGPm7.s 			page 205
+ARM GAS  /tmp/ccisU4dJ.s 			page 205
 
 
  6265              		.cfi_def_cfa_offset 24
@@ -12298,7 +12298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1885:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FSHIFT(t, ATON_SHIFT(conf->shift_f));
  6305              		.loc 1 1885 3 is_stmt 1 view .LVU2406
 1886:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ACTIV_CTRL_SET_FROUND(t, conf->rounding_f);
-ARM GAS  /tmp/ccTTGPm7.s 			page 206
+ARM GAS  /tmp/ccisU4dJ.s 			page 206
 
 
  6306              		.loc 1 1886 3 view .LVU2407
@@ -12358,7 +12358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1890:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  6342              		.loc 1 1890 7 view .LVU2426
  6343 004c 43EA0043 		orr	r3, r3, r0, lsl #16
-ARM GAS  /tmp/ccTTGPm7.s 			page 207
+ARM GAS  /tmp/ccisU4dJ.s 			page 207
 
 
  6344 0050 43EA8603 		orr	r3, r3, r6, lsl #2
@@ -12418,7 +12418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6381 008a 00F57520 		add	r0, r0, #1003520
 1896:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  6382              		.loc 1 1896 3 discriminator 4 view .LVU2444
-ARM GAS  /tmp/ccTTGPm7.s 			page 208
+ARM GAS  /tmp/ccisU4dJ.s 			page 208
 
 
  6383 008e 0260     		str	r2, [r0]
@@ -12478,7 +12478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1914:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  6417              		.loc 1 1914 5 view .LVU2465
 1917:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     ATON_ACTIV_ACTIVPARAM2_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 209
+ARM GAS  /tmp/ccisU4dJ.s 			page 209
 
 
  6418              		.loc 1 1917 9 is_stmt 0 view .LVU2466
@@ -12538,7 +12538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1988:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** }
  6450              		.loc 1 1988 10 is_stmt 0 view .LVU2489
  6451 00b8 0020     		movs	r0, #0
-ARM GAS  /tmp/ccTTGPm7.s 			page 210
+ARM GAS  /tmp/ccisU4dJ.s 			page 210
 
 
  6452              	.L439:
@@ -12598,7 +12598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6490              		.loc 1 1929 5 view .LVU2505
 1930:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_ACTIV_FUNC_SET_CSHIFT(t, conf->shift_c);
  6491              		.loc 1 1930 5 view .LVU2506
-ARM GAS  /tmp/ccTTGPm7.s 			page 211
+ARM GAS  /tmp/ccisU4dJ.s 			page 211
 
 
 1930:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_ACTIV_FUNC_SET_CSHIFT(t, conf->shift_c);
@@ -12658,7 +12658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1936:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_ACTIV_ACTIVPARAM_SET_FUNC(t, conf->shift_norm);
  6530              		.loc 1 1936 5 view .LVU2523
 1937:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     ATON_ACTIV_ACTIVPARAM_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 212
+ARM GAS  /tmp/ccisU4dJ.s 			page 212
 
 
  6531              		.loc 1 1937 5 view .LVU2524
@@ -12718,7 +12718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1952:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       for (int i = 0; i < ROM1_rows; i++)
  6569              		.loc 1 1952 7 view .LVU2541
 1953:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
-ARM GAS  /tmp/ccTTGPm7.s 			page 213
+ARM GAS  /tmp/ccisU4dJ.s 			page 213
 
 
  6570              		.loc 1 1953 7 view .LVU2542
@@ -12778,7 +12778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1958:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         t = ATON_ACTIV_ROM1_C_DT;
  6609              		.loc 1 1958 9 is_stmt 1 view .LVU2558
 1958:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****         t = ATON_ACTIV_ROM1_C_DT;
-ARM GAS  /tmp/ccTTGPm7.s 			page 214
+ARM GAS  /tmp/ccisU4dJ.s 			page 214
 
 
  6610              		.loc 1 1958 9 view .LVU2559
@@ -12838,7 +12838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1953:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
  6645              		.loc 1 1953 39 is_stmt 0 discriminator 2 view .LVU2579
  6646 014c 0834     		adds	r4, r4, #8
-ARM GAS  /tmp/ccTTGPm7.s 			page 215
+ARM GAS  /tmp/ccisU4dJ.s 			page 215
 
 
  6647 014e 0632     		adds	r2, r2, #6
@@ -12898,7 +12898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 1943:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       {
  6685              		.loc 1 1943 39 discriminator 2 view .LVU2596
  6686              	.LBE155:
-ARM GAS  /tmp/ccTTGPm7.s 			page 216
+ARM GAS  /tmp/ccisU4dJ.s 			page 216
 
 
  6687              	.LBE160:
@@ -12958,7 +12958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2044:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   uint32_t t;
  6728              		.loc 1 2044 1 is_stmt 0 view .LVU2603
  6729 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
-ARM GAS  /tmp/ccTTGPm7.s 			page 217
+ARM GAS  /tmp/ccisU4dJ.s 			page 217
 
 
  6730              		.cfi_def_cfa_offset 36
@@ -13018,7 +13018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6769              		.loc 1 2060 3 discriminator 4 view .LVU2618
  6770 0024 C8F80030 		str	r3, [r8]
 2060:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 218
+ARM GAS  /tmp/ccisU4dJ.s 			page 218
 
 
  6771              		.loc 1 2060 3 is_stmt 1 view .LVU2619
@@ -13078,7 +13078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2069:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_CTRL_SET_SAT(t, (conf->saturation_o != 0));
  6807              		.loc 1 2069 7 view .LVU2638
  6808 0054 9B06     		lsls	r3, r3, #26
-ARM GAS  /tmp/ccTTGPm7.s 			page 219
+ARM GAS  /tmp/ccisU4dJ.s 			page 219
 
 
 2070:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_CTRL_SET_COEFFA(t, (conf->scalar == 0));
@@ -13138,7 +13138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2075:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #ifdef ATON_ARITH_CTRL_SET_CLIPOUT
  6846              		.loc 1 2075 7 view .LVU2656
  6847 008c 06F00102 		and	r2, r6, #1
-ARM GAS  /tmp/ccTTGPm7.s 			page 220
+ARM GAS  /tmp/ccisU4dJ.s 			page 220
 
 
  6848 0090 1207     		lsls	r2, r2, #28
@@ -13198,7 +13198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6888              	.LVL752:
  6889              	.L465:
 2084:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 221
+ARM GAS  /tmp/ccisU4dJ.s 			page 221
 
 
  6890              		.loc 1 2084 3 is_stmt 1 view .LVU2671
@@ -13258,7 +13258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6923 00d4 0B43     		orrs	r3, r3, r1
 2089:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_INSHIFTER_SET_FSATX(t, (conf->saturation_x != 0));
  6924              		.loc 1 2089 7 view .LVU2693
-ARM GAS  /tmp/ccTTGPm7.s 			page 222
+ARM GAS  /tmp/ccisU4dJ.s 			page 222
 
 
  6925 00d6 02F00101 		and	r1, r2, #1
@@ -13318,7 +13318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  6962 010c 9204     		lsls	r2, r2, #18
  6963 010e 02F47C02 		and	r2, r2, #16515072
 2098:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_INSHIFTER_SET_FOBYTESY(t, conf->outbytes_y);
-ARM GAS  /tmp/ccTTGPm7.s 			page 223
+ARM GAS  /tmp/ccisU4dJ.s 			page 223
 
 
  6964              		.loc 1 2098 5 view .LVU2711
@@ -13378,7 +13378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2103:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_ARITH_SHIFT_SET_BY(t, conf->By_shift + sshift);
  6999              		.loc 1 2103 7 view .LVU2731
  7000 0130 A27A     		ldrb	r2, [r4, #10]	@ zero_extendqisi2
-ARM GAS  /tmp/ccTTGPm7.s 			page 224
+ARM GAS  /tmp/ccisU4dJ.s 			page 224
 
 
 2112:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -13438,7 +13438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7036              	.LVL768:
 2112:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7037              		.loc 1 2112 3 is_stmt 1 view .LVU2751
-ARM GAS  /tmp/ccTTGPm7.s 			page 225
+ARM GAS  /tmp/ccisU4dJ.s 			page 225
 
 
 2112:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -13498,7 +13498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7070 0160 B4F91C10 		ldrsh	r1, [r4, #28]
 2122:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     t = ATON_ARITH_CLIPRANGE_SET_CLIPMIN(t, (conf->clipmin & 0xFFFFU));
  7071              		.loc 1 2122 9 view .LVU2774
-ARM GAS  /tmp/ccTTGPm7.s 			page 226
+ARM GAS  /tmp/ccisU4dJ.s 			page 226
 
 
  7072 0164 E38B     		ldrh	r3, [r4, #30]
@@ -13558,7 +13558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7107              		.loc 1 2272 10 view .LVU2793
  7108 017a 0020     		movs	r0, #0
  7109              	.LVL777:
-ARM GAS  /tmp/ccTTGPm7.s 			page 227
+ARM GAS  /tmp/ccisU4dJ.s 			page 227
 
 
  7110              	.L459:
@@ -13618,7 +13618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7154 0198 637A     		ldrb	r3, [r4, #9]	@ zero_extendqisi2
  7155 019a 013B     		subs	r3, r3, #1
  7156 019c 042B     		cmp	r3, #4
-ARM GAS  /tmp/ccTTGPm7.s 			page 228
+ARM GAS  /tmp/ccisU4dJ.s 			page 228
 
 
  7157 019e 00F21681 		bhi	.L495
@@ -13678,7 +13678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2147:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7194              		.loc 1 2147 7 view .LVU2821
 2147:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 229
+ARM GAS  /tmp/ccisU4dJ.s 			page 229
 
 
  7195              		.loc 1 2147 7 is_stmt 0 discriminator 4 view .LVU2822
@@ -13738,7 +13738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2155:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7231              		.loc 1 2155 7 view .LVU2841
 2155:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 230
+ARM GAS  /tmp/ccisU4dJ.s 			page 230
 
 
  7232              		.loc 1 2155 7 view .LVU2842
@@ -13798,7 +13798,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7266              		.loc 1 2162 9 view .LVU2862
  7267 01f8 2943     		orrs	r1, r1, r5
  7268              	.LVL795:
-ARM GAS  /tmp/ccTTGPm7.s 			page 231
+ARM GAS  /tmp/ccisU4dJ.s 			page 231
 
 
 2163:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       maxc = conf->fChannels;
@@ -13858,7 +13858,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7303 020e 0293     		str	r3, [sp, #8]
  7304              	.LVL800:
 2224:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     uint32_t *Cp = (uint32_t *)conf->C_vector.p;
-ARM GAS  /tmp/ccTTGPm7.s 			page 232
+ARM GAS  /tmp/ccisU4dJ.s 			page 232
 
 
  7305              		.loc 1 2224 5 is_stmt 1 view .LVU2883
@@ -13918,7 +13918,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2232:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7342              		.loc 1 2232 5 view .LVU2901
 2234:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if (LL_ATON_PLATFORM == LL_ATON_PLAT_EC_TRACE)
-ARM GAS  /tmp/ccTTGPm7.s 			page 233
+ARM GAS  /tmp/ccisU4dJ.s 			page 233
 
 
  7343              		.loc 1 2234 5 view .LVU2902
@@ -13978,7 +13978,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7380              		.loc 1 2242 7 view .LVU2919
 2242:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       uint32_t B = Bp != NULL ? LL_ATON_getbits(Bp, bitcnt_B, nbits_B) : (uint32_t)conf->B_scalar;
  7381              		.loc 1 2242 72 is_stmt 0 view .LVU2920
-ARM GAS  /tmp/ccTTGPm7.s 			page 234
+ARM GAS  /tmp/ccisU4dJ.s 			page 234
 
 
  7382 024e 029B     		ldr	r3, [sp, #8]
@@ -14038,7 +14038,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7427 028c D207     		lsls	r2, r2, #31
  7428 028e 70D5     		bpl	.L483
 2245:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       if (conf->combinebc && Cp != NULL)
-ARM GAS  /tmp/ccTTGPm7.s 			page 235
+ARM GAS  /tmp/ccisU4dJ.s 			page 235
 
 
  7429              		.loc 1 2245 7 is_stmt 0 discriminator 1 view .LVU2930
@@ -14098,7 +14098,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7467 02b8 6369     		ldr	r3, [r4, #20]
  7468              	.LVL821:
 2170:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_ARITH_RSTCNT1_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 236
+ARM GAS  /tmp/ccisU4dJ.s 			page 236
 
 
  7469              		.loc 1 2170 11 view .LVU2947
@@ -14158,7 +14158,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7504 02d4 91E7     		b	.L505
  7505              	.LVL825:
  7506              	.L471:
-ARM GAS  /tmp/ccTTGPm7.s 			page 237
+ARM GAS  /tmp/ccisU4dJ.s 			page 237
 
 
 2181:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_ARITH_INCCNT_SET(id, t);
@@ -14218,7 +14218,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7542              	.LVL828:
 2196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7543              		.loc 1 2196 7 is_stmt 1 view .LVU2986
-ARM GAS  /tmp/ccTTGPm7.s 			page 238
+ARM GAS  /tmp/ccisU4dJ.s 			page 238
 
 
 2196:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -14278,7 +14278,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7577              		.loc 1 2213 7 is_stmt 1 view .LVU3008
 2213:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
-ARM GAS  /tmp/ccTTGPm7.s 			page 239
+ARM GAS  /tmp/ccisU4dJ.s 			page 239
 
 
  7578              		.loc 1 2213 7 view .LVU3009
@@ -14338,7 +14338,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7625              	.L484:
 2245:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       if (conf->combinebc && Cp != NULL)
  7626              		.loc 1 2245 7 discriminator 6 view .LVU3017
-ARM GAS  /tmp/ccTTGPm7.s 			page 240
+ARM GAS  /tmp/ccisU4dJ.s 			page 240
 
 
  7627 0368 B9F1000F 		cmp	r9, #0
@@ -14398,7 +14398,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2261:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       ATON_ARITH_COEFF_AB_SET(id, k, t);
  7663              		.loc 1 2261 7 view .LVU3036
 2262:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       t = ATON_ARITH_COEFF_C_DT;
-ARM GAS  /tmp/ccTTGPm7.s 			page 241
+ARM GAS  /tmp/ccisU4dJ.s 			page 241
 
 
  7664              		.loc 1 2262 7 is_stmt 0 discriminator 4 view .LVU3037
@@ -14458,7 +14458,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2265:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  7700              		.loc 1 2265 7 is_stmt 0 discriminator 8 view .LVU3056
  7701 03ac 48F80300 		str	r0, [r8, r3]
-ARM GAS  /tmp/ccTTGPm7.s 			page 242
+ARM GAS  /tmp/ccisU4dJ.s 			page 242
 
 
 2265:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
@@ -14518,7 +14518,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7739              		.loc 1 2239 37 is_stmt 1 discriminator 2 view .LVU3073
 2239:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
  7740              		.loc 1 2239 37 is_stmt 0 discriminator 2 view .LVU3074
-ARM GAS  /tmp/ccTTGPm7.s 			page 243
+ARM GAS  /tmp/ccisU4dJ.s 			page 243
 
 
  7741 03c6 3FE7     		b	.L476
@@ -14578,7 +14578,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7787 0004 0546     		mov	r5, r0
  7788 0006 0C46     		mov	r4, r1
 2311:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     return LL_ATON_INVALID_ID;
-ARM GAS  /tmp/ccTTGPm7.s 			page 244
+ARM GAS  /tmp/ccisU4dJ.s 			page 244
 
 
  7789              		.loc 1 2311 6 view .LVU3085
@@ -14638,7 +14638,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7825 0022 2D03     		lsls	r5, r5, #12
  7826              	.LVL858:
 2328:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_CTRL_SET_SAT(t, (conf->saturation_o != 0));
-ARM GAS  /tmp/ccTTGPm7.s 			page 245
+ARM GAS  /tmp/ccisU4dJ.s 			page 245
 
 
  7827              		.loc 1 2328 7 view .LVU3104
@@ -14698,7 +14698,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7866 0068 43EA8233 		orr	r3, r3, r2, lsl #14
 2332:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_CTRL_SET_FROUND(t, (conf->rounding_f != 0));
  7867              		.loc 1 2332 7 view .LVU3120
-ARM GAS  /tmp/ccTTGPm7.s 			page 246
+ARM GAS  /tmp/ccisU4dJ.s 			page 246
 
 
  7868 006c 94F82020 		ldrb	r2, [r4, #32]	@ zero_extendqisi2
@@ -14758,7 +14758,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2351:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_RNDCTRL_SET_ORNDMODE(t, (conf->relu_mode_o << 1) | conf->round_mode_o);
  7903              		.loc 1 2351 3 view .LVU3140
 2351:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_RNDCTRL_SET_ORNDMODE(t, (conf->relu_mode_o << 1) | conf->round_mode_o);
-ARM GAS  /tmp/ccTTGPm7.s 			page 247
+ARM GAS  /tmp/ccisU4dJ.s 			page 247
 
 
  7904              		.loc 1 2351 7 is_stmt 0 view .LVU3141
@@ -14818,7 +14818,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  7939              		.loc 1 2356 3 view .LVU3160
  7940              	.LVL869:
 2357:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_PDIMS_SET_WINY(t, conf->poolWinY);
-ARM GAS  /tmp/ccTTGPm7.s 			page 248
+ARM GAS  /tmp/ccisU4dJ.s 			page 248
 
 
  7941              		.loc 1 2357 3 view .LVU3161
@@ -14878,7 +14878,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2362:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_PDIMS_SET_LPAD(t, conf->leftPad);
  7979              		.loc 1 2362 3 is_stmt 1 view .LVU3178
 2362:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_PDIMS_SET_LPAD(t, conf->leftPad);
-ARM GAS  /tmp/ccTTGPm7.s 			page 249
+ARM GAS  /tmp/ccisU4dJ.s 			page 249
 
 
  7980              		.loc 1 2362 7 is_stmt 0 view .LVU3179
@@ -14938,7 +14938,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2366:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** 
  8018              		.loc 1 2366 3 view .LVU3196
 2369:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   t = ATON_POOL_FDIMS_SET_FEATX(t, conf->inputX * conf->batchSize);
-ARM GAS  /tmp/ccTTGPm7.s 			page 250
+ARM GAS  /tmp/ccisU4dJ.s 			page 250
 
 
  8019              		.loc 1 2369 3 view .LVU3197
@@ -14998,7 +14998,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8053 012a E388     		ldrh	r3, [r4, #6]
  8054 012c C3F30B03 		ubfx	r3, r3, #0, #12
 2377:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   ATON_POOL_OUTDIMS_SET(id, t);
-ARM GAS  /tmp/ccTTGPm7.s 			page 251
+ARM GAS  /tmp/ccisU4dJ.s 			page 251
 
 
  8055              		.loc 1 2377 5 view .LVU3218
@@ -15058,7 +15058,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8088 013e FBB9     		cbnz	r3, .L514
  8089              	.LVL884:
  8090              	.L515:
-ARM GAS  /tmp/ccTTGPm7.s 			page 252
+ARM GAS  /tmp/ccisU4dJ.s 			page 252
 
 
 2404:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   if (r_crop > 0)
@@ -15118,7 +15118,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8125              		.loc 1 2411 9 is_stmt 0 view .LVU3259
  8126 015a E389     		ldrh	r3, [r4, #14]
  8127 015c C3F30B03 		ubfx	r3, r3, #0, #12
-ARM GAS  /tmp/ccTTGPm7.s 			page 253
+ARM GAS  /tmp/ccisU4dJ.s 			page 253
 
 
  8128              	.LVL889:
@@ -15178,7 +15178,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8165 0178 0E4A     		ldr	r2, .L522+36
  8166 017a 0F48     		ldr	r0, .L522+40
  8167 017c FFF7FEFF 		bl	__assert_func
-ARM GAS  /tmp/ccTTGPm7.s 			page 254
+ARM GAS  /tmp/ccisU4dJ.s 			page 254
 
 
  8168              	.LVL894:
@@ -15238,7 +15238,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8215              		.cfi_startproc
  8216              		@ args = 0, pretend = 0, frame = 0
  8217              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccTTGPm7.s 			page 255
+ARM GAS  /tmp/ccisU4dJ.s 			page 255
 
 
 2537:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #if (LL_ATON_ENABLE_CLOCK_GATING == 1)
@@ -15298,7 +15298,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2545:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     clock -= 32;
 2546:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     ATON_REG_WRITE_FIELD_RANGE(CLKCTRL, 0, BGATES1, clock, 1, 0);
 2547:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   }
-ARM GAS  /tmp/ccTTGPm7.s 			page 256
+ARM GAS  /tmp/ccisU4dJ.s 			page 256
 
 
 2548:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif
@@ -15358,7 +15358,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  387:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   {
  8305              		.loc 1 387 17 is_stmt 1 discriminator 1 view .LVU3313
  8306 0008 8C42     		cmp	r4, r1
-ARM GAS  /tmp/ccTTGPm7.s 			page 257
+ARM GAS  /tmp/ccisU4dJ.s 			page 257
 
 
  8307 000a 01DB     		blt	.L567
@@ -15418,7 +15418,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8347 002e 88BF     		it	hi
  8348 0030 0022     		movhi	r2, #0
  396:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_STRENG_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 258
+ARM GAS  /tmp/ccisU4dJ.s 			page 258
 
 
  8349              		.loc 1 396 7 is_stmt 0 discriminator 4 view .LVU3328
@@ -15478,7 +15478,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8383              		.loc 1 396 7 view .LVU3348
  8384              	.L541:
  396:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_STRENG_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 259
+ARM GAS  /tmp/ccisU4dJ.s 			page 259
 
 
  8385              		.loc 1 396 7 discriminator 21 view .LVU3349
@@ -15538,7 +15538,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8421 0068 88BF     		it	hi
  8422 006a 0022     		movhi	r2, #0
  403:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_CONVACC_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 260
+ARM GAS  /tmp/ccisU4dJ.s 			page 260
 
 
  8423              		.loc 1 403 7 is_stmt 0 discriminator 4 view .LVU3368
@@ -15598,7 +15598,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8457              		.loc 1 403 7 view .LVU3388
  8458              	.L546:
  403:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_CONVACC_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 261
+ARM GAS  /tmp/ccisU4dJ.s 			page 261
 
 
  8459              		.loc 1 403 7 discriminator 21 view .LVU3389
@@ -15658,7 +15658,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8496 00ac F332     		addls	r2, r2, #243
  8497 00ae 1203     		lslls	r2, r2, #12
  410:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_DECUN_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 262
+ARM GAS  /tmp/ccisU4dJ.s 			page 262
 
 
  8498              		.loc 1 410 7 discriminator 4 view .LVU3407
@@ -15718,7 +15718,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8531 00c0 10F08040 		ands	r0, r0, #1073741824
  8532 00c4 FBD1     		bne	.L550
  410:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_DECUN_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 263
+ARM GAS  /tmp/ccisU4dJ.s 			page 263
 
 
  8533              		.loc 1 410 7 is_stmt 1 view .LVU3429
@@ -15778,7 +15778,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  417:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ACTIV_CLKB_CLK(unitId));
  8569              		.loc 1 417 7 view .LVU3448
  8570              	.L553:
-ARM GAS  /tmp/ccTTGPm7.s 			page 264
+ARM GAS  /tmp/ccisU4dJ.s 			page 264
 
 
  417:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ACTIV_CLKB_CLK(unitId));
@@ -15838,7 +15838,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8604              	.LVL924:
  8605              	.L534:
  424:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ARITH_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 265
+ARM GAS  /tmp/ccisU4dJ.s 			page 265
 
 
  8606              		.loc 1 424 7 is_stmt 1 view .LVU3470
@@ -15898,7 +15898,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  424:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ARITH_CLKB_CLK(unitId));
  8641              		.loc 1 424 7 view .LVU3490
  424:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_ARITH_CLKB_CLK(unitId));
-ARM GAS  /tmp/ccTTGPm7.s 			page 266
+ARM GAS  /tmp/ccisU4dJ.s 			page 266
 
 
  8642              		.loc 1 424 7 view .LVU3491
@@ -15958,7 +15958,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8675 012a 8EBF     		itee	hi
  8676 012c 0022     		movhi	r2, #0
  434:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif // !POOL_RC14
-ARM GAS  /tmp/ccTTGPm7.s 			page 267
+ARM GAS  /tmp/ccisU4dJ.s 			page 267
 
 
  8677              		.loc 1 434 7 is_stmt 0 discriminator 1 view .LVU3513
@@ -16018,7 +16018,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8711              		.loc 1 434 7 view .LVU3533
  434:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** #endif // !POOL_RC14
  8712              		.loc 1 434 7 view .LVU3534
-ARM GAS  /tmp/ccTTGPm7.s 			page 268
+ARM GAS  /tmp/ccisU4dJ.s 			page 268
 
 
  8713              	.L562:
@@ -16078,7 +16078,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8747              	.L565:
  443:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_RECBUF_CLKB_CLK(unitId));
  8748              		.loc 1 443 7 discriminator 10 view .LVU3555
-ARM GAS  /tmp/ccTTGPm7.s 			page 269
+ARM GAS  /tmp/ccisU4dJ.s 			page 269
 
 
  443:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       LL_ATON_DisableClock(ATON_RECBUF_CLKB_CLK(unitId));
@@ -16138,7 +16138,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  392:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     {
  8783              		.loc 1 392 5 view .LVU3576
  8784 0172 6FF00100 		mvn	r0, #1
-ARM GAS  /tmp/ccTTGPm7.s 			page 270
+ARM GAS  /tmp/ccisU4dJ.s 			page 270
 
 
  8785 0176 4AE7     		b	.L528
@@ -16198,7 +16198,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2571:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** LL_ATON_WEAK void *LL_ATON_Dma_memcpy(void *dst, void *src, void *src_limit, size_t n, int dst_cach
 2572:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c **** {
  8818              		.loc 1 2572 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccTTGPm7.s 			page 271
+ARM GAS  /tmp/ccisU4dJ.s 			page 271
 
 
  8819              		.cfi_startproc
@@ -16258,7 +16258,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8856 002a 8046     		mov	r8, r0
  8857              	.LVL940:
 2575:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****   int i;
-ARM GAS  /tmp/ccTTGPm7.s 			page 272
+ARM GAS  /tmp/ccisU4dJ.s 			page 272
 
 
  8858              		.loc 1 2575 3 is_stmt 1 view .LVU3590
@@ -16318,7 +16318,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
    8:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****  * @attention
    9:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****  *
   10:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****  * Copyright (c) 2024 STMicroelectronics.
-ARM GAS  /tmp/ccTTGPm7.s 			page 273
+ARM GAS  /tmp/ccisU4dJ.s 			page 273
 
 
   11:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****  * All rights reserved.
@@ -16378,7 +16378,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
   65:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****    * @note the address range should fulfill alignment constraints with respect to the MCU cache lin
   66:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****    *       for both its `address` & `size` (to better correspond to what this operation will actual
   67:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****    * @note this function is intended to handle the case where a buffer has been filled by-passing t
-ARM GAS  /tmp/ccTTGPm7.s 			page 274
+ARM GAS  /tmp/ccisU4dJ.s 			page 274
 
 
   68:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_caches_interface.h ****    *       cache (e.g. using a DMA) and should be called BEFORE the buffer gets filled
@@ -16438,7 +16438,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8911              		.loc 1 2596 33 is_stmt 0 view .LVU3615
  8912 004e 4822     		movs	r2, #72
  8913 0050 0021     		movs	r1, #0
-ARM GAS  /tmp/ccTTGPm7.s 			page 275
+ARM GAS  /tmp/ccisU4dJ.s 			page 275
 
 
  8914 0052 06A8     		add	r0, sp, #24
@@ -16498,7 +16498,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  8942 0086 4444     		add	r4, r4, r8
  8943              	.LVL950:
  8944              		.loc 1 2620 33 view .LVU3622
-ARM GAS  /tmp/ccTTGPm7.s 			page 276
+ARM GAS  /tmp/ccisU4dJ.s 			page 276
 
 
  8945 0088 8DF86030 		strb	r3, [sp, #96]
@@ -16558,7 +16558,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
 2652:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       dma_out.cache_allocate = 1;
  8967              		.loc 1 2652 7 view .LVU3631
 2651:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****       dma_out.cache_allocate = 1;
-ARM GAS  /tmp/ccTTGPm7.s 			page 277
+ARM GAS  /tmp/ccisU4dJ.s 			page 277
 
 
  8968              		.loc 1 2651 25 is_stmt 0 view .LVU3632
@@ -16618,7 +16618,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  9008              	.LVL954:
 2663:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     LL_Switch_Init(&switch_init, 1);
  9009              		.loc 1 2663 5 view .LVU3643
-ARM GAS  /tmp/ccTTGPm7.s 			page 278
+ARM GAS  /tmp/ccisU4dJ.s 			page 278
 
 
  9010 00f8 2146     		mov	r1, r4
@@ -16678,7 +16678,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  9052 012c 0132     		adds	r2, r2, #1
  9053              	.LVL961:
 2584:../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton.c ****     *_dst++ = *_src++;
-ARM GAS  /tmp/ccTTGPm7.s 			page 279
+ARM GAS  /tmp/ccisU4dJ.s 			page 279
 
 
  9054              		.loc 1 2584 32 is_stmt 0 discriminator 3 view .LVU3655
@@ -16738,7 +16738,7 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  9108      72697468 
  9108      6163635F 
  9108      496E6974 
-ARM GAS  /tmp/ccTTGPm7.s 			page 280
+ARM GAS  /tmp/ccisU4dJ.s 			page 280
 
 
  9108      00
@@ -16793,153 +16793,153 @@ ARM GAS  /tmp/ccTTGPm7.s 			page 1
  9149      00000000 
  9150              		.text
  9151              	.Letext0:
- 9152              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 9153              		.file 5 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 9154              		.file 6 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 9152              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 9153              		.file 5 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 9154              		.file 6 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
  9155              		.file 7 "../../Middlewares/stedgeai-lib/Npu/ll_aton/ll_aton_util.h"
- 9156              		.file 8 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
-ARM GAS  /tmp/ccTTGPm7.s 			page 281
+ 9156              		.file 8 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ARM GAS  /tmp/ccisU4dJ.s 			page 281
 
 
- 9157              		.file 9 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 9158              		.file 10 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ 9157              		.file 9 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 9158              		.file 10 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/a
  9159              		.file 11 "../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.h"
- 9160              		.file 12 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-
+ 9160              		.file 12 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/a
  9161              		.file 13 "<built-in>"
-ARM GAS  /tmp/ccTTGPm7.s 			page 282
+ARM GAS  /tmp/ccisU4dJ.s 			page 282
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 ll_aton.c
-     /tmp/ccTTGPm7.s:26     .text.decun_inc_page_addr:00000000 $t
-     /tmp/ccTTGPm7.s:31     .text.decun_inc_page_addr:00000000 decun_inc_page_addr
-     /tmp/ccTTGPm7.s:83     .text.LL_Address_Physical2Virtual:00000000 $t
-     /tmp/ccTTGPm7.s:89     .text.LL_Address_Physical2Virtual:00000000 LL_Address_Physical2Virtual
-     /tmp/ccTTGPm7.s:104    .text.LL_Address_Virtual2Physical:00000000 $t
-     /tmp/ccTTGPm7.s:110    .text.LL_Address_Virtual2Physical:00000000 LL_Address_Virtual2Physical
-     /tmp/ccTTGPm7.s:122    .text.startWatchdog:00000000 $t
-     /tmp/ccTTGPm7.s:128    .text.startWatchdog:00000000 startWatchdog
-     /tmp/ccTTGPm7.s:147    .text.checkWatchdog:00000000 $t
-     /tmp/ccTTGPm7.s:153    .text.checkWatchdog:00000000 checkWatchdog
-     /tmp/ccTTGPm7.s:204    .text.LL_ATON_Init:00000000 $t
-     /tmp/ccTTGPm7.s:210    .text.LL_ATON_Init:00000000 LL_ATON_Init
-     /tmp/ccTTGPm7.s:735    .text.LL_ATON_Init:00000290 $d
-     /tmp/ccTTGPm7.s:9137   .bss.done.10:00000000 done.10
-     /tmp/ccTTGPm7.s:9142   .rodata.__func__.11:00000000 __func__.11
-     /tmp/ccTTGPm7.s:759    .text.LL_ATON_Init:000002e8 $t
-     /tmp/ccTTGPm7.s:1140   .text.LL_ATON_Init:00000504 $d
-     /tmp/ccTTGPm7.s:1157   .text.LL_ATON_DeInit:00000000 $t
-     /tmp/ccTTGPm7.s:1163   .text.LL_ATON_DeInit:00000000 LL_ATON_DeInit
-     /tmp/ccTTGPm7.s:1235   .text.LL_ATON_DeInit:00000020 $d
-     /tmp/ccTTGPm7.s:1240   .text.LL_ATON_EnableUnits_Init:00000000 $t
-     /tmp/ccTTGPm7.s:1246   .text.LL_ATON_EnableUnits_Init:00000000 LL_ATON_EnableUnits_Init
-     /tmp/ccTTGPm7.s:1299   .text.LL_ATON_EnableUnits_Init:0000002a $d
-     /tmp/ccTTGPm7.s:1483   .text.LL_ATON_EnableUnits_Init:000000a8 $d
-     /tmp/ccTTGPm7.s:9148   .bss.Conv_ctrl_bits:00000000 Conv_ctrl_bits
-     /tmp/ccTTGPm7.s:1493   .text.LL_Streng_Wait:00000000 $t
-     /tmp/ccTTGPm7.s:1499   .text.LL_Streng_Wait:00000000 LL_Streng_Wait
-     /tmp/ccTTGPm7.s:1598   .text.LL_Streng_Wait:00000050 $d
-     /tmp/ccTTGPm7.s:9132   .rodata.__func__.8:00000000 __func__.8
-     /tmp/ccTTGPm7.s:1606   .text.LL_TriggerHigh:00000000 $t
-     /tmp/ccTTGPm7.s:1612   .text.LL_TriggerHigh:00000000 LL_TriggerHigh
-     /tmp/ccTTGPm7.s:1665   .text.LL_TriggerHigh:0000002c $d
-     /tmp/ccTTGPm7.s:1671   .text.LL_TriggerLow:00000000 $t
-     /tmp/ccTTGPm7.s:1677   .text.LL_TriggerLow:00000000 LL_TriggerLow
-     /tmp/ccTTGPm7.s:1710   .text.LL_TriggerLow:00000018 $d
-     /tmp/ccTTGPm7.s:1726   .text.__atonn_getSrcPortID:00000000 $t
-     /tmp/ccTTGPm7.s:1732   .text.__atonn_getSrcPortID:00000000 __atonn_getSrcPortID
-     /tmp/ccTTGPm7.s:1788   .text.__atonn_getSrcPortID:0000002e $d
-     /tmp/ccTTGPm7.s:2023   .text.__atonn_getSrcPortID:00000108 $d
-     /tmp/ccTTGPm7.s:9127   .rodata.__func__.7:00000000 __func__.7
-     /tmp/ccTTGPm7.s:2040   .text.__atonn_getDstPortID:00000000 $t
-     /tmp/ccTTGPm7.s:2046   .text.__atonn_getDstPortID:00000000 __atonn_getDstPortID
-     /tmp/ccTTGPm7.s:2104   .text.__atonn_getDstPortID:0000002e $d
-     /tmp/ccTTGPm7.s:2373   .text.__atonn_getDstPortID:00000124 $d
-     /tmp/ccTTGPm7.s:9122   .rodata.__func__.6:00000000 __func__.6
-     /tmp/ccTTGPm7.s:2387   .text.LL_Switch_Init_NoReset:00000000 $t
-     /tmp/ccTTGPm7.s:2393   .text.LL_Switch_Init_NoReset:00000000 LL_Switch_Init_NoReset
-     /tmp/ccTTGPm7.s:2490   .text.LL_Switch_Init_NoReset:00000058 $d
-     /tmp/ccTTGPm7.s:2495   .text.LL_Switch_Init:00000000 $t
-     /tmp/ccTTGPm7.s:2501   .text.LL_Switch_Init:00000000 LL_Switch_Init
-     /tmp/ccTTGPm7.s:2567   .text.LL_Switch_Init:00000024 $d
-     /tmp/ccTTGPm7.s:2572   .text.LL_Switch_Deinit:00000000 $t
-     /tmp/ccTTGPm7.s:2578   .text.LL_Switch_Deinit:00000000 LL_Switch_Deinit
-     /tmp/ccTTGPm7.s:2637   .text.LL_Switch_Deinit_Fine_Grained:00000000 $t
-     /tmp/ccTTGPm7.s:2643   .text.LL_Switch_Deinit_Fine_Grained:00000000 LL_Switch_Deinit_Fine_Grained
-ARM GAS  /tmp/ccTTGPm7.s 			page 283
+     /tmp/ccisU4dJ.s:26     .text.decun_inc_page_addr:00000000 $t
+     /tmp/ccisU4dJ.s:31     .text.decun_inc_page_addr:00000000 decun_inc_page_addr
+     /tmp/ccisU4dJ.s:83     .text.LL_Address_Physical2Virtual:00000000 $t
+     /tmp/ccisU4dJ.s:89     .text.LL_Address_Physical2Virtual:00000000 LL_Address_Physical2Virtual
+     /tmp/ccisU4dJ.s:104    .text.LL_Address_Virtual2Physical:00000000 $t
+     /tmp/ccisU4dJ.s:110    .text.LL_Address_Virtual2Physical:00000000 LL_Address_Virtual2Physical
+     /tmp/ccisU4dJ.s:122    .text.startWatchdog:00000000 $t
+     /tmp/ccisU4dJ.s:128    .text.startWatchdog:00000000 startWatchdog
+     /tmp/ccisU4dJ.s:147    .text.checkWatchdog:00000000 $t
+     /tmp/ccisU4dJ.s:153    .text.checkWatchdog:00000000 checkWatchdog
+     /tmp/ccisU4dJ.s:204    .text.LL_ATON_Init:00000000 $t
+     /tmp/ccisU4dJ.s:210    .text.LL_ATON_Init:00000000 LL_ATON_Init
+     /tmp/ccisU4dJ.s:735    .text.LL_ATON_Init:00000290 $d
+     /tmp/ccisU4dJ.s:9137   .bss.done.10:00000000 done.10
+     /tmp/ccisU4dJ.s:9142   .rodata.__func__.11:00000000 __func__.11
+     /tmp/ccisU4dJ.s:759    .text.LL_ATON_Init:000002e8 $t
+     /tmp/ccisU4dJ.s:1140   .text.LL_ATON_Init:00000504 $d
+     /tmp/ccisU4dJ.s:1157   .text.LL_ATON_DeInit:00000000 $t
+     /tmp/ccisU4dJ.s:1163   .text.LL_ATON_DeInit:00000000 LL_ATON_DeInit
+     /tmp/ccisU4dJ.s:1235   .text.LL_ATON_DeInit:00000020 $d
+     /tmp/ccisU4dJ.s:1240   .text.LL_ATON_EnableUnits_Init:00000000 $t
+     /tmp/ccisU4dJ.s:1246   .text.LL_ATON_EnableUnits_Init:00000000 LL_ATON_EnableUnits_Init
+     /tmp/ccisU4dJ.s:1299   .text.LL_ATON_EnableUnits_Init:0000002a $d
+     /tmp/ccisU4dJ.s:1483   .text.LL_ATON_EnableUnits_Init:000000a8 $d
+     /tmp/ccisU4dJ.s:9148   .bss.Conv_ctrl_bits:00000000 Conv_ctrl_bits
+     /tmp/ccisU4dJ.s:1493   .text.LL_Streng_Wait:00000000 $t
+     /tmp/ccisU4dJ.s:1499   .text.LL_Streng_Wait:00000000 LL_Streng_Wait
+     /tmp/ccisU4dJ.s:1598   .text.LL_Streng_Wait:00000050 $d
+     /tmp/ccisU4dJ.s:9132   .rodata.__func__.8:00000000 __func__.8
+     /tmp/ccisU4dJ.s:1606   .text.LL_TriggerHigh:00000000 $t
+     /tmp/ccisU4dJ.s:1612   .text.LL_TriggerHigh:00000000 LL_TriggerHigh
+     /tmp/ccisU4dJ.s:1665   .text.LL_TriggerHigh:0000002c $d
+     /tmp/ccisU4dJ.s:1671   .text.LL_TriggerLow:00000000 $t
+     /tmp/ccisU4dJ.s:1677   .text.LL_TriggerLow:00000000 LL_TriggerLow
+     /tmp/ccisU4dJ.s:1710   .text.LL_TriggerLow:00000018 $d
+     /tmp/ccisU4dJ.s:1726   .text.__atonn_getSrcPortID:00000000 $t
+     /tmp/ccisU4dJ.s:1732   .text.__atonn_getSrcPortID:00000000 __atonn_getSrcPortID
+     /tmp/ccisU4dJ.s:1788   .text.__atonn_getSrcPortID:0000002e $d
+     /tmp/ccisU4dJ.s:2023   .text.__atonn_getSrcPortID:00000108 $d
+     /tmp/ccisU4dJ.s:9127   .rodata.__func__.7:00000000 __func__.7
+     /tmp/ccisU4dJ.s:2040   .text.__atonn_getDstPortID:00000000 $t
+     /tmp/ccisU4dJ.s:2046   .text.__atonn_getDstPortID:00000000 __atonn_getDstPortID
+     /tmp/ccisU4dJ.s:2104   .text.__atonn_getDstPortID:0000002e $d
+     /tmp/ccisU4dJ.s:2373   .text.__atonn_getDstPortID:00000124 $d
+     /tmp/ccisU4dJ.s:9122   .rodata.__func__.6:00000000 __func__.6
+     /tmp/ccisU4dJ.s:2387   .text.LL_Switch_Init_NoReset:00000000 $t
+     /tmp/ccisU4dJ.s:2393   .text.LL_Switch_Init_NoReset:00000000 LL_Switch_Init_NoReset
+     /tmp/ccisU4dJ.s:2490   .text.LL_Switch_Init_NoReset:00000058 $d
+     /tmp/ccisU4dJ.s:2495   .text.LL_Switch_Init:00000000 $t
+     /tmp/ccisU4dJ.s:2501   .text.LL_Switch_Init:00000000 LL_Switch_Init
+     /tmp/ccisU4dJ.s:2567   .text.LL_Switch_Init:00000024 $d
+     /tmp/ccisU4dJ.s:2572   .text.LL_Switch_Deinit:00000000 $t
+     /tmp/ccisU4dJ.s:2578   .text.LL_Switch_Deinit:00000000 LL_Switch_Deinit
+     /tmp/ccisU4dJ.s:2637   .text.LL_Switch_Deinit_Fine_Grained:00000000 $t
+     /tmp/ccisU4dJ.s:2643   .text.LL_Switch_Deinit_Fine_Grained:00000000 LL_Switch_Deinit_Fine_Grained
+ARM GAS  /tmp/ccisU4dJ.s 			page 283
 
 
-     /tmp/ccTTGPm7.s:2713   .text.LL_EpochCtrl_Init:00000000 $t
-     /tmp/ccTTGPm7.s:2719   .text.LL_EpochCtrl_Init:00000000 LL_EpochCtrl_Init
-     /tmp/ccTTGPm7.s:2817   .text.LL_EpochCtrl_Init:00000034 $d
-     /tmp/ccTTGPm7.s:2822   .text.LL_EpochCtrl_Step:00000000 $t
-     /tmp/ccTTGPm7.s:2828   .text.LL_EpochCtrl_Step:00000000 LL_EpochCtrl_Step
-     /tmp/ccTTGPm7.s:2868   .text.LL_EpochCtrl_Step:00000014 $d
-     /tmp/ccTTGPm7.s:2873   .text.LL_EpochCtrl_Wait:00000000 $t
-     /tmp/ccTTGPm7.s:2879   .text.LL_EpochCtrl_Wait:00000000 LL_EpochCtrl_Wait
-     /tmp/ccTTGPm7.s:2948   .text.LL_EpochCtrl_Wait:00000034 $d
-     /tmp/ccTTGPm7.s:9092   .rodata.__func__.0:00000000 __func__.0
-     /tmp/ccTTGPm7.s:2957   .text.LL_EpochCtrl_GetBlobSize:00000000 $t
-     /tmp/ccTTGPm7.s:2963   .text.LL_EpochCtrl_GetBlobSize:00000000 LL_EpochCtrl_GetBlobSize
-     /tmp/ccTTGPm7.s:2988   .text.LL_ATON_EnableClock:00000000 $t
-     /tmp/ccTTGPm7.s:2994   .text.LL_ATON_EnableClock:00000000 LL_ATON_EnableClock
-     /tmp/ccTTGPm7.s:3054   .text.LL_ATON_EnableClock:00000020 $d
-     /tmp/ccTTGPm7.s:3059   .text.LL_Streng_TensorInit:00000000 $t
-     /tmp/ccTTGPm7.s:3065   .text.LL_Streng_TensorInit:00000000 LL_Streng_TensorInit
-     /tmp/ccTTGPm7.s:3802   .text.LL_Streng_TensorInit:000002a0 $d
-     /tmp/ccTTGPm7.s:3818   .text.LL_Streng_ExtSyncInit:00000000 $t
-     /tmp/ccTTGPm7.s:3824   .text.LL_Streng_ExtSyncInit:00000000 LL_Streng_ExtSyncInit
-     /tmp/ccTTGPm7.s:3916   .text.LL_Streng_ExtSyncInit:0000003c $d
-     /tmp/ccTTGPm7.s:3926   .text.LL_Decun_Init:00000000 $t
-     /tmp/ccTTGPm7.s:3932   .text.LL_Decun_Init:00000000 LL_Decun_Init
-     /tmp/ccTTGPm7.s:4901   .text.LL_Decun_Init:00000368 $d
-     /tmp/ccTTGPm7.s:9117   .rodata.__func__.5:00000000 __func__.5
-     /tmp/ccTTGPm7.s:4912   .text.LL_Decun_Init:0000037c $t
-     /tmp/ccTTGPm7.s:5489   .text.LL_Decun_Init:00000580 $d
-     /tmp/ccTTGPm7.s:5495   .text.LL_Convacc_Init:00000000 $t
-     /tmp/ccTTGPm7.s:5501   .text.LL_Convacc_Init:00000000 LL_Convacc_Init
-     /tmp/ccTTGPm7.s:6232   .text.LL_Convacc_Init:000002e4 $d
-     /tmp/ccTTGPm7.s:6248   .text.LL_Activacc_Init:00000000 $t
-     /tmp/ccTTGPm7.s:6254   .text.LL_Activacc_Init:00000000 LL_Activacc_Init
-     /tmp/ccTTGPm7.s:6696   .text.LL_Activacc_Init:00000170 $d
-     /tmp/ccTTGPm7.s:9112   .rodata.__func__.4:00000000 __func__.4
-     /tmp/ccTTGPm7.s:6712   .text.LL_Arithacc_Init:00000000 $t
-     /tmp/ccTTGPm7.s:6718   .text.LL_Arithacc_Init:00000000 LL_Arithacc_Init
-     /tmp/ccTTGPm7.s:7160   .text.LL_Arithacc_Init:000001a6 $d
-     /tmp/ccTTGPm7.s:7605   .text.LL_Arithacc_Init:0000031c $d
-     /tmp/ccTTGPm7.s:9072   .rodata.CSWTCH.279:00000000 CSWTCH.279
-     /tmp/ccTTGPm7.s:9102   .rodata.__func__.2:00000000 __func__.2
-     /tmp/ccTTGPm7.s:9107   .rodata.__func__.3:00000000 __func__.3
-     /tmp/ccTTGPm7.s:7627   .text.LL_Arithacc_Init:00000368 $t
-     /tmp/ccTTGPm7.s:7762   .text.LL_Poolacc_Init:00000000 $t
-     /tmp/ccTTGPm7.s:7768   .text.LL_Poolacc_Init:00000000 LL_Poolacc_Init
-     /tmp/ccTTGPm7.s:8190   .text.LL_Poolacc_Init:00000190 $d
-     /tmp/ccTTGPm7.s:9062   .rodata.CSWTCH.281:00000000 CSWTCH.281
-     /tmp/ccTTGPm7.s:9097   .rodata.__func__.1:00000000 __func__.1
-     /tmp/ccTTGPm7.s:8205   .text.LL_ATON_DisableClock:00000000 $t
-     /tmp/ccTTGPm7.s:8211   .text.LL_ATON_DisableClock:00000000 LL_ATON_DisableClock
-     /tmp/ccTTGPm7.s:8267   .text.LL_ATON_DisableClock:0000001c $d
-     /tmp/ccTTGPm7.s:8272   .text.LL_ATON_DisableUnits_Init:00000000 $t
-     /tmp/ccTTGPm7.s:8278   .text.LL_ATON_DisableUnits_Init:00000000 LL_ATON_DisableUnits_Init
-     /tmp/ccTTGPm7.s:8327   .text.LL_ATON_DisableUnits_Init:00000022 $d
-     /tmp/ccTTGPm7.s:8799   .text.LL_ATON_DisableUnits_Init:00000180 $d
-     /tmp/ccTTGPm7.s:8809   .text.LL_ATON_Dma_memcpy:00000000 $t
-     /tmp/ccTTGPm7.s:8815   .text.LL_ATON_Dma_memcpy:00000000 LL_ATON_Dma_memcpy
-     /tmp/ccTTGPm7.s:9138   .bss.done.10:00000000 $d
-ARM GAS  /tmp/ccTTGPm7.s 			page 284
+     /tmp/ccisU4dJ.s:2713   .text.LL_EpochCtrl_Init:00000000 $t
+     /tmp/ccisU4dJ.s:2719   .text.LL_EpochCtrl_Init:00000000 LL_EpochCtrl_Init
+     /tmp/ccisU4dJ.s:2817   .text.LL_EpochCtrl_Init:00000034 $d
+     /tmp/ccisU4dJ.s:2822   .text.LL_EpochCtrl_Step:00000000 $t
+     /tmp/ccisU4dJ.s:2828   .text.LL_EpochCtrl_Step:00000000 LL_EpochCtrl_Step
+     /tmp/ccisU4dJ.s:2868   .text.LL_EpochCtrl_Step:00000014 $d
+     /tmp/ccisU4dJ.s:2873   .text.LL_EpochCtrl_Wait:00000000 $t
+     /tmp/ccisU4dJ.s:2879   .text.LL_EpochCtrl_Wait:00000000 LL_EpochCtrl_Wait
+     /tmp/ccisU4dJ.s:2948   .text.LL_EpochCtrl_Wait:00000034 $d
+     /tmp/ccisU4dJ.s:9092   .rodata.__func__.0:00000000 __func__.0
+     /tmp/ccisU4dJ.s:2957   .text.LL_EpochCtrl_GetBlobSize:00000000 $t
+     /tmp/ccisU4dJ.s:2963   .text.LL_EpochCtrl_GetBlobSize:00000000 LL_EpochCtrl_GetBlobSize
+     /tmp/ccisU4dJ.s:2988   .text.LL_ATON_EnableClock:00000000 $t
+     /tmp/ccisU4dJ.s:2994   .text.LL_ATON_EnableClock:00000000 LL_ATON_EnableClock
+     /tmp/ccisU4dJ.s:3054   .text.LL_ATON_EnableClock:00000020 $d
+     /tmp/ccisU4dJ.s:3059   .text.LL_Streng_TensorInit:00000000 $t
+     /tmp/ccisU4dJ.s:3065   .text.LL_Streng_TensorInit:00000000 LL_Streng_TensorInit
+     /tmp/ccisU4dJ.s:3802   .text.LL_Streng_TensorInit:000002a0 $d
+     /tmp/ccisU4dJ.s:3818   .text.LL_Streng_ExtSyncInit:00000000 $t
+     /tmp/ccisU4dJ.s:3824   .text.LL_Streng_ExtSyncInit:00000000 LL_Streng_ExtSyncInit
+     /tmp/ccisU4dJ.s:3916   .text.LL_Streng_ExtSyncInit:0000003c $d
+     /tmp/ccisU4dJ.s:3926   .text.LL_Decun_Init:00000000 $t
+     /tmp/ccisU4dJ.s:3932   .text.LL_Decun_Init:00000000 LL_Decun_Init
+     /tmp/ccisU4dJ.s:4901   .text.LL_Decun_Init:00000368 $d
+     /tmp/ccisU4dJ.s:9117   .rodata.__func__.5:00000000 __func__.5
+     /tmp/ccisU4dJ.s:4912   .text.LL_Decun_Init:0000037c $t
+     /tmp/ccisU4dJ.s:5489   .text.LL_Decun_Init:00000580 $d
+     /tmp/ccisU4dJ.s:5495   .text.LL_Convacc_Init:00000000 $t
+     /tmp/ccisU4dJ.s:5501   .text.LL_Convacc_Init:00000000 LL_Convacc_Init
+     /tmp/ccisU4dJ.s:6232   .text.LL_Convacc_Init:000002e4 $d
+     /tmp/ccisU4dJ.s:6248   .text.LL_Activacc_Init:00000000 $t
+     /tmp/ccisU4dJ.s:6254   .text.LL_Activacc_Init:00000000 LL_Activacc_Init
+     /tmp/ccisU4dJ.s:6696   .text.LL_Activacc_Init:00000170 $d
+     /tmp/ccisU4dJ.s:9112   .rodata.__func__.4:00000000 __func__.4
+     /tmp/ccisU4dJ.s:6712   .text.LL_Arithacc_Init:00000000 $t
+     /tmp/ccisU4dJ.s:6718   .text.LL_Arithacc_Init:00000000 LL_Arithacc_Init
+     /tmp/ccisU4dJ.s:7160   .text.LL_Arithacc_Init:000001a6 $d
+     /tmp/ccisU4dJ.s:7605   .text.LL_Arithacc_Init:0000031c $d
+     /tmp/ccisU4dJ.s:9072   .rodata.CSWTCH.279:00000000 CSWTCH.279
+     /tmp/ccisU4dJ.s:9102   .rodata.__func__.2:00000000 __func__.2
+     /tmp/ccisU4dJ.s:9107   .rodata.__func__.3:00000000 __func__.3
+     /tmp/ccisU4dJ.s:7627   .text.LL_Arithacc_Init:00000368 $t
+     /tmp/ccisU4dJ.s:7762   .text.LL_Poolacc_Init:00000000 $t
+     /tmp/ccisU4dJ.s:7768   .text.LL_Poolacc_Init:00000000 LL_Poolacc_Init
+     /tmp/ccisU4dJ.s:8190   .text.LL_Poolacc_Init:00000190 $d
+     /tmp/ccisU4dJ.s:9062   .rodata.CSWTCH.281:00000000 CSWTCH.281
+     /tmp/ccisU4dJ.s:9097   .rodata.__func__.1:00000000 __func__.1
+     /tmp/ccisU4dJ.s:8205   .text.LL_ATON_DisableClock:00000000 $t
+     /tmp/ccisU4dJ.s:8211   .text.LL_ATON_DisableClock:00000000 LL_ATON_DisableClock
+     /tmp/ccisU4dJ.s:8267   .text.LL_ATON_DisableClock:0000001c $d
+     /tmp/ccisU4dJ.s:8272   .text.LL_ATON_DisableUnits_Init:00000000 $t
+     /tmp/ccisU4dJ.s:8278   .text.LL_ATON_DisableUnits_Init:00000000 LL_ATON_DisableUnits_Init
+     /tmp/ccisU4dJ.s:8327   .text.LL_ATON_DisableUnits_Init:00000022 $d
+     /tmp/ccisU4dJ.s:8799   .text.LL_ATON_DisableUnits_Init:00000180 $d
+     /tmp/ccisU4dJ.s:8809   .text.LL_ATON_Dma_memcpy:00000000 $t
+     /tmp/ccisU4dJ.s:8815   .text.LL_ATON_Dma_memcpy:00000000 LL_ATON_Dma_memcpy
+     /tmp/ccisU4dJ.s:9138   .bss.done.10:00000000 $d
+ARM GAS  /tmp/ccisU4dJ.s 			page 284
 
 
-     /tmp/ccTTGPm7.s:9145   .bss.Conv_ctrl_bits:00000000 $d
-     /tmp/ccTTGPm7.s:1308   .text.LL_ATON_EnableUnits_Init:00000033 $d
-     /tmp/ccTTGPm7.s:1308   .text.LL_ATON_EnableUnits_Init:00000034 $t
-     /tmp/ccTTGPm7.s:1795   .text.__atonn_getSrcPortID:00000035 $d
-     /tmp/ccTTGPm7.s:1795   .text.__atonn_getSrcPortID:00000036 $t
-     /tmp/ccTTGPm7.s:2111   .text.__atonn_getDstPortID:00000035 $d
-     /tmp/ccTTGPm7.s:2111   .text.__atonn_getDstPortID:00000036 $t
-     /tmp/ccTTGPm7.s:7165   .text.LL_Arithacc_Init:000001ab $d
-     /tmp/ccTTGPm7.s:7165   .text.LL_Arithacc_Init:000001ac $t
-     /tmp/ccTTGPm7.s:8336   .text.LL_ATON_DisableUnits_Init:0000002b $d
-     /tmp/ccTTGPm7.s:8336   .text.LL_ATON_DisableUnits_Init:0000002c $t
+     /tmp/ccisU4dJ.s:9145   .bss.Conv_ctrl_bits:00000000 $d
+     /tmp/ccisU4dJ.s:1308   .text.LL_ATON_EnableUnits_Init:00000033 $d
+     /tmp/ccisU4dJ.s:1308   .text.LL_ATON_EnableUnits_Init:00000034 $t
+     /tmp/ccisU4dJ.s:1795   .text.__atonn_getSrcPortID:00000035 $d
+     /tmp/ccisU4dJ.s:1795   .text.__atonn_getSrcPortID:00000036 $t
+     /tmp/ccisU4dJ.s:2111   .text.__atonn_getDstPortID:00000035 $d
+     /tmp/ccisU4dJ.s:2111   .text.__atonn_getDstPortID:00000036 $t
+     /tmp/ccisU4dJ.s:7165   .text.LL_Arithacc_Init:000001ab $d
+     /tmp/ccisU4dJ.s:7165   .text.LL_Arithacc_Init:000001ac $t
+     /tmp/ccisU4dJ.s:8336   .text.LL_ATON_DisableUnits_Init:0000002b $d
+     /tmp/ccisU4dJ.s:8336   .text.LL_ATON_DisableUnits_Init:0000002c $t
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
                            .group:00000000 wm4.newlib.h.27.b904f6f8971bd921b436e5701877de32
@@ -16986,7 +16986,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.cmsis_gcc.h.39.eba7438bc45fd1a6e6376b63ffe44436
                            .group:00000000 wm4.cmsis_gcc_m.h.24.e590ec51aeda3a1242400351d73f5dce
                            .group:00000000 wm4.core_cm55.h.213.0528f46a674315ef8d35c4477e230358
-ARM GAS  /tmp/ccTTGPm7.s 			page 285
+ARM GAS  /tmp/ccisU4dJ.s 			page 285
 
 
                            .group:00000000 wm4.armv8m_mpu.h.24.bf28cc25bee30a7ff9d2f7a44a5e2230

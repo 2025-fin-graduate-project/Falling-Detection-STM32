@@ -290,7 +290,9 @@ int main(void)
     static uint32_t pipeline_frame_count = 0;
     pipeline_frame_count++;
 
-    if (pipeline_frame_count % 2 == 0)
+    if ((ret == AI_SPE_POSTPROCESS_ERROR_NO) &&
+        (pp_output.pOutBuff != NULL) &&
+        (pipeline_frame_count % 2 == 0))
     {
       uint32_t now_tick = HAL_GetTick();
       float32_t dt_s = (float32_t)(now_tick - pose_last_tick) * 1e-3f;

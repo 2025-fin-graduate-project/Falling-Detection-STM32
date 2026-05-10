@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc50G25a.s 			page 1
+ARM GAS  /tmp/ccFBBWdK.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
   23:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   *
   24:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * This software is licensed under terms that can be found in the LICENSE file
   25:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * in the root directory of this software component.
-ARM GAS  /tmp/cc50G25a.s 			page 2
+ARM GAS  /tmp/ccFBBWdK.s 			page 2
 
 
   26:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
   80:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      (+) Data strobe (DQS) mode : the activation (or not) of this mode
   81:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     [..]
   82:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      If no data is required for the command (only for regular mode, not for
-ARM GAS  /tmp/cc50G25a.s 			page 3
+ARM GAS  /tmp/ccFBBWdK.s 			page 3
 
 
   83:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      Hyperbus mode), it is sent directly to the memory :
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  137:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  138:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     *** Errors management and abort functionality ***
  139:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     =================================================
-ARM GAS  /tmp/cc50G25a.s 			page 4
+ARM GAS  /tmp/ccFBBWdK.s 			page 4
 
 
  140:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     [..]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  194:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      it allows to register following callbacks:
  195:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      (+) ErrorCallback : callback when error occurs.
  196:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      (+) AbortCpltCallback : callback when abort is completed.
-ARM GAS  /tmp/cc50G25a.s 			page 5
+ARM GAS  /tmp/ccFBBWdK.s 			page 5
 
 
  197:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****      (+) FifoThresholdCallback : callback when the fifo threshold is reached.
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  251:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  252:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   @endverbatim
  253:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   ******************************************************************************
-ARM GAS  /tmp/cc50G25a.s 			page 6
+ARM GAS  /tmp/ccFBBWdK.s 			page 6
 
 
  254:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  308:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
  309:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   @endcond
  310:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   */
-ARM GAS  /tmp/cc50G25a.s 			page 7
+ARM GAS  /tmp/ccFBBWdK.s 			page 7
 
 
  311:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  365:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     assert_param(IS_XSPI_MAXTRAN(hxspi->Init.MaxTran));
  366:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     assert_param(IS_XSPI_CSSEL(hxspi->Init.MemorySelect));
  367:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     assert_param(IS_XSPI_EXTENDMEM(hxspi->Init.MemoryExtended));
-ARM GAS  /tmp/cc50G25a.s 			page 8
+ARM GAS  /tmp/ccFBBWdK.s 			page 8
 
 
  368:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* Initialize error code */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  422:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       MODIFY_REG(hxspi->Instance->CR, XSPI_CR_FTHRES, ((hxspi->Init.FifoThresholdByte - 1U) << XSPI
  423:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  424:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       /* Wait till busy flag is reset */
-ARM GAS  /tmp/cc50G25a.s 			page 9
+ARM GAS  /tmp/ccFBBWdK.s 			page 9
 
 
  425:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, hxspi->T
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  479:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
  480:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Initialize the XSPI MSP.
  481:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
-ARM GAS  /tmp/cc50G25a.s 			page 10
+ARM GAS  /tmp/ccFBBWdK.s 			page 10
 
 
  482:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @retval None
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  536:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  537:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
  538:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  DeInitialize the XSPI MSP.
-ARM GAS  /tmp/cc50G25a.s 			page 11
+ARM GAS  /tmp/ccFBBWdK.s 			page 11
 
 
  539:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  593:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
  594:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       /* Write a data in the fifo */
  595:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       *((__IO uint8_t *)data_reg) = *hxspi->pBuffPtr;
-ARM GAS  /tmp/cc50G25a.s 			page 12
+ARM GAS  /tmp/ccFBBWdK.s 			page 12
 
 
  596:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->pBuffPtr++;
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  650:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #else
  651:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         HAL_XSPI_RxCpltCallback(hxspi);
  652:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-ARM GAS  /tmp/cc50G25a.s 			page 13
+ARM GAS  /tmp/ccFBBWdK.s 			page 13
 
 
  653:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  707:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
  708:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         }
  709:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
-ARM GAS  /tmp/cc50G25a.s 			page 14
+ARM GAS  /tmp/ccFBBWdK.s 			page 14
 
 
  710:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       else
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  764:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         hxspi->ErrorCallback(hxspi);
  765:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #else
  766:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         HAL_XSPI_ErrorCallback(hxspi);
-ARM GAS  /tmp/cc50G25a.s 			page 15
+ARM GAS  /tmp/ccFBBWdK.s 			page 15
 
 
  767:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  821:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   */
  822:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** HAL_StatusTypeDef HAL_XSPI_Command(XSPI_HandleTypeDef *hxspi, const XSPI_RegularCmdTypeDef *pCmd, u
  823:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
-ARM GAS  /tmp/cc50G25a.s 			page 16
+ARM GAS  /tmp/ccFBBWdK.s 			page 16
 
 
  824:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status;
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  878:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  879:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* Wait till busy flag is reset */
  880:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     status = XSPI_WaitFlagStateUntilTimeout(hxspi, HAL_XSPI_FLAG_BUSY, RESET, tickstart, Timeout);
-ARM GAS  /tmp/cc50G25a.s 			page 17
+ARM GAS  /tmp/ccFBBWdK.s 			page 17
 
 
  881:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  935:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
  936:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
  937:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     else
-ARM GAS  /tmp/cc50G25a.s 			page 18
+ARM GAS  /tmp/ccFBBWdK.s 			page 18
 
 
  938:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  992:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_DATA_MODE(hxspi->Init.MemoryType, pCmd->DataMode));
  993:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  994:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if (pCmd->DataMode != HAL_XSPI_DATA_NONE)
-ARM GAS  /tmp/cc50G25a.s 			page 19
+ARM GAS  /tmp/ccFBBWdK.s 			page 19
 
 
  995:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1049:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
 1050:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status;
 1051:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   uint32_t state;
-ARM GAS  /tmp/cc50G25a.s 			page 20
+ARM GAS  /tmp/ccFBBWdK.s 			page 20
 
 
 1052:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   uint32_t tickstart = HAL_GetTick();
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1106:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_ADDRESS_WIDTH(pCmd->AddressWidth));
 1107:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_DATA_LENGTH(pCmd->DataLength));
 1108:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_DQS_MODE(pCmd->DQSMode));
-ARM GAS  /tmp/cc50G25a.s 			page 21
+ARM GAS  /tmp/ccFBBWdK.s 			page 21
 
 
 1109:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_DATA_MODE(hxspi->Init.MemoryType, pCmd->DataMode));
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1163:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @retval HAL status
 1164:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   */
 1165:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** HAL_StatusTypeDef HAL_XSPI_Transmit(XSPI_HandleTypeDef *hxspi, const uint8_t *pData, uint32_t Timeo
-ARM GAS  /tmp/cc50G25a.s 			page 22
+ARM GAS  /tmp/ccFBBWdK.s 			page 22
 
 
 1166:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1220:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
 1221:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       status = HAL_ERROR;
 1222:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
-ARM GAS  /tmp/cc50G25a.s 			page 23
+ARM GAS  /tmp/ccFBBWdK.s 			page 23
 
 
 1223:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1277:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           WRITE_REG(hxspi->Instance->IR, ir_reg);
 1278:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         }
 1279:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
-ARM GAS  /tmp/cc50G25a.s 			page 24
+ARM GAS  /tmp/ccFBBWdK.s 			page 24
 
 
 1280:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1334:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     status = HAL_ERROR;
 1335:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
 1336:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
-ARM GAS  /tmp/cc50G25a.s 			page 25
+ARM GAS  /tmp/ccFBBWdK.s 			page 25
 
 
 1337:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   else
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1391:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     if (hxspi->State == HAL_XSPI_STATE_CMD_CFG)
 1392:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
 1393:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       /* Configure counters and size */
-ARM GAS  /tmp/cc50G25a.s 			page 26
+ARM GAS  /tmp/ccFBBWdK.s 			page 26
 
 
 1394:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->XferCount = READ_REG(hxspi->Instance->DLR) + 1U;
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1448:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** HAL_StatusTypeDef HAL_XSPI_Transmit_DMA(XSPI_HandleTypeDef *hxspi, const uint8_t *pData)
 1449:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
 1450:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status = HAL_OK;
-ARM GAS  /tmp/cc50G25a.s 			page 27
+ARM GAS  /tmp/ccFBBWdK.s 			page 27
 
 
 1451:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   uint32_t data_size = hxspi->Instance->DLR + 1U;
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1505:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       else if (data_width == DMA_DEST_DATAWIDTH_WORD)
 1506:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
 1507:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         if (((data_size % 4U) != 0U) || ((hxspi->Init.FifoThresholdByte % 4U) != 0U))
-ARM GAS  /tmp/cc50G25a.s 			page 28
+ARM GAS  /tmp/ccFBBWdK.s 			page 28
 
 
 1508:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         {
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1562:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             /* Set DMA source address */
 1563:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             p_queue->Head->LinkRegisters[NODE_CSAR_DEFAULT_OFFSET] = (uint32_t)pData;
 1564:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             /* Set DMA destination address */
-ARM GAS  /tmp/cc50G25a.s 			page 29
+ARM GAS  /tmp/ccFBBWdK.s 			page 29
 
 
 1565:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             p_queue->Head->LinkRegisters[NODE_CDAR_DEFAULT_OFFSET] = (uint32_t)&hxspi->Instance->DR
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1619:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 1620:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
 1621:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Receive an amount of data in non-blocking mode with DMA.
-ARM GAS  /tmp/cc50G25a.s 			page 30
+ARM GAS  /tmp/ccFBBWdK.s 			page 30
 
 
 1622:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1676:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
 1677:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       else if (data_width == DMA_DEST_DATAWIDTH_HALFWORD)
 1678:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
-ARM GAS  /tmp/cc50G25a.s 			page 31
+ARM GAS  /tmp/ccFBBWdK.s 			page 31
 
 
 1679:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         if (((data_size % 2U) != 0U) || ((hxspi->Init.FifoThresholdByte % 2U) != 0U))
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1733:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         /* Clear the DMA abort callback */
 1734:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         hxspi->hdmarx->XferAbortCallback = NULL;
 1735:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 32
+ARM GAS  /tmp/ccFBBWdK.s 			page 32
 
 
 1736:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         /* Enable the receive DMA Channel */
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1790:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           else
 1791:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           {
 1792:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             if (READ_BIT(hxspi->Instance->CCR, XSPI_CCR_ADMODE) != HAL_XSPI_ADDRESS_NONE)
-ARM GAS  /tmp/cc50G25a.s 			page 33
+ARM GAS  /tmp/ccFBBWdK.s 			page 33
 
 
 1793:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             {
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1847:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 1848:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Check the state */
 1849:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if ((hxspi->State == HAL_XSPI_STATE_CMD_CFG) && (pCfg->AutomaticStop == HAL_XSPI_AUTOMATIC_STOP_E
-ARM GAS  /tmp/cc50G25a.s 			page 34
+ARM GAS  /tmp/ccFBBWdK.s 			page 34
 
 
 1850:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1904:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 1905:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
 1906:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Configure the XSPI Automatic Polling Mode in non-blocking mode.
-ARM GAS  /tmp/cc50G25a.s 			page 35
+ARM GAS  /tmp/ccFBBWdK.s 			page 35
 
 
 1907:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1961:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         }
 1962:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         else
 1963:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         {
-ARM GAS  /tmp/cc50G25a.s 			page 36
+ARM GAS  /tmp/ccFBBWdK.s 			page 36
 
 
 1964:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           WRITE_REG(hxspi->Instance->IR, ir_reg);
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2018:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       if (pCfg->TimeOutActivation == HAL_XSPI_TIMEOUT_COUNTER_ENABLE)
 2019:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
 2020:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         assert_param(IS_XSPI_TIMEOUT_PERIOD(pCfg->TimeoutPeriodClock));
-ARM GAS  /tmp/cc50G25a.s 			page 37
+ARM GAS  /tmp/ccFBBWdK.s 			page 37
 
 
 2021:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2075:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
 2076:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Prevent unused argument(s) compilation warning */
 2077:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   UNUSED(hxspi);
-ARM GAS  /tmp/cc50G25a.s 			page 38
+ARM GAS  /tmp/ccFBBWdK.s 			page 38
 
 
 2078:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2132:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @retval None
 2133:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   */
 2134:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** __weak void HAL_XSPI_RxCpltCallback(XSPI_HandleTypeDef *hxspi)
-ARM GAS  /tmp/cc50G25a.s 			page 39
+ARM GAS  /tmp/ccFBBWdK.s 			page 39
 
 
 2135:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2189:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
 2190:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Status Match callback.
 2191:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
-ARM GAS  /tmp/cc50G25a.s 			page 40
+ARM GAS  /tmp/ccFBBWdK.s 			page 40
 
 
 2192:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @retval None
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2246:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if (pCallback == NULL)
 2247:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
 2248:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* Update the error code */
-ARM GAS  /tmp/cc50G25a.s 			page 41
+ARM GAS  /tmp/ccFBBWdK.s 			page 41
 
 
 2249:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode |= HAL_XSPI_ERROR_INVALID_CALLBACK;
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2303:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     switch (CallbackID)
 2304:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
 2305:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       case HAL_XSPI_MSP_INIT_CB_ID :
-ARM GAS  /tmp/cc50G25a.s 			page 42
+ARM GAS  /tmp/ccFBBWdK.s 			page 42
 
 
 2306:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         hxspi->MspInitCallback = pCallback;
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2360:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         break;
 2361:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       case HAL_XSPI_ABORT_CB_ID :
 2362:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         hxspi->AbortCpltCallback = HAL_XSPI_AbortCpltCallback;
-ARM GAS  /tmp/cc50G25a.s 			page 43
+ARM GAS  /tmp/ccFBBWdK.s 			page 43
 
 
 2363:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         break;
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2417:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         break;
 2418:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
 2419:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
-ARM GAS  /tmp/cc50G25a.s 			page 44
+ARM GAS  /tmp/ccFBBWdK.s 			page 44
 
 
 2420:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   else
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2474:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       /* Disable the DMA transmit on the DMA side */
 2475:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       status = HAL_DMA_Abort(hxspi->hdmatx);
 2476:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       if (status != HAL_OK)
-ARM GAS  /tmp/cc50G25a.s 			page 45
+ARM GAS  /tmp/ccFBBWdK.s 			page 45
 
 
 2477:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2531:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
 2532:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Abort the current operation, return to the indirect mode. (non-blocking function)
 2533:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @param  hxspi : XSPI handle
-ARM GAS  /tmp/cc50G25a.s 			page 46
+ARM GAS  /tmp/ccFBBWdK.s 			page 46
 
 
 2534:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @retval HAL status
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2588:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 2589:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         /* Enable the transfer complete interrupts */
 2590:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         HAL_XSPI_ENABLE_IT(hxspi, HAL_XSPI_IT_TC);
-ARM GAS  /tmp/cc50G25a.s 			page 47
+ARM GAS  /tmp/ccFBBWdK.s 			page 47
 
 
 2591:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2645:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
 2646:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     status = HAL_ERROR;
 2647:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
-ARM GAS  /tmp/cc50G25a.s 			page 48
+ARM GAS  /tmp/ccFBBWdK.s 			page 48
 
 
 2648:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2702:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Check the state */
 2703:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if ((hxspi->State & XSPI_BUSY_STATE_MASK) == 0U)
 2704:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 49
+ARM GAS  /tmp/ccFBBWdK.s 			page 49
 
 
 2705:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* Synchronize initialization structure with the new device size value */
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2759:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** }
 2760:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 2761:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** /**
-ARM GAS  /tmp/cc50G25a.s 			page 50
+ARM GAS  /tmp/ccFBBWdK.s 			page 50
 
 
 2762:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   * @brief  Return the XSPI error code.
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2816:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Prevent unused argument(s) compilation warning */
 2817:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   UNUSED(Timeout);
 2818:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 51
+ARM GAS  /tmp/ccFBBWdK.s 			page 51
 
 
 2819:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Check the parameters of the XSPI IO Manager configuration structure */
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2873:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
 2874:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   else if (hxspi->Instance == XSPI2)
 2875:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 52
+ARM GAS  /tmp/ccFBBWdK.s 			page 52
 
 
 2876:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     IOM_cfg[1].IOPort = pCfg->IOPort ;
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2930:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 2931:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /******* Re-enable both XSPI after configure XSPI IO Manager ********/
 2932:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if ((xspi_enabled & 0x1U) != 0U)
-ARM GAS  /tmp/cc50G25a.s 			page 53
+ARM GAS  /tmp/ccFBBWdK.s 			page 53
 
 
 2933:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2987:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         reg = hxspi->Instance->CALFCR;
 2988:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         pCfg->MaxCalibration = (reg & XSPI_CALFCR_CALMAX);
 2989:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         break;
-ARM GAS  /tmp/cc50G25a.s 			page 54
+ARM GAS  /tmp/ccFBBWdK.s 			page 54
 
 
 2990:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3044:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****                      (pCfg->FineCalibrationUnit | (pCfg->CoarseCalibrationUnit << XSPI_CALMR_COARSE
 3045:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           break;
 3046:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         case HAL_XSPI_CAL_DATA_OUTPUT_DELAY:
-ARM GAS  /tmp/cc50G25a.s 			page 55
+ARM GAS  /tmp/ccFBBWdK.s 			page 55
 
 
 3047:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           MODIFY_REG(hxspi->Instance->CALSOR, (XSPI_CALSOR_COARSE | XSPI_CALSOR_FINE),
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
   43 0002 C36D     		ldr	r3, [r0, #92]
   44              	.LVL1:
   45              		.loc 1 3090 3 is_stmt 1 view .LVU4
-ARM GAS  /tmp/cc50G25a.s 			page 56
+ARM GAS  /tmp/ccFBBWdK.s 			page 56
 
 
   46              		.loc 1 3090 20 is_stmt 0 view .LVU5
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3108:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
 3109:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if (hxspi->State == HAL_XSPI_STATE_BUSY_RX)
 3110:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 57
+ARM GAS  /tmp/ccFBBWdK.s 			page 57
 
 
 3111:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #if defined (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U)
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3165:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   XSPI_HandleTypeDef *hxspi = (XSPI_HandleTypeDef *)(hdma->Parent);
 3166:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   hxspi->XferCount = 0;
 3167:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 58
+ARM GAS  /tmp/ccFBBWdK.s 			page 58
 
 
 3168:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Check the state */
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3222:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   while ((HAL_XSPI_GET_FLAG(hxspi, Flag)) != State)
 3223:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
 3224:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* Check for the Timeout */
-ARM GAS  /tmp/cc50G25a.s 			page 59
+ARM GAS  /tmp/ccFBBWdK.s 			page 59
 
 
 3225:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     if (Timeout != HAL_MAX_DELAY)
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  100 0006 1368     		ldr	r3, [r2]
 3246:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status = HAL_OK;
  101              		.loc 1 3246 1 view .LVU19
-ARM GAS  /tmp/cc50G25a.s 			page 60
+ARM GAS  /tmp/ccFBBWdK.s 			page 60
 
 
  102 0008 0546     		mov	r5, r0
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3265:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     tcr_reg = &(hxspi->Instance->WTCR);
  145              		.loc 1 3265 5 is_stmt 1 view .LVU35
  146              		.loc 1 3265 13 is_stmt 0 view .LVU36
-ARM GAS  /tmp/cc50G25a.s 			page 61
+ARM GAS  /tmp/ccFBBWdK.s 			page 61
 
 
  147 0040 02F5C476 		add	r6, r2, #392
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  173 0058 676B     		ldr	r7, [r4, #52]
  174 005a E36A     		ldr	r3, [r4, #44]
  175              	.LVL11:
-ARM GAS  /tmp/cc50G25a.s 			page 62
+ARM GAS  /tmp/ccFBBWdK.s 			page 62
 
 
  176              		.loc 1 3293 5 is_stmt 0 view .LVU50
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  211 008e 236C     		ldr	r3, [r4, #64]
  212 0090 B3F1006F 		cmp	r3, #134217728
  213 0094 56D1     		bne	.L12
-ARM GAS  /tmp/cc50G25a.s 			page 63
+ARM GAS  /tmp/ccFBBWdK.s 			page 63
 
 
 3313:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  240              	.LVL12:
 3332:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
  241              		.loc 1 3332 10 view .LVU75
-ARM GAS  /tmp/cc50G25a.s 			page 64
+ARM GAS  /tmp/ccFBBWdK.s 			page 64
 
 
  242 00be BAF1000F 		cmp	r10, #0
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  272              		.loc 1 3360 7 is_stmt 1 view .LVU85
  273              		.loc 1 3360 10 is_stmt 0 view .LVU86
  274 00f0 0029     		cmp	r1, #0
-ARM GAS  /tmp/cc50G25a.s 			page 65
+ARM GAS  /tmp/ccFBBWdK.s 			page 65
 
 
  275 00f2 3FD0     		beq	.L18
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3407:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
 3408:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         /* ---- Command with only address ---- */
 3409:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 66
+ARM GAS  /tmp/ccFBBWdK.s 			page 66
 
 
 3410:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         /* Configure the CCR register with all communication parameters */
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  305 0110 4148     		ldr	r0, .L40
  306 0112 FFF7FEFF 		bl	assert_failed
  307              	.LVL16:
-ARM GAS  /tmp/cc50G25a.s 			page 67
+ARM GAS  /tmp/ccFBBWdK.s 			page 67
 
 
  308              	.L28:
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  343              	.LVL23:
 3280:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     abr_reg = &(hxspi->Instance->ABR);
  344              		.loc 1 3280 5 is_stmt 1 view .LVU115
-ARM GAS  /tmp/cc50G25a.s 			page 68
+ARM GAS  /tmp/ccFBBWdK.s 			page 68
 
 
 3280:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     abr_reg = &(hxspi->Instance->ABR);
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  388 017e 2648     		ldr	r0, .L40
  389 0180 FFF7FEFF 		bl	assert_failed
  390              	.LVL30:
-ARM GAS  /tmp/cc50G25a.s 			page 69
+ARM GAS  /tmp/ccFBBWdK.s 			page 69
 
 
  391 0184 B6E7     		b	.L21
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3337:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****                                 XSPI_CCR_ADMODE | XSPI_CCR_ADDTR | XSPI_CCR_ADSIZE |
  432              		.loc 1 3337 9 is_stmt 0 view .LVU140
  433 01c0 D4E90870 		ldrd	r7, r0, [r4, #32]
-ARM GAS  /tmp/cc50G25a.s 			page 70
+ARM GAS  /tmp/ccFBBWdK.s 			page 70
 
 
  434              	.LVL34:
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  476 0202 3843     		orrs	r0, r0, r7
  477 0204 23F47C53 		bic	r3, r3, #16128
  478 0208 1843     		orrs	r0, r0, r3
-ARM GAS  /tmp/cc50G25a.s 			page 71
+ARM GAS  /tmp/ccFBBWdK.s 			page 71
 
 
  479 020a 0860     		str	r0, [r1]
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3222:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  528              		.loc 1 3222 3 is_stmt 1 view .LVU160
  529              	.LVL41:
-ARM GAS  /tmp/cc50G25a.s 			page 72
+ARM GAS  /tmp/ccFBBWdK.s 			page 72
 
 
  530              	.L43:
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3230:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  570              		.loc 1 3230 26 view .LVU175
  571 0036 0320     		movs	r0, #3
-ARM GAS  /tmp/cc50G25a.s 			page 73
+ARM GAS  /tmp/ccFBBWdK.s 			page 73
 
 
 3229:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         hxspi->ErrorCode |= HAL_XSPI_ERROR_TIMEOUT;
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  618              		.section	.text.HAL_XSPI_Init,"ax",%progbits
  619              		.align	1
  620              		.global	HAL_XSPI_Init
-ARM GAS  /tmp/cc50G25a.s 			page 74
+ARM GAS  /tmp/ccFBBWdK.s 			page 74
 
 
  621              		.syntax unified
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  664              	.LVL51:
  665              	.L57:
  355:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     assert_param(IS_XSPI_MEMORY_SIZE(hxspi->Init.MemorySize));
-ARM GAS  /tmp/cc50G25a.s 			page 75
+ARM GAS  /tmp/ccFBBWdK.s 			page 75
 
 
  666              		.loc 1 355 5 is_stmt 1 view .LVU199
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  711              		.loc 1 359 5 is_stmt 1 view .LVU208
  712 0072 E369     		ldr	r3, [r4, #28]
  713 0074 012B     		cmp	r3, #1
-ARM GAS  /tmp/cc50G25a.s 			page 76
+ARM GAS  /tmp/ccFBBWdK.s 			page 76
 
 
  714 0076 04D9     		bls	.L62
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  758              		.loc 1 363 5 is_stmt 1 view .LVU218
  759 00c6 236B     		ldr	r3, [r4, #48]
  760 00c8 1F2B     		cmp	r3, #31
-ARM GAS  /tmp/cc50G25a.s 			page 77
+ARM GAS  /tmp/ccFBBWdK.s 			page 77
 
 
  761 00ca 04D9     		bls	.L66
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  806 0118 FFF7FEFF 		bl	assert_failed
  807              	.LVL64:
  808              	.L70:
-ARM GAS  /tmp/cc50G25a.s 			page 78
+ARM GAS  /tmp/ccFBBWdK.s 			page 78
 
 
  369:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  849              	.LBE10:
  850              	.LBE11:
  403:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****                  (XSPI_DCR1_MTYP | XSPI_DCR1_DEVSIZE | XSPI_DCR1_CSHT | XSPI_DCR1_FRCK | XSPI_DCR1_
-ARM GAS  /tmp/cc50G25a.s 			page 79
+ARM GAS  /tmp/ccFBBWdK.s 			page 79
 
 
  851              		.loc 1 403 7 is_stmt 1 view .LVU242
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  893 018e 2046     		mov	r0, r4
  894 0190 0092     		str	r2, [sp]
  895 0192 3346     		mov	r3, r6
-ARM GAS  /tmp/cc50G25a.s 			page 80
+ARM GAS  /tmp/ccFBBWdK.s 			page 80
 
 
  896 0194 3A46     		mov	r2, r7
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  940 01cc 35D0     		beq	.L73
  433:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         {
  941              		.loc 1 433 13 discriminator 4 view .LVU265
-ARM GAS  /tmp/cc50G25a.s 			page 81
+ARM GAS  /tmp/ccFBBWdK.s 			page 81
 
 
  942 01ce 254A     		ldr	r2, .L112+16
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  986 021e 02BF     		ittt	eq
  987 0220 9A68     		ldreq	r2, [r3, #8]
  988 0222 42F40012 		orreq	r2, r2, #2097152
-ARM GAS  /tmp/cc50G25a.s 			page 82
+ARM GAS  /tmp/ccFBBWdK.s 			page 82
 
 
  989 0226 9A60     		streq	r2, [r3, #8]
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  348:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     /* No error code can be set set as the handler is null */
  1030              		.loc 1 348 12 view .LVU289
  1031 0252 A5E7     		b	.L56
-ARM GAS  /tmp/cc50G25a.s 			page 83
+ARM GAS  /tmp/ccFBBWdK.s 			page 83
 
 
  1032              	.L113:
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1084 0004 68B1     		cbz	r0, .L117
  512:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  1085              		.loc 1 512 5 is_stmt 1 view .LVU296
-ARM GAS  /tmp/cc50G25a.s 			page 84
+ARM GAS  /tmp/ccFBBWdK.s 			page 84
 
 
  1086 0006 0368     		ldr	r3, [r0]
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1131              		.loc 1 825 3 view .LVU307
  826:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  1132              		.loc 1 826 3 view .LVU308
-ARM GAS  /tmp/cc50G25a.s 			page 85
+ARM GAS  /tmp/ccFBBWdK.s 			page 85
 
 
  823:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status;
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1175 0030 FFF7FEFF 		bl	assert_failed
  1176              	.LVL86:
  1177              	.L120:
-ARM GAS  /tmp/cc50G25a.s 			page 86
+ARM GAS  /tmp/ccFBBWdK.s 			page 86
 
 
  835:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE)
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1221 007a 236A     		ldr	r3, [r4, #32]
  1222 007c 33F44053 		bics	r3, r3, #12288
  1223 0080 2CD1     		bne	.L129
-ARM GAS  /tmp/cc50G25a.s 			page 87
+ARM GAS  /tmp/ccFBBWdK.s 			page 87
 
 
  1224              	.L130:
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1267 00c8 636B     		ldr	r3, [r4, #52]
  1268 00ca 33F40023 		bics	r3, r3, #524288
  1269 00ce 19D0     		beq	.L134
-ARM GAS  /tmp/cc50G25a.s 			page 88
+ARM GAS  /tmp/ccFBBWdK.s 			page 88
 
 
  853:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1312 0110 21F08071 		bic	r1, r1, #16777216
  1313 0114 B1F1806F 		cmp	r1, #67108864
  1314 0118 24D1     		bne	.L143
-ARM GAS  /tmp/cc50G25a.s 			page 89
+ARM GAS  /tmp/ccFBBWdK.s 			page 89
 
 
  1315              	.L147:
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1359 0162 DAE7     		b	.L147
  1360              	.L143:
  856:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 90
+ARM GAS  /tmp/ccFBBWdK.s 			page 90
 
 
  1361              		.loc 1 856 3 discriminator 27 view .LVU365
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1402 0196 EB65     		str	r3, [r5, #92]
  1403 0198 1CE0     		b	.L162
  1404              	.LVL103:
-ARM GAS  /tmp/cc50G25a.s 			page 91
+ARM GAS  /tmp/ccFBBWdK.s 			page 91
 
 
  1405              	.L144:
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  888:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  1446              		.loc 1 888 16 is_stmt 0 view .LVU392
  1447 01ca 2146     		mov	r1, r4
-ARM GAS  /tmp/cc50G25a.s 			page 92
+ARM GAS  /tmp/ccFBBWdK.s 			page 92
 
 
  1448 01cc 2846     		mov	r0, r5
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  896:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  1490              		.loc 1 896 20 is_stmt 0 view .LVU405
  1491 01ee 0246     		mov	r2, r0
-ARM GAS  /tmp/cc50G25a.s 			page 93
+ARM GAS  /tmp/ccFBBWdK.s 			page 93
 
 
  1492 01f0 3346     		mov	r3, r6
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1531              		.loc 1 927 28 view .LVU420
  1532 0218 AB65     		str	r3, [r5, #88]
  1533 021a DCE7     		b	.L154
-ARM GAS  /tmp/cc50G25a.s 			page 94
+ARM GAS  /tmp/ccFBBWdK.s 			page 94
 
 
  1534              	.L159:
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  959:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status;
  1578              		.loc 1 959 1 is_stmt 0 view .LVU433
  1579 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
-ARM GAS  /tmp/cc50G25a.s 			page 95
+ARM GAS  /tmp/ccFBBWdK.s 			page 95
 
 
  1580              		.cfi_def_cfa_offset 24
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1622 0032 E368     		ldr	r3, [r4, #12]
  1623 0034 042B     		cmp	r3, #4
  1624 0036 04D9     		bls	.L217
-ARM GAS  /tmp/cc50G25a.s 			page 96
+ARM GAS  /tmp/ccFBBWdK.s 			page 96
 
 
  971:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   if (pCmd->InstructionMode != HAL_XSPI_INSTRUCTION_NONE)
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1668              		.loc 1 982 5 view .LVU456
  1669 0080 636A     		ldr	r3, [r4, #36]
  1670 0082 33F40063 		bics	r3, r3, #2048
-ARM GAS  /tmp/cc50G25a.s 			page 97
+ARM GAS  /tmp/ccFBBWdK.s 			page 97
 
 
  1671 0086 13D0     		beq	.L223
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1714 00ce 40F2DD31 		movw	r1, #989
  1715 00d2 4448     		ldr	r0, .L299
  1716 00d4 FFF7FEFF 		bl	assert_failed
-ARM GAS  /tmp/cc50G25a.s 			page 98
+ARM GAS  /tmp/ccFBBWdK.s 			page 98
 
 
  1717              	.LVL129:
@@ -5878,7 +5878,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  996:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     assert_param(IS_XSPI_DATA_DTR_MODE(pCmd->DataDTRMode));
  1760              		.loc 1 996 5 is_stmt 1 view .LVU479
  1761 011a E36B     		ldr	r3, [r4, #60]
-ARM GAS  /tmp/cc50G25a.s 			page 99
+ARM GAS  /tmp/ccFBBWdK.s 			page 99
 
 
  1762 011c 23B9     		cbnz	r3, .L241
@@ -5938,7 +5938,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1807              	.L239:
  992:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  1808              		.loc 1 992 3 discriminator 27 view .LVU489
-ARM GAS  /tmp/cc50G25a.s 			page 100
+ARM GAS  /tmp/ccFBBWdK.s 			page 100
 
 
  1809 016c 4FF47871 		mov	r1, #992
@@ -5998,7 +5998,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1851 01ac 3346     		mov	r3, r6
  1852 01ae FFF7FEFF 		bl	XSPI_WaitFlagStateUntilTimeout
  1853              	.LVL138:
-ARM GAS  /tmp/cc50G25a.s 			page 101
+ARM GAS  /tmp/ccFBBWdK.s 			page 101
 
 
 1010:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
@@ -6058,7 +6058,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1890 01d0 1368     		ldr	r3, [r2]
  1891 01d2 43F44033 		orr	r3, r3, #196608
  1892 01d6 1360     		str	r3, [r2]
-ARM GAS  /tmp/cc50G25a.s 			page 102
+ARM GAS  /tmp/ccFBBWdK.s 			page 102
 
 
  1893              	.LVL143:
@@ -6118,7 +6118,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1049:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status;
  1939              		.loc 1 1049 1 is_stmt 0 view .LVU530
  1940 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
-ARM GAS  /tmp/cc50G25a.s 			page 103
+ARM GAS  /tmp/ccFBBWdK.s 			page 103
 
 
  1941              		.cfi_def_cfa_offset 32
@@ -6178,7 +6178,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  1984              		.loc 1 1057 3 is_stmt 0 discriminator 2 view .LVU541
  1985 0036 40F22141 		movw	r1, #1057
  1986 003a 1648     		ldr	r0, .L312
-ARM GAS  /tmp/cc50G25a.s 			page 104
+ARM GAS  /tmp/ccFBBWdK.s 			page 104
 
 
  1987 003c FFF7FEFF 		bl	assert_failed
@@ -6238,7 +6238,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2028 006e 2168     		ldr	r1, [r4]
  2029 0070 2A68     		ldr	r2, [r5]
  2030 0072 43EA0143 		orr	r3, r3, r1, lsl #16
-ARM GAS  /tmp/cc50G25a.s 			page 105
+ARM GAS  /tmp/ccFBBWdK.s 			page 105
 
 
  2031 0076 6168     		ldr	r1, [r4, #4]
@@ -6298,7 +6298,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2075              		.align	1
  2076              		.global	HAL_XSPI_HyperbusCmd
  2077              		.syntax unified
-ARM GAS  /tmp/cc50G25a.s 			page 106
+ARM GAS  /tmp/ccFBBWdK.s 			page 106
 
 
  2078              		.thumb
@@ -6358,7 +6358,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1106:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_DATA_LENGTH(pCmd->DataLength));
  2122              		.loc 1 1106 3 is_stmt 1 view .LVU577
  2123 0022 A368     		ldr	r3, [r4, #8]
-ARM GAS  /tmp/cc50G25a.s 			page 107
+ARM GAS  /tmp/ccFBBWdK.s 			page 107
 
 
  2124 0024 33F44053 		bics	r3, r3, #12288
@@ -6418,7 +6418,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2166              		.loc 1 1109 3 discriminator 27 view .LVU589
  2167 006a 40F25541 		movw	r1, #1109
  2168 006e 2248     		ldr	r0, .L347
-ARM GAS  /tmp/cc50G25a.s 			page 108
+ARM GAS  /tmp/ccFBBWdK.s 			page 108
 
 
  2169 0070 FFF7FEFF 		bl	assert_failed
@@ -6478,7 +6478,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2210 00b0 0B43     		orrs	r3, r3, r1
  2211 00b2 6169     		ldr	r1, [r4, #20]
  2212 00b4 0B43     		orrs	r3, r3, r1
-ARM GAS  /tmp/cc50G25a.s 			page 109
+ARM GAS  /tmp/ccFBBWdK.s 			page 109
 
 
  2213 00b6 43F00063 		orr	r3, r3, #134217728
@@ -6538,7 +6538,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2254              		.loc 1 1150 12 view .LVU615
  2255 00ec 0120     		movs	r0, #1
 1151:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
-ARM GAS  /tmp/cc50G25a.s 			page 110
+ARM GAS  /tmp/ccFBBWdK.s 			page 110
 
 
  2256              		.loc 1 1151 22 view .LVU616
@@ -6598,7 +6598,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2304              	.LVL179:
 1168:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   __IO uint32_t *data_reg = &hxspi->Instance->DR;
  2305              		.loc 1 1168 24 view .LVU625
-ARM GAS  /tmp/cc50G25a.s 			page 111
+ARM GAS  /tmp/ccFBBWdK.s 			page 111
 
 
  2306 000e 0546     		mov	r5, r0
@@ -6658,7 +6658,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2342              		.loc 1 1183 57 view .LVU643
  2343 002c 0133     		adds	r3, r3, #1
 1183:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->XferSize  = hxspi->XferCount;
-ARM GAS  /tmp/cc50G25a.s 			page 112
+ARM GAS  /tmp/ccFBBWdK.s 			page 112
 
 
  2344              		.loc 1 1183 24 view .LVU644
@@ -6718,7 +6718,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2382              		.loc 1 1202 9 is_stmt 1 view .LVU660
 1202:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       } while (hxspi->XferCount > 0U);
  2383              		.loc 1 1202 14 is_stmt 0 view .LVU661
-ARM GAS  /tmp/cc50G25a.s 			page 113
+ARM GAS  /tmp/ccFBBWdK.s 			page 113
 
 
  2384 005a E36C     		ldr	r3, [r4, #76]
@@ -6778,7 +6778,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2425 0080 2268     		ldr	r2, [r4]
  2426 0082 5362     		str	r3, [r2, #36]
 1215:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         }
-ARM GAS  /tmp/cc50G25a.s 			page 114
+ARM GAS  /tmp/ccFBBWdK.s 			page 114
 
 
  2427              		.loc 1 1215 11 view .LVU675
@@ -6838,7 +6838,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1241:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   uint32_t addr_reg = hxspi->Instance->AR;
  2473              		.loc 1 1241 35 view .LVU686
  2474 000e 2568     		ldr	r5, [r4]
-ARM GAS  /tmp/cc50G25a.s 			page 115
+ARM GAS  /tmp/ccFBBWdK.s 			page 115
 
 
 1240:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   __IO uint32_t *data_reg = &hxspi->Instance->DR;
@@ -6898,7 +6898,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2511 0028 042B     		cmp	r3, #4
  2512 002a 3FD1     		bne	.L365
 1257:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->XferSize  = hxspi->XferCount;
-ARM GAS  /tmp/cc50G25a.s 			page 116
+ARM GAS  /tmp/ccFBBWdK.s 			page 116
 
 
  2513              		.loc 1 1257 7 is_stmt 1 view .LVU705
@@ -6958,7 +6958,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1284:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  2549              		.loc 1 1284 18 is_stmt 0 view .LVU724
  2550 0050 3346     		mov	r3, r6
-ARM GAS  /tmp/cc50G25a.s 			page 117
+ARM GAS  /tmp/ccFBBWdK.s 			page 117
 
 
  2551 0052 0122     		movs	r2, #1
@@ -7018,7 +7018,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2588 007c 0122     		movs	r2, #1
  2589 007e 0221     		movs	r1, #2
  2590 0080 2046     		mov	r0, r4
-ARM GAS  /tmp/cc50G25a.s 			page 118
+ARM GAS  /tmp/ccFBBWdK.s 			page 118
 
 
  2591              	.LVL201:
@@ -7078,7 +7078,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2633              	.L365:
 1312:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
  2634              		.loc 1 1312 7 is_stmt 1 view .LVU754
-ARM GAS  /tmp/cc50G25a.s 			page 119
+ARM GAS  /tmp/ccFBBWdK.s 			page 119
 
 
 1313:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
@@ -7138,7 +7138,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2677              		.loc 1 1340 5 is_stmt 1 view .LVU768
 1340:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
  2678              		.loc 1 1340 14 is_stmt 0 view .LVU769
-ARM GAS  /tmp/cc50G25a.s 			page 120
+ARM GAS  /tmp/ccFBBWdK.s 			page 120
 
 
  2679 000a 836D     		ldr	r3, [r0, #88]
@@ -7198,7 +7198,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2716 0032 42F4E022 		orr	r2, r2, #458752
  2717 0036 1A60     		str	r2, [r3]
  2718 0038 7047     		bx	lr
-ARM GAS  /tmp/cc50G25a.s 			page 121
+ARM GAS  /tmp/ccFBBWdK.s 			page 121
 
 
  2719              	.LVL212:
@@ -7258,7 +7258,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2762 000a 19B9     		cbnz	r1, .L386
 1385:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_PARAM;
  2763              		.loc 1 1385 5 is_stmt 1 view .LVU800
-ARM GAS  /tmp/cc50G25a.s 			page 122
+ARM GAS  /tmp/ccFBBWdK.s 			page 122
 
 
  2764              	.LVL216:
@@ -7318,7 +7318,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2800 0026 1A68     		ldr	r2, [r3]
  2801 0028 22F04052 		bic	r2, r2, #805306368
  2802 002c 42F08052 		orr	r2, r2, #268435456
-ARM GAS  /tmp/cc50G25a.s 			page 123
+ARM GAS  /tmp/ccFBBWdK.s 			page 123
 
 
  2803 0030 1A60     		str	r2, [r3]
@@ -7378,7 +7378,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1429:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
  2843              		.loc 1 1429 7 view .LVU833
  2844              	.LVL221:
-ARM GAS  /tmp/cc50G25a.s 			page 124
+ARM GAS  /tmp/ccFBBWdK.s 			page 124
 
 
 1430:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
@@ -7438,7 +7438,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2888 0008 11B9     		cbnz	r1, .L396
  2889              	.LVL224:
  2890              	.L407:
-ARM GAS  /tmp/cc50G25a.s 			page 125
+ARM GAS  /tmp/ccFBBWdK.s 			page 125
 
 
 1511:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           status = HAL_ERROR;
@@ -7498,7 +7498,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1469:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         {
  2929              		.loc 1 1469 31 discriminator 1 view .LVU863
  2930 002a 002D     		cmp	r5, #0
-ARM GAS  /tmp/cc50G25a.s 			page 126
+ARM GAS  /tmp/ccFBBWdK.s 			page 126
 
 
  2931 002c 3AD0     		beq	.L400
@@ -7558,7 +7558,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  2968              		.loc 1 1536 22 is_stmt 0 view .LVU880
  2969 004c 1823     		movs	r3, #24
  2970 004e A365     		str	r3, [r4, #88]
-ARM GAS  /tmp/cc50G25a.s 			page 127
+ARM GAS  /tmp/ccFBBWdK.s 			page 127
 
 
 1539:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -7618,7 +7618,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1561:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             /* Set DMA source address */
  3009              		.loc 1 1561 13 view .LVU897
 1561:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             /* Set DMA source address */
-ARM GAS  /tmp/cc50G25a.s 			page 128
+ARM GAS  /tmp/ccFBBWdK.s 			page 128
 
 
  3010              		.loc 1 1561 75 is_stmt 0 view .LVU898
@@ -7678,7 +7678,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3048              		.loc 1 1489 9 view .LVU914
 1489:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       }
  3049              		.loc 1 1489 26 is_stmt 0 view .LVU915
-ARM GAS  /tmp/cc50G25a.s 			page 129
+ARM GAS  /tmp/ccFBBWdK.s 			page 129
 
 
  3050 00a8 E364     		str	r3, [r4, #76]
@@ -7738,7 +7738,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3089              	.L404:
 1505:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
  3090              		.loc 1 1505 12 is_stmt 1 view .LVU931
-ARM GAS  /tmp/cc50G25a.s 			page 130
+ARM GAS  /tmp/ccFBBWdK.s 			page 130
 
 
 1505:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
@@ -7798,7 +7798,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3128 00ea DEE7     		b	.L397
  3129              	.LVL247:
  3130              	.L409:
-ARM GAS  /tmp/cc50G25a.s 			page 131
+ARM GAS  /tmp/ccFBBWdK.s 			page 131
 
 
 1582:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****               (hxspi->hdmatx->Init.SrcInc == DMA_SINC_INCREMENTED) && (hxspi->hdmatx->Init.DestInc 
@@ -7858,7 +7858,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3169              		.loc 1 1613 24 view .LVU964
  3170 0110 7CE7     		b	.L421
  3171              	.L425:
-ARM GAS  /tmp/cc50G25a.s 			page 132
+ARM GAS  /tmp/ccFBBWdK.s 			page 132
 
 
  3172 0112 00BF     		.align	2
@@ -7918,7 +7918,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1636:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   DMA_QListTypeDef *p_queue = {NULL};
  3218              		.loc 1 1636 3 is_stmt 1 view .LVU975
 1636:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   DMA_QListTypeDef *p_queue = {NULL};
-ARM GAS  /tmp/cc50G25a.s 			page 133
+ARM GAS  /tmp/ccFBBWdK.s 			page 133
 
 
  3219              		.loc 1 1636 12 is_stmt 0 view .LVU976
@@ -7978,7 +7978,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1653:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         if ((p_queue != NULL) && (p_queue->Head != NULL))
  3258              		.loc 1 1653 9 is_stmt 1 view .LVU992
 1653:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         if ((p_queue != NULL) && (p_queue->Head != NULL))
-ARM GAS  /tmp/cc50G25a.s 			page 134
+ARM GAS  /tmp/ccFBBWdK.s 			page 134
 
 
  3259              		.loc 1 1653 17 is_stmt 0 view .LVU993
@@ -8038,7 +8038,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3297 004e A364     		str	r3, [r4, #72]
 1713:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  3298              		.loc 1 1713 9 is_stmt 1 view .LVU1010
-ARM GAS  /tmp/cc50G25a.s 			page 135
+ARM GAS  /tmp/ccFBBWdK.s 			page 135
 
 
 1716:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -8098,7 +8098,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3336              		.loc 1 1742 13 is_stmt 1 view .LVU1027
  3337 0080 DEF80030 		ldr	r3, [lr]
 1749:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****             /* Set DMA destination address */
-ARM GAS  /tmp/cc50G25a.s 			page 136
+ARM GAS  /tmp/ccFBBWdK.s 			page 136
 
 
  3338              		.loc 1 1749 80 is_stmt 0 view .LVU1028
@@ -8158,7 +8158,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3377 00ba 9E64     		str	r6, [r3, #72]
  3378              	.L446:
 1803:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         }
-ARM GAS  /tmp/cc50G25a.s 			page 137
+ARM GAS  /tmp/ccFBBWdK.s 			page 137
 
 
  3379              		.loc 1 1803 11 view .LVU1044
@@ -8218,7 +8218,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3417              		.loc 1 1669 20 view .LVU1060
  3418 00d4 B6E7     		b	.L432
  3419              	.LVL276:
-ARM GAS  /tmp/cc50G25a.s 			page 138
+ARM GAS  /tmp/ccFBBWdK.s 			page 138
 
 
  3420              	.L433:
@@ -8278,7 +8278,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3458              		.loc 1 1758 13 is_stmt 1 view .LVU1076
 1758:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  3459              		.loc 1 1758 30 is_stmt 0 view .LVU1077
-ARM GAS  /tmp/cc50G25a.s 			page 139
+ARM GAS  /tmp/ccFBBWdK.s 			page 139
 
 
  3460 00fc 0423     		movs	r3, #4
@@ -8338,7 +8338,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3498 0124 FFF7FEFF 		bl	HAL_DMA_Start_IT
  3499              	.LVL283:
 1771:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****           }
-ARM GAS  /tmp/cc50G25a.s 			page 140
+ARM GAS  /tmp/ccFBBWdK.s 			page 140
 
 
  3500              		.loc 1 1771 20 view .LVU1094
@@ -8398,7 +8398,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3543              		.global	HAL_XSPI_AutoPolling
  3544              		.syntax unified
  3545              		.thumb
-ARM GAS  /tmp/cc50G25a.s 			page 141
+ARM GAS  /tmp/ccFBBWdK.s 			page 141
 
 
  3546              		.thumb_func
@@ -8458,7 +8458,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3588              		.loc 1 1839 3 is_stmt 1 view .LVU1119
 1839:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* USE_FULL_ASSERT */
  3589              		.loc 1 1839 12 is_stmt 0 view .LVU1120
-ARM GAS  /tmp/cc50G25a.s 			page 142
+ARM GAS  /tmp/ccFBBWdK.s 			page 142
 
 
  3590 001a D3F840A0 		ldr	r10, [r3, #64]
@@ -8518,7 +8518,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1849:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  3634              		.loc 1 1849 13 is_stmt 0 view .LVU1131
  3635 0064 A36D     		ldr	r3, [r4, #88]
-ARM GAS  /tmp/cc50G25a.s 			page 143
+ARM GAS  /tmp/ccFBBWdK.s 			page 143
 
 
 1849:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -8578,7 +8578,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3677 00a8 45F00055 		orr	r5, r5, #536870912
 1864:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
  3678              		.loc 1 1864 10 view .LVU1145
-ARM GAS  /tmp/cc50G25a.s 			page 144
+ARM GAS  /tmp/ccFBBWdK.s 			page 144
 
 
  3679 00ac B3F1806F 		cmp	r3, #67108864
@@ -8638,7 +8638,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3719 00d4 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
  3720              	.LVL305:
  3721              	.L468:
-ARM GAS  /tmp/cc50G25a.s 			page 145
+ARM GAS  /tmp/ccFBBWdK.s 			page 145
 
 
  3722              		.cfi_restore_state
@@ -8698,7 +8698,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3764              		.section	.text.HAL_XSPI_AutoPolling_IT,"ax",%progbits
  3765              		.align	1
  3766              		.global	HAL_XSPI_AutoPolling_IT
-ARM GAS  /tmp/cc50G25a.s 			page 146
+ARM GAS  /tmp/ccFBBWdK.s 			page 146
 
 
  3767              		.syntax unified
@@ -8758,7 +8758,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3809              		.loc 1 1919 3 is_stmt 1 view .LVU1185
 1919:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* USE_FULL_ASSERT */
  3810              		.loc 1 1919 12 is_stmt 0 view .LVU1186
-ARM GAS  /tmp/cc50G25a.s 			page 147
+ARM GAS  /tmp/ccFBBWdK.s 			page 147
 
 
  3811 0016 D3F84090 		ldr	r9, [r3, #64]
@@ -8818,7 +8818,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1929:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  3855              		.loc 1 1929 12 is_stmt 0 view .LVU1197
  3856 0060 A36D     		ldr	r3, [r4, #88]
-ARM GAS  /tmp/cc50G25a.s 			page 148
+ARM GAS  /tmp/ccFBBWdK.s 			page 148
 
 
 1929:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -8878,7 +8878,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3898 00a4 4822     		movs	r2, #72
  3899 00a6 A265     		str	r2, [r4, #88]
 1949:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 149
+ARM GAS  /tmp/ccFBBWdK.s 			page 149
 
 
  3900              		.loc 1 1949 7 is_stmt 1 view .LVU1211
@@ -8938,7 +8938,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1972:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
  3941              		.loc 1 1972 22 view .LVU1225
  3942 00d4 E365     		str	r3, [r4, #92]
-ARM GAS  /tmp/cc50G25a.s 			page 150
+ARM GAS  /tmp/ccFBBWdK.s 			page 150
 
 
  3943 00d6 F0E7     		b	.L488
@@ -8998,7 +8998,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  3989              		.loc 1 1988 24 view .LVU1235
  3990 000c 0646     		mov	r6, r0
  3991              	.LVL331:
-ARM GAS  /tmp/cc50G25a.s 			page 151
+ARM GAS  /tmp/ccFBBWdK.s 			page 151
 
 
 1991:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   assert_param(IS_XSPI_NO_PREFETCH_DATA(pCfg->NoPrefetchData));
@@ -9058,7 +9058,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4033              		.loc 1 2000 8 view .LVU1248
  4034 0048 0028     		cmp	r0, #0
  4035 004a 45D1     		bne	.L512
-ARM GAS  /tmp/cc50G25a.s 			page 152
+ARM GAS  /tmp/ccFBBWdK.s 			page 152
 
 
 2002:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -9118,7 +9118,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4078              	.L510:
 2033:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****                  (pCfg->TimeOutActivation | XSPI_FUNCTIONAL_MODE_MEMORY_MAPPED));
  4079              		.loc 1 2033 7 view .LVU1261
-ARM GAS  /tmp/cc50G25a.s 			page 153
+ARM GAS  /tmp/ccFBBWdK.s 			page 153
 
 
  4080 008e 2A68     		ldr	r2, [r5]
@@ -9178,7 +9178,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2040:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
  4126              		.loc 1 2040 22 is_stmt 0 view .LVU1270
  4127 00d0 1023     		movs	r3, #16
-ARM GAS  /tmp/cc50G25a.s 			page 154
+ARM GAS  /tmp/ccFBBWdK.s 			page 154
 
 
 2039:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
@@ -9238,7 +9238,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4173 0008 1B68     		ldr	r3, [r3]
  4174              	.LVL348:
 2065:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
-ARM GAS  /tmp/cc50G25a.s 			page 155
+ARM GAS  /tmp/ccFBBWdK.s 			page 155
 
 
  4175              		.loc 1 2065 14 view .LVU1282
@@ -9298,7 +9298,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4231              	.LVL349:
  4232              	.LFB926:
 3164:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   XSPI_HandleTypeDef *hxspi = (XSPI_HandleTypeDef *)(hdma->Parent);
-ARM GAS  /tmp/cc50G25a.s 			page 156
+ARM GAS  /tmp/ccFBBWdK.s 			page 156
 
 
  4233              		.loc 1 3164 1 view -0
@@ -9358,7 +9358,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4272 0028 1A68     		ldr	r2, [r3]
  4273 002a 42F00202 		orr	r2, r2, #2
  4274 002e 1A60     		str	r2, [r3]
-ARM GAS  /tmp/cc50G25a.s 			page 157
+ARM GAS  /tmp/ccFBBWdK.s 			page 157
 
 
  4275              	.LVL351:
@@ -9418,7 +9418,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4322              		.align	1
  4323              		.weak	HAL_XSPI_CmdCpltCallback
  4324              		.syntax unified
-ARM GAS  /tmp/cc50G25a.s 			page 158
+ARM GAS  /tmp/ccFBBWdK.s 			page 158
 
 
  4325              		.thumb
@@ -9478,7 +9478,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4383              	.LFB947:
  4384              		.cfi_startproc
 2164:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
-ARM GAS  /tmp/cc50G25a.s 			page 159
+ARM GAS  /tmp/ccFBBWdK.s 			page 159
 
 
  4385              		.loc 1 2164 13 view -0
@@ -9538,7 +9538,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3107:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  4436              		.loc 1 3107 40 view .LVU1324
  4437 0006 5B08     		lsrs	r3, r3, #1
-ARM GAS  /tmp/cc50G25a.s 			page 160
+ARM GAS  /tmp/ccFBBWdK.s 			page 160
 
 
 3107:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -9598,7 +9598,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4487              	HAL_XSPI_TimeOutCallback:
  4488              	.LFB953:
  4489              		.cfi_startproc
-ARM GAS  /tmp/cc50G25a.s 			page 161
+ARM GAS  /tmp/ccFBBWdK.s 			page 161
 
 
 2209:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** {
@@ -9658,7 +9658,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4534              		.loc 1 590 6 is_stmt 0 view .LVU1345
  4535 000a 5507     		lsls	r5, r2, #29
  587:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 162
+ARM GAS  /tmp/ccFBBWdK.s 			page 162
 
 
  4536              		.loc 1 587 12 view .LVU1346
@@ -9718,7 +9718,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4573              		.loc 1 611 5 view .LVU1363
  611:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
  4574              		.loc 1 611 14 is_stmt 0 view .LVU1364
-ARM GAS  /tmp/cc50G25a.s 			page 163
+ARM GAS  /tmp/ccFBBWdK.s 			page 163
 
 
  4575 002c E36C     		ldr	r3, [r4, #76]
@@ -9778,7 +9778,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4615 0050 9507     		lsls	r5, r2, #30
  4616 0052 3ED5     		bpl	.L553
  626:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 164
+ARM GAS  /tmp/ccFBBWdK.s 			page 164
 
 
  4617              		.loc 1 626 46 discriminator 1 view .LVU1379
@@ -9838,7 +9838,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4656              	.L555:
  637:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
  4657              		.loc 1 637 12 is_stmt 1 view .LVU1395
-ARM GAS  /tmp/cc50G25a.s 			page 165
+ARM GAS  /tmp/ccFBBWdK.s 			page 165
 
 
  637:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
@@ -9898,7 +9898,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4696 009e 1829     		cmp	r1, #24
  665:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  4697              		.loc 1 665 7 view .LVU1412
-ARM GAS  /tmp/cc50G25a.s 			page 166
+ARM GAS  /tmp/ccFBBWdK.s 			page 166
 
 
  4698 00a0 22F4E022 		bic	r2, r2, #458752
@@ -9958,7 +9958,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4736              		.loc 1 689 12 view .LVU1428
  4737 00c8 002B     		cmp	r3, #0
  4738 00ca 3BD1     		bne	.L612
-ARM GAS  /tmp/cc50G25a.s 			page 167
+ARM GAS  /tmp/ccFBBWdK.s 			page 167
 
 
  4739              	.LVL391:
@@ -10018,7 +10018,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4777 00ee A365     		str	r3, [r4, #88]
  4778              	.L562:
  735:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-ARM GAS  /tmp/cc50G25a.s 			page 168
+ARM GAS  /tmp/ccFBBWdK.s 			page 168
 
 
  4779              		.loc 1 735 5 is_stmt 1 view .LVU1445
@@ -10078,7 +10078,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4817              		.loc 1 751 8 view .LVU1461
  4818 0114 19D5     		bpl	.L564
  754:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 169
+ARM GAS  /tmp/ccFBBWdK.s 			page 169
 
 
  4819              		.loc 1 754 7 is_stmt 1 view .LVU1462
@@ -10138,7 +10138,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4855              		.loc 1 772 10 discriminator 1 view .LVU1480
  4856 013a 0028     		cmp	r0, #0
  4857 013c 80D0     		beq	.L547
-ARM GAS  /tmp/cc50G25a.s 			page 170
+ARM GAS  /tmp/ccFBBWdK.s 			page 170
 
 
  774:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -10198,7 +10198,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  4896              		.loc 1 800 26 view .LVU1496
  4897 015e 5A62     		str	r2, [r3, #36]
  806:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-ARM GAS  /tmp/cc50G25a.s 			page 171
+ARM GAS  /tmp/ccFBBWdK.s 			page 171
 
 
  4898              		.loc 1 806 5 is_stmt 1 view .LVU1497
@@ -10258,7 +10258,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2466:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  4944              		.loc 1 2466 3 is_stmt 1 view .LVU1508
 2466:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 172
+ARM GAS  /tmp/ccFBBWdK.s 			page 172
 
 
  4945              		.loc 1 2466 6 is_stmt 0 view .LVU1509
@@ -10318,7 +10318,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2483:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
  4983              		.loc 1 2483 7 is_stmt 1 view .LVU1526
 2483:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
-ARM GAS  /tmp/cc50G25a.s 			page 173
+ARM GAS  /tmp/ccFBBWdK.s 			page 173
 
 
  4984              		.loc 1 2483 10 is_stmt 0 view .LVU1527
@@ -10378,7 +10378,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5024              	.LVL422:
  5025              	.L624:
 2528:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** }
-ARM GAS  /tmp/cc50G25a.s 			page 174
+ARM GAS  /tmp/ccFBBWdK.s 			page 174
 
 
  5026              		.loc 1 2528 3 is_stmt 1 view .LVU1542
@@ -10438,7 +10438,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5067              		.loc 1 2517 7 is_stmt 1 view .LVU1555
  5068 008c 23F04053 		bic	r3, r3, #805306368
  5069 0090 1360     		str	r3, [r2]
-ARM GAS  /tmp/cc50G25a.s 			page 175
+ARM GAS  /tmp/ccFBBWdK.s 			page 175
 
 
 2519:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
@@ -10498,7 +10498,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5114 0002 836D     		ldr	r3, [r0, #88]
 2537:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status = HAL_OK;
  5115              		.loc 1 2537 1 view .LVU1568
-ARM GAS  /tmp/cc50G25a.s 			page 176
+ARM GAS  /tmp/ccFBBWdK.s 			page 176
 
 
  5116 0004 0446     		mov	r4, r0
@@ -10558,7 +10558,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5154              		.loc 1 2556 11 is_stmt 0 view .LVU1584
  5155 002e FFF7FEFF 		bl	HAL_DMA_Abort_IT
  5156              	.LVL431:
-ARM GAS  /tmp/cc50G25a.s 			page 177
+ARM GAS  /tmp/ccFBBWdK.s 			page 177
 
 
 2556:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
@@ -10618,7 +10618,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5193              	.LVL435:
  5194              	.L634:
 2578:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
-ARM GAS  /tmp/cc50G25a.s 			page 178
+ARM GAS  /tmp/ccFBBWdK.s 			page 178
 
 
  5195              		.loc 1 2578 9 view .LVU1603
@@ -10678,7 +10678,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2603:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  5237              		.loc 1 2603 22 is_stmt 0 view .LVU1616
  5238 0082 8165     		str	r1, [r0, #88]
-ARM GAS  /tmp/cc50G25a.s 			page 179
+ARM GAS  /tmp/ccFBBWdK.s 			page 179
 
 
 2609:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
@@ -10738,7 +10738,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3134:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   hxspi->XferCount = 0;
  5284              		.loc 1 3134 23 view .LVU1628
  5285 0004 C46D     		ldr	r4, [r0, #92]
-ARM GAS  /tmp/cc50G25a.s 			page 180
+ARM GAS  /tmp/ccFBBWdK.s 			page 180
 
 
  5286              	.LVL441:
@@ -10798,7 +10798,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3153:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** #endif /* (USE_HAL_XSPI_REGISTER_CALLBACKS) && (USE_HAL_XSPI_REGISTER_CALLBACKS == 1U) */
  5323              		.loc 1 3153 5 is_stmt 1 view .LVU1646
  5324 002e FFF7FEFF 		bl	HAL_XSPI_ErrorCallback
-ARM GAS  /tmp/cc50G25a.s 			page 181
+ARM GAS  /tmp/ccFBBWdK.s 			page 181
 
 
  5325              	.LVL444:
@@ -10858,7 +10858,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2632:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  5370              		.loc 1 2632 3 discriminator 1 view .LVU1658
  5371 0012 FFF7FEFF 		bl	assert_failed
-ARM GAS  /tmp/cc50G25a.s 			page 182
+ARM GAS  /tmp/ccFBBWdK.s 			page 182
 
 
  5372              	.LVL448:
@@ -10918,7 +10918,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5413              		.section	.text.HAL_XSPI_GetFifoThreshold,"ax",%progbits
  5414              		.align	1
  5415              		.global	HAL_XSPI_GetFifoThreshold
-ARM GAS  /tmp/cc50G25a.s 			page 183
+ARM GAS  /tmp/ccFBBWdK.s 			page 183
 
 
  5416              		.syntax unified
@@ -10978,7 +10978,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2671:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  5464              		.loc 1 2671 3 view .LVU1682
  5465 0002 31F04073 		bics	r3, r1, #50331648
-ARM GAS  /tmp/cc50G25a.s 			page 184
+ARM GAS  /tmp/ccFBBWdK.s 			page 184
 
 
 2668:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status = HAL_OK;
@@ -11038,7 +11038,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5505 0036 38BD     		pop	{r3, r4, r5, pc}
  5506              	.LVL458:
  5507              	.L660:
-ARM GAS  /tmp/cc50G25a.s 			page 185
+ARM GAS  /tmp/ccFBBWdK.s 			page 185
 
 
 2684:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     hxspi->ErrorCode = HAL_XSPI_ERROR_INVALID_SEQUENCE;
@@ -11098,7 +11098,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2700:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
  5553              		.loc 1 2700 3 discriminator 1 view .LVU1709
  5554 000a 40F68C21 		movw	r1, #2700
-ARM GAS  /tmp/cc50G25a.s 			page 186
+ARM GAS  /tmp/ccFBBWdK.s 			page 186
 
 
  5555              	.LVL460:
@@ -11158,7 +11158,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5593 0032 E365     		str	r3, [r4, #92]
  5594 0034 FAE7     		b	.L673
  5595              	.L675:
-ARM GAS  /tmp/cc50G25a.s 			page 187
+ARM GAS  /tmp/ccFBBWdK.s 			page 187
 
 
  5596 0036 00BF     		.align	2
@@ -11218,7 +11218,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2732:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  5642              		.loc 1 2732 13 is_stmt 0 view .LVU1736
  5643 0014 A06D     		ldr	r0, [r4, #88]
-ARM GAS  /tmp/cc50G25a.s 			page 188
+ARM GAS  /tmp/ccFBBWdK.s 			page 188
 
 
 2732:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
@@ -11278,7 +11278,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5688              	.LVL471:
  5689              	.LFB917:
 2756:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   hxspi->Timeout = Timeout;
-ARM GAS  /tmp/cc50G25a.s 			page 189
+ARM GAS  /tmp/ccFBBWdK.s 			page 189
 
 
  5690              		.loc 1 2756 1 is_stmt 1 view -0
@@ -11338,7 +11338,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5739              	.LVL475:
  5740              	.LFB919:
 2777:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   /* Return XSPI handle state */
-ARM GAS  /tmp/cc50G25a.s 			page 190
+ARM GAS  /tmp/ccFBBWdK.s 			page 190
 
 
  5741              		.loc 1 2777 1 is_stmt 1 view -0
@@ -11398,7 +11398,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5786              		.loc 1 2809 1 view .LVU1770
  5787 0008 0546     		mov	r5, r0
 2814:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
-ARM GAS  /tmp/cc50G25a.s 			page 191
+ARM GAS  /tmp/ccFBBWdK.s 			page 191
 
 
  5788              		.loc 1 2814 20 view .LVU1771
@@ -11458,7 +11458,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2825:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  5832              		.loc 1 2825 26 is_stmt 1 discriminator 1 view .LVU1782
 2809:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   HAL_StatusTypeDef status = HAL_OK;
-ARM GAS  /tmp/cc50G25a.s 			page 192
+ARM GAS  /tmp/ccFBBWdK.s 			page 192
 
 
  5833              		.loc 1 2809 1 is_stmt 0 view .LVU1783
@@ -11518,7 +11518,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3479:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       pCfg->nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
 3480:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     }
 3481:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
-ARM GAS  /tmp/cc50G25a.s 			page 193
+ARM GAS  /tmp/ccFBBWdK.s 			page 193
 
 
 3482:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   else
@@ -11578,7 +11578,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 3504:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       pCfg->nCSOverride = HAL_XSPI_CSSEL_OVR_NCS1;
  5881              		.loc 1 3504 7 is_stmt 1 view .LVU1805
  5882              	.L691:
-ARM GAS  /tmp/cc50G25a.s 			page 194
+ARM GAS  /tmp/ccFBBWdK.s 			page 194
 
 
  5883              	.LVL489:
@@ -11638,7 +11638,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
   36:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /* Define to prevent recursive inclusion -------------------------------------*/
   37:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #ifndef STM32N6xx_LL_BUS_H
   38:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define STM32N6xx_LL_BUS_H
-ARM GAS  /tmp/cc50G25a.s 			page 195
+ARM GAS  /tmp/ccFBBWdK.s 			page 195
 
 
   39:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
@@ -11698,7 +11698,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
   93:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_MEM_AXISRAM2                    RCC_MEMENR_AXISRAM2EN
   94:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_MEM_AXISRAM3                    RCC_MEMENR_AXISRAM3EN
   95:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_MEM_AXISRAM4                    RCC_MEMENR_AXISRAM4EN
-ARM GAS  /tmp/cc50G25a.s 			page 196
+ARM GAS  /tmp/ccFBBWdK.s 			page 196
 
 
   96:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_MEM_AXISRAM5                    RCC_MEMENR_AXISRAM5EN
@@ -11758,7 +11758,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  150:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_SAES           RCC_AHB3ENR_SAESEN
  151:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #else
  152:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB3_GRP1_PERIPH_SAES
-ARM GAS  /tmp/cc50G25a.s 			page 197
+ARM GAS  /tmp/ccFBBWdK.s 			page 197
 
 
  153:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #endif /* SAES */
@@ -11818,7 +11818,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  207:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_MCE1              RCC_AHB5ENR_MCE1EN
  208:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_MCE2              RCC_AHB5ENR_MCE2EN
  209:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_MCE3              RCC_AHB5ENR_MCE3EN
-ARM GAS  /tmp/cc50G25a.s 			page 198
+ARM GAS  /tmp/ccFBBWdK.s 			page 198
 
 
  210:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_AHB5_GRP1_PERIPH_MCE4              RCC_AHB5ENR_MCE4EN
@@ -11878,7 +11878,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  264:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_USART3         RCC_APB1ENR1_USART3EN
  265:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_UART4          RCC_APB1ENR1_UART4EN
  266:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_UART5          RCC_APB1ENR1_UART5EN
-ARM GAS  /tmp/cc50G25a.s 			page 199
+ARM GAS  /tmp/ccFBBWdK.s 			page 199
 
 
  267:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB1_GRP1_PERIPH_UART7          RCC_APB1ENR1_UART7EN
@@ -11938,7 +11938,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  321:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB2_GRP1_PERIPH_SPI5   | LL_APB2_GRP1_PERIPH_TIM1  
  322:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB2_GRP1_PERIPH_TIM8   | LL_APB2_GRP1_PERIPH_TIM9  
  323:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB2_GRP1_PERIPH_TIM15  | LL_APB2_GRP1_PERIPH_TIM16 
-ARM GAS  /tmp/cc50G25a.s 			page 200
+ARM GAS  /tmp/ccFBBWdK.s 			page 200
 
 
  324:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB2_GRP1_PERIPH_TIM17  | LL_APB2_GRP1_PERIPH_TIM18 
@@ -11998,7 +11998,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  378:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #endif /* VENC */
  379:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** #define LL_APB5_GRP1_PERIPH_ALL            (LL_APB5_GRP1_PERIPH_CSI    | LL_APB5_GRP1_PERIPH_DCMIPP
  380:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB5_GRP1_PERIPH_GFXTIM | LL_APB5_GRP1_PERIPH_LTDC  
-ARM GAS  /tmp/cc50G25a.s 			page 201
+ARM GAS  /tmp/ccFBBWdK.s 			page 201
 
 
  381:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****                                             LL_APB5_GRP1_PERIPH_VENC)
@@ -12058,7 +12058,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  435:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_ACLKNC
  436:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHBM
  437:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1
-ARM GAS  /tmp/cc50G25a.s 			page 202
+ARM GAS  /tmp/ccFBBWdK.s 			page 202
 
 
  438:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2
@@ -12118,7 +12118,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  492:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
  493:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
  494:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
-ARM GAS  /tmp/cc50G25a.s 			page 203
+ARM GAS  /tmp/ccFBBWdK.s 			page 203
 
 
  495:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Disable AXI bus clock.
@@ -12178,7 +12178,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  549:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1
  550:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2
  551:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3
-ARM GAS  /tmp/cc50G25a.s 			page 204
+ARM GAS  /tmp/ccFBBWdK.s 			page 204
 
 
  552:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4
@@ -12238,7 +12238,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  606:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
  607:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Disable AXI bus clock during Low Power mode.
  608:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @rmtoll BUSLPENCR    ACLKNLPENC    LL_BUS_DisableClockLowPower\n
-ARM GAS  /tmp/cc50G25a.s 			page 205
+ARM GAS  /tmp/ccFBBWdK.s 			page 205
 
 
  609:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         BUSLPENCR    ACLKNCLPENC   LL_BUS_DisableClockLowPower\n
@@ -12298,7 +12298,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  663:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMENSR      VENCRAMENS    LL_MEM_EnableClock
  664:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Memories This parameter can be a combination of the following values:
  665:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AXISRAM1
-ARM GAS  /tmp/cc50G25a.s 			page 206
+ARM GAS  /tmp/ccFBBWdK.s 			page 206
 
 
  666:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AXISRAM2
@@ -12358,7 +12358,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  720:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
  721:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
  722:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /**
-ARM GAS  /tmp/cc50G25a.s 			page 207
+ARM GAS  /tmp/ccFBBWdK.s 			page 207
 
 
  723:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Disable memories clock.
@@ -12418,7 +12418,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  777:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AHBSRAM1
  778:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_AHBSRAM2
  779:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_BKPSRAM
-ARM GAS  /tmp/cc50G25a.s 			page 208
+ARM GAS  /tmp/ccFBBWdK.s 			page 208
 
 
  780:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_MEM_FLEXRAM
@@ -12478,7 +12478,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  834:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENCR    AXISRAM5LPENC LL_MEM_DisableClockLowPower\n
  835:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENCR    AXISRAM6LPENC LL_MEM_DisableClockLowPower\n
  836:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENCR    AHBSRAM1LPENC LL_MEM_DisableClockLowPower\n
-ARM GAS  /tmp/cc50G25a.s 			page 209
+ARM GAS  /tmp/ccFBBWdK.s 			page 209
 
 
  837:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         MEMLPENCR    AHBSRAM2LPENC LL_MEM_DisableClockLowPower\n
@@ -12538,7 +12538,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  891:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB1ENR      ADC12EN       LL_AHB1_GRP1_IsEnabledClock
  892:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
  893:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_GPDMA1
-ARM GAS  /tmp/cc50G25a.s 			page 210
+ARM GAS  /tmp/ccFBBWdK.s 			page 210
 
 
  894:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_ADC12
@@ -12598,7 +12598,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  948:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
  949:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_GPDMA1
  950:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB1_GRP1_PERIPH_ADC12
-ARM GAS  /tmp/cc50G25a.s 			page 211
+ARM GAS  /tmp/ccFBBWdK.s 			page 211
 
 
  951:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
@@ -12658,7 +12658,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1005:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2_GRP1_PERIPH_MDF1
 1006:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB2_GRP1_PERIPH_ADF1
 1007:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
-ARM GAS  /tmp/cc50G25a.s 			page 212
+ARM GAS  /tmp/ccFBBWdK.s 			page 212
 
 
 1008:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
@@ -12718,7 +12718,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1062:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** {
 1063:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   WRITE_REG(RCC->AHB2RSTSR, Periphs);
 1064:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** }
-ARM GAS  /tmp/cc50G25a.s 			page 213
+ARM GAS  /tmp/ccFBBWdK.s 			page 213
 
 
 1065:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
@@ -12778,7 +12778,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1119:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @brief  Disable AHB2 peripherals clock during Low Power mode.
 1120:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @rmtoll AHB2LPENCR   RAMCFGLPENC   LL_AHB2_GRP1_DisableClockLowPower\n
 1121:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB2LPENCR   MDF1LPENC     LL_AHB2_GRP1_DisableClockLowPower\n
-ARM GAS  /tmp/cc50G25a.s 			page 214
+ARM GAS  /tmp/ccFBBWdK.s 			page 214
 
 
 1122:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB2LPENCR   ADF1LPENC     LL_AHB2_GRP1_DisableClockLowPower
@@ -12838,7 +12838,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1176:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @rmtoll AHB3ENR      RNGEN         LL_AHB3_GRP1_IsEnabledClock\n
 1177:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3ENR      HASHEN        LL_AHB3_GRP1_IsEnabledClock\n
 1178:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3ENR      CRYPEN        LL_AHB3_GRP1_IsEnabledClock\n  (*)
-ARM GAS  /tmp/cc50G25a.s 			page 215
+ARM GAS  /tmp/ccFBBWdK.s 			page 215
 
 
 1179:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3ENR      SAESEN        LL_AHB3_GRP1_IsEnabledClock\n  (*)
@@ -12898,7 +12898,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1233:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3RSTSR    HASHRSTS      LL_AHB3_GRP1_ForceReset\n
 1234:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3RSTSR    CRYPRSTS      LL_AHB3_GRP1_ForceReset\n  (*)
 1235:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3RSTSR    SAESRSTS      LL_AHB3_GRP1_ForceReset\n  (*)
-ARM GAS  /tmp/cc50G25a.s 			page 216
+ARM GAS  /tmp/ccFBBWdK.s 			page 216
 
 
 1236:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3RSTSR    PKARSTS       LL_AHB3_GRP1_ForceReset\n
@@ -12958,7 +12958,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1290:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_HASH
 1291:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_CRYP (*)
 1292:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_SAES (*)
-ARM GAS  /tmp/cc50G25a.s 			page 217
+ARM GAS  /tmp/ccFBBWdK.s 			page 217
 
 
 1293:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_PKA
@@ -13018,7 +13018,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1347:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB3LPENCR   IACLPENC      LL_AHB3_GRP1_DisableClockLowPower
 1348:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @param  Periphs This parameter can be a combination of the following values:
 1349:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_RNG
-ARM GAS  /tmp/cc50G25a.s 			page 218
+ARM GAS  /tmp/ccFBBWdK.s 			page 218
 
 
 1350:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB3_GRP1_PERIPH_HASH
@@ -13078,7 +13078,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1404:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_CRC
 1405:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @retval None
 1406:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
-ARM GAS  /tmp/cc50G25a.s 			page 219
+ARM GAS  /tmp/ccFBBWdK.s 			page 219
 
 
 1407:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** __STATIC_INLINE void LL_AHB4_GRP1_EnableClock(uint32_t Periphs)
@@ -13138,7 +13138,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1461:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4ENCR     GPIOFENC      LL_AHB4_GRP1_DisableClock\n
 1462:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4ENCR     GPIOGENC      LL_AHB4_GRP1_DisableClock\n
 1463:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4ENCR     GPIOHENC      LL_AHB4_GRP1_DisableClock\n
-ARM GAS  /tmp/cc50G25a.s 			page 220
+ARM GAS  /tmp/ccFBBWdK.s 			page 220
 
 
 1464:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4ENCR     GPIONENC      LL_AHB4_GRP1_DisableClock\n
@@ -13198,7 +13198,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1518:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOO
 1519:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOP
 1520:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOQ
-ARM GAS  /tmp/cc50G25a.s 			page 221
+ARM GAS  /tmp/ccFBBWdK.s 			page 221
 
 
 1521:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_PWR
@@ -13258,7 +13258,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1575:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENSR    GPIOFLPENS     LL_AHB4_GRP1_EnableClockLowPower\n
 1576:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENSR    GPIOGLPENS     LL_AHB4_GRP1_EnableClockLowPower\n
 1577:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENSR    GPIOHLPENS     LL_AHB4_GRP1_EnableClockLowPower\n
-ARM GAS  /tmp/cc50G25a.s 			page 222
+ARM GAS  /tmp/ccFBBWdK.s 			page 222
 
 
 1578:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         AHB4LPENSR    GPIONLPENS     LL_AHB4_GRP1_EnableClockLowPower\n
@@ -13318,7 +13318,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1632:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOF
 1633:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOG
 1634:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPIOH
-ARM GAS  /tmp/cc50G25a.s 			page 223
+ARM GAS  /tmp/ccFBBWdK.s 			page 223
 
 
 1635:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB4_GRP1_PERIPH_GPION
@@ -13378,7 +13378,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1689:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** 
 1690:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h **** /** @defgroup BUS_LL_EF_AHB5 AHB5
 1691:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   * @{
-ARM GAS  /tmp/cc50G25a.s 			page 224
+ARM GAS  /tmp/ccFBBWdK.s 			page 224
 
 
 1692:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   */
@@ -13438,7 +13438,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1746:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTG2
 1747:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTGPHY1
 1748:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_OTGPHY2
-ARM GAS  /tmp/cc50G25a.s 			page 225
+ARM GAS  /tmp/ccFBBWdK.s 			page 225
 
 
 1749:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_CACHEAXI
@@ -13498,7 +13498,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 1803:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_SDMMC1
 1804:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_SDMMC2
 1805:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE1 (*)
-ARM GAS  /tmp/cc50G25a.s 			page 226
+ARM GAS  /tmp/ccFBBWdK.s 			page 226
 
 
 1806:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h ****   *         @arg @ref LL_AHB5_GRP1_PERIPH_MCE2 (*)
@@ -13558,7 +13558,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5925              		.loc 1 2836 20 is_stmt 0 view .LVU1820
  5926 00a4 0123     		movne	r3, #1
  5927              	.LVL494:
-ARM GAS  /tmp/cc50G25a.s 			page 227
+ARM GAS  /tmp/ccFBBWdK.s 			page 227
 
 
  5928              	.L693:
@@ -13618,7 +13618,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  5971              		.loc 2 1827 62 view .LVU1838
  5972 00c8 9003     		lsls	r0, r2, #14
  5973              	.LVL498:
-ARM GAS  /tmp/cc50G25a.s 			page 228
+ARM GAS  /tmp/ccFBBWdK.s 			page 228
 
 
  5974              		.loc 2 1827 62 view .LVU1839
@@ -13678,7 +13678,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6015 0100 B142     		cmp	r1, r6
  6016 0102 29D1     		bne	.L696
 2864:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     if (pCfg->nCSOverride != HAL_XSPI_CSSEL_OVR_DISABLED)
-ARM GAS  /tmp/cc50G25a.s 			page 229
+ARM GAS  /tmp/ccFBBWdK.s 			page 229
 
 
  6017              		.loc 1 2864 5 is_stmt 1 view .LVU1854
@@ -13738,7 +13738,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6055              		.loc 1 2923 7 is_stmt 1 view .LVU1870
  6056 0134 1D49     		ldr	r1, .L748+4
  6057 0136 D1F80024 		ldr	r2, [r1, #1024]
-ARM GAS  /tmp/cc50G25a.s 			page 230
+ARM GAS  /tmp/ccFBBWdK.s 			page 230
 
 
  6058 013a 42F00202 		orr	r2, r2, #2
@@ -13798,7 +13798,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
 2877:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
  6097              		.loc 1 2877 8 is_stmt 0 view .LVU1886
  6098 0164 0028     		cmp	r0, #0
-ARM GAS  /tmp/cc50G25a.s 			page 231
+ARM GAS  /tmp/ccFBBWdK.s 			page 231
 
 
  6099 0166 D8D0     		beq	.L698
@@ -13858,7 +13858,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6136              		.loc 1 2905 5 is_stmt 1 view .LVU1903
 2906:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   }
  6137              		.loc 1 2906 12 is_stmt 0 view .LVU1904
-ARM GAS  /tmp/cc50G25a.s 			page 232
+ARM GAS  /tmp/ccFBBWdK.s 			page 232
 
 
  6138 018e 0120     		movs	r0, #1
@@ -13918,7 +13918,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6188              		@ frame_needed = 0, uses_anonymous_args = 0
 2976:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   __IO uint32_t reg = 0;
  6189              		.loc 1 2976 3 view .LVU1911
-ARM GAS  /tmp/cc50G25a.s 			page 233
+ARM GAS  /tmp/ccFBBWdK.s 			page 233
 
 
 2977:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c **** 
@@ -13978,7 +13978,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6229 002c 03D0     		beq	.L751
 2979:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
  6230              		.loc 1 2979 7 discriminator 5 view .LVU1927
-ARM GAS  /tmp/cc50G25a.s 			page 234
+ARM GAS  /tmp/ccFBBWdK.s 			page 234
 
 
  6231 002e 02F17042 		add	r2, r2, #-268435456
@@ -14038,7 +14038,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6273 0062 EB60     		str	r3, [r5, #12]
 2989:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       case HAL_XSPI_CAL_FEEDBACK_CLK_DELAY:
  6274              		.loc 1 2989 9 is_stmt 1 view .LVU1940
-ARM GAS  /tmp/cc50G25a.s 			page 235
+ARM GAS  /tmp/ccFBBWdK.s 			page 235
 
 
 3005:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****     {
@@ -14098,7 +14098,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6311 0088 F9E7     		b	.L763
  6312              	.L755:
 2997:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****         break;
-ARM GAS  /tmp/cc50G25a.s 			page 236
+ARM GAS  /tmp/ccFBBWdK.s 			page 236
 
 
  6313              		.loc 1 2997 9 is_stmt 1 view .LVU1959
@@ -14158,7 +14158,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6356              		.thumb_func
  6358              	HAL_XSPI_SetDelayValue:
  6359              	.LVL516:
-ARM GAS  /tmp/cc50G25a.s 			page 237
+ARM GAS  /tmp/ccFBBWdK.s 			page 237
 
 
  6360              	.LFB922:
@@ -14218,7 +14218,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6400 0026 9342     		cmp	r3, r2
  6401 0028 03D0     		beq	.L767
 3030:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****   {
-ARM GAS  /tmp/cc50G25a.s 			page 238
+ARM GAS  /tmp/ccFBBWdK.s 			page 238
 
 
  6402              		.loc 1 3030 7 discriminator 5 view .LVU1986
@@ -14278,7 +14278,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6445 0064 1B07     		lsls	r3, r3, #28
  6446 0066 34D4     		bmi	.L772
 3040:../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_xspi.c ****       {
-ARM GAS  /tmp/cc50G25a.s 			page 239
+ARM GAS  /tmp/ccFBBWdK.s 			page 239
 
 
  6447              		.loc 1 3040 7 is_stmt 1 view .LVU1998
@@ -14338,7 +14338,7 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6491 00b6 D4E90130 		ldrd	r3, r0, [r4, #4]
  6492 00ba D1F82822 		ldr	r2, [r1, #552]
  6493 00be 43EA0043 		orr	r3, r3, r0, lsl #16
-ARM GAS  /tmp/cc50G25a.s 			page 240
+ARM GAS  /tmp/ccFBBWdK.s 			page 240
 
 
  6494 00c2 22F4F812 		bic	r2, r2, #2031616
@@ -14386,8 +14386,8 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6527              	.LFE922:
  6529              		.text
  6530              	.Letext0:
- 6531              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 6532              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 6531              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 6532              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
  6533              		.file 5 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
  6534              		.file 6 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n6xx.h"
  6535              		.file 7 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_def.h"
@@ -14397,135 +14397,135 @@ ARM GAS  /tmp/cc50G25a.s 			page 1
  6539              		.file 11 "Inc/stm32n6xx_hal_conf.h"
  6540              		.file 12 "../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal.h"
  6541              		.file 13 "<built-in>"
-ARM GAS  /tmp/cc50G25a.s 			page 241
+ARM GAS  /tmp/ccFBBWdK.s 			page 241
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32n6xx_hal_xspi.c
-     /tmp/cc50G25a.s:26     .text.XSPI_DMACplt:00000000 $t
-     /tmp/cc50G25a.s:31     .text.XSPI_DMACplt:00000000 XSPI_DMACplt
-     /tmp/cc50G25a.s:69     .text.XSPI_ConfigCmd:00000000 $t
-     /tmp/cc50G25a.s:74     .text.XSPI_ConfigCmd:00000000 XSPI_ConfigCmd
-     /tmp/cc50G25a.s:496    .text.XSPI_ConfigCmd:00000218 $d
-     /tmp/cc50G25a.s:502    .text.XSPI_WaitFlagStateUntilTimeout:00000000 $t
-     /tmp/cc50G25a.s:507    .text.XSPI_WaitFlagStateUntilTimeout:00000000 XSPI_WaitFlagStateUntilTimeout
-     /tmp/cc50G25a.s:598    .text.HAL_XSPI_MspInit:00000000 $t
-     /tmp/cc50G25a.s:604    .text.HAL_XSPI_MspInit:00000000 HAL_XSPI_MspInit
-     /tmp/cc50G25a.s:619    .text.HAL_XSPI_Init:00000000 $t
-     /tmp/cc50G25a.s:625    .text.HAL_XSPI_Init:00000000 HAL_XSPI_Init
-     /tmp/cc50G25a.s:1035   .text.HAL_XSPI_Init:00000254 $d
-     /tmp/cc50G25a.s:1044   .text.HAL_XSPI_MspDeInit:00000000 $t
-     /tmp/cc50G25a.s:1050   .text.HAL_XSPI_MspDeInit:00000000 HAL_XSPI_MspDeInit
-     /tmp/cc50G25a.s:1062   .text.HAL_XSPI_DeInit:00000000 $t
-     /tmp/cc50G25a.s:1068   .text.HAL_XSPI_DeInit:00000000 HAL_XSPI_DeInit
-     /tmp/cc50G25a.s:1117   .text.HAL_XSPI_Command:00000000 $t
-     /tmp/cc50G25a.s:1123   .text.HAL_XSPI_Command:00000000 HAL_XSPI_Command
-     /tmp/cc50G25a.s:1558   .text.HAL_XSPI_Command:00000230 $d
-     /tmp/cc50G25a.s:1563   .text.HAL_XSPI_Command_IT:00000000 $t
-     /tmp/cc50G25a.s:1569   .text.HAL_XSPI_Command_IT:00000000 HAL_XSPI_Command_IT
-     /tmp/cc50G25a.s:1918   .text.HAL_XSPI_Command_IT:000001e4 $d
-     /tmp/cc50G25a.s:1923   .text.HAL_XSPI_HyperbusCfg:00000000 $t
-     /tmp/cc50G25a.s:1929   .text.HAL_XSPI_HyperbusCfg:00000000 HAL_XSPI_HyperbusCfg
-     /tmp/cc50G25a.s:2070   .text.HAL_XSPI_HyperbusCfg:00000094 $d
-     /tmp/cc50G25a.s:2075   .text.HAL_XSPI_HyperbusCmd:00000000 $t
-     /tmp/cc50G25a.s:2081   .text.HAL_XSPI_HyperbusCmd:00000000 HAL_XSPI_HyperbusCmd
-     /tmp/cc50G25a.s:2269   .text.HAL_XSPI_HyperbusCmd:000000f8 $d
-     /tmp/cc50G25a.s:2274   .text.HAL_XSPI_Transmit:00000000 $t
-     /tmp/cc50G25a.s:2280   .text.HAL_XSPI_Transmit:00000000 HAL_XSPI_Transmit
-     /tmp/cc50G25a.s:2442   .text.HAL_XSPI_Receive:00000000 $t
-     /tmp/cc50G25a.s:2448   .text.HAL_XSPI_Receive:00000000 HAL_XSPI_Receive
-     /tmp/cc50G25a.s:2643   .text.HAL_XSPI_Transmit_IT:00000000 $t
-     /tmp/cc50G25a.s:2649   .text.HAL_XSPI_Transmit_IT:00000000 HAL_XSPI_Transmit_IT
-     /tmp/cc50G25a.s:2730   .text.HAL_XSPI_Receive_IT:00000000 $t
-     /tmp/cc50G25a.s:2736   .text.HAL_XSPI_Receive_IT:00000000 HAL_XSPI_Receive_IT
-     /tmp/cc50G25a.s:2853   .text.HAL_XSPI_Transmit_DMA:00000000 $t
-     /tmp/cc50G25a.s:2859   .text.HAL_XSPI_Transmit_DMA:00000000 HAL_XSPI_Transmit_DMA
-     /tmp/cc50G25a.s:3174   .text.HAL_XSPI_Transmit_DMA:00000114 $d
-     /tmp/cc50G25a.s:4417   .text.XSPI_DMAHalfCplt:00000000 XSPI_DMAHalfCplt
-     /tmp/cc50G25a.s:5269   .text.XSPI_DMAError:00000000 XSPI_DMAError
-     /tmp/cc50G25a.s:3181   .text.HAL_XSPI_Receive_DMA:00000000 $t
-     /tmp/cc50G25a.s:3187   .text.HAL_XSPI_Receive_DMA:00000000 HAL_XSPI_Receive_DMA
-     /tmp/cc50G25a.s:3535   .text.HAL_XSPI_Receive_DMA:00000144 $d
-     /tmp/cc50G25a.s:3542   .text.HAL_XSPI_AutoPolling:00000000 $t
-     /tmp/cc50G25a.s:3548   .text.HAL_XSPI_AutoPolling:00000000 HAL_XSPI_AutoPolling
-     /tmp/cc50G25a.s:3760   .text.HAL_XSPI_AutoPolling:000000f8 $d
-     /tmp/cc50G25a.s:3765   .text.HAL_XSPI_AutoPolling_IT:00000000 $t
-     /tmp/cc50G25a.s:3771   .text.HAL_XSPI_AutoPolling_IT:00000000 HAL_XSPI_AutoPolling_IT
-     /tmp/cc50G25a.s:3954   .text.HAL_XSPI_AutoPolling_IT:000000dc $d
-     /tmp/cc50G25a.s:3959   .text.HAL_XSPI_MemoryMapped:00000000 $t
-     /tmp/cc50G25a.s:3965   .text.HAL_XSPI_MemoryMapped:00000000 HAL_XSPI_MemoryMapped
-     /tmp/cc50G25a.s:4142   .text.HAL_XSPI_MemoryMapped:000000dc $d
-     /tmp/cc50G25a.s:4147   .text.HAL_XSPI_IsMemoryMapped:00000000 $t
-     /tmp/cc50G25a.s:4153   .text.HAL_XSPI_IsMemoryMapped:00000000 HAL_XSPI_IsMemoryMapped
-ARM GAS  /tmp/cc50G25a.s 			page 242
+     /tmp/ccFBBWdK.s:26     .text.XSPI_DMACplt:00000000 $t
+     /tmp/ccFBBWdK.s:31     .text.XSPI_DMACplt:00000000 XSPI_DMACplt
+     /tmp/ccFBBWdK.s:69     .text.XSPI_ConfigCmd:00000000 $t
+     /tmp/ccFBBWdK.s:74     .text.XSPI_ConfigCmd:00000000 XSPI_ConfigCmd
+     /tmp/ccFBBWdK.s:496    .text.XSPI_ConfigCmd:00000218 $d
+     /tmp/ccFBBWdK.s:502    .text.XSPI_WaitFlagStateUntilTimeout:00000000 $t
+     /tmp/ccFBBWdK.s:507    .text.XSPI_WaitFlagStateUntilTimeout:00000000 XSPI_WaitFlagStateUntilTimeout
+     /tmp/ccFBBWdK.s:598    .text.HAL_XSPI_MspInit:00000000 $t
+     /tmp/ccFBBWdK.s:604    .text.HAL_XSPI_MspInit:00000000 HAL_XSPI_MspInit
+     /tmp/ccFBBWdK.s:619    .text.HAL_XSPI_Init:00000000 $t
+     /tmp/ccFBBWdK.s:625    .text.HAL_XSPI_Init:00000000 HAL_XSPI_Init
+     /tmp/ccFBBWdK.s:1035   .text.HAL_XSPI_Init:00000254 $d
+     /tmp/ccFBBWdK.s:1044   .text.HAL_XSPI_MspDeInit:00000000 $t
+     /tmp/ccFBBWdK.s:1050   .text.HAL_XSPI_MspDeInit:00000000 HAL_XSPI_MspDeInit
+     /tmp/ccFBBWdK.s:1062   .text.HAL_XSPI_DeInit:00000000 $t
+     /tmp/ccFBBWdK.s:1068   .text.HAL_XSPI_DeInit:00000000 HAL_XSPI_DeInit
+     /tmp/ccFBBWdK.s:1117   .text.HAL_XSPI_Command:00000000 $t
+     /tmp/ccFBBWdK.s:1123   .text.HAL_XSPI_Command:00000000 HAL_XSPI_Command
+     /tmp/ccFBBWdK.s:1558   .text.HAL_XSPI_Command:00000230 $d
+     /tmp/ccFBBWdK.s:1563   .text.HAL_XSPI_Command_IT:00000000 $t
+     /tmp/ccFBBWdK.s:1569   .text.HAL_XSPI_Command_IT:00000000 HAL_XSPI_Command_IT
+     /tmp/ccFBBWdK.s:1918   .text.HAL_XSPI_Command_IT:000001e4 $d
+     /tmp/ccFBBWdK.s:1923   .text.HAL_XSPI_HyperbusCfg:00000000 $t
+     /tmp/ccFBBWdK.s:1929   .text.HAL_XSPI_HyperbusCfg:00000000 HAL_XSPI_HyperbusCfg
+     /tmp/ccFBBWdK.s:2070   .text.HAL_XSPI_HyperbusCfg:00000094 $d
+     /tmp/ccFBBWdK.s:2075   .text.HAL_XSPI_HyperbusCmd:00000000 $t
+     /tmp/ccFBBWdK.s:2081   .text.HAL_XSPI_HyperbusCmd:00000000 HAL_XSPI_HyperbusCmd
+     /tmp/ccFBBWdK.s:2269   .text.HAL_XSPI_HyperbusCmd:000000f8 $d
+     /tmp/ccFBBWdK.s:2274   .text.HAL_XSPI_Transmit:00000000 $t
+     /tmp/ccFBBWdK.s:2280   .text.HAL_XSPI_Transmit:00000000 HAL_XSPI_Transmit
+     /tmp/ccFBBWdK.s:2442   .text.HAL_XSPI_Receive:00000000 $t
+     /tmp/ccFBBWdK.s:2448   .text.HAL_XSPI_Receive:00000000 HAL_XSPI_Receive
+     /tmp/ccFBBWdK.s:2643   .text.HAL_XSPI_Transmit_IT:00000000 $t
+     /tmp/ccFBBWdK.s:2649   .text.HAL_XSPI_Transmit_IT:00000000 HAL_XSPI_Transmit_IT
+     /tmp/ccFBBWdK.s:2730   .text.HAL_XSPI_Receive_IT:00000000 $t
+     /tmp/ccFBBWdK.s:2736   .text.HAL_XSPI_Receive_IT:00000000 HAL_XSPI_Receive_IT
+     /tmp/ccFBBWdK.s:2853   .text.HAL_XSPI_Transmit_DMA:00000000 $t
+     /tmp/ccFBBWdK.s:2859   .text.HAL_XSPI_Transmit_DMA:00000000 HAL_XSPI_Transmit_DMA
+     /tmp/ccFBBWdK.s:3174   .text.HAL_XSPI_Transmit_DMA:00000114 $d
+     /tmp/ccFBBWdK.s:4417   .text.XSPI_DMAHalfCplt:00000000 XSPI_DMAHalfCplt
+     /tmp/ccFBBWdK.s:5269   .text.XSPI_DMAError:00000000 XSPI_DMAError
+     /tmp/ccFBBWdK.s:3181   .text.HAL_XSPI_Receive_DMA:00000000 $t
+     /tmp/ccFBBWdK.s:3187   .text.HAL_XSPI_Receive_DMA:00000000 HAL_XSPI_Receive_DMA
+     /tmp/ccFBBWdK.s:3535   .text.HAL_XSPI_Receive_DMA:00000144 $d
+     /tmp/ccFBBWdK.s:3542   .text.HAL_XSPI_AutoPolling:00000000 $t
+     /tmp/ccFBBWdK.s:3548   .text.HAL_XSPI_AutoPolling:00000000 HAL_XSPI_AutoPolling
+     /tmp/ccFBBWdK.s:3760   .text.HAL_XSPI_AutoPolling:000000f8 $d
+     /tmp/ccFBBWdK.s:3765   .text.HAL_XSPI_AutoPolling_IT:00000000 $t
+     /tmp/ccFBBWdK.s:3771   .text.HAL_XSPI_AutoPolling_IT:00000000 HAL_XSPI_AutoPolling_IT
+     /tmp/ccFBBWdK.s:3954   .text.HAL_XSPI_AutoPolling_IT:000000dc $d
+     /tmp/ccFBBWdK.s:3959   .text.HAL_XSPI_MemoryMapped:00000000 $t
+     /tmp/ccFBBWdK.s:3965   .text.HAL_XSPI_MemoryMapped:00000000 HAL_XSPI_MemoryMapped
+     /tmp/ccFBBWdK.s:4142   .text.HAL_XSPI_MemoryMapped:000000dc $d
+     /tmp/ccFBBWdK.s:4147   .text.HAL_XSPI_IsMemoryMapped:00000000 $t
+     /tmp/ccFBBWdK.s:4153   .text.HAL_XSPI_IsMemoryMapped:00000000 HAL_XSPI_IsMemoryMapped
+ARM GAS  /tmp/ccFBBWdK.s 			page 242
 
 
-     /tmp/cc50G25a.s:4189   .text.HAL_XSPI_ErrorCallback:00000000 $t
-     /tmp/cc50G25a.s:4195   .text.HAL_XSPI_ErrorCallback:00000000 HAL_XSPI_ErrorCallback
-     /tmp/cc50G25a.s:4207   .text.HAL_XSPI_AbortCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4213   .text.HAL_XSPI_AbortCpltCallback:00000000 HAL_XSPI_AbortCpltCallback
-     /tmp/cc50G25a.s:4225   .text.XSPI_DMAAbortCplt:00000000 $t
-     /tmp/cc50G25a.s:4230   .text.XSPI_DMAAbortCplt:00000000 XSPI_DMAAbortCplt
-     /tmp/cc50G25a.s:4304   .text.HAL_XSPI_FifoThresholdCallback:00000000 $t
-     /tmp/cc50G25a.s:4310   .text.HAL_XSPI_FifoThresholdCallback:00000000 HAL_XSPI_FifoThresholdCallback
-     /tmp/cc50G25a.s:4322   .text.HAL_XSPI_CmdCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4328   .text.HAL_XSPI_CmdCpltCallback:00000000 HAL_XSPI_CmdCpltCallback
-     /tmp/cc50G25a.s:4340   .text.HAL_XSPI_RxCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4346   .text.HAL_XSPI_RxCpltCallback:00000000 HAL_XSPI_RxCpltCallback
-     /tmp/cc50G25a.s:4358   .text.HAL_XSPI_TxCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4364   .text.HAL_XSPI_TxCpltCallback:00000000 HAL_XSPI_TxCpltCallback
-     /tmp/cc50G25a.s:4376   .text.HAL_XSPI_RxHalfCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4382   .text.HAL_XSPI_RxHalfCpltCallback:00000000 HAL_XSPI_RxHalfCpltCallback
-     /tmp/cc50G25a.s:4394   .text.HAL_XSPI_TxHalfCpltCallback:00000000 $t
-     /tmp/cc50G25a.s:4400   .text.HAL_XSPI_TxHalfCpltCallback:00000000 HAL_XSPI_TxHalfCpltCallback
-     /tmp/cc50G25a.s:4412   .text.XSPI_DMAHalfCplt:00000000 $t
-     /tmp/cc50G25a.s:4463   .text.HAL_XSPI_StatusMatchCallback:00000000 $t
-     /tmp/cc50G25a.s:4469   .text.HAL_XSPI_StatusMatchCallback:00000000 HAL_XSPI_StatusMatchCallback
-     /tmp/cc50G25a.s:4481   .text.HAL_XSPI_TimeOutCallback:00000000 $t
-     /tmp/cc50G25a.s:4487   .text.HAL_XSPI_TimeOutCallback:00000000 HAL_XSPI_TimeOutCallback
-     /tmp/cc50G25a.s:4499   .text.HAL_XSPI_IRQHandler:00000000 $t
-     /tmp/cc50G25a.s:4505   .text.HAL_XSPI_IRQHandler:00000000 HAL_XSPI_IRQHandler
-     /tmp/cc50G25a.s:4907   .text.HAL_XSPI_IRQHandler:00000168 $d
-     /tmp/cc50G25a.s:4912   .text.HAL_XSPI_Abort:00000000 $t
-     /tmp/cc50G25a.s:4918   .text.HAL_XSPI_Abort:00000000 HAL_XSPI_Abort
-     /tmp/cc50G25a.s:5091   .text.HAL_XSPI_Abort_IT:00000000 $t
-     /tmp/cc50G25a.s:5097   .text.HAL_XSPI_Abort_IT:00000000 HAL_XSPI_Abort_IT
-     /tmp/cc50G25a.s:5259   .text.HAL_XSPI_Abort_IT:00000090 $d
-     /tmp/cc50G25a.s:5264   .text.XSPI_DMAError:00000000 $t
-     /tmp/cc50G25a.s:5334   .text.HAL_XSPI_SetFifoThreshold:00000000 $t
-     /tmp/cc50G25a.s:5340   .text.HAL_XSPI_SetFifoThreshold:00000000 HAL_XSPI_SetFifoThreshold
-     /tmp/cc50G25a.s:5409   .text.HAL_XSPI_SetFifoThreshold:00000038 $d
-     /tmp/cc50G25a.s:5414   .text.HAL_XSPI_GetFifoThreshold:00000000 $t
-     /tmp/cc50G25a.s:5420   .text.HAL_XSPI_GetFifoThreshold:00000000 HAL_XSPI_GetFifoThreshold
-     /tmp/cc50G25a.s:5442   .text.HAL_XSPI_SetMemoryType:00000000 $t
-     /tmp/cc50G25a.s:5448   .text.HAL_XSPI_SetMemoryType:00000000 HAL_XSPI_SetMemoryType
-     /tmp/cc50G25a.s:5520   .text.HAL_XSPI_SetMemoryType:00000040 $d
-     /tmp/cc50G25a.s:5525   .text.HAL_XSPI_SetDeviceSize:00000000 $t
-     /tmp/cc50G25a.s:5531   .text.HAL_XSPI_SetDeviceSize:00000000 HAL_XSPI_SetDeviceSize
-     /tmp/cc50G25a.s:5598   .text.HAL_XSPI_SetDeviceSize:00000038 $d
-     /tmp/cc50G25a.s:5603   .text.HAL_XSPI_SetClockPrescaler:00000000 $t
-     /tmp/cc50G25a.s:5609   .text.HAL_XSPI_SetClockPrescaler:00000000 HAL_XSPI_SetClockPrescaler
-     /tmp/cc50G25a.s:5676   .text.HAL_XSPI_SetClockPrescaler:00000034 $d
-     /tmp/cc50G25a.s:5681   .text.HAL_XSPI_SetTimeout:00000000 $t
-     /tmp/cc50G25a.s:5687   .text.HAL_XSPI_SetTimeout:00000000 HAL_XSPI_SetTimeout
-     /tmp/cc50G25a.s:5708   .text.HAL_XSPI_GetError:00000000 $t
-     /tmp/cc50G25a.s:5714   .text.HAL_XSPI_GetError:00000000 HAL_XSPI_GetError
-     /tmp/cc50G25a.s:5732   .text.HAL_XSPI_GetState:00000000 $t
-     /tmp/cc50G25a.s:5738   .text.HAL_XSPI_GetState:00000000 HAL_XSPI_GetState
-     /tmp/cc50G25a.s:5756   .text.HAL_XSPIM_Config:00000000 $t
-     /tmp/cc50G25a.s:5762   .text.HAL_XSPIM_Config:00000000 HAL_XSPIM_Config
-     /tmp/cc50G25a.s:6166   .text.HAL_XSPIM_Config:000001a8 $d
-     /tmp/cc50G25a.s:6176   .text.HAL_XSPI_GetDelayValue:00000000 $t
-     /tmp/cc50G25a.s:6182   .text.HAL_XSPI_GetDelayValue:00000000 HAL_XSPI_GetDelayValue
-ARM GAS  /tmp/cc50G25a.s 			page 243
+     /tmp/ccFBBWdK.s:4189   .text.HAL_XSPI_ErrorCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4195   .text.HAL_XSPI_ErrorCallback:00000000 HAL_XSPI_ErrorCallback
+     /tmp/ccFBBWdK.s:4207   .text.HAL_XSPI_AbortCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4213   .text.HAL_XSPI_AbortCpltCallback:00000000 HAL_XSPI_AbortCpltCallback
+     /tmp/ccFBBWdK.s:4225   .text.XSPI_DMAAbortCplt:00000000 $t
+     /tmp/ccFBBWdK.s:4230   .text.XSPI_DMAAbortCplt:00000000 XSPI_DMAAbortCplt
+     /tmp/ccFBBWdK.s:4304   .text.HAL_XSPI_FifoThresholdCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4310   .text.HAL_XSPI_FifoThresholdCallback:00000000 HAL_XSPI_FifoThresholdCallback
+     /tmp/ccFBBWdK.s:4322   .text.HAL_XSPI_CmdCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4328   .text.HAL_XSPI_CmdCpltCallback:00000000 HAL_XSPI_CmdCpltCallback
+     /tmp/ccFBBWdK.s:4340   .text.HAL_XSPI_RxCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4346   .text.HAL_XSPI_RxCpltCallback:00000000 HAL_XSPI_RxCpltCallback
+     /tmp/ccFBBWdK.s:4358   .text.HAL_XSPI_TxCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4364   .text.HAL_XSPI_TxCpltCallback:00000000 HAL_XSPI_TxCpltCallback
+     /tmp/ccFBBWdK.s:4376   .text.HAL_XSPI_RxHalfCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4382   .text.HAL_XSPI_RxHalfCpltCallback:00000000 HAL_XSPI_RxHalfCpltCallback
+     /tmp/ccFBBWdK.s:4394   .text.HAL_XSPI_TxHalfCpltCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4400   .text.HAL_XSPI_TxHalfCpltCallback:00000000 HAL_XSPI_TxHalfCpltCallback
+     /tmp/ccFBBWdK.s:4412   .text.XSPI_DMAHalfCplt:00000000 $t
+     /tmp/ccFBBWdK.s:4463   .text.HAL_XSPI_StatusMatchCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4469   .text.HAL_XSPI_StatusMatchCallback:00000000 HAL_XSPI_StatusMatchCallback
+     /tmp/ccFBBWdK.s:4481   .text.HAL_XSPI_TimeOutCallback:00000000 $t
+     /tmp/ccFBBWdK.s:4487   .text.HAL_XSPI_TimeOutCallback:00000000 HAL_XSPI_TimeOutCallback
+     /tmp/ccFBBWdK.s:4499   .text.HAL_XSPI_IRQHandler:00000000 $t
+     /tmp/ccFBBWdK.s:4505   .text.HAL_XSPI_IRQHandler:00000000 HAL_XSPI_IRQHandler
+     /tmp/ccFBBWdK.s:4907   .text.HAL_XSPI_IRQHandler:00000168 $d
+     /tmp/ccFBBWdK.s:4912   .text.HAL_XSPI_Abort:00000000 $t
+     /tmp/ccFBBWdK.s:4918   .text.HAL_XSPI_Abort:00000000 HAL_XSPI_Abort
+     /tmp/ccFBBWdK.s:5091   .text.HAL_XSPI_Abort_IT:00000000 $t
+     /tmp/ccFBBWdK.s:5097   .text.HAL_XSPI_Abort_IT:00000000 HAL_XSPI_Abort_IT
+     /tmp/ccFBBWdK.s:5259   .text.HAL_XSPI_Abort_IT:00000090 $d
+     /tmp/ccFBBWdK.s:5264   .text.XSPI_DMAError:00000000 $t
+     /tmp/ccFBBWdK.s:5334   .text.HAL_XSPI_SetFifoThreshold:00000000 $t
+     /tmp/ccFBBWdK.s:5340   .text.HAL_XSPI_SetFifoThreshold:00000000 HAL_XSPI_SetFifoThreshold
+     /tmp/ccFBBWdK.s:5409   .text.HAL_XSPI_SetFifoThreshold:00000038 $d
+     /tmp/ccFBBWdK.s:5414   .text.HAL_XSPI_GetFifoThreshold:00000000 $t
+     /tmp/ccFBBWdK.s:5420   .text.HAL_XSPI_GetFifoThreshold:00000000 HAL_XSPI_GetFifoThreshold
+     /tmp/ccFBBWdK.s:5442   .text.HAL_XSPI_SetMemoryType:00000000 $t
+     /tmp/ccFBBWdK.s:5448   .text.HAL_XSPI_SetMemoryType:00000000 HAL_XSPI_SetMemoryType
+     /tmp/ccFBBWdK.s:5520   .text.HAL_XSPI_SetMemoryType:00000040 $d
+     /tmp/ccFBBWdK.s:5525   .text.HAL_XSPI_SetDeviceSize:00000000 $t
+     /tmp/ccFBBWdK.s:5531   .text.HAL_XSPI_SetDeviceSize:00000000 HAL_XSPI_SetDeviceSize
+     /tmp/ccFBBWdK.s:5598   .text.HAL_XSPI_SetDeviceSize:00000038 $d
+     /tmp/ccFBBWdK.s:5603   .text.HAL_XSPI_SetClockPrescaler:00000000 $t
+     /tmp/ccFBBWdK.s:5609   .text.HAL_XSPI_SetClockPrescaler:00000000 HAL_XSPI_SetClockPrescaler
+     /tmp/ccFBBWdK.s:5676   .text.HAL_XSPI_SetClockPrescaler:00000034 $d
+     /tmp/ccFBBWdK.s:5681   .text.HAL_XSPI_SetTimeout:00000000 $t
+     /tmp/ccFBBWdK.s:5687   .text.HAL_XSPI_SetTimeout:00000000 HAL_XSPI_SetTimeout
+     /tmp/ccFBBWdK.s:5708   .text.HAL_XSPI_GetError:00000000 $t
+     /tmp/ccFBBWdK.s:5714   .text.HAL_XSPI_GetError:00000000 HAL_XSPI_GetError
+     /tmp/ccFBBWdK.s:5732   .text.HAL_XSPI_GetState:00000000 $t
+     /tmp/ccFBBWdK.s:5738   .text.HAL_XSPI_GetState:00000000 HAL_XSPI_GetState
+     /tmp/ccFBBWdK.s:5756   .text.HAL_XSPIM_Config:00000000 $t
+     /tmp/ccFBBWdK.s:5762   .text.HAL_XSPIM_Config:00000000 HAL_XSPIM_Config
+     /tmp/ccFBBWdK.s:6166   .text.HAL_XSPIM_Config:000001a8 $d
+     /tmp/ccFBBWdK.s:6176   .text.HAL_XSPI_GetDelayValue:00000000 $t
+     /tmp/ccFBBWdK.s:6182   .text.HAL_XSPI_GetDelayValue:00000000 HAL_XSPI_GetDelayValue
+ARM GAS  /tmp/ccFBBWdK.s 			page 243
 
 
-     /tmp/cc50G25a.s:6255   .text.HAL_XSPI_GetDelayValue:00000050 $d
-     /tmp/cc50G25a.s:6259   .text.HAL_XSPI_GetDelayValue:00000054 $t
-     /tmp/cc50G25a.s:6344   .text.HAL_XSPI_GetDelayValue:0000009c $d
-     /tmp/cc50G25a.s:6352   .text.HAL_XSPI_SetDelayValue:00000000 $t
-     /tmp/cc50G25a.s:6358   .text.HAL_XSPI_SetDelayValue:00000000 HAL_XSPI_SetDelayValue
-     /tmp/cc50G25a.s:6522   .text.HAL_XSPI_SetDelayValue:000000e0 $d
+     /tmp/ccFBBWdK.s:6255   .text.HAL_XSPI_GetDelayValue:00000050 $d
+     /tmp/ccFBBWdK.s:6259   .text.HAL_XSPI_GetDelayValue:00000054 $t
+     /tmp/ccFBBWdK.s:6344   .text.HAL_XSPI_GetDelayValue:0000009c $d
+     /tmp/ccFBBWdK.s:6352   .text.HAL_XSPI_SetDelayValue:00000000 $t
+     /tmp/ccFBBWdK.s:6358   .text.HAL_XSPI_SetDelayValue:00000000 HAL_XSPI_SetDelayValue
+     /tmp/ccFBBWdK.s:6522   .text.HAL_XSPI_SetDelayValue:000000e0 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
                            .group:00000000 wm4.stddef.h.39.811583f327f35b0df7808fda70b062a0
@@ -14577,7 +14577,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32n6xx_hal_dma.h.1020.87e2180c009560b617c1f8208140c950
                            .group:00000000 wm4.stm32n6xx_hal_cortex.h.21.f493623cc58f9454ab4eae41e395c5cc
                            .group:00000000 wm4.stm32n6xx_hal_bsec.h.21.1ee89319140541f82434908b4267aa30
-ARM GAS  /tmp/cc50G25a.s 			page 244
+ARM GAS  /tmp/ccFBBWdK.s 			page 244
 
 
                            .group:00000000 wm4.stm32n6xx_hal_dcmipp.h.21.e2b87dce83d7d722d696a597f6ac56bf

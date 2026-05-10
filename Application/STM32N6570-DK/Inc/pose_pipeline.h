@@ -32,7 +32,7 @@ extern "C" {
 /* ------------------------------------------------------------------ */
 /* Person presence gate  (Step 1)                                       */
 /* ------------------------------------------------------------------ */
-#define POSE_MIN_VISIBLE_KP         5   /* HIGH_THRESH 이상 키포인트 최소 수 */
+#define POSE_MIN_VISIBLE_KP         5   /* 노트북 centroid consistency 최소 후보 수 */
 #define POSE_NO_PERSON_RESET_FRAMES 15  /* 연속 미감지 프레임 수 (15fps → 1초) */
 
 /* ------------------------------------------------------------------ */
@@ -106,6 +106,7 @@ typedef struct {
     /* HSSC derivative history for VHSSC / AHSSC */
     float32_t hssc_y_prev;
     float32_t vhssc_prev;
+    float32_t torso_length;
     uint8_t   deriv_initialized;
 
     /* Circular sliding window for TCN */

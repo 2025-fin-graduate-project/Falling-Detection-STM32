@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cci9V3ap.s 			page 1
+ARM GAS  /tmp/cceL26xV.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
   23:Src/syscalls.c **** /* Includes */
   24:Src/syscalls.c **** #include <sys/stat.h>
   25:Src/syscalls.c **** #include <stdlib.h>
-ARM GAS  /tmp/cci9V3ap.s 			page 2
+ARM GAS  /tmp/cceL26xV.s 			page 2
 
 
   26:Src/syscalls.c **** #include <errno.h>
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
   65              		.section	.text._kill,"ax",%progbits
   66              		.align	1
   67              		.global	_kill
-ARM GAS  /tmp/cci9V3ap.s 			page 3
+ARM GAS  /tmp/cceL26xV.s 			page 3
 
 
   68              		.syntax unified
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  113              		@ args = 0, pretend = 0, frame = 0
  114              		@ frame_needed = 0, uses_anonymous_args = 0
   63:Src/syscalls.c ****   _kill(status, -1);
-ARM GAS  /tmp/cci9V3ap.s 			page 4
+ARM GAS  /tmp/cceL26xV.s 			page 4
 
 
  115              		.loc 1 63 3 view .LVU15
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
   65:Src/syscalls.c **** }
   66:Src/syscalls.c **** 
   67:Src/syscalls.c **** __attribute__((weak)) int _read(int file, char *ptr, int len)
-ARM GAS  /tmp/cci9V3ap.s 			page 5
+ARM GAS  /tmp/cceL26xV.s 			page 5
 
 
   68:Src/syscalls.c **** {
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  199 0016 06F8010B 		strb	r0, [r6], #1
  200              	.LVL10:
   72:Src/syscalls.c ****   {
-ARM GAS  /tmp/cci9V3ap.s 			page 6
+ARM GAS  /tmp/cceL26xV.s 			page 6
 
 
  201              		.loc 1 72 43 is_stmt 1 discriminator 3 view .LVU42
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
   90:Src/syscalls.c **** }
  244              		.loc 1 90 1 is_stmt 0 view .LVU53
  245 000e 2046     		mov	r0, r4
-ARM GAS  /tmp/cci9V3ap.s 			page 7
+ARM GAS  /tmp/cceL26xV.s 			page 7
 
 
  246 0010 70BD     		pop	{r4, r5, r6, pc}
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  294              	.LVL19:
  295              	.LFB32:
   97:Src/syscalls.c **** 
-ARM GAS  /tmp/cci9V3ap.s 			page 8
+ARM GAS  /tmp/cceL26xV.s 			page 8
 
 
   98:Src/syscalls.c **** 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  337 0002 7047     		bx	lr
  338              		.cfi_endproc
  339              	.LFE33:
-ARM GAS  /tmp/cci9V3ap.s 			page 9
+ARM GAS  /tmp/cceL26xV.s 			page 9
 
 
  341              		.section	.text._lseek,"ax",%progbits
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  124:Src/syscalls.c ****   /* Pretend like we always fail */
  125:Src/syscalls.c ****   return -1;
  385              		.loc 1 125 3 view .LVU86
-ARM GAS  /tmp/cci9V3ap.s 			page 10
+ARM GAS  /tmp/cceL26xV.s 			page 10
 
 
  121:Src/syscalls.c ****   (void)path;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  133:Src/syscalls.c **** }
  433              		.loc 1 133 1 is_stmt 0 view .LVU97
  434 000a 4FF0FF30 		mov	r0, #-1
-ARM GAS  /tmp/cci9V3ap.s 			page 11
+ARM GAS  /tmp/cceL26xV.s 			page 11
 
 
  435 000e 08BD     		pop	{r3, pc}
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  143:Src/syscalls.c **** {
  483              		.loc 1 143 1 is_stmt 1 view -0
  484              		.cfi_startproc
-ARM GAS  /tmp/cci9V3ap.s 			page 12
+ARM GAS  /tmp/cceL26xV.s 			page 12
 
 
  485              		@ args = 0, pretend = 0, frame = 0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  530              		.global	_link
  531              		.syntax unified
  532              		.thumb
-ARM GAS  /tmp/cci9V3ap.s 			page 13
+ARM GAS  /tmp/cceL26xV.s 			page 13
 
 
  533              		.thumb_func
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  164:Src/syscalls.c ****   errno = EAGAIN;
  577              		.loc 1 164 1 is_stmt 0 view .LVU130
  578 0000 08B5     		push	{r3, lr}
-ARM GAS  /tmp/cci9V3ap.s 			page 14
+ARM GAS  /tmp/cceL26xV.s 			page 14
 
 
  579              		.cfi_def_cfa_offset 8
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  624              		.loc 1 175 3 is_stmt 1 view .LVU143
  176:Src/syscalls.c **** }
  625              		.loc 1 176 1 is_stmt 0 view .LVU144
-ARM GAS  /tmp/cci9V3ap.s 			page 15
+ARM GAS  /tmp/cceL26xV.s 			page 15
 
 
  626 000a 4FF0FF30 		mov	r0, #-1
@@ -859,59 +859,59 @@ ARM GAS  /tmp/cci9V3ap.s 			page 1
  646              		.weak	__io_getchar
  647              		.text
  648              	.Letext0:
- 649              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 650              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 651              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 652              		.file 5 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 653              		.file 6 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 654              		.file 7 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 655              		.file 8 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 656              		.file 9 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
-ARM GAS  /tmp/cci9V3ap.s 			page 16
+ 649              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 650              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 651              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 652              		.file 5 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 653              		.file 6 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 654              		.file 7 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 655              		.file 8 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 656              		.file 9 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ARM GAS  /tmp/cceL26xV.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 syscalls.c
-     /tmp/cci9V3ap.s:26     .text.initialise_monitor_handles:00000000 $t
-     /tmp/cci9V3ap.s:32     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
-     /tmp/cci9V3ap.s:45     .text._getpid:00000000 $t
-     /tmp/cci9V3ap.s:51     .text._getpid:00000000 _getpid
-     /tmp/cci9V3ap.s:66     .text._kill:00000000 $t
-     /tmp/cci9V3ap.s:72     .text._kill:00000000 _kill
-     /tmp/cci9V3ap.s:101    .text._exit:00000000 $t
-     /tmp/cci9V3ap.s:107    .text._exit:00000000 _exit
-     /tmp/cci9V3ap.s:152    .text._read:00000000 $t
-     /tmp/cci9V3ap.s:158    .text._read:00000000 _read
-     /tmp/cci9V3ap.s:207    .text._write:00000000 $t
-     /tmp/cci9V3ap.s:213    .text._write:00000000 _write
-     /tmp/cci9V3ap.s:262    .text._close:00000000 $t
-     /tmp/cci9V3ap.s:268    .text._close:00000000 _close
-     /tmp/cci9V3ap.s:287    .text._fstat:00000000 $t
-     /tmp/cci9V3ap.s:293    .text._fstat:00000000 _fstat
-     /tmp/cci9V3ap.s:317    .text._isatty:00000000 $t
-     /tmp/cci9V3ap.s:323    .text._isatty:00000000 _isatty
-     /tmp/cci9V3ap.s:342    .text._lseek:00000000 $t
-     /tmp/cci9V3ap.s:348    .text._lseek:00000000 _lseek
-     /tmp/cci9V3ap.s:369    .text._open:00000000 $t
-     /tmp/cci9V3ap.s:375    .text._open:00000000 _open
-     /tmp/cci9V3ap.s:406    .text._wait:00000000 $t
-     /tmp/cci9V3ap.s:412    .text._wait:00000000 _wait
-     /tmp/cci9V3ap.s:440    .text._unlink:00000000 $t
-     /tmp/cci9V3ap.s:446    .text._unlink:00000000 _unlink
-     /tmp/cci9V3ap.s:474    .text._times:00000000 $t
-     /tmp/cci9V3ap.s:480    .text._times:00000000 _times
-     /tmp/cci9V3ap.s:499    .text._stat:00000000 $t
-     /tmp/cci9V3ap.s:505    .text._stat:00000000 _stat
-     /tmp/cci9V3ap.s:529    .text._link:00000000 $t
-     /tmp/cci9V3ap.s:535    .text._link:00000000 _link
-     /tmp/cci9V3ap.s:564    .text._fork:00000000 $t
-     /tmp/cci9V3ap.s:570    .text._fork:00000000 _fork
-     /tmp/cci9V3ap.s:596    .text._execve:00000000 $t
-     /tmp/cci9V3ap.s:602    .text._execve:00000000 _execve
-     /tmp/cci9V3ap.s:636    .data.environ:00000000 environ
-     /tmp/cci9V3ap.s:633    .data.environ:00000000 $d
-     /tmp/cci9V3ap.s:643    .bss.__env:00000000 __env
-     /tmp/cci9V3ap.s:640    .bss.__env:00000000 $d
+     /tmp/cceL26xV.s:26     .text.initialise_monitor_handles:00000000 $t
+     /tmp/cceL26xV.s:32     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
+     /tmp/cceL26xV.s:45     .text._getpid:00000000 $t
+     /tmp/cceL26xV.s:51     .text._getpid:00000000 _getpid
+     /tmp/cceL26xV.s:66     .text._kill:00000000 $t
+     /tmp/cceL26xV.s:72     .text._kill:00000000 _kill
+     /tmp/cceL26xV.s:101    .text._exit:00000000 $t
+     /tmp/cceL26xV.s:107    .text._exit:00000000 _exit
+     /tmp/cceL26xV.s:152    .text._read:00000000 $t
+     /tmp/cceL26xV.s:158    .text._read:00000000 _read
+     /tmp/cceL26xV.s:207    .text._write:00000000 $t
+     /tmp/cceL26xV.s:213    .text._write:00000000 _write
+     /tmp/cceL26xV.s:262    .text._close:00000000 $t
+     /tmp/cceL26xV.s:268    .text._close:00000000 _close
+     /tmp/cceL26xV.s:287    .text._fstat:00000000 $t
+     /tmp/cceL26xV.s:293    .text._fstat:00000000 _fstat
+     /tmp/cceL26xV.s:317    .text._isatty:00000000 $t
+     /tmp/cceL26xV.s:323    .text._isatty:00000000 _isatty
+     /tmp/cceL26xV.s:342    .text._lseek:00000000 $t
+     /tmp/cceL26xV.s:348    .text._lseek:00000000 _lseek
+     /tmp/cceL26xV.s:369    .text._open:00000000 $t
+     /tmp/cceL26xV.s:375    .text._open:00000000 _open
+     /tmp/cceL26xV.s:406    .text._wait:00000000 $t
+     /tmp/cceL26xV.s:412    .text._wait:00000000 _wait
+     /tmp/cceL26xV.s:440    .text._unlink:00000000 $t
+     /tmp/cceL26xV.s:446    .text._unlink:00000000 _unlink
+     /tmp/cceL26xV.s:474    .text._times:00000000 $t
+     /tmp/cceL26xV.s:480    .text._times:00000000 _times
+     /tmp/cceL26xV.s:499    .text._stat:00000000 $t
+     /tmp/cceL26xV.s:505    .text._stat:00000000 _stat
+     /tmp/cceL26xV.s:529    .text._link:00000000 $t
+     /tmp/cceL26xV.s:535    .text._link:00000000 _link
+     /tmp/cceL26xV.s:564    .text._fork:00000000 $t
+     /tmp/cceL26xV.s:570    .text._fork:00000000 _fork
+     /tmp/cceL26xV.s:596    .text._execve:00000000 $t
+     /tmp/cceL26xV.s:602    .text._execve:00000000 _execve
+     /tmp/cceL26xV.s:636    .data.environ:00000000 environ
+     /tmp/cceL26xV.s:633    .data.environ:00000000 $d
+     /tmp/cceL26xV.s:643    .bss.__env:00000000 __env
+     /tmp/cceL26xV.s:640    .bss.__env:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
                            .group:00000000 wm4.newlib.h.27.b904f6f8971bd921b436e5701877de32
@@ -927,7 +927,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4._types.h.127.3bdfe3ff8ea2d0985b03d9cbe93480e3
                            .group:00000000 wm4.reent.h.18.25503cdc8b7e55dd0d6ea7b3e5af7a03
                            .group:00000000 wm4.lock.h.2.1461d1fff82dffe8bfddc23307f6484f
-ARM GAS  /tmp/cci9V3ap.s 			page 17
+ARM GAS  /tmp/cceL26xV.s 			page 17
 
 
                            .group:00000000 wm4.reent.h.78.6d702f69a6d6435d2dbe915b10150b1a

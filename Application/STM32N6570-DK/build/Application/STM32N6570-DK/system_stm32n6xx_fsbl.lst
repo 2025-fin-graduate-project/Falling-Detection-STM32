@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc7ezuOX.s 			page 1
+ARM GAS  /tmp/cc8l90RM.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
   23:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *                                 be called whenever the core clock is changed
   24:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *                                 during program execution.
   25:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *
-ARM GAS  /tmp/cc7ezuOX.s 			page 2
+ARM GAS  /tmp/cc8l90RM.s 			page 2
 
 
   26:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *   After each device reset the HSI (64 MHz) is used as system clock source.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
   80:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   * @{
   81:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   */
   82:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** #if !defined  (HSE_VALUE)
-ARM GAS  /tmp/cc7ezuOX.s 			page 3
+ARM GAS  /tmp/cc8l90RM.s 			page 3
 
 
   83:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** #define HSE_VALUE      48000000UL /*!< Value of the High-Speed External oscillator in Hz */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  137:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency
  138:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****          Note: If you use this function to configure the system clock; then there
  139:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****                is no need to call the 2 first functions listed above, since SystemCoreClock
-ARM GAS  /tmp/cc7ezuOX.s 			page 4
+ARM GAS  /tmp/cc8l90RM.s 			page 4
 
 
  140:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****                variable is updated automatically.
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
   44              		.cfi_def_cfa_offset 16
   45              		.cfi_offset 4, -16
   46              		.cfi_offset 5, -12
-ARM GAS  /tmp/cc7ezuOX.s 			page 5
+ARM GAS  /tmp/cc8l90RM.s 			page 5
 
 
   47              		.cfi_offset 6, -8
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
   73              		.loc 1 193 3 is_stmt 1 view .LVU18
  193:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SAU->RLAR = 0;
   74              		.loc 1 193 13 is_stmt 0 view .LVU19
-ARM GAS  /tmp/cc7ezuOX.s 			page 6
+ARM GAS  /tmp/cc8l90RM.s 			page 6
 
 
   75 0024 C3F8DC20 		str	r2, [r3, #220]
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  109 0050 C3F8E020 		str	r2, [r3, #224]
  110              		.loc 1 204 3 is_stmt 1 view .LVU42
  111              		.loc 1 204 12 is_stmt 0 view .LVU43
-ARM GAS  /tmp/cc7ezuOX.s 			page 7
+ARM GAS  /tmp/cc8l90RM.s 			page 7
 
 
  112 0054 C3F8D850 		str	r5, [r3, #216]
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  147              		.loc 1 214 13 is_stmt 0 view .LVU66
  148 0082 C3F8DC20 		str	r2, [r3, #220]
  215:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SAU->RLAR = 0;
-ARM GAS  /tmp/cc7ezuOX.s 			page 8
+ARM GAS  /tmp/cc8l90RM.s 			page 8
 
 
  149              		.loc 1 215 3 is_stmt 1 view .LVU67
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  185              		.loc 1 232 22 is_stmt 0 view .LVU87
  186 00b2 40F28726 		movw	r6, #647
  187 00b6 6E65     		str	r6, [r5, #84]
-ARM GAS  /tmp/cc7ezuOX.s 			page 9
+ARM GAS  /tmp/cc8l90RM.s 			page 9
 
 
  233:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   SYSCFG->VDDIO3CCCR = 0x00000287UL; /* VDDIO3 power domain compensation */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  226              		.loc 1 248 3 is_stmt 1 view .LVU109
  227 00ea D1F87822 		ldr	r2, [r1, #632]
  249:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   RCC->APB4ENR2 &= ~(0x00000010UL);
-ARM GAS  /tmp/cc7ezuOX.s 			page 10
+ARM GAS  /tmp/cc8l90RM.s 			page 10
 
 
  228              		.loc 1 249 3 view .LVU110
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  259 011a C4F87802 		str	r0, [r4, #632]
  268:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  269:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** #if defined(USER_TZ_SAU_SETUP)
-ARM GAS  /tmp/cc7ezuOX.s 			page 11
+ARM GAS  /tmp/cc8l90RM.s 			page 11
 
 
  270:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   /* SAU/IDAU, FPU and Interrupts secure/non-secure allocation settings */
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  290:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *         to update SystemCoreClock variable value. Otherwise, any configuration
  291:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *         based on this variable will be incorrect.
  292:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   *
-ARM GAS  /tmp/cc7ezuOX.s 			page 12
+ARM GAS  /tmp/cc8l90RM.s 			page 12
 
 
  293:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   * @note   - The system frequency computed by this function is not the real
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  337:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   uint32_t pllp2 = 0;
  306              		.loc 1 337 3 view .LVU142
  338:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   uint32_t pllcfgr, pllsource, pllbypass, ic_divider;
-ARM GAS  /tmp/cc7ezuOX.s 			page 13
+ARM GAS  /tmp/cc8l90RM.s 			page 13
 
 
  307              		.loc 1 338 3 view .LVU143
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  347:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c **** 
  348:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****   case RCC_CFGR1_CPUSWS_0:  /* MSI used as system clock source */
  349:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     if (READ_BIT(RCC->MSICFGR, RCC_MSICFGR_MSIFREQSEL) == 0UL)
-ARM GAS  /tmp/cc7ezuOX.s 			page 14
+ARM GAS  /tmp/cc8l90RM.s 			page 14
 
 
  350:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     {
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  404:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL3CFGR2, RCC_PLL3CFGR2_PLL3DIVNFRAC) >>  RCC_PLL3CFGR2_PLL3DIVNF
  405:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL3CFGR3);
  406:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL3CFGR3_PLL3PDIV1) >>  RCC_PLL3CFGR3_PLL3PDIV1_Pos;
-ARM GAS  /tmp/cc7ezuOX.s 			page 15
+ARM GAS  /tmp/cc8l90RM.s 			page 15
 
 
  407:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp2 = (pllcfgr & RCC_PLL3CFGR3_PLL3PDIV2) >>  RCC_PLL3CFGR3_PLL3PDIV2_Pos;
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  461:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     }
  462:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     /* Apply IC1 divider */
  463:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     ic_divider = (READ_BIT(RCC->IC1CFGR, RCC_IC1CFGR_IC1INT) >> RCC_IC1CFGR_IC1INT_Pos) + 1UL;
-ARM GAS  /tmp/cc7ezuOX.s 			page 16
+ARM GAS  /tmp/cc8l90RM.s 			page 16
 
 
  464:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  371:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       {
  384              		.loc 1 371 10 is_stmt 0 view .LVU172
  385 0058 0E01     		lsls	r6, r1, #4
-ARM GAS  /tmp/cc7ezuOX.s 			page 17
+ARM GAS  /tmp/cc8l90RM.s 			page 17
 
 
  369:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       pllbypass = pllcfgr & RCC_PLL1CFGR1_PLL1BYP;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  421 007c C1F30550 		ubfx	r0, r1, #20, #6
  422              	.LVL12:
  422:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       }
-ARM GAS  /tmp/cc7ezuOX.s 			page 18
+ARM GAS  /tmp/cc8l90RM.s 			page 18
 
 
  423              		.loc 1 422 15 view .LVU192
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  462 00a8 75D4     		bmi	.L13
  387:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         plln = (pllcfgr & RCC_PLL2CFGR1_PLL2DIVN) >>  RCC_PLL2CFGR1_PLL2DIVN_Pos;
  463              		.loc 1 387 9 is_stmt 1 view .LVU208
-ARM GAS  /tmp/cc7ezuOX.s 			page 19
+ARM GAS  /tmp/cc8l90RM.s 			page 19
 
 
  464              	.LVL18:
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  404:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL3CFGR3);
  500              		.loc 1 404 20 is_stmt 0 view .LVU227
  501 00c8 D3F8A440 		ldr	r4, [r3, #164]
-ARM GAS  /tmp/cc7ezuOX.s 			page 20
+ARM GAS  /tmp/cc8l90RM.s 			page 20
 
 
  403:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllfracn = READ_BIT(RCC->PLL3CFGR2, RCC_PLL3CFGR2_PLL3DIVNFRAC) >>  RCC_PLL3CFGR2_PLL3DIVNF
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  538              	.LVL33:
  419:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllcfgr = READ_REG(RCC->PLL4CFGR3);
  539              		.loc 1 419 9 is_stmt 1 view .LVU246
-ARM GAS  /tmp/cc7ezuOX.s 			page 21
+ARM GAS  /tmp/cc8l90RM.s 			page 21
 
 
  420:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****         pllp1 = (pllcfgr & RCC_PLL4CFGR3_PLL4PDIV1) >>  RCC_PLL4CFGR3_PLL4PDIV1_Pos;
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  580              	.LVL40:
  464:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     break;
  581              		.loc 1 464 5 is_stmt 1 view .LVU261
-ARM GAS  /tmp/cc7ezuOX.s 			page 22
+ARM GAS  /tmp/cc8l90RM.s 			page 22
 
 
  463:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****     sysclk = sysclk / ic_divider;
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  620 014a 07EE100A 		vmov	s14, r0	@ int
  621              	.LVL47:
  459:../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c ****       sysclk = (uint32_t)((float_t)(pllvco/(((float_t)pllp1) * ((float_t)pllp2))));
-ARM GAS  /tmp/cc7ezuOX.s 			page 23
+ARM GAS  /tmp/cc8l90RM.s 			page 23
 
 
  622              		.loc 1 459 97 view .LVU278
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  664 0188 104B     		ldr	r3, .L36+16
  665 018a 4EE7     		b	.L5
  666              	.LVL53:
-ARM GAS  /tmp/cc7ezuOX.s 			page 24
+ARM GAS  /tmp/cc8l90RM.s 			page 24
 
 
  667              	.L18:
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  715              		.align	1
  716              		.global	SECURE_SystemCoreClockUpdate
  717              		.global	__acle_se_SECURE_SystemCoreClockUpdate
-ARM GAS  /tmp/cc7ezuOX.s 			page 25
+ARM GAS  /tmp/cc8l90RM.s 			page 25
 
 
  718              		.syntax unified
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  758              		.cfi_endproc
  759              	.LFE277:
  761              		.global	SystemCoreClock
-ARM GAS  /tmp/cc7ezuOX.s 			page 26
+ARM GAS  /tmp/cc8l90RM.s 			page 26
 
 
  762              		.section	.data.SystemCoreClock,"aw"
@@ -1507,29 +1507,29 @@ ARM GAS  /tmp/cc7ezuOX.s 			page 1
  767 0000 0090D003 		.word	64000000
  768              		.text
  769              	.Letext0:
- 770              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
- 771              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 770              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 771              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
  772              		.file 4 "../../STM32Cube_FW_N6/Drivers/CMSIS/Include/core_cm55.h"
  773              		.file 5 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/stm32n657xx.h"
- 774              		.file 6 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 774              		.file 6 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
  775              		.file 7 "../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Include/system_stm32n6xx.h"
-ARM GAS  /tmp/cc7ezuOX.s 			page 27
+ARM GAS  /tmp/cc8l90RM.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32n6xx_fsbl.c
-     /tmp/cc7ezuOX.s:26     .text.SystemInit:00000000 $t
-     /tmp/cc7ezuOX.s:32     .text.SystemInit:00000000 SystemInit
-     /tmp/cc7ezuOX.s:278    .text.SystemInit:0000013c $d
-     /tmp/cc7ezuOX.s:288    .text.SystemCoreClockUpdate:00000000 $t
-     /tmp/cc7ezuOX.s:294    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-     /tmp/cc7ezuOX.s:703    .text.SystemCoreClockUpdate:000001bc $d
-     /tmp/cc7ezuOX.s:766    .data.SystemCoreClock:00000000 SystemCoreClock
-     /tmp/cc7ezuOX.s:715    .text.SECURE_SystemCoreClockUpdate:00000000 $t
-     /tmp/cc7ezuOX.s:726    .text.SECURE_SystemCoreClockUpdate:00000000 SECURE_SystemCoreClockUpdate
-     /tmp/cc7ezuOX.s:727    .text.SECURE_SystemCoreClockUpdate:00000000 __acle_se_SECURE_SystemCoreClockUpdate
-     /tmp/cc7ezuOX.s:757    .text.SECURE_SystemCoreClockUpdate:00000020 $d
-     /tmp/cc7ezuOX.s:763    .data.SystemCoreClock:00000000 $d
+     /tmp/cc8l90RM.s:26     .text.SystemInit:00000000 $t
+     /tmp/cc8l90RM.s:32     .text.SystemInit:00000000 SystemInit
+     /tmp/cc8l90RM.s:278    .text.SystemInit:0000013c $d
+     /tmp/cc8l90RM.s:288    .text.SystemCoreClockUpdate:00000000 $t
+     /tmp/cc8l90RM.s:294    .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+     /tmp/cc8l90RM.s:703    .text.SystemCoreClockUpdate:000001bc $d
+     /tmp/cc8l90RM.s:766    .data.SystemCoreClock:00000000 SystemCoreClock
+     /tmp/cc8l90RM.s:715    .text.SECURE_SystemCoreClockUpdate:00000000 $t
+     /tmp/cc8l90RM.s:726    .text.SECURE_SystemCoreClockUpdate:00000000 SECURE_SystemCoreClockUpdate
+     /tmp/cc8l90RM.s:727    .text.SECURE_SystemCoreClockUpdate:00000000 __acle_se_SECURE_SystemCoreClockUpdate
+     /tmp/cc8l90RM.s:757    .text.SECURE_SystemCoreClockUpdate:00000020 $d
+     /tmp/cc8l90RM.s:763    .data.SystemCoreClock:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.stm32n6xx.h.34.c523a1ffdf274a69e8802892c6776332
                            .group:00000000 wm4.stm32n657xx.h.26.acd272cb67318cc1a4791ce2f0720ca6
