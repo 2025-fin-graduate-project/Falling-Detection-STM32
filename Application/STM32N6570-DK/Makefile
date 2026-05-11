@@ -25,7 +25,11 @@ rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(su
 TARGET = Project
 MODEL_DIR     = ../../Model/STM32N6570-DK
 TCN_MODEL_DIR = $(MODEL_DIR)/TCN
+GRU_MODEL_DIR = $(MODEL_DIR)/GRU
 BINARY_DIR = Binary
+
+# Fall detection model selection: TCN or GRU (must match app_config.h)
+FALL_DETECTION_MODEL ?= GRU
 ifdef APP_GIT_SHA1_STRING
 C_DEFS += -DAPP_GIT_SHA1_STRING=\"$(APP_GIT_SHA1_STRING)\"
 endif
@@ -62,8 +66,13 @@ C_SOURCES += ../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c
 C_SOURCES += ../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/npu_cache.c
 C_SOURCES += $(MODEL_DIR)/network.c
 C_SOURCES += $(MODEL_DIR)/stai_network.c
+ifeq ($(FALL_DETECTION_MODEL),GRU)
+C_SOURCES += $(GRU_MODEL_DIR)/gru_network.c
+C_SOURCES += $(GRU_MODEL_DIR)/gru_network_data.c
+else
 C_SOURCES += $(TCN_MODEL_DIR)/tcn_network.c
 C_SOURCES += $(TCN_MODEL_DIR)/stai_tcn_network.c
+endif
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal.c
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_cortex.c
@@ -191,7 +200,11 @@ C_INCLUDES += -I../../Middlewares/stm32-mw-camera/sensors/ov5640
 
 C_INCLUDES += -IInc
 C_INCLUDES += -I$(MODEL_DIR)
+ifeq ($(FALL_DETECTION_MODEL),GRU)
+C_INCLUDES += -I$(GRU_MODEL_DIR)
+else
 C_INCLUDES += -I$(TCN_MODEL_DIR)
+endif
 C_INCLUDES += -I../../Middlewares/ai-postprocessing-wrapper
 C_INCLUDES += -I../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc
 C_INCLUDES += -I../../Middlewares/stedgeai-lib/Npu/ll_aton
@@ -291,16 +304,29 @@ clean:
 #######################################
 .PHONY: flash
 flash: $(BUILD_DIR)/$(TARGET)_sign.bin
-	$(FLASHER) -c port=SWD mode=HOTPLUG -el $(EL) -hardRst -w $< 0x70100000
+	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $< 0x70100000
 	@echo FLASH $<
 
 .PHONY: flash_weights
 flash_weights: $(MODEL_DIR)/network_data.hex
-	$(FLASHER) -c port=SWD mode=HOTPLUG -el $(EL) -hardRst -w $<
+	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
 
 .PHONY: flash_tcn_weights
 flash_tcn_weights: $(TCN_MODEL_DIR)/tcn_network_data.hex
-	$(FLASHER) -c port=SWD mode=HOTPLUG -el $(EL) -hardRst -w $<
+	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
+
+.PHONY: flash_gru_weights
+flash_gru_weights: $(GRU_MODEL_DIR)/gru_network_data.hex
+	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
+
+# Convenience: build (GRU), sign, flash app + MoveNet weights in one shot.
+# GRU weights are embedded in the binary — no separate flash step needed.
+.PHONY: flash_gru
+flash_gru:
+	$(MAKE) FALL_DETECTION_MODEL=GRU
+	$(MAKE) sign
+	$(MAKE) flash
+	$(MAKE) flash_weights
 
 #######################################
 # dependencies

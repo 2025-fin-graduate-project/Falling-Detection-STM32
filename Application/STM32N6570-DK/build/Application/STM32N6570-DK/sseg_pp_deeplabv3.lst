@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccaUcepF.s 			page 1
+ARM GAS  /tmp/cc0Uwwqj.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
   22:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
   23:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   switch (pInput->type) {
   24:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   case AI_SSEG_DATA_FLOAT:
-ARM GAS  /tmp/ccaUcepF.s 			page 2
+ARM GAS  /tmp/cc0Uwwqj.s 			page 2
 
 
   25:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
   79:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 memcpy(out, &pInput_static_param->color_map[_index_a[p]], 3 * sizeof(uint8_t));
   80:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                 out+=3 * sizeof(uint8_t);
   81:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****             }
-ARM GAS  /tmp/ccaUcepF.s 			page 3
+ARM GAS  /tmp/cc0Uwwqj.s 			page 3
 
 
   82:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         }
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
   58 000a 5C43     		muls	r4, r3, r4
  110:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   float32_t _maxim_a[4];
  111:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (nb_classes < 256) {
-ARM GAS  /tmp/ccaUcepF.s 			page 4
+ARM GAS  /tmp/cc0Uwwqj.s 			page 4
 
 
   59              		.loc 1 111 6 view .LVU8
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  123:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
  124:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_if32ou16(pSrc, nb_classes, nb_classes, _maxim_a, (uint16_t *)out, loop
  125:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+= 4*nb_classes;
-ARM GAS  /tmp/ccaUcepF.s 			page 5
+ARM GAS  /tmp/cc0Uwwqj.s 			page 5
 
 
  126:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out += 4;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  132              		.loc 1 127 13 view .LVU30
  133 004a F1E7     		b	.L3
  134              	.LVL12:
-ARM GAS  /tmp/ccaUcepF.s 			page 6
+ARM GAS  /tmp/cc0Uwwqj.s 			page 6
 
 
  135              	.L4:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  177              		@ frame_needed = 0, uses_anonymous_args = 0
  137:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int32_t error   = AI_SSEG_POSTPROCESS_ERROR_NO;
  178              		.loc 1 137 3 view .LVU41
-ARM GAS  /tmp/ccaUcepF.s 			page 7
+ARM GAS  /tmp/cc0Uwwqj.s 			page 7
 
 
  138:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   uint32_t nb_classes = pInput_static_param->nb_classes;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  217              		.loc 1 145 5 view .LVU57
  146:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
  147:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         vision_models_maxi_p_iu8ou8(pSrc, nb_classes, nb_classes, _maxim_a, out, loop);
-ARM GAS  /tmp/ccaUcepF.s 			page 8
+ARM GAS  /tmp/cc0Uwwqj.s 			page 8
 
 
  148:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         pSrc+=16*nb_classes;
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  251              		.loc 1 147 9 is_stmt 0 view .LVU64
  252 0038 FFF7FEFF 		bl	vision_models_maxi_p_iu8ou8
  253              	.LVL26:
-ARM GAS  /tmp/ccaUcepF.s 			page 9
+ARM GAS  /tmp/cc0Uwwqj.s 			page 9
 
 
  148:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****         out +=16;
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  292              		.loc 1 158 13 is_stmt 0 view .LVU80
  293 005c 1037     		adds	r7, r7, #16
  294              	.LVL33:
-ARM GAS  /tmp/ccaUcepF.s 			page 10
+ARM GAS  /tmp/cc0Uwwqj.s 			page 10
 
 
  159:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     }
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  335              		.loc 1 172 3 is_stmt 1 view .LVU90
  336              		.loc 1 173 45 is_stmt 0 view .LVU91
  337 000a 5C43     		muls	r4, r3, r4
-ARM GAS  /tmp/ccaUcepF.s 			page 11
+ARM GAS  /tmp/cc0Uwwqj.s 			page 11
 
 
  174:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   int8_t _maxim_a[16];
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  184:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   } else {
  185:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     uint16_t *out = (uint16_t *)pOutput->pOutBuff;
  186:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
-ARM GAS  /tmp/ccaUcepF.s 			page 12
+ARM GAS  /tmp/cc0Uwwqj.s 			page 12
 
 
  187:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  410              	.LBB14:
  185:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     while(loop > 0)
  411              		.loc 1 185 5 is_stmt 1 view .LVU116
-ARM GAS  /tmp/ccaUcepF.s 			page 13
+ARM GAS  /tmp/cc0Uwwqj.s 			page 13
 
 
  186:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****     {
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  197:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** int32_t sseg_deeplabv3_pp_apply_color_map(sseg_deeplabv3_pp_in_t *pInput,
  198:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                           sseg_pp_out_t *pOutput,
  199:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                           sseg_deeplabv3_pp_static_param_t *pInput_static_param)
-ARM GAS  /tmp/ccaUcepF.s 			page 14
+ARM GAS  /tmp/cc0Uwwqj.s 			page 14
 
 
  200:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** {
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  468              	.LFE777:
  470              		.section	.text.sseg_deeplabv3_pp_process,"ax",%progbits
  471              		.align	1
-ARM GAS  /tmp/ccaUcepF.s 			page 15
+ARM GAS  /tmp/cc0Uwwqj.s 			page 15
 
 
  472              		.global	sseg_deeplabv3_pp_process
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  274:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****                                                pInput_static_param);
  275:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****  }
  276:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c **** 
-ARM GAS  /tmp/ccaUcepF.s 			page 16
+ARM GAS  /tmp/cc0Uwwqj.s 			page 16
 
 
  277:../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/sseg_pp_deeplabv3.c ****   if (error != AI_SSEG_POSTPROCESS_ERROR_NO) {
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  528 0008 08BD     		pop	{r3, pc}
  529              		.cfi_endproc
  530              	.LFE779:
-ARM GAS  /tmp/ccaUcepF.s 			page 17
+ARM GAS  /tmp/cc0Uwwqj.s 			page 17
 
 
  532              		.section	.text.sseg_deeplabv3_pp_process_int8,"ax",%progbits
@@ -1014,25 +1014,25 @@ ARM GAS  /tmp/ccaUcepF.s 			page 1
  569              		.file 6 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/sseg_pp_out
  570              		.file 7 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/sseg_deepla
  571              		.file 8 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_mode
-ARM GAS  /tmp/ccaUcepF.s 			page 18
+ARM GAS  /tmp/cc0Uwwqj.s 			page 18
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 sseg_pp_deeplabv3.c
-     /tmp/ccaUcepF.s:26     .text.sseg_deeplabv3_pp_argmax:00000000 $t
-     /tmp/ccaUcepF.s:32     .text.sseg_deeplabv3_pp_argmax:00000000 sseg_deeplabv3_pp_argmax
-     /tmp/ccaUcepF.s:165    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 $t
-     /tmp/ccaUcepF.s:171    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 sseg_deeplabv3_pp_argmax_uint8
-     /tmp/ccaUcepF.s:306    .text.sseg_deeplabv3_pp_argmax_int8:00000000 $t
-     /tmp/ccaUcepF.s:312    .text.sseg_deeplabv3_pp_argmax_int8:00000000 sseg_deeplabv3_pp_argmax_int8
-     /tmp/ccaUcepF.s:447    .text.sseg_deeplabv3_pp_reset:00000000 $t
-     /tmp/ccaUcepF.s:453    .text.sseg_deeplabv3_pp_reset:00000000 sseg_deeplabv3_pp_reset
-     /tmp/ccaUcepF.s:471    .text.sseg_deeplabv3_pp_process:00000000 $t
-     /tmp/ccaUcepF.s:477    .text.sseg_deeplabv3_pp_process:00000000 sseg_deeplabv3_pp_process
-     /tmp/ccaUcepF.s:502    .text.sseg_deeplabv3_pp_process_uint8:00000000 $t
-     /tmp/ccaUcepF.s:508    .text.sseg_deeplabv3_pp_process_uint8:00000000 sseg_deeplabv3_pp_process_uint8
-     /tmp/ccaUcepF.s:533    .text.sseg_deeplabv3_pp_process_int8:00000000 $t
-     /tmp/ccaUcepF.s:539    .text.sseg_deeplabv3_pp_process_int8:00000000 sseg_deeplabv3_pp_process_int8
+     /tmp/cc0Uwwqj.s:26     .text.sseg_deeplabv3_pp_argmax:00000000 $t
+     /tmp/cc0Uwwqj.s:32     .text.sseg_deeplabv3_pp_argmax:00000000 sseg_deeplabv3_pp_argmax
+     /tmp/cc0Uwwqj.s:165    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 $t
+     /tmp/cc0Uwwqj.s:171    .text.sseg_deeplabv3_pp_argmax_uint8:00000000 sseg_deeplabv3_pp_argmax_uint8
+     /tmp/cc0Uwwqj.s:306    .text.sseg_deeplabv3_pp_argmax_int8:00000000 $t
+     /tmp/cc0Uwwqj.s:312    .text.sseg_deeplabv3_pp_argmax_int8:00000000 sseg_deeplabv3_pp_argmax_int8
+     /tmp/cc0Uwwqj.s:447    .text.sseg_deeplabv3_pp_reset:00000000 $t
+     /tmp/cc0Uwwqj.s:453    .text.sseg_deeplabv3_pp_reset:00000000 sseg_deeplabv3_pp_reset
+     /tmp/cc0Uwwqj.s:471    .text.sseg_deeplabv3_pp_process:00000000 $t
+     /tmp/cc0Uwwqj.s:477    .text.sseg_deeplabv3_pp_process:00000000 sseg_deeplabv3_pp_process
+     /tmp/cc0Uwwqj.s:502    .text.sseg_deeplabv3_pp_process_uint8:00000000 $t
+     /tmp/cc0Uwwqj.s:508    .text.sseg_deeplabv3_pp_process_uint8:00000000 sseg_deeplabv3_pp_process_uint8
+     /tmp/cc0Uwwqj.s:533    .text.sseg_deeplabv3_pp_process_int8:00000000 $t
+     /tmp/cc0Uwwqj.s:539    .text.sseg_deeplabv3_pp_process_int8:00000000 sseg_deeplabv3_pp_process_int8
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.arm_math_types.h.28.9e71aea5cdf6aebdd83091bf39b4832a
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
@@ -1074,7 +1074,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.fast_math_functions.h.28.aa389abd5521cfceab0e76a6af3dd2e2
                            .group:00000000 wm4.matrix_functions.h.28.8fc8488c73b2d6f328b0946db3460102
                            .group:00000000 wm4.controller_functions.h.28.388735b97ccd96442b0ac9e554629f36
-ARM GAS  /tmp/ccaUcepF.s 			page 19
+ARM GAS  /tmp/cc0Uwwqj.s 			page 19
 
 
                            .group:00000000 wm4.filtering_functions.h.46.6cf1424fb1f86d5f9958d208b83340a1

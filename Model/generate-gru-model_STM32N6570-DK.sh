@@ -6,7 +6,7 @@ set -eu # Exit on any error, Exit on unset variable
 # GRU models are best supported in ONNX format.
 # If using TFLite, ensure it doesn't use "Select TF ops" (Variables).
 
-MODEL_FILE="fall_detection_gru_v26_int8.tflite"
+MODEL_FILE="gru_v26_int8.tflite"
 
 if [ ! -f "$MODEL_FILE" ]; then
     echo "Error: $MODEL_FILE not found in Model/ directory."
@@ -20,7 +20,7 @@ echo "Generating GRU model from $MODEL_FILE..."
 # --address 0x70680000 ensures weights are referenced at this offset in xSPI2
 stedgeai generate --model "$MODEL_FILE" \
     --target stm32n6 \
-    --st-neural-art "default@user_neuralart_STM32N6570-DK.json" \
+    --st-neural-art "default@user_neuralart_gru_STM32N6570-DK.json" \
     --input-data-type float32 \
     --output-data-type float32 \
     --optimization time \

@@ -33,6 +33,14 @@
 #define ASPECT_RATIO_FULLSCREEN (3) /* Resize camera image to NN input size and display a maximized image. See Doc/Build-Options.md#aspect-ratio-mode */
 #define ASPECT_RATIO_MODE ASPECT_RATIO_FIT
 
+/* Fall detection model selection: change this line to switch between TCN and GRU */
+#define FALL_MODEL_TCN  0
+#define FALL_MODEL_GRU  1
+#define FALL_DETECTION_MODEL  FALL_MODEL_GRU
+
+/* GRU stateful: frames to accumulate before trusting output (~2 sec at 15fps) */
+#define GRU_WARMUP_FRAMES  30
+
 /* Model Related Info */
 #define POSTPROCESS_TYPE    POSTPROCESS_SPE_MOVENET_UI
 

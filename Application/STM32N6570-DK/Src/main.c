@@ -30,7 +30,11 @@
 #include "app_postprocess.h"
 #include "stai.h"
 #include "stai_network.h"
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+#include "gru_network.h"
+#else
 #include "stai_tcn_network.h"
+#endif
 #include "app_camerapipeline.h"
 #include "main.h"
 #include <stdio.h>
@@ -86,7 +90,7 @@ typedef struct
   uint8_t window_ready;
   uint8_t fall_detected;
   uint32_t frame_count;
-  uint32_t tcn_inference_ms;
+  uint32_t inference_ms;
   float32_t normal_logit;
   float32_t fall_logit;
   float32_t normal_score;
@@ -145,8 +149,12 @@ uint8_t *dcmipp_out_nn;
 
 /* MoveNet model context */
 STAI_NETWORK_CONTEXT_DECLARE(network_context, STAI_NETWORK_CONTEXT_SIZE)
-/* Fall detection TCN model context */
+/* Fall detection model context */
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+STAI_NETWORK_CONTEXT_DECLARE(gru_network_context, STAI_GRU_NETWORK_CONTEXT_SIZE)
+#else
 STAI_NETWORK_CONTEXT_DECLARE(tcn_network_context, STAI_TCN_NETWORK_CONTEXT_SIZE)
+#endif
 /* Lcd Background Buffer */
 __attribute__ ((section (".psram_bss")))
 __attribute__ ((aligned (32)))
@@ -160,9 +168,22 @@ static PoseDebugMetrics_TypeDef pose_debug_metrics;
 static FallDetectionState_TypeDef fall_state;
 static PosePipeline_t pose_pipeline;
 static uint32_t pose_last_tick;
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+/* GRU stateful: 3 inputs [h1, h2, pose], 3 outputs [new_h1, logits, new_h2] */
+static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
+static stai_ptr gru_out[STAI_GRU_NETWORK_OUT_NUM]  = {0};
+static int32_t  gru_in_len[STAI_GRU_NETWORK_IN_NUM]  = {0};
+static int32_t  gru_out_len[STAI_GRU_NETWORK_OUT_NUM] = {0};
+/* Hidden state buffers — persistent across frames */
+__attribute__((aligned(32))) static float32_t gru_h1[64] = {0};
+__attribute__((aligned(32))) static float32_t gru_h2[32] = {0};
+/* Activation scratch buffer — required because g_gru_network_activations_1 is NULL in generated code */
+__attribute__((aligned(4))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
+#else
 static stai_ptr tcn_in;
 static stai_ptr tcn_out[STAI_TCN_NETWORK_OUT_NUM] = {0};
 static int32_t tcn_out_len[STAI_TCN_NETWORK_OUT_NUM] = {0};
+#endif
 
 static void SystemClock_Config(void);
 static void CONSOLE_Config(void);
@@ -178,8 +199,8 @@ static void Hardware_init(void);
 static void Run_Inference(stai_network *network_instance);
 static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_size *number_output, int32_t nn_out_len[]);
 static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai_size number_output, spe_pp_out_t *p_postprocess);
-static void TcnNetwork_init(void);
-static void Run_TcnInference(stai_network *network_instance);
+static void FallModel_init(void);
+static void Run_FallInference(void);
 static void FallDetection_Update(PosePipeline_t *pipeline);
 
 
@@ -206,7 +227,11 @@ int main(void)
   printf("HAL: %lu.%lu.%lu\n", __STM32N6xx_HAL_VERSION_MAIN, __STM32N6xx_HAL_VERSION_SUB1, __STM32N6xx_HAL_VERSION_SUB2);
   printf("STEdgeAI Tools: %d.%d.%d\n", STAI_TOOLS_VERSION_MAJOR, STAI_TOOLS_VERSION_MINOR, STAI_TOOLS_VERSION_MICRO);
   printf("NN model: %s\n", STAI_NETWORK_ORIGIN_MODEL_NAME);
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  printf("Fall model: %s\n", STAI_GRU_NETWORK_ORIGIN_MODEL_NAME);
+#else
   printf("Fall model: %s\n", STAI_TCN_NETWORK_ORIGIN_MODEL_NAME);
+#endif
   printf("========================================\n");
 
   /*** NN Init ****************************************************************/
@@ -217,7 +242,7 @@ int main(void)
   int32_t nn_out_len[STAI_NETWORK_OUT_NUM] = {0};
 
   NeuralNetwork_init(&nn_in_len, nn_out, &number_output, nn_out_len);
-  TcnNetwork_init();
+  FallModel_init();
 
   /*** Post Processing Init ***************************************************/
   stai_network_info info;
@@ -369,16 +394,20 @@ static void Run_Inference(stai_network *network_instance) {
   assert(ret == STAI_SUCCESS);
 }
 
-static void Run_TcnInference(stai_network *network_instance) {
+static void Run_FallInference(void) {
   stai_return_code ret;
 
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  ret = stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
+#else
   do {
-    ret = stai_tcn_network_run(network_instance, STAI_MODE_ASYNC);
+    ret = stai_tcn_network_run(tcn_network_context, STAI_MODE_ASYNC);
     if (ret == STAI_RUNNING_WFE)
       LL_ATON_OSAL_WFE();
   } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
+  ret = stai_ext_tcn_network_new_inference(tcn_network_context);
+#endif
 
-  ret = stai_ext_tcn_network_new_inference(network_instance);
   assert(ret == STAI_SUCCESS);
 }
 
@@ -413,35 +442,63 @@ static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_si
   }
 }
 
-static void TcnNetwork_init(void)
+static void FallModel_init(void)
 {
-  stai_network_info info;
-  stai_size number_input = STAI_TCN_NETWORK_IN_NUM;
-  stai_size number_output = STAI_TCN_NETWORK_OUT_NUM;
   int ret;
+
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  stai_size number_input  = STAI_GRU_NETWORK_IN_NUM;
+  stai_size number_output = STAI_GRU_NETWORK_OUT_NUM;
+
+  ret = stai_gru_network_init(gru_network_context);
+  assert(ret == STAI_SUCCESS);
+
+  /* Connect input/output pointers into the activation buffer */
+  stai_ptr act_bufs[STAI_GRU_NETWORK_ACTIVATIONS_NUM] = { (stai_ptr)gru_activation_buf };
+  stai_size n_act = STAI_GRU_NETWORK_ACTIVATIONS_NUM;
+  ret = stai_gru_network_set_activations(gru_network_context, act_bufs, n_act);
+  assert(ret == STAI_SUCCESS);
+
+  ret = stai_gru_network_get_inputs(gru_network_context, gru_in, &number_input);
+  assert(ret == STAI_SUCCESS);
+
+  ret = stai_gru_network_get_outputs(gru_network_context, gru_out, &number_output);
+  assert(ret == STAI_SUCCESS);
+
+  gru_in_len[0]  = STAI_GRU_NETWORK_IN_1_SIZE_BYTES;
+  gru_in_len[1]  = STAI_GRU_NETWORK_IN_2_SIZE_BYTES;
+  gru_in_len[2]  = STAI_GRU_NETWORK_IN_3_SIZE_BYTES;
+  gru_out_len[0] = STAI_GRU_NETWORK_OUT_1_SIZE_BYTES;
+  gru_out_len[1] = STAI_GRU_NETWORK_OUT_2_SIZE_BYTES;
+  gru_out_len[2] = STAI_GRU_NETWORK_OUT_3_SIZE_BYTES;
+
+  /* zero-init hidden states */
+  memset(gru_h1, 0, sizeof(gru_h1));
+  memset(gru_h2, 0, sizeof(gru_h2));
+
+#else
+  stai_size number_input  = STAI_TCN_NETWORK_IN_NUM;
+  stai_size number_output = STAI_TCN_NETWORK_OUT_NUM;
 
   ret = stai_tcn_network_init(tcn_network_context);
   assert(ret == STAI_SUCCESS);
 
   ret = stai_tcn_network_get_info(tcn_network_context, &info);
   assert(ret == STAI_SUCCESS);
-  assert(info.n_inputs == STAI_TCN_NETWORK_IN_NUM);
+  assert(info.n_inputs  == STAI_TCN_NETWORK_IN_NUM);
   assert(info.n_outputs == STAI_TCN_NETWORK_OUT_NUM);
-  assert(info.inputs[0].size_bytes == STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
+  assert(info.inputs[0].size_bytes  == STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
   assert(info.outputs[0].size_bytes == STAI_TCN_NETWORK_OUT_1_SIZE_BYTES);
 
   ret = stai_tcn_network_get_inputs(tcn_network_context, &tcn_in, &number_input);
   assert(ret == STAI_SUCCESS);
-  assert(number_input == STAI_TCN_NETWORK_IN_NUM);
 
   ret = stai_tcn_network_get_outputs(tcn_network_context, tcn_out, &number_output);
   assert(ret == STAI_SUCCESS);
-  assert(number_output == STAI_TCN_NETWORK_OUT_NUM);
 
   for (int i = 0; i < STAI_TCN_NETWORK_OUT_NUM; i++)
-  {
     tcn_out_len[i] = info.outputs[i].size_bytes;
-  }
+#endif
 
   memset(&fall_state, 0, sizeof(fall_state));
 }
@@ -449,14 +506,47 @@ static void TcnNetwork_init(void)
 static void FallDetection_Update(PosePipeline_t *pipeline)
 {
   fall_state.frame_count = pipeline->win_count;
+
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  /* GRU stateful: run every frame, show result after warmup */
+  fall_state.window_ready = (pipeline->win_count >= GRU_WARMUP_FRAMES) ? 1u : 0u;
+
+  if (pipeline->win_count == 0)
+  {
+    fall_state.fall_detected = 0;
+    fall_state.fall_score    = 0.0f;
+    fall_state.normal_score  = 0.0f;
+    fall_state.inference_ms  = 0;
+    return;
+  }
+
+  /* IN[0]=h1(256B), IN[1]=h2(128B), IN[2]=pose(220B) */
+  memcpy(gru_in[0], gru_h1, STAI_GRU_NETWORK_IN_1_SIZE_BYTES);
+  memcpy(gru_in[1], gru_h2, STAI_GRU_NETWORK_IN_2_SIZE_BYTES);
+  PosePipeline_GetLatestFeature(pipeline, (float32_t *)gru_in[2]);
+
+  /* GRU runs on CPU: no cache maintenance needed for inputs or outputs.
+     InvalidateDCache would discard dirty cache lines written by the CPU runtime
+     before they reach RAM, causing stale (zero) reads. */
+  uint32_t t0 = HAL_GetTick();
+  Run_FallInference();
+  uint32_t t1 = HAL_GetTick();
+  fall_state.inference_ms = t1 - t0;
+
+  memcpy(gru_h1, gru_out[0], STAI_GRU_NETWORK_OUT_1_SIZE_BYTES);
+  memcpy(gru_h2, gru_out[2], STAI_GRU_NETWORK_OUT_3_SIZE_BYTES);
+
+  float32_t *logits = (float32_t *)gru_out[1];
+
+#else /* TCN */
   fall_state.window_ready = PosePipeline_WindowFull(pipeline);
 
   if (!fall_state.window_ready)
   {
     fall_state.fall_detected = 0;
-    fall_state.fall_score = 0.0f;
-    fall_state.normal_score = 0.0f;
-    fall_state.tcn_inference_ms = 0;
+    fall_state.fall_score    = 0.0f;
+    fall_state.normal_score  = 0.0f;
+    fall_state.inference_ms  = 0;
     return;
   }
 
@@ -464,35 +554,40 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   SCB_CleanDCache_by_Addr(tcn_in, STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
 
   uint32_t t0 = HAL_GetTick();
-  printf("[TCN] start\r\n");
-  Run_TcnInference(tcn_network_context);
+  Run_FallInference();
   uint32_t t1 = HAL_GetTick();
-  fall_state.tcn_inference_ms = t1 - t0;
-  printf("[TCN] done %lums\r\n", fall_state.tcn_inference_ms);
+  fall_state.inference_ms = t1 - t0;
 
   SCB_InvalidateDCache_by_Addr(tcn_out[0], tcn_out_len[0]);
-
   float32_t *logits = (float32_t *)tcn_out[0];
-  fall_state.normal_logit = logits[0];
-  fall_state.fall_logit = logits[1];
+#endif
 
-  float32_t max_logit = (logits[0] > logits[1]) ? logits[0] : logits[1];
+  if (fall_state.window_ready)
+    printf("[%s] %lums\r\n",
+           (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
+           fall_state.inference_ms);
+
+  fall_state.normal_logit = logits[0];
+  fall_state.fall_logit   = logits[1];
+
+  float32_t max_logit  = (logits[0] > logits[1]) ? logits[0] : logits[1];
   float32_t normal_exp = expf(logits[0] - max_logit);
-  float32_t fall_exp = expf(logits[1] - max_logit);
-  float32_t denom = normal_exp + fall_exp;
+  float32_t fall_exp   = expf(logits[1] - max_logit);
+  float32_t denom      = normal_exp + fall_exp;
 
   if (denom > 0.0f)
   {
     fall_state.normal_score = normal_exp / denom;
-    fall_state.fall_score = fall_exp / denom;
+    fall_state.fall_score   = fall_exp   / denom;
   }
   else
   {
     fall_state.normal_score = 0.5f;
-    fall_state.fall_score = 0.5f;
+    fall_state.fall_score   = 0.5f;
   }
 
-  fall_state.fall_detected = (fall_state.fall_score >= fall_state.normal_score) ? 1u : 0u;
+  if (fall_state.window_ready)
+    fall_state.fall_detected = (fall_state.fall_score >= fall_state.normal_score) ? 1u : 0u;
 }
 
 static void NPURam_enable(void)
@@ -653,11 +748,12 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
   if (fall_state.window_ready)
   {
     UTIL_LCD_SetTextColor(fall_state.fall_detected ? UTIL_LCD_COLOR_RED : UTIL_LCD_COLOR_GREEN);
-    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "%s Fall %.2f Normal %.2f TCN %lums",
+    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "%s Fall %.2f Normal %.2f %s %lums",
                         fall_state.fall_detected ? "FALL" : "NORMAL",
                         (double)fall_state.fall_score,
                         (double)fall_state.normal_score,
-                        fall_state.tcn_inference_ms);
+                        (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
+                        fall_state.inference_ms);
   }
   else
   {

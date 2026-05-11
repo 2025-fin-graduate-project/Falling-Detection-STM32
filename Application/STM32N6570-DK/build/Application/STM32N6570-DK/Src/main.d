@@ -143,9 +143,9 @@ build/Application/STM32N6570-DK/Src/main.o: Src/main.c \
  ../../Middlewares/stedgeai-lib/Inc/stai_debug.h \
  ../../Middlewares/stedgeai-lib/Inc/stai.h \
  ../../Middlewares/stedgeai-lib/Npu/ll_aton/stai_aton_common.h \
- ../../Model/STM32N6570-DK/TCN/stai_tcn_network.h \
- Inc/app_camerapipeline.h Inc/main.h Inc/app_config.h Inc/pose_pipeline.h \
- Inc/crop_img.h Inc/stlogo.h Inc/utils.h Inc/display_spe.h
+ ../../Model/STM32N6570-DK/GRU/gru_network.h Inc/app_camerapipeline.h \
+ Inc/main.h Inc/app_config.h Inc/pose_pipeline.h Inc/crop_img.h \
+ Inc/stlogo.h Inc/utils.h Inc/display_spe.h
 ../../Middlewares/stm32-mw-camera/cmw_camera.h:
 ../../Middlewares/stm32-mw-camera/cmw_errno.h:
 Inc/cmw_camera_conf.h:
@@ -292,7 +292,7 @@ Inc/stm32_lcd_ex.h:
 ../../Middlewares/stedgeai-lib/Inc/stai_debug.h:
 ../../Middlewares/stedgeai-lib/Inc/stai.h:
 ../../Middlewares/stedgeai-lib/Npu/ll_aton/stai_aton_common.h:
-../../Model/STM32N6570-DK/TCN/stai_tcn_network.h:
+../../Model/STM32N6570-DK/GRU/gru_network.h:
 Inc/app_camerapipeline.h:
 Inc/main.h:
 Inc/app_config.h:

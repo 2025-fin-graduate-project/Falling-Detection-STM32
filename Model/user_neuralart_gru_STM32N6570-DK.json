@@ -1,0 +1,10 @@
+{
+    "Globals": {
+    },
+    "Profiles": {
+        "default": {
+            "memory_pool": "./my_mpools/stm32n6-gru_STM32N6570-DK.mpool",
+            "options" : "--all-buffers-info --cache-maintenance --Ocache-opt --Os --enable-virtual-mem-pools"
+        }
+    }
+}
