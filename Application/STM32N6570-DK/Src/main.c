@@ -79,6 +79,14 @@ typedef struct
   float32_t raw_max_dequant;
   float32_t max_keypoint_proba;
   uint32_t visible_keypoints;
+  uint32_t person_keypoints;
+  uint32_t person_missing_count;
+  uint32_t person_entry_count;
+  uint8_t person_present;
+  uint8_t person_present_confirmed;
+  uint8_t person_missing_confirmed;
+  uint8_t postprocess_valid;
+  uint8_t draw_keypoints;
   uint32_t output_width;
   uint32_t output_height;
   uint32_t output_channels;
@@ -95,6 +103,8 @@ typedef struct
   float32_t fall_logit;
   float32_t normal_score;
   float32_t fall_score;
+  uint32_t fall_consec_count; /* consecutive fall frames; resets GRU on threshold */
+  uint32_t fall_latch_tick;   /* HAL tick of last confirmed fall; 0 if never */
 } FallDetectionState_TypeDef;
 
 /* Lcd Background area */
@@ -202,6 +212,7 @@ static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai
 static void FallModel_init(void);
 static void Run_FallInference(void);
 static void FallDetection_Update(PosePipeline_t *pipeline);
+static void FallDetection_Invalidate(PosePipeline_t *pipeline);
 
 
 /**
@@ -277,6 +288,7 @@ int main(void)
     else
     {
       /* Start NN camera single capture Snapshot */
+      SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
       CameraPipeline_NNPipe_Start(nn_in, CMW_MODE_SNAPSHOT);
     }
 
@@ -295,6 +307,10 @@ int main(void)
      */
       img_crop(dcmipp_out_nn, nn_in, pitch_nn, STAI_NETWORK_IN_1_WIDTH, STAI_NETWORK_IN_1_HEIGHT, STAI_NETWORK_IN_1_CHANNEL);
       SCB_CleanInvalidateDCache_by_Addr(nn_in, nn_in_len);
+    }
+    else
+    {
+      SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
     }
 
     ts[0] = HAL_GetTick();
@@ -315,9 +331,55 @@ int main(void)
     static uint32_t pipeline_frame_count = 0;
     pipeline_frame_count++;
 
-    if ((ret == AI_SPE_POSTPROCESS_ERROR_NO) &&
-        (pp_output.pOutBuff != NULL) &&
-        (pipeline_frame_count % 2 == 0))
+    pose_debug_metrics.postprocess_valid = ((ret == AI_SPE_POSTPROCESS_ERROR_NO) &&
+                                            (pp_output.pOutBuff != NULL)) ? 1u : 0u;
+
+    /* --- Presence State Machine --- */
+    if (pose_debug_metrics.postprocess_valid != 0u)
+    {
+      if (pose_debug_metrics.person_present != 0u)
+      {
+        /* Entry logic: Need consecutive frames to confirm */
+        pose_debug_metrics.person_missing_count = 0u;
+        if (pose_debug_metrics.person_present_confirmed == 0u)
+        {
+          pose_debug_metrics.person_entry_count++;
+          if (pose_debug_metrics.person_entry_count >= FALL_PERSON_ENTRY_CONF_COUNT)
+          {
+            pose_debug_metrics.person_present_confirmed = 1u;
+            pose_debug_metrics.person_missing_confirmed = 0u;
+          }
+        }
+      }
+      else
+      {
+        /* Exit logic: Need consecutive frames to confirm missing */
+        pose_debug_metrics.person_entry_count = 0u;
+        if (pose_debug_metrics.person_present_confirmed != 0u)
+        {
+          pose_debug_metrics.person_missing_count++;
+          if (pose_debug_metrics.person_missing_count >= FALL_PERSON_MISSING_RESET_COUNT)
+          {
+            pose_debug_metrics.person_present_confirmed = 0u;
+            pose_debug_metrics.person_missing_confirmed = 1u;
+          }
+        }
+        else
+        {
+          pose_debug_metrics.person_missing_confirmed = 1u;
+        }
+      }
+    }
+
+    uint8_t pose_valid = ((pose_debug_metrics.postprocess_valid != 0u) &&
+                          (pose_debug_metrics.person_present_confirmed != 0u)) ? 1u : 0u;
+    
+    /* Visualization depends on the confirmed presence state */
+    pose_debug_metrics.draw_keypoints = ((pose_debug_metrics.postprocess_valid != 0u) &&
+                                         (pose_debug_metrics.person_present_confirmed != 0u) &&
+                                         (pose_debug_metrics.visible_keypoints > 0u)) ? 1u : 0u;
+
+    if ((pose_valid != 0u) && (pipeline_frame_count % 2 == 0))
     {
       uint32_t now_tick = HAL_GetTick();
       float32_t dt_s = (float32_t)(now_tick - pose_last_tick) * 1e-3f;
@@ -327,6 +389,10 @@ int main(void)
       PoseFeatureVec_t feat_vec;
       PosePipeline_Process(&pose_pipeline, pp_output.pOutBuff, dt_s, &feat_vec);
       FallDetection_Update(&pose_pipeline);
+    }
+    else if (pose_valid == 0u)
+    {
+      FallDetection_Invalidate(&pose_pipeline);
     }
 
     Display_NetworkOutput(&pp_output, ts[1] - ts[0]);
@@ -562,11 +628,6 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   float32_t *logits = (float32_t *)tcn_out[0];
 #endif
 
-  if (fall_state.window_ready)
-    printf("[%s] %lums\r\n",
-           (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
-           fall_state.inference_ms);
-
   fall_state.normal_logit = logits[0];
   fall_state.fall_logit   = logits[1];
 
@@ -586,8 +647,83 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
     fall_state.fall_score   = 0.5f;
   }
 
-  if (fall_state.window_ready)
+  if (fall_state.window_ready) {
     fall_state.fall_detected = (fall_state.fall_score >= fall_state.normal_score) ? 1u : 0u;
+  } else {
+    fall_state.fall_detected = 0u;
+}
+  if (fall_state.fall_detected)
+    fall_state.fall_latch_tick = HAL_GetTick();
+
+  if (fall_state.window_ready)
+  {
+    static uint32_t last_fall_log_tick = 0;
+    uint32_t now_tick = HAL_GetTick();
+    if ((last_fall_log_tick == 0u) || ((now_tick - last_fall_log_tick) >= 1000u))
+    {
+      printf("[%s] %lums %s Fall %.2f Normal %.2f KP %lu/%lu P%lu\r\n",
+             (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
+             fall_state.inference_ms,
+             fall_state.fall_detected ? "FALL" : "NORMAL",
+             (double)fall_state.fall_score,
+             (double)fall_state.normal_score,
+             pose_debug_metrics.visible_keypoints,
+             (uint32_t)AI_POSE_PP_POSE_KEYPOINTS_NB,
+             pose_debug_metrics.person_keypoints);
+      last_fall_log_tick = now_tick;
+    }
+  }
+
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  if (fall_state.fall_detected)
+  {
+    fall_state.fall_consec_count++;
+    if (fall_state.fall_consec_count >= GRU_FALL_RESET_COUNT)
+    {
+      printf("[GRU] Fall confirmed (%lu frames) - resetting state\r\n",
+             fall_state.fall_consec_count);
+      memset(gru_h1, 0, sizeof(gru_h1));
+      memset(gru_h2, 0, sizeof(gru_h2));
+      PosePipeline_Init(pipeline);
+      fall_state.fall_consec_count = 0;
+      fall_state.frame_count       = 0;
+      fall_state.window_ready      = 0;
+      /* fall_detected stays 1 so the display keeps showing FALL this frame */
+    }
+  }
+  else
+  {
+    fall_state.fall_consec_count = 0;
+  }
+#endif
+}
+
+static void FallDetection_Invalidate(PosePipeline_t *pipeline)
+{
+  if (pipeline != NULL)
+  {
+    /* We don't call PosePipeline_Init here anymore because it clears the filters.
+     * Instead, we just reset the window count to clear old features, 
+     * but keep the filters in their last known state to prevent 'snapping' when re-detected. */
+    pipeline->win_count = 0u;
+    pipeline->win_head = 0u;
+  }
+
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  memset(gru_h1, 0, sizeof(gru_h1));
+  memset(gru_h2, 0, sizeof(gru_h2));
+#endif
+
+  fall_state.window_ready = 0u;
+  fall_state.fall_detected = 0u;
+  fall_state.frame_count = 0u;
+  fall_state.inference_ms = 0u;
+  fall_state.normal_logit = 0.0f;
+  fall_state.fall_logit = 0.0f;
+  fall_state.normal_score = 0.0f;
+  fall_state.fall_score = 0.0f;
+  fall_state.fall_consec_count = 0u;
+  fall_state.fall_latch_tick = 0u;
 }
 
 static void NPURam_enable(void)
@@ -728,7 +864,7 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
   mpe_pp_outBuffer_t *rois = ((mpe_pp_out_t *) p_postprocess)->pOutBuff;
   uint32_t nb_rois = ((mpe_pp_out_t *) p_postprocess)->nb_detect;
 #elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
-  spe_pp_outBuffer_t *roi = ((spe_pp_out_t *) p_postprocess)->pOutBuff;
+  spe_pp_outBuffer_t *roi = (p_postprocess != NULL) ? ((spe_pp_out_t *) p_postprocess)->pOutBuff : NULL;
 #endif
   int ret;
 
@@ -742,30 +878,55 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
     Display_mpe_Detection(&rois[i]);
   UTIL_LCDEx_PrintfAt(0, LINE(2), CENTER_MODE, "Objects %u", nb_rois);
 #elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
-  Display_spe_Detection(roi);
+    if (roi != NULL)
+    {
+      /* --- RAW MODE: Bypassing filters for visualization --- */
+      Display_spe_Detection(roi);
+    }
 #endif
   UTIL_LCD_SetBackColor(0x40000000);
-  if (fall_state.window_ready)
+  if (pose_debug_metrics.postprocess_valid == 0u)
   {
-    UTIL_LCD_SetTextColor(fall_state.fall_detected ? UTIL_LCD_COLOR_RED : UTIL_LCD_COLOR_GREEN);
-    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "%s Fall %.2f Normal %.2f %s %lums",
-                        fall_state.fall_detected ? "FALL" : "NORMAL",
-                        (double)fall_state.fall_score,
-                        (double)fall_state.normal_score,
-                        (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
-                        fall_state.inference_ms);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GRAY);
+    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "postprocess error PP %ld",
+                        (long)pose_debug_metrics.postprocess_status);
+  }
+  else if (pose_debug_metrics.person_missing_confirmed != 0u)
+  {
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GRAY);
+    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "no person");
   }
   else
   {
-    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
-    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "Fall detector warming %lu/%u",
-                        fall_state.frame_count,
-                        (uint32_t)POSE_WINDOW_SIZE);
+    uint8_t latch_active = (fall_state.fall_latch_tick != 0u) &&
+                           ((HAL_GetTick() - fall_state.fall_latch_tick) < GRU_FALL_LATCH_MS);
+
+    if (fall_state.window_ready || latch_active)
+    {
+      uint8_t show_fall = fall_state.fall_detected || latch_active;
+      UTIL_LCD_SetTextColor(show_fall ? UTIL_LCD_COLOR_RED : UTIL_LCD_COLOR_GREEN);
+      UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "%s Fall %.2f Normal %.2f %s %lums",
+                          show_fall ? "FALL" : "NORMAL",
+                          (double)fall_state.fall_score,
+                          (double)fall_state.normal_score,
+                          (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
+                          fall_state.inference_ms);
+    }
+    else
+    {
+      uint32_t warmup_target = (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? GRU_WARMUP_FRAMES : POSE_WINDOW_SIZE;
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
+      UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "Fall detector warming %lu/%u",
+                          fall_state.frame_count,
+                          warmup_target);
+    }
   }
   UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
-  UTIL_LCDEx_PrintfAt(0, LINE(2), CENTER_MODE, "KP %lu/%u Max %.2f",
+  UTIL_LCDEx_PrintfAt(0, LINE(2), CENTER_MODE, "KP %lu/%u P%lu M%lu Max %.2f",
                       pose_debug_metrics.visible_keypoints,
                       (uint32_t)AI_POSE_PP_POSE_KEYPOINTS_NB,
+                      pose_debug_metrics.person_keypoints,
+                      pose_debug_metrics.person_missing_count,
                       (double)pose_debug_metrics.max_keypoint_proba);
   UTIL_LCDEx_PrintfAt(0, LINE(3), CENTER_MODE, "Raw[%d,%d] Deq[%.2f,%.2f]",
                       pose_debug_metrics.raw_min,
@@ -799,6 +960,10 @@ static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai
   pose_debug_metrics.raw_max_dequant = 0.0f;
   pose_debug_metrics.max_keypoint_proba = 0.0f;
   pose_debug_metrics.visible_keypoints = 0;
+  pose_debug_metrics.person_keypoints = 0;
+  pose_debug_metrics.person_present = 0u;
+  pose_debug_metrics.postprocess_valid = 0u;
+  pose_debug_metrics.draw_keypoints = 0u;
   pose_debug_metrics.output_width = STAI_NETWORK_OUT_1_WIDTH;
   pose_debug_metrics.output_height = STAI_NETWORK_OUT_1_HEIGHT;
   pose_debug_metrics.output_channels = STAI_NETWORK_OUT_1_CHANNEL;
@@ -830,9 +995,15 @@ static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai
 
   if ((p_postprocess != NULL) && (p_postprocess->pOutBuff != NULL))
   {
-    for (uint32_t i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
+    /* Collect confidence scores from the raw postprocess output for presence logic.
+     * We don't use the smoothed features from the pipeline here to avoid a deadlock
+     * where the pipeline doesn't update because no person is present, and no person
+     * is present because the pipeline isn't updating. */
+    float32_t scores[POSE_KP_COUNT];
+    for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
     {
       float32_t proba = p_postprocess->pOutBuff[i].proba;
+      scores[i] = proba;
 
       if (proba > pose_debug_metrics.max_keypoint_proba)
       {
@@ -842,7 +1013,33 @@ static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai
       {
         pose_debug_metrics.visible_keypoints++;
       }
+      if (proba >= FALL_PERSON_CONF_THRESHOLD)
+      {
+        pose_debug_metrics.person_keypoints++;
+      }
     }
+
+    /* Robust Presence: Top-5 Average Confidence. 
+     * If at least 5 keypoints are detected with some confidence, 
+     * their average must be above threshold. */
+    for (int i = 0; i < 5; i++)
+    {
+      for (int j = i + 1; j < POSE_KP_COUNT; j++)
+      {
+        if (scores[j] > scores[i])
+        {
+          float32_t tmp = scores[i];
+          scores[i] = scores[j];
+          scores[j] = tmp;
+        }
+      }
+    }
+
+    float32_t top5_avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4]) / 5.0f;
+
+    /* Presence to block noise: 
+     * either one best point >= 0.18 or top-5 avg >= 0.07. */
+    pose_debug_metrics.person_present = (scores[0] >= 0.18f || top5_avg >= 0.07f) ? 1u : 0u;
   }
 }
 

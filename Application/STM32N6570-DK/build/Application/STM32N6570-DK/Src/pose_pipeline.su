@@ -1,7 +1,8 @@
-Src/pose_pipeline.c:15:25:clamp01	0	static
-Src/pose_pipeline.c:60:6:PosePipeline_Init	0	static
-Src/pose_pipeline.c:65:6:PosePipeline_Process	248	static
-Src/pose_pipeline.c:130:6:PosePipeline_GetWindowFeaturesFirst	20	static
-Src/pose_pipeline.c:145:6:PosePipeline_GetWindowTimeFirst	32	static
-Src/pose_pipeline.c:157:9:PosePipeline_WindowFull	0	static
-Src/pose_pipeline.c:162:6:PosePipeline_GetLatestFeature	4	static
+Src/pose_pipeline.c:17:25:clamp01	0	static
+Src/pose_pipeline.c:40:18:euro_filter_apply	0	static
+Src/pose_pipeline.c:141:6:PosePipeline_Init	0	static
+Src/pose_pipeline.c:159:6:PosePipeline_Process	256	static
+Src/pose_pipeline.c:232:6:PosePipeline_GetWindowFeaturesFirst	20	static
+Src/pose_pipeline.c:247:6:PosePipeline_GetWindowTimeFirst	32	static
+Src/pose_pipeline.c:259:9:PosePipeline_WindowFull	0	static
+Src/pose_pipeline.c:264:6:PosePipeline_GetLatestFeature	4	static

@@ -109,6 +109,9 @@ void Display_spe_Detection(spe_pp_outBuffer_t *detect)
   int i;
 
 #ifdef USE_BINDINGS
+  for (i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
+    Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+
   for (i = 0; i < BINDINGS_NB; i++)
     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
 #else

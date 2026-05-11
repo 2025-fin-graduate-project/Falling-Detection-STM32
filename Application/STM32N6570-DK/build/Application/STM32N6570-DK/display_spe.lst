@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccDfwoMH.s 			page 1
+ARM GAS  /tmp/cciV2IvA.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
   23:Src/display_spe.c **** #include <assert.h>
   24:Src/display_spe.c **** #include <stdlib.h>
   25:Src/display_spe.c **** #include <stdint.h>
-ARM GAS  /tmp/ccDfwoMH.s 			page 2
+ARM GAS  /tmp/cciV2IvA.s 			page 2
 
 
   26:Src/display_spe.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
   70 0028 9847     		blx	r3
   71              	.LVL3:
   42:Src/display_spe.c ****   xc = x - CIRCLE_RADIUS / 2;
-ARM GAS  /tmp/ccDfwoMH.s 			page 3
+ARM GAS  /tmp/cciV2IvA.s 			page 3
 
 
   72              		.loc 1 42 3 is_stmt 1 view .LVU12
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
  113 004c 0233     		adds	r3, r3, #2
   46:Src/display_spe.c ****   yc = y + CIRCLE_RADIUS / 2;
  114              		.loc 1 46 6 view .LVU33
-ARM GAS  /tmp/ccDfwoMH.s 			page 4
+ARM GAS  /tmp/cciV2IvA.s 			page 4
 
 
  115 004e 0193     		str	r3, [sp, #4]
@@ -217,7 +217,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
  142              		.loc 1 53 1 view .LVU41
  143 006a 00BF     		.align	2
  144              	.L4:
- 145 006c CDCC4C3E 		.word	1045220557
+ 145 006c CDCCCC3D 		.word	1036831949
  146 0070 00000000 		.word	convert_point
  147 0074 00000000 		.word	clamp_point
  148              		.cfi_endproc
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
   58:Src/display_spe.c ****   int is_clamp;
   59:Src/display_spe.c ****   int x0, y0;
   60:Src/display_spe.c ****   int x1, y1;
-ARM GAS  /tmp/ccDfwoMH.s 			page 5
+ARM GAS  /tmp/cciV2IvA.s 			page 5
 
 
   61:Src/display_spe.c ****   int i;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
  103:Src/display_spe.c ****   convert_point = convert_point_init;
  173              		.loc 1 103 3 view .LVU47
  174              		.loc 1 103 17 is_stmt 0 view .LVU48
-ARM GAS  /tmp/ccDfwoMH.s 			page 6
+ARM GAS  /tmp/cciV2IvA.s 			page 6
 
 
  175 0004 0349     		ldr	r1, .L7+4
@@ -341,7 +341,7 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
  208              		.loc 1 109 3 view .LVU54
  110:Src/display_spe.c **** 
  111:Src/display_spe.c **** #ifdef USE_BINDINGS
- 112:Src/display_spe.c ****   for (i = 0; i < BINDINGS_NB; i++)
+ 112:Src/display_spe.c ****   for (i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
  209              		.loc 1 112 3 view .LVU55
  210              		.loc 1 112 17 discriminator 1 view .LVU56
  108:Src/display_spe.c ****   int i;
@@ -358,357 +358,377 @@ ARM GAS  /tmp/ccDfwoMH.s 			page 1
  221              		.cfi_offset 11, -8
  222              		.cfi_offset 14, -4
  223 0004 2DED028B 		vpush.64	{d8}
-ARM GAS  /tmp/ccDfwoMH.s 			page 7
+ARM GAS  /tmp/cciV2IvA.s 			page 7
 
 
  224              		.cfi_def_cfa_offset 44
  225              		.cfi_offset 80, -44
  226              		.cfi_offset 81, -40
- 227 0008 4FF0120B 		mov	fp, #18
- 228              	.LBB4:
- 229              	.LBB5:
+ 227 0008 0446     		mov	r4, r0
+ 228 000a 89B0     		sub	sp, sp, #36
+ 229              		.cfi_def_cfa_offset 80
+ 108:Src/display_spe.c ****   int i;
+ 230              		.loc 1 108 1 view .LVU58
+ 231 000c 0290     		str	r0, [sp, #8]
+ 232 000e 00F1CC06 		add	r6, r0, #204
+ 233              	.LVL15:
+ 234              	.L10:
+ 113:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+ 235              		.loc 1 113 5 is_stmt 1 view .LVU59
+ 236 0012 2046     		mov	r0, r4
+ 237 0014 4A49     		ldr	r1, .L19
+ 112:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+ 238              		.loc 1 112 17 is_stmt 0 discriminator 1 view .LVU60
+ 239 0016 0C34     		adds	r4, r4, #12
+ 240              		.loc 1 113 5 view .LVU61
+ 241 0018 FFF7FEFF 		bl	Display_keypoint
+ 242              	.LVL16:
+ 112:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+ 243              		.loc 1 112 50 is_stmt 1 discriminator 3 view .LVU62
+ 112:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+ 244              		.loc 1 112 17 discriminator 1 view .LVU63
+ 245 001c A642     		cmp	r6, r4
+ 246 001e F8D1     		bne	.L10
+ 114:Src/display_spe.c **** 
+ 115:Src/display_spe.c ****   for (i = 0; i < BINDINGS_NB; i++)
+ 247              		.loc 1 115 10 is_stmt 0 view .LVU64
+ 248 0020 0023     		movs	r3, #0
+ 249              	.LBB4:
+ 250              	.LBB5:
   65:Src/display_spe.c ****     return ;
- 230              		.loc 1 65 6 view .LVU58
- 231 000c 9FED458A 		vldr.32	s16, .L17
- 232              	.LBE5:
- 233              	.LBE4:
- 108:Src/display_spe.c ****   int i;
- 234              		.loc 1 108 1 view .LVU59
- 235 0010 89B0     		sub	sp, sp, #36
- 236              		.cfi_def_cfa_offset 80
- 237 0012 454F     		ldr	r7, .L17+4
- 238              	.LBB12:
- 239              	.LBB6:
+ 251              		.loc 1 65 6 view .LVU65
+ 252 0022 9FED488A 		vldr.32	s16, .L19+4
+ 253 0026 DFF82081 		ldr	r8, .L19+8
   70:Src/display_spe.c ****   is_clamp = clamp_point(&x0, &y0);
- 240              		.loc 1 70 3 view .LVU60
- 241 0014 DFF81491 		ldr	r9, .L17+8
+ 254              		.loc 1 70 3 view .LVU66
+ 255 002a DFF820A1 		ldr	r10, .L19+12
   71:Src/display_spe.c ****   if (is_clamp)
- 242              		.loc 1 71 14 view .LVU61
- 243 0018 DFF814A1 		ldr	r10, .L17+12
- 244              	.LBE6:
- 245              	.LBE12:
- 108:Src/display_spe.c ****   int i;
- 246              		.loc 1 108 1 view .LVU62
- 247 001c 0390     		str	r0, [sp, #12]
- 248              	.LVL15:
- 249              	.L14:
- 113:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
- 250              		.loc 1 113 5 is_stmt 1 view .LVU63
- 251              		.loc 1 113 28 is_stmt 0 view .LVU64
- 252 001e 0C23     		movs	r3, #12
- 253 0020 3E68     		ldr	r6, [r7]
- 254              		.loc 1 113 5 view .LVU65
- 255 0022 039A     		ldr	r2, [sp, #12]
- 256 0024 03FB0626 		mla	r6, r3, r6, r2
- 257              	.LVL16:
- 258              	.LBB13:
- 259              	.LBI4:
+ 256              		.loc 1 71 14 view .LVU67
+ 257 002e DFF820B1 		ldr	fp, .L19+16
+ 258              	.LBE5:
+ 259              	.LBE4:
+ 260              		.loc 1 115 10 view .LVU68
+ 261 0032 0393     		str	r3, [sp, #12]
+ 262              	.L15:
+ 263              	.LVL17:
+ 116:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 264              		.loc 1 116 5 is_stmt 1 view .LVU69
+ 265              		.loc 1 116 28 is_stmt 0 view .LVU70
+ 266 0034 0C23     		movs	r3, #12
+ 267 0036 D8F80070 		ldr	r7, [r8]
+ 268              		.loc 1 116 5 view .LVU71
+ 269 003a 029A     		ldr	r2, [sp, #8]
+ARM GAS  /tmp/cciV2IvA.s 			page 8
+
+
+ 270 003c 03FB0727 		mla	r7, r3, r7, r2
+ 271              	.LVL18:
+ 272              	.LBB10:
+ 273              	.LBI4:
   56:Src/display_spe.c **** {
- 260              		.loc 1 56 13 is_stmt 1 view .LVU66
- 261              	.LBB7:
+ 274              		.loc 1 56 13 is_stmt 1 view .LVU72
+ 275              	.LBB6:
   58:Src/display_spe.c ****   int x0, y0;
- 262              		.loc 1 58 3 view .LVU67
+ 276              		.loc 1 58 3 view .LVU73
   59:Src/display_spe.c ****   int x1, y1;
- 263              		.loc 1 59 3 view .LVU68
+ 277              		.loc 1 59 3 view .LVU74
   60:Src/display_spe.c ****   int i;
- 264              		.loc 1 60 3 view .LVU69
+ 278              		.loc 1 60 3 view .LVU75
   61:Src/display_spe.c **** 
- 265              		.loc 1 61 3 view .LVU70
+ 279              		.loc 1 61 3 view .LVU76
   63:Src/display_spe.c **** 
- 266              		.loc 1 63 3 view .LVU71
+ 280              		.loc 1 63 3 view .LVU77
   65:Src/display_spe.c ****     return ;
- 267              		.loc 1 65 3 view .LVU72
-ARM GAS  /tmp/ccDfwoMH.s 			page 8
-
-
+ 281              		.loc 1 65 3 view .LVU78
   65:Src/display_spe.c ****     return ;
- 268              		.loc 1 65 6 is_stmt 0 view .LVU73
- 269 0028 D6ED027A 		vldr.32	s15, [r6, #8]
- 270 002c F4EEC87A 		vcmpe.f32	s15, s16
- 271 0030 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 272 0034 5ED4     		bmi	.L13
- 273              	.LBE7:
- 274              	.LBE13:
- 275              		.loc 1 113 53 view .LVU74
- 276 0036 7D68     		ldr	r5, [r7, #4]
- 277              		.loc 1 113 5 view .LVU75
- 278 0038 03FB0523 		mla	r3, r3, r5, r2
- 279              	.LBB14:
- 280              	.LBB8:
+ 282              		.loc 1 65 6 is_stmt 0 view .LVU79
+ 283 0040 D7ED027A 		vldr.32	s15, [r7, #8]
+ 284 0044 F4EEC87A 		vcmpe.f32	s15, s16
+ 285 0048 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 286 004c 5ED4     		bmi	.L14
+ 287              	.LBE6:
+ 288              	.LBE10:
+ 289              		.loc 1 116 53 view .LVU80
+ 290 004e D8F80460 		ldr	r6, [r8, #4]
+ 291              		.loc 1 116 5 view .LVU81
+ 292 0052 03FB0626 		mla	r6, r3, r6, r2
+ 293              	.LBB11:
+ 294              	.LBB7:
   67:Src/display_spe.c ****     return ;
- 281              		.loc 1 67 6 view .LVU76
- 282 003c D3ED027A 		vldr.32	s15, [r3, #8]
- 283 0040 F4EEC87A 		vcmpe.f32	s15, s16
- 284 0044 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 285              	.LBE8:
- 286              	.LBE14:
- 287              		.loc 1 113 5 view .LVU77
- 288 0048 0293     		str	r3, [sp, #8]
- 289              	.LBB15:
- 290              	.LBB9:
+ 295              		.loc 1 67 3 is_stmt 1 view .LVU82
   67:Src/display_spe.c ****     return ;
- 291              		.loc 1 67 3 is_stmt 1 view .LVU78
-  67:Src/display_spe.c ****     return ;
- 292              		.loc 1 67 6 is_stmt 0 view .LVU79
- 293 004a 53D4     		bmi	.L13
+ 296              		.loc 1 67 6 is_stmt 0 view .LVU83
+ 297 0056 D6ED027A 		vldr.32	s15, [r6, #8]
+ 298 005a F4EEC87A 		vcmpe.f32	s15, s16
+ 299 005e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 300 0062 53D4     		bmi	.L14
   70:Src/display_spe.c ****   is_clamp = clamp_point(&x0, &y0);
- 294              		.loc 1 70 3 view .LVU80
- 295 004c D9F80030 		ldr	r3, [r9]
- 296 0050 05A9     		add	r1, sp, #20
- 297 0052 04A8     		add	r0, sp, #16
- 298 0054 D6ED010A 		vldr.32	s1, [r6, #4]
- 299 0058 96ED000A 		vldr.32	s0, [r6]
- 300              	.LBE9:
- 301              	.LBE15:
- 302              		.loc 1 113 82 view .LVU81
- 303 005c BC68     		ldr	r4, [r7, #8]
- 304              	.LBB16:
- 305              	.LBB10:
+ 301              		.loc 1 70 3 view .LVU84
+ 302 0064 DAF80030 		ldr	r3, [r10]
+ 303 0068 05A9     		add	r1, sp, #20
+ 304 006a 04A8     		add	r0, sp, #16
+ 305 006c D7ED010A 		vldr.32	s1, [r7, #4]
+ 306 0070 97ED000A 		vldr.32	s0, [r7]
+ 307              	.LBE7:
+ 308              	.LBE11:
+ 309              		.loc 1 116 82 view .LVU85
+ 310 0074 D8F80840 		ldr	r4, [r8, #8]
+ 311              	.LBB12:
+ 312              	.LBB8:
   70:Src/display_spe.c ****   is_clamp = clamp_point(&x0, &y0);
- 306              		.loc 1 70 3 is_stmt 1 view .LVU82
- 307 005e 9847     		blx	r3
- 308              	.LVL17:
+ 313              		.loc 1 70 3 is_stmt 1 view .LVU86
+ 314 0078 9847     		blx	r3
+ARM GAS  /tmp/cciV2IvA.s 			page 9
+
+
+ 315              	.LVL19:
   71:Src/display_spe.c ****   if (is_clamp)
- 309              		.loc 1 71 3 view .LVU83
+ 316              		.loc 1 71 3 view .LVU87
   71:Src/display_spe.c ****   if (is_clamp)
- 310              		.loc 1 71 14 is_stmt 0 view .LVU84
- 311 0060 DAF80030 		ldr	r3, [r10]
- 312 0064 05A9     		add	r1, sp, #20
- 313 0066 04A8     		add	r0, sp, #16
- 314 0068 9847     		blx	r3
- 315              	.LVL18:
+ 317              		.loc 1 71 14 is_stmt 0 view .LVU88
+ 318 007a DBF80030 		ldr	r3, [fp]
+ 319 007e 05A9     		add	r1, sp, #20
+ 320 0080 04A8     		add	r0, sp, #16
+ 321 0082 9847     		blx	r3
+ 322              	.LVL20:
   72:Src/display_spe.c ****     return ;
-ARM GAS  /tmp/ccDfwoMH.s 			page 9
-
-
- 316              		.loc 1 72 3 is_stmt 1 view .LVU85
+ 323              		.loc 1 72 3 is_stmt 1 view .LVU89
   72:Src/display_spe.c ****     return ;
- 317              		.loc 1 72 6 is_stmt 0 view .LVU86
- 318 006a 0028     		cmp	r0, #0
- 319 006c 42D1     		bne	.L13
+ 324              		.loc 1 72 6 is_stmt 0 view .LVU90
+ 325 0084 0028     		cmp	r0, #0
+ 326 0086 41D1     		bne	.L14
   75:Src/display_spe.c ****   is_clamp = clamp_point(&x1, &y1);
- 320              		.loc 1 75 3 is_stmt 1 view .LVU87
- 321 006e 029A     		ldr	r2, [sp, #8]
- 322 0070 D9F80030 		ldr	r3, [r9]
- 323 0074 07A9     		add	r1, sp, #28
- 324 0076 06A8     		add	r0, sp, #24
- 325              	.LVL19:
+ 327              		.loc 1 75 3 is_stmt 1 view .LVU91
+ 328 0088 DAF80030 		ldr	r3, [r10]
+ 329 008c 07A9     		add	r1, sp, #28
+ 330 008e 06A8     		add	r0, sp, #24
+ 331              	.LVL21:
   75:Src/display_spe.c ****   is_clamp = clamp_point(&x1, &y1);
- 326              		.loc 1 75 3 is_stmt 0 view .LVU88
- 327 0078 D2ED010A 		vldr.32	s1, [r2, #4]
- 328 007c 92ED000A 		vldr.32	s0, [r2]
- 329 0080 9847     		blx	r3
- 330              	.LVL20:
+ 332              		.loc 1 75 3 is_stmt 0 view .LVU92
+ 333 0090 D6ED010A 		vldr.32	s1, [r6, #4]
+ 334 0094 96ED000A 		vldr.32	s0, [r6]
+ 335 0098 9847     		blx	r3
+ 336              	.LVL22:
   76:Src/display_spe.c ****   if (is_clamp)
- 331              		.loc 1 76 3 is_stmt 1 view .LVU89
+ 337              		.loc 1 76 3 is_stmt 1 view .LVU93
   76:Src/display_spe.c ****   if (is_clamp)
- 332              		.loc 1 76 14 is_stmt 0 view .LVU90
- 333 0082 DAF80030 		ldr	r3, [r10]
- 334 0086 07A9     		add	r1, sp, #28
- 335 0088 06A8     		add	r0, sp, #24
- 336 008a 9847     		blx	r3
- 337              	.LVL21:
+ 338              		.loc 1 76 14 is_stmt 0 view .LVU94
+ 339 009a DBF80030 		ldr	r3, [fp]
+ 340 009e 07A9     		add	r1, sp, #28
+ 341 00a0 06A8     		add	r0, sp, #24
+ 342 00a2 9847     		blx	r3
+ 343              	.LVL23:
   77:Src/display_spe.c ****     return ;
- 338              		.loc 1 77 3 is_stmt 1 view .LVU91
+ 344              		.loc 1 77 3 is_stmt 1 view .LVU95
   77:Src/display_spe.c ****     return ;
- 339              		.loc 1 77 6 is_stmt 0 view .LVU92
- 340 008c 90BB     		cbnz	r0, .L13
+ 345              		.loc 1 77 6 is_stmt 0 view .LVU96
+ 346 00a4 90BB     		cbnz	r0, .L14
   80:Src/display_spe.c ****   for (i = 1; i <= (BINDING_WIDTH - 1) / 2; i++) {
- 341              		.loc 1 80 3 is_stmt 1 view .LVU93
- 342 008e DDE90401 		ldrd	r0, r1, [sp, #16]
- 343              	.LVL22:
+ 347              		.loc 1 80 3 is_stmt 1 view .LVU97
+ 348 00a6 DDE90401 		ldrd	r0, r1, [sp, #16]
+ 349              	.LVL24:
   80:Src/display_spe.c ****   for (i = 1; i <= (BINDING_WIDTH - 1) / 2; i++) {
- 344              		.loc 1 80 3 is_stmt 0 view .LVU94
- 345 0092 DDE90623 		ldrd	r2, r3, [sp, #24]
- 346 0096 0094     		str	r4, [sp]
- 347 0098 FFF7FEFF 		bl	UTIL_LCD_DrawLine
- 348              	.LVL23:
+ 350              		.loc 1 80 3 is_stmt 0 view .LVU98
+ 351 00aa DDE90623 		ldrd	r2, r3, [sp, #24]
+ 352 00ae 0094     		str	r4, [sp]
+ 353 00b0 FFF7FEFF 		bl	UTIL_LCD_DrawLine
+ 354              	.LVL25:
   81:Src/display_spe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
- 349              		.loc 1 81 3 is_stmt 1 view .LVU95
+ 355              		.loc 1 81 3 is_stmt 1 view .LVU99
   81:Src/display_spe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
- 350              		.loc 1 81 17 discriminator 1 view .LVU96
+ 356              		.loc 1 81 17 discriminator 1 view .LVU100
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 351              		.loc 1 82 5 view .LVU97
-  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 352              		.loc 1 82 31 is_stmt 0 view .LVU98
- 353 009c 04A8     		add	r0, sp, #16
- 354 009e 0FC8     		ldm	r0, {r0, r1, r2, r3}
-  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 355              		.loc 1 82 16 view .LVU99
- 356 00a0 A3EB010E 		sub	lr, r3, r1
-  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 357              		.loc 1 82 31 view .LVU100
-ARM GAS  /tmp/ccDfwoMH.s 			page 10
+ARM GAS  /tmp/cciV2IvA.s 			page 10
 
 
- 358 00a4 A2EB000C 		sub	ip, r2, r0
+ 357              		.loc 1 82 5 view .LVU101
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 359              		.loc 1 82 9 view .LVU101
- 360 00a8 BEF1000F 		cmp	lr, #0
- 361 00ac B8BF     		it	lt
- 362 00ae CEF1000E 		rsblt	lr, lr, #0
+ 358              		.loc 1 82 31 is_stmt 0 view .LVU102
+ 359 00b4 04A8     		add	r0, sp, #16
+ 360 00b6 0FC8     		ldm	r0, {r0, r1, r2, r3}
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 363              		.loc 1 82 24 view .LVU102
- 364 00b2 BCF1000F 		cmp	ip, #0
+ 361              		.loc 1 82 16 view .LVU103
+ 362 00b8 A3EB010E 		sub	lr, r3, r1
+  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 363              		.loc 1 82 31 view .LVU104
+ 364 00bc A2EB000C 		sub	ip, r2, r0
+  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 365              		.loc 1 82 9 view .LVU105
+ 366 00c0 BEF1000F 		cmp	lr, #0
+ 367 00c4 B8BF     		it	lt
+ 368 00c6 CEF1000E 		rsblt	lr, lr, #0
+  82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
+ 369              		.loc 1 82 24 view .LVU106
+ 370 00ca BCF1000F 		cmp	ip, #0
   83:Src/display_spe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
- 365              		.loc 1 83 7 view .LVU103
- 366 00b6 DFF87C80 		ldr	r8, .L17+16
+ 371              		.loc 1 83 7 view .LVU107
+ 372 00ce DFF88490 		ldr	r9, .L19+20
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 367              		.loc 1 82 24 view .LVU104
- 368 00ba B8BF     		it	lt
- 369 00bc CCF1000C 		rsblt	ip, ip, #0
+ 373              		.loc 1 82 24 view .LVU108
+ 374 00d2 B8BF     		it	lt
+ 375 00d4 CCF1000C 		rsblt	ip, ip, #0
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 370              		.loc 1 82 8 view .LVU105
- 371 00c0 E645     		cmp	lr, ip
+ 376              		.loc 1 82 8 view .LVU109
+ 377 00d8 E645     		cmp	lr, ip
   83:Src/display_spe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
- 372              		.loc 1 83 7 view .LVU106
- 373 00c2 D8F80050 		ldr	r5, [r8]
- 374 00c6 0094     		str	r4, [sp]
+ 378              		.loc 1 83 7 view .LVU110
+ 379 00da D9F80050 		ldr	r5, [r9]
+ 380 00de 0094     		str	r4, [sp]
   82:Src/display_spe.c ****       Display_binding_line(x0 + i, y0, x1 + i , y1, color);
- 375              		.loc 1 82 8 view .LVU107
- 376 00c8 1EDD     		ble	.L11
+ 381              		.loc 1 82 8 view .LVU111
+ 382 00e0 20DD     		ble	.L12
   83:Src/display_spe.c ****       Display_binding_line(x0 - i, y0, x1 - i , y1, color);
- 377              		.loc 1 83 7 is_stmt 1 view .LVU108
- 378 00ca 0132     		adds	r2, r2, #1
- 379 00cc 0130     		adds	r0, r0, #1
- 380 00ce A847     		blx	r5
- 381              	.LVL24:
+ 383              		.loc 1 83 7 is_stmt 1 view .LVU112
+ 384 00e2 0132     		adds	r2, r2, #1
+ 385 00e4 0130     		adds	r0, r0, #1
+ 386 00e6 A847     		blx	r5
+ 387              	.LVL26:
   84:Src/display_spe.c ****     } else {
- 382              		.loc 1 84 7 view .LVU109
- 383 00d0 DDE90623 		ldrd	r2, r3, [sp, #24]
- 384 00d4 DDE90401 		ldrd	r0, r1, [sp, #16]
- 385 00d8 0094     		str	r4, [sp]
- 386 00da D8F80080 		ldr	r8, [r8]
- 387 00de 013A     		subs	r2, r2, #1
- 388 00e0 0138     		subs	r0, r0, #1
- 389              	.L16:
+ 388              		.loc 1 84 7 view .LVU113
+ 389 00e8 DDE90623 		ldrd	r2, r3, [sp, #24]
+ 390 00ec DDE90401 		ldrd	r0, r1, [sp, #16]
+ 391 00f0 0094     		str	r4, [sp]
+ 392 00f2 D9F80090 		ldr	r9, [r9]
+ 393 00f6 013A     		subs	r2, r2, #1
+ 394 00f8 0138     		subs	r0, r0, #1
+ 395              	.L18:
   87:Src/display_spe.c ****     }
- 390              		.loc 1 87 7 is_stmt 0 view .LVU110
- 391 00e2 C047     		blx	r8
- 392              	.LVL25:
+ 396              		.loc 1 87 7 is_stmt 0 view .LVU114
+ 397 00fa C847     		blx	r9
+ 398              	.LVL27:
   81:Src/display_spe.c ****     if (abs(y1 - y0) > abs(x1 - x0)) {
- 393              		.loc 1 81 17 is_stmt 1 discriminator 1 view .LVU111
+ 399              		.loc 1 81 17 is_stmt 1 discriminator 1 view .LVU115
+ARM GAS  /tmp/cciV2IvA.s 			page 11
+
+
   91:Src/display_spe.c ****   Display_keypoint(to, color);
- 394              		.loc 1 91 3 view .LVU112
- 395 00e4 2146     		mov	r1, r4
- 396 00e6 3046     		mov	r0, r6
- 397 00e8 FFF7FEFF 		bl	Display_keypoint
- 398              	.LVL26:
+ 400              		.loc 1 91 3 view .LVU116
+ 401 00fc 2146     		mov	r1, r4
+ 402 00fe 3846     		mov	r0, r7
+ 403 0100 FFF7FEFF 		bl	Display_keypoint
+ 404              	.LVL28:
   92:Src/display_spe.c **** }
- 399              		.loc 1 92 3 view .LVU113
- 400 00ec 2146     		mov	r1, r4
- 401 00ee 0298     		ldr	r0, [sp, #8]
-ARM GAS  /tmp/ccDfwoMH.s 			page 11
-
-
- 402 00f0 FFF7FEFF 		bl	Display_keypoint
- 403              	.LVL27:
- 404              	.L13:
+ 405              		.loc 1 92 3 view .LVU117
+ 406 0104 2146     		mov	r1, r4
+ 407 0106 3046     		mov	r0, r6
+ 408 0108 FFF7FEFF 		bl	Display_keypoint
+ 409              	.LVL29:
+ 410              	.L14:
   92:Src/display_spe.c **** }
- 405              		.loc 1 92 3 is_stmt 0 view .LVU114
- 406              	.LBE10:
- 407              	.LBE16:
- 112:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
- 408              		.loc 1 112 33 is_stmt 1 discriminator 3 view .LVU115
- 112:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
- 409              		.loc 1 112 17 discriminator 1 view .LVU116
- 410 00f4 BBF1010B 		subs	fp, fp, #1
- 411              	.LVL28:
- 112:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
- 412              		.loc 1 112 17 is_stmt 0 discriminator 1 view .LVU117
- 413 00f8 07F10C07 		add	r7, r7, #12
- 414 00fc 8FD1     		bne	.L14
- 114:Src/display_spe.c **** #else
- 115:Src/display_spe.c ****   for (i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
- 116:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
- 117:Src/display_spe.c **** #endif
- 118:Src/display_spe.c **** }
- 415              		.loc 1 118 1 view .LVU118
- 416 00fe 09B0     		add	sp, sp, #36
- 417              		.cfi_remember_state
- 418              		.cfi_def_cfa_offset 44
- 419              		@ sp needed
- 420 0100 BDEC028B 		vldm	sp!, {d8}
- 421              		.cfi_restore 80
- 422              		.cfi_restore 81
- 423              		.cfi_def_cfa_offset 36
- 424 0104 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
- 425              	.LVL29:
- 426              	.L11:
- 427              		.cfi_restore_state
- 428              	.LBB17:
- 429              	.LBB11:
+ 411              		.loc 1 92 3 is_stmt 0 view .LVU118
+ 412              	.LBE8:
+ 413              	.LBE12:
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 414              		.loc 1 115 33 is_stmt 1 discriminator 3 view .LVU119
+ 415 010c 039B     		ldr	r3, [sp, #12]
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 416              		.loc 1 115 17 is_stmt 0 discriminator 1 view .LVU120
+ 417 010e 08F10C08 		add	r8, r8, #12
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 418              		.loc 1 115 33 discriminator 3 view .LVU121
+ 419 0112 0133     		adds	r3, r3, #1
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 420              		.loc 1 115 17 discriminator 1 view .LVU122
+ 421 0114 122B     		cmp	r3, #18
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 422              		.loc 1 115 33 discriminator 3 view .LVU123
+ 423 0116 0393     		str	r3, [sp, #12]
+ 424              	.LVL30:
+ 115:Src/display_spe.c ****     Display_binding(&detect[bindings[i][0]], &detect[bindings[i][1]], bindings[i][2]);
+ 425              		.loc 1 115 17 is_stmt 1 discriminator 1 view .LVU124
+ 426 0118 8CD1     		bne	.L15
+ 117:Src/display_spe.c **** #else
+ 118:Src/display_spe.c ****   for (i = 0; i < AI_POSE_PP_POSE_KEYPOINTS_NB; i++)
+ 119:Src/display_spe.c ****     Display_keypoint(&detect[i], DEFAULT_KEYPOINTS_COLOR);
+ 120:Src/display_spe.c **** #endif
+ 121:Src/display_spe.c **** }
+ 427              		.loc 1 121 1 is_stmt 0 view .LVU125
+ 428 011a 09B0     		add	sp, sp, #36
+ 429              		.cfi_remember_state
+ 430              		.cfi_def_cfa_offset 44
+ 431              		@ sp needed
+ 432 011c BDEC028B 		vldm	sp!, {d8}
+ 433              		.cfi_restore 80
+ 434              		.cfi_restore 81
+ 435              		.cfi_def_cfa_offset 36
+ 436 0120 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 437              	.LVL31:
+ 438              	.L12:
+ 439              		.cfi_restore_state
+ 440              	.LBB13:
+ 441              	.LBB9:
   86:Src/display_spe.c ****       Display_binding_line(x0, y0 - i, x1 , y1 - i, color);
- 430              		.loc 1 86 7 is_stmt 1 view .LVU119
- 431 0108 0133     		adds	r3, r3, #1
- 432 010a 0131     		adds	r1, r1, #1
- 433 010c A847     		blx	r5
- 434              	.LVL30:
+ARM GAS  /tmp/cciV2IvA.s 			page 12
+
+
+ 442              		.loc 1 86 7 is_stmt 1 view .LVU126
+ 443 0124 0133     		adds	r3, r3, #1
+ 444 0126 0131     		adds	r1, r1, #1
+ 445 0128 A847     		blx	r5
+ 446              	.LVL32:
   87:Src/display_spe.c ****     }
- 435              		.loc 1 87 7 view .LVU120
- 436 010e DDE90512 		ldrd	r1, r2, [sp, #20]
- 437 0112 079B     		ldr	r3, [sp, #28]
- 438 0114 0094     		str	r4, [sp]
- 439 0116 D8F80080 		ldr	r8, [r8]
- 440 011a 0498     		ldr	r0, [sp, #16]
- 441 011c 013B     		subs	r3, r3, #1
- 442 011e 0139     		subs	r1, r1, #1
- 443 0120 DFE7     		b	.L16
- 444              	.L18:
- 445 0122 00BF     		.align	2
- 446              	.L17:
- 447 0124 CDCC4C3E 		.word	1045220557
-ARM GAS  /tmp/ccDfwoMH.s 			page 12
-
-
- 448 0128 00000000 		.word	bindings
- 449 012c 00000000 		.word	convert_point
- 450 0130 00000000 		.word	clamp_point
- 451 0134 00000000 		.word	Display_binding_line
- 452              	.LBE11:
- 453              	.LBE17:
- 454              		.cfi_endproc
- 455              	.LFE1516:
- 457              		.section	.bss.Display_binding_line,"aw",%nobits
- 458              		.align	2
- 461              	Display_binding_line:
- 462 0000 00000000 		.space	4
- 463              		.section	.bss.convert_point,"aw",%nobits
- 464              		.align	2
- 467              	convert_point:
- 468 0000 00000000 		.space	4
- 469              		.section	.bss.clamp_point,"aw",%nobits
- 470              		.align	2
- 473              	clamp_point:
- 474 0000 00000000 		.space	4
- 475              		.text
- 476              	.Letext0:
- 477              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 478              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 479              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
- 480              		.file 5 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/spe_pp_outp
- 481              		.file 6 "../../STM32Cube_FW_N6/Utilities/lcd/stm32_lcd.h"
- 482              		.file 7 "Inc/app_config.h"
-ARM GAS  /tmp/ccDfwoMH.s 			page 13
+ 447              		.loc 1 87 7 view .LVU127
+ 448 012a DDE90512 		ldrd	r1, r2, [sp, #20]
+ 449 012e 079B     		ldr	r3, [sp, #28]
+ 450 0130 0094     		str	r4, [sp]
+ 451 0132 D9F80090 		ldr	r9, [r9]
+ 452 0136 0498     		ldr	r0, [sp, #16]
+ 453 0138 013B     		subs	r3, r3, #1
+ 454 013a 0139     		subs	r1, r1, #1
+ 455 013c DDE7     		b	.L18
+ 456              	.L20:
+ 457 013e 00BF     		.align	2
+ 458              	.L19:
+ 459 0140 DCA939FF 		.word	-12998180
+ 460 0144 CDCCCC3D 		.word	1036831949
+ 461 0148 00000000 		.word	bindings
+ 462 014c 00000000 		.word	convert_point
+ 463 0150 00000000 		.word	clamp_point
+ 464 0154 00000000 		.word	Display_binding_line
+ 465              	.LBE9:
+ 466              	.LBE13:
+ 467              		.cfi_endproc
+ 468              	.LFE1516:
+ 470              		.section	.bss.Display_binding_line,"aw",%nobits
+ 471              		.align	2
+ 474              	Display_binding_line:
+ 475 0000 00000000 		.space	4
+ 476              		.section	.bss.convert_point,"aw",%nobits
+ 477              		.align	2
+ 480              	convert_point:
+ 481 0000 00000000 		.space	4
+ 482              		.section	.bss.clamp_point,"aw",%nobits
+ 483              		.align	2
+ 486              	clamp_point:
+ 487 0000 00000000 		.space	4
+ 488              		.text
+ 489              	.Letext0:
+ 490              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 491              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 492              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
+ 493              		.file 5 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/spe_pp_outp
+ 494              		.file 6 "../../STM32Cube_FW_N6/Utilities/lcd/stm32_lcd.h"
+ 495              		.file 7 "Inc/app_config.h"
+ARM GAS  /tmp/cciV2IvA.s 			page 13
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 display_spe.c
-     /tmp/ccDfwoMH.s:26     .text.Display_keypoint:00000000 $t
-     /tmp/ccDfwoMH.s:31     .text.Display_keypoint:00000000 Display_keypoint
-     /tmp/ccDfwoMH.s:145    .text.Display_keypoint:0000006c $d
-     /tmp/ccDfwoMH.s:467    .bss.convert_point:00000000 convert_point
-     /tmp/ccDfwoMH.s:473    .bss.clamp_point:00000000 clamp_point
-     /tmp/ccDfwoMH.s:152    .text.Display_spe_InitFunctions:00000000 $t
-     /tmp/ccDfwoMH.s:158    .text.Display_spe_InitFunctions:00000000 Display_spe_InitFunctions
-     /tmp/ccDfwoMH.s:188    .text.Display_spe_InitFunctions:00000010 $d
-     /tmp/ccDfwoMH.s:461    .bss.Display_binding_line:00000000 Display_binding_line
-     /tmp/ccDfwoMH.s:195    .text.Display_spe_Detection:00000000 $t
-     /tmp/ccDfwoMH.s:201    .text.Display_spe_Detection:00000000 Display_spe_Detection
-     /tmp/ccDfwoMH.s:447    .text.Display_spe_Detection:00000124 $d
-     /tmp/ccDfwoMH.s:458    .bss.Display_binding_line:00000000 $d
-     /tmp/ccDfwoMH.s:464    .bss.convert_point:00000000 $d
-     /tmp/ccDfwoMH.s:470    .bss.clamp_point:00000000 $d
+     /tmp/cciV2IvA.s:26     .text.Display_keypoint:00000000 $t
+     /tmp/cciV2IvA.s:31     .text.Display_keypoint:00000000 Display_keypoint
+     /tmp/cciV2IvA.s:145    .text.Display_keypoint:0000006c $d
+     /tmp/cciV2IvA.s:480    .bss.convert_point:00000000 convert_point
+     /tmp/cciV2IvA.s:486    .bss.clamp_point:00000000 clamp_point
+     /tmp/cciV2IvA.s:152    .text.Display_spe_InitFunctions:00000000 $t
+     /tmp/cciV2IvA.s:158    .text.Display_spe_InitFunctions:00000000 Display_spe_InitFunctions
+     /tmp/cciV2IvA.s:188    .text.Display_spe_InitFunctions:00000010 $d
+     /tmp/cciV2IvA.s:474    .bss.Display_binding_line:00000000 Display_binding_line
+     /tmp/cciV2IvA.s:195    .text.Display_spe_Detection:00000000 $t
+     /tmp/cciV2IvA.s:201    .text.Display_spe_Detection:00000000 Display_spe_Detection
+     /tmp/cciV2IvA.s:459    .text.Display_spe_Detection:00000140 $d
+     /tmp/cciV2IvA.s:471    .bss.Display_binding_line:00000000 $d
+     /tmp/cciV2IvA.s:477    .bss.convert_point:00000000 $d
+     /tmp/cciV2IvA.s:483    .bss.clamp_point:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.arm_math_types.h.28.9e71aea5cdf6aebdd83091bf39b4832a
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
@@ -749,7 +769,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.utils.h.41.820d6032ed1c0d7dd5bd2ed80938ee65
                            .group:00000000 wm4.fast_math_functions.h.28.aa389abd5521cfceab0e76a6af3dd2e2
                            .group:00000000 wm4.matrix_functions.h.28.8fc8488c73b2d6f328b0946db3460102
-ARM GAS  /tmp/ccDfwoMH.s 			page 14
+ARM GAS  /tmp/cciV2IvA.s 			page 14
 
 
                            .group:00000000 wm4.controller_functions.h.28.388735b97ccd96442b0ac9e554629f36
@@ -794,7 +814,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stai_network.h.57.8dfb21a08a1ef1a6e6a309b63eb85b05
                            .group:00000000 wm4.lcd.h.21.98701c105e66fef2e089854e5bc0fe32
                            .group:00000000 wm4.stm32_lcd.h.55.1a04e503950bf34ef3721d2ebb9542fc
-                           .group:00000000 wm4.app_config.h.26.21904fc3508749247345de609f8b6a31
+                           .group:00000000 wm4.app_config.h.26.d1e7cadc8820825646fd90142310edef
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
                            .group:00000000 wm4.arm_cmse.h.103.a0d15a79c4c9a67da8d5831704d7248e
                            .group:00000000 wm4.stm32_hal_legacy.h.22.e62aae2fd3ae33360b6781c8a72e5b18
@@ -809,7 +829,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stm32n6xx_hal_rif.h.21.33f2c553a8a3fc14dca8c470b213ab19
                            .group:00000000 wm4.stm32n6xx_hal_dma.h.21.61e48c5c2e8d25d22177834b232fe45c
                            .group:00000000 wm4.stm32n6xx_hal_dma_ex.h.21.82f854ecdb6a463b06d0b4e5c217c368
-ARM GAS  /tmp/ccDfwoMH.s 			page 15
+ARM GAS  /tmp/cciV2IvA.s 			page 15
 
 
                            .group:00000000 wm4.stm32n6xx_hal_dma.h.1020.87e2180c009560b617c1f8208140c950

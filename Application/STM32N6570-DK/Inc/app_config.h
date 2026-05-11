@@ -31,15 +31,25 @@
 #define ASPECT_RATIO_CROP       (1) /* Crop both pipes to nn input aspect ratio; Original aspect ratio kept */
 #define ASPECT_RATIO_FIT        (2) /* Resize both pipe to NN input aspect ratio; Original aspect ratio not kept */
 #define ASPECT_RATIO_FULLSCREEN (3) /* Resize camera image to NN input size and display a maximized image. See Doc/Build-Options.md#aspect-ratio-mode */
-#define ASPECT_RATIO_MODE ASPECT_RATIO_FIT
+#define ASPECT_RATIO_MODE ASPECT_RATIO_CROP
 
 /* Fall detection model selection: change this line to switch between TCN and GRU */
 #define FALL_MODEL_TCN  0
 #define FALL_MODEL_GRU  1
 #define FALL_DETECTION_MODEL  FALL_MODEL_GRU
 
-/* GRU stateful: frames to accumulate before trusting output (~2 sec at 15fps) */
-#define GRU_WARMUP_FRAMES  30
+/* GRU stateful: frames to accumulate before trusting output (~1 sec at 15fps) */
+#define GRU_WARMUP_FRAMES       15
+/* Consecutive fall detections required to trigger GRU + pipeline reset */
+#define GRU_FALL_RESET_COUNT    2
+/* Keep showing FALL on display for this many ms after confirmation */
+#define GRU_FALL_LATCH_MS       3000
+/* Minimum postprocessed keypoint confidence required to run fall detection */
+#define FALL_PERSON_CONF_THRESHOLD  (0.08f)
+/* Consecutive postprocessed frames below the person threshold before reset */
+#define FALL_PERSON_MISSING_RESET_COUNT  45
+/* Consecutive postprocessed frames above the person threshold before confirming entry */
+#define FALL_PERSON_ENTRY_CONF_COUNT     3
 
 /* Model Related Info */
 #define POSTPROCESS_TYPE    POSTPROCESS_SPE_MOVENET_UI
@@ -53,7 +63,7 @@
 #define AI_SPE_MOVENET_POSTPROC_HEATMAP_HEIGHT       (STAI_NETWORK_IN_1_HEIGHT/4)
 
 /* Post processing values */
-#define AI_POSE_PP_CONF_THRESHOLD           (0.20f)
+#define AI_POSE_PP_CONF_THRESHOLD           (0.10f)
 #define AI_POSE_PP_POSE_KEYPOINTS_NB        (17)
 
 #define USE_BINDINGS
