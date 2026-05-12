@@ -1037,9 +1037,8 @@ static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai
 
     float32_t top5_avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4]) / 5.0f;
 
-    /* Presence to block noise: 
-     * either one best point >= 0.18 or top-5 avg >= 0.07. */
-    pose_debug_metrics.person_present = (scores[0] >= 0.18f || top5_avg >= 0.07f) ? 1u : 0u;
+    /* Presence: top-5 average confidence must be >= 0.2 */
+    pose_debug_metrics.person_present = (top5_avg >= 0.2f) ? 1u : 0u;
   }
 }
 
