@@ -560,6 +560,8 @@ static void FallModel_init(void)
 #endif
 
   memset(&fall_state, 0, sizeof(fall_state));
+  /* Show "no person" on startup until presence is confirmed. */
+  pose_debug_metrics.person_missing_confirmed = 1u;
 
   BSP_LED_Init(LED_RED);
   BSP_LED_Off(LED_RED);
@@ -585,12 +587,14 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   /* IN[0]: time-first window [40][27] → feed directly into activation buffer */
   PosePipeline_GetWindowTimeFirst(pipeline,
                                   (float32_t (*)[POSE_FEATURE_COUNT])gru_in[0]);
+  SCB_CleanDCache_by_Addr(gru_in[0], gru_in_len[0]);
 
   uint32_t t0 = HAL_GetTick();
   Run_FallInference();
   uint32_t t1 = HAL_GetTick();
   fall_state.inference_ms = t1 - t0;
 
+  SCB_InvalidateDCache_by_Addr(gru_out[0], gru_out_len[0]);
   /* OUT[0]: softmax probabilities [normal, fall] — already normalized */
   float32_t *logits = (float32_t *)gru_out[0];
 
@@ -712,7 +716,8 @@ static void FallDetection_Invalidate(PosePipeline_t *pipeline)
   fall_state.normal_score = 0.0f;
   fall_state.fall_score = 0.0f;
   fall_state.fall_consec_count = 0u;
-  fall_state.fall_latch_tick = 0u;
+  /* Do NOT reset fall_latch_tick: alarm must keep showing even if person
+   * is hard to detect on the floor (low-confidence keypoints → Invalidate). */
 }
 
 static void Alarm_Update(void)
@@ -937,7 +942,7 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
     }
     else
     {
-      uint32_t warmup_target = (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? GRU_WARMUP_FRAMES : POSE_WINDOW_SIZE;
+      uint32_t warmup_target = POSE_WINDOW_SIZE; /* always 40-step window */
       UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
       UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "Fall detector warming %lu/%u",
                           fall_state.frame_count,
