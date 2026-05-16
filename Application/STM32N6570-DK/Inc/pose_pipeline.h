@@ -33,10 +33,11 @@ extern "C" {
 /* Compile-time constants                                               */
 /* ------------------------------------------------------------------ */
 
-#define POSE_KP_COUNT        17     /* COCO 17-keypoint MoveNet */
+#define POSE_KP_COUNT        17     /* COCO 17-keypoint MoveNet (all used for HSSC/RWHC) */
+#define POSE_KP7_COUNT        7     /* kp7 subset stored in feature vector */
 #define POSE_ENG_FEAT_COUNT   6     /* HSSC_Y, HSSC_X, RWHC, VHSSC, AHSSC, AHSSC_x */
-#define POSE_FEATURE_COUNT   (POSE_KP_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 57 */
-#define POSE_WINDOW_SIZE     60     /* timesteps (15 fps × 4 s) */
+#define POSE_FEATURE_COUNT   (POSE_KP7_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 27 */
+#define POSE_WINDOW_SIZE     40     /* timesteps (15 fps × ~2.7 s) */
 
 /* --- One-Euro Filter (Pipeline D) -----------------------------------
  * Tuned for training-data quality; softer than STM32 v1 (1.0 / 0.5).
@@ -56,19 +57,46 @@ extern "C" {
 #define POSE_CONF_MASK_THRESHOLD  (0.15f)
 
 /* --- Confidence EMA -------------------------------------------------
- * Asymmetric: fast attack (0.8) when a KP appears, slower decay when
- * it fades — matches the Python EMA alpha=0.5 on average. */
+ * Matches Python Pipeline D exactly (alpha=0.5).
+ * Previous asymmetric version (0.8/0.5) removed for better alignment. */
 #define POSE_CONF_EMA_ALPHA       (0.5f)
-#define POSE_CONF_EMA_ALPHA_RISE  (0.8f)
 
 /* --- VHSSC EMA (Pipeline D) ----------------------------------------
- * Applied to VHSSC before deriving AHSSC.
- * Reduces AHSSC noise std by 71.9% vs raw 2nd-derivative. */
-#define POSE_VHSSC_EMA_ALPHA  (0.4f)
+ * Applied to vertical velocity (VHSSC) before deriving AHSSC.
+ * Matches Python Pipeline D (ema_deriv_alpha=0.4). */
+#define POSE_VHSSC_EMA_ALPHA      (0.4f)
+
+/* ------------------------------------------------------------------ */
+/* MinMax normalization — P27-vm0 (kp7 + filtered, 27 features)        */
+/* Applied after computing raw features, before storing to window buf. */
+/* feat_norm = (feat_raw - min) / scale                                */
+/* ------------------------------------------------------------------ */
+#define POSE_NORM_MIN { \
+    0.000000f, 0.000000f, 0.002383f, \
+    0.000002f, 0.000000f, 0.004055f, \
+    0.000000f, 0.000000f, 0.002157f, \
+    0.001145f, 0.000001f, 0.001560f, \
+    0.001290f, 0.002396f, 0.004167f, \
+    0.008567f, 0.002751f, 0.008049f, \
+    0.002279f, 0.000000f, 0.006607f, \
+    0.000137f, 0.000158f, 0.024745f, \
+    -2.220820f, -18.393295f, -67.749054f }
+
+#define POSE_NORM_SCALE { \
+    0.999908f, 0.999997f, 0.870511f, \
+    0.997730f, 0.999995f, 0.968784f, \
+    0.983443f, 0.999999f, 0.962983f, \
+    0.997804f, 0.999956f, 0.972651f, \
+    0.986192f, 0.994499f, 0.963977f, \
+    0.991426f, 0.997080f, 0.941503f, \
+    0.997647f, 0.999300f, 0.938715f, \
+    0.991539f, 0.998045f, 21.949295f, \
+    5.239275f, 45.194557f, 125.179825f }
 
 /* ------------------------------------------------------------------ */
 /* HSSC upper-body keypoint indices                                     */
 /* nose=0, l_eye=1, r_eye=2, l_ear=3, r_ear=4, l_sho=5, r_sho=6      */
+/* (Same as original 17-kp pipeline — HSSC computed from kp0-kp6)     */
 /* ------------------------------------------------------------------ */
 #define POSE_HSSC_INDICES_COUNT  7
 

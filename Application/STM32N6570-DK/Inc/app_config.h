@@ -38,14 +38,20 @@
 #define FALL_MODEL_GRU  1
 #define FALL_DETECTION_MODEL  FALL_MODEL_GRU
 
-/* GRU stateful: frames to accumulate before trusting output (~1 sec at 15fps) */
+/* GRU window-based (1×40×27): window fills before inference begins */
 #define GRU_WARMUP_FRAMES       15
-/* Consecutive fall detections required to trigger GRU + pipeline reset */
-#define GRU_FALL_RESET_COUNT    2
-/* Keep showing FALL on display for this many ms after confirmation */
-#define GRU_FALL_LATCH_MS       3000
+/* Softmax fall score must reach this to count as a fall frame — P27-vm0 INT8 val reselection */
+#define GRU_FALL_SCORE_THRESHOLD  0.50f
+/* Consecutive fall windows required to trigger alarm + pipeline reset — P27-vm0 min_consecutive=1 */
+#define GRU_FALL_RESET_COUNT    1
+/* Keep showing FALL on display and sounding alarm for this many ms after confirmation */
+#define GRU_FALL_LATCH_MS       5000
+/* LED_RED blink half-period during alarm (ms) */
+#define GRU_ALARM_BLINK_PERIOD_MS  250
 /* Minimum postprocessed keypoint confidence required to run fall detection */
 #define FALL_PERSON_CONF_THRESHOLD  (0.08f)
+/* Max keypoint bounding-box span (normalized 0-1) before skipping visualization */
+#define FALL_KP_SPREAD_MAX          (0.85f)
 /* Consecutive postprocessed frames below the person threshold before reset */
 #define FALL_PERSON_MISSING_RESET_COUNT  45
 /* Consecutive postprocessed frames above the person threshold before confirming entry */

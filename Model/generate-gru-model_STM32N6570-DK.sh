@@ -2,44 +2,50 @@
 
 set -eu # Exit on any error, Exit on unset variable
 
-# Note: stedgeai v3.0.0+ is required.
-# GRU models are best supported in ONNX format.
-# If using TFLite, ensure it doesn't use "Select TF ops" (Variables).
+# P27-vm0: GRU(128,64) + 2×Conv1D(64,k=5,causal), kp7 27-feature, 40-step window
+# Model: results/phase27_seed_sweep/P27-vm0/model_stedgeai_compat.keras
+# INT8 MinP=0.9258, threshold=0.50, min_consecutive=1
+#
+# Note: stedgeai 4.0 with --type keras. Do NOT use --st-neural-art (incompatible with
+#       address/binary args) and do NOT use --address (NeuralArt E102 error).
 
-MODEL_FILE="gru_v26_int8.tflite"
+MODEL_FILE="p27_vm0_compat.keras"
 
 if [ ! -f "$MODEL_FILE" ]; then
     echo "Error: $MODEL_FILE not found in Model/ directory."
+    echo "Copy from: results/phase27_seed_sweep/P27-vm0/model_stedgeai_compat.keras"
     exit 1
 fi
 
 echo "Generating GRU model from $MODEL_FILE..."
 
-# Generate using stedgeai
-# --name gru_network will produce gru_network.c and stai_gru_network.c
-# --address 0x70680000 ensures weights are referenced at this offset in xSPI2
-stedgeai generate --model "$MODEL_FILE" \
+stedgeai generate \
+    --model "$MODEL_FILE" \
+    --type keras \
     --target stm32n6 \
-    --st-neural-art "default@user_neuralart_gru_STM32N6570-DK.json" \
     --input-data-type float32 \
     --output-data-type float32 \
     --optimization time \
     --name gru_network \
-    --address 0x70680000 \
-    --output st_ai_output_gru
+    --output st_ai_output_gru_p27
 
-# Copy files to the application model directory
+# Copy generated C files to application model directory
 mkdir -p STM32N6570-DK/GRU
-cp st_ai_output_gru/gru_network.c STM32N6570-DK/GRU/
-cp st_ai_output_gru/gru_network.h STM32N6570-DK/GRU/
-cp st_ai_output_gru/stai_gru_network.c STM32N6570-DK/GRU/
-cp st_ai_output_gru/stai_gru_network.h STM32N6570-DK/GRU/
-cp st_ai_output_gru/gru_network_atonbuf.xSPI2.raw STM32N6570-DK/GRU/gru_network_data.xSPI2.bin
+cp st_ai_output_gru_p27/gru_network.c       STM32N6570-DK/GRU/
+cp st_ai_output_gru_p27/gru_network.h       STM32N6570-DK/GRU/
+cp st_ai_output_gru_p27/gru_network_data.c  STM32N6570-DK/GRU/
+cp st_ai_output_gru_p27/gru_network_data.h  STM32N6570-DK/GRU/
+cp st_ai_output_gru_p27/gru_network_details.h STM32N6570-DK/GRU/
 
-# Convert weights to HEX for flashing
-# TCN weights were at 0x70680000. Let's use the same or check for overlap.
-# MoveNet: 0x70380000..0x70634000
-# TCN/GRU: 0x70680000 (enough margin)
-arm-none-eabi-objcopy -I binary STM32N6570-DK/GRU/gru_network_data.xSPI2.bin --change-addresses 0x70680000 -O ihex STM32N6570-DK/GRU/gru_network_data.hex
+# Convert weights to HEX for xSPI2 flashing at 0x70680000
+# MoveNet occupies 0x70380000..0x70634000; GRU weights start at 0x70680000
+if [ -f "st_ai_output_gru_p27/gru_network_data.xSPI2.raw" ]; then
+    cp st_ai_output_gru_p27/gru_network_data.xSPI2.raw STM32N6570-DK/GRU/gru_network_data.xSPI2.bin
+    arm-none-eabi-objcopy -I binary STM32N6570-DK/GRU/gru_network_data.xSPI2.bin \
+        --change-addresses 0x70680000 -O ihex STM32N6570-DK/GRU/gru_network_data.hex
+    echo "Weight HEX generated at 0x70680000."
+else
+    echo "Note: no xSPI2.raw found — weights are compiled into gru_network_data.c directly."
+fi
 
 echo "GRU model generated in STM32N6570-DK/GRU/"

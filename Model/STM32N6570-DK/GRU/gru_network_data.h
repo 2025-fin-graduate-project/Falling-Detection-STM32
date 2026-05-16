@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    gru_network_data.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    2026-05-10T22:50:57+0900
+  * @date    2026-05-17T02:21:08+0900
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * Copyright (c) 2026 STMicroelectronics.
@@ -18,6 +18,6 @@
 #define STAI_GRU_NETWORK_DATA_H
 #include "stai.h"
 STAI_ALIGNED(8)
-extern const uint64_t g_gru_network_weights_array[16883];
+extern const uint64_t g_gru_network_weights_array[68675];
 #endif  /* STAI_GRU_NETWORK_DATA_H */
 
