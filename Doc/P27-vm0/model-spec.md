@@ -162,18 +162,50 @@ COCO 17-keypoint 중 7개 선택 × (y, x, confidence) = 21:
 | Flash (weights) | **536.52 KiB** |
 | 활성화 버퍼 | **40.16 KiB** (41,120 bytes) |
 | MACC/추론 | **5,322,472** |
-| xSPI2 주소 | `0x70680000` |
 | analyze 성공 | True |
 
-### Flash 레이아웃 (xSPI2 NOR 64 MB)
+---
 
-```
-0x70000000  FSBL
-0x70100000  Application code
-0x70380000  MoveNet 256×256 (2.64 MB)  →  0x70634000
-0x70680000  P27-vm0 GRU weights (537 KiB)  →  약 0x70706000
-            여유 ~57 MB
-```
+## 5.5 실측 메모리 상태 (make + 플래시 후)
+
+> 빌드 환경: arm-none-eabi-gcc 14.3, `-Os -g3`, STM32N6570-DK  
+> STedgeAI generate 결과 `gru_network_data.c`에 가중치 내장 (xSPI2 별도 슬롯 미사용)
+
+### AXISRAM1_S (0x34000400, 1023 KB) — **98.47% 사용**
+
+코드/rodata도 FSBL이 xSPI에서 복사하여 AXISRAM에서 실행됨.
+
+| 섹션 | 크기 | 비고 |
+|---|---|---|
+| `.text` (코드) | 180.6 KB | 응용 + HAL + STedgeAI 런타임 |
+| `.rodata` | **749.2 KB** | GRU 가중치 537 KB + 폰트/패치 테이블 212 KB |
+| `.isr_vector` / 기타 | 0.9 KB | |
+| `.data` | 8.2 KB | 초기값 있는 전역변수 |
+| `.bss` | 51.9 KB | gru_activation_buf 40.2 KB + pose_pipeline 4.8 KB + 기타 6.9 KB |
+| `._user_heap_stack` | 16.5 KB | |
+| **합계** | **1007.3 KB** | **여유 15.7 KB** |
+
+> **주의**: GRU 가중치(537 KB)가 rodata로 AXISRAM1_S에 상주하여 공간을 크게 점유.  
+> 여유 15.7 KB는 정적 할당 기준으로 충분하나 추가 변수 추가 시 OOM 위험.  
+> 해결: 가중치를 xSPI2(0x70680000)에 분리 배치하면 rodata를 ~212 KB로 줄여 여유 약 537 KB 확보 가능.
+
+### PSRAM (0x91000000, 16 MB) — 13.7% 사용
+
+| 섹션 | 크기 | 비고 |
+|---|---|---|
+| `lcd_bg_buffer` | 750 KB | 카메라 배경 프레임 버퍼 |
+| `lcd_fg_buffer` | 1500 KB | UI 오버레이 프레임 버퍼 |
+| **합계** | **2250 KB (2.20 MB)** | **여유 ~13 MB** |
+
+### xSPI2 NOR Flash (0x70000000, 64 MB) — 7.1% 사용
+
+| 주소 | 내용 | 크기 |
+|---|---|---|
+| `0x70000000` | FSBL | ~1024 KB |
+| `0x70100000` | App 바이너리 (signed) | 939 KB (부팅 시 AXISRAM으로 복사) |
+| `0x70380000` | MoveNet 가중치 | 2703 KB (NPU 직접 접근) |
+| `0x70680000` | GRU xSPI 슬롯 | **0 KB** (가중치 컴파일 내장) |
+| **합계** | | **4666 KB / 65536 KB** |
 
 ---
 
