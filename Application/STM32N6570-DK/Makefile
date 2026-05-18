@@ -281,7 +281,7 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile $(BUILD_DIR)/$(TARGET).list
 	$($(quiet)SZ) $@
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
-	$(BIN) $< $@
+	$(BIN) --remove-section=.gru_weights $< $@
 
 $(BUILD_DIR)/$(TARGET)_sign.bin: $(BUILD_DIR)/$(TARGET).bin
 	$(SIGNER) -s -bin $< -nk -t ssbl -hv 2.3 -align -o $(BUILD_DIR)/$(TARGET)_sign.bin
@@ -315,18 +315,24 @@ flash_weights: $(MODEL_DIR)/network_data.hex
 flash_tcn_weights: $(TCN_MODEL_DIR)/tcn_network_data.hex
 	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
 
+# Extract GRU weights from .gru_weights ELF section into ihex (0x70680000).
+$(GRU_MODEL_DIR)/gru_network_data.hex: $(BUILD_DIR)/$(TARGET).elf
+	$(CP) -j .gru_weights -O ihex $< $@
+
 .PHONY: flash_gru_weights
 flash_gru_weights: $(GRU_MODEL_DIR)/gru_network_data.hex
 	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
 
-# Convenience: build (GRU), sign, flash app + MoveNet weights in one shot.
-# GRU weights are embedded in the binary — no separate flash step needed.
+# Convenience: build (GRU), sign, flash app + MoveNet weights + GRU weights in one shot.
+# GRU weights are placed in XIP flash at 0x70680000 (separate from application binary).
 .PHONY: flash_gru
 flash_gru:
 	$(MAKE) FALL_DETECTION_MODEL=GRU
 	$(MAKE) sign
+	$(MAKE) $(GRU_MODEL_DIR)/gru_network_data.hex
 	$(MAKE) flash
 	$(MAKE) flash_weights
+	$(MAKE) flash_gru_weights
 
 #######################################
 # dependencies

@@ -180,13 +180,13 @@ static FallDetectionState_TypeDef fall_state;
 static PosePipeline_t pose_pipeline;
 static uint32_t pose_last_tick;
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-/* GRU window-based (1×40×27): same structure as TCN path */
+/* GRU window-based (1×40×74): same structure as TCN path */
 static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
 static stai_ptr gru_out[STAI_GRU_NETWORK_OUT_NUM]  = {0};
 static int32_t  gru_in_len[STAI_GRU_NETWORK_IN_NUM]  = {0};
 static int32_t  gru_out_len[STAI_GRU_NETWORK_OUT_NUM] = {0};
-/* Input window buffer (time-first: [40][27]) in activation memory */
-__attribute__((aligned(4))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
+/* Input window buffer (time-first: [40][74]) in activation memory */
+__attribute__((aligned(32))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
 #else
 static stai_ptr tcn_in;
 static stai_ptr tcn_out[STAI_TCN_NETWORK_OUT_NUM] = {0};
@@ -327,9 +327,6 @@ int main(void)
     Update_PoseDebugMetrics(nn_out, nn_out_len, number_output, &pp_output);
 
     /* --- Pose pipeline (2프레임마다 1회 = 30fps 카메라 → 15fps 윈도우) ------- */
-    static uint32_t pipeline_frame_count = 0;
-    pipeline_frame_count++;
-
     pose_debug_metrics.postprocess_valid = ((ret == AI_SPE_POSTPROCESS_ERROR_NO) &&
                                             (pp_output.pOutBuff != NULL)) ? 1u : 0u;
 
@@ -379,7 +376,7 @@ int main(void)
                                          (pose_debug_metrics.visible_keypoints > 0u) &&
                                          (pose_debug_metrics.keypoints_too_spread == 0u)) ? 1u : 0u;
 
-    if ((pose_valid != 0u) && (pipeline_frame_count % 2 == 0))
+    if (pose_valid != 0u)
     {
       uint32_t now_tick = HAL_GetTick();
       float32_t dt_s = (float32_t)(now_tick - pose_last_tick) * 1e-3f;
@@ -465,6 +462,28 @@ static void Run_FallInference(void) {
   stai_return_code ret;
 
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
+  /* ll_aton leaves OctoSPI2 in indirect/DMA mode after MoveNet inference.
+   * BSP_XSPI_NOR_DeInit has a linker issue (HAL_DMA_Abort relocation), so
+   * we abort the hardware directly and force HAL state to READY. */
+  {
+    extern XSPI_HandleTypeDef hxspi_nor[];
+    /* Disable DMA, abort any pending hw transaction */
+    CLEAR_BIT(hxspi_nor[0].Instance->CR, XSPI_CR_DMAEN);
+    if (HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_BUSY))
+    {
+      SET_BIT(hxspi_nor[0].Instance->CR, XSPI_CR_ABORT);
+      uint32_t t0 = HAL_GetTick();
+      while (!HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_TC) &&
+             (HAL_GetTick() - t0) < 100U) {}
+      HAL_XSPI_CLEAR_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_TC);
+      t0 = HAL_GetTick();
+      while (HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_BUSY) &&
+             (HAL_GetTick() - t0) < 100U) {}
+    }
+    hxspi_nor[0].State = HAL_XSPI_STATE_READY;
+  }
+  BSP_XSPI_NOR_EnableMemoryMappedMode(0);
+
   ret = stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
 #else
   do {
@@ -572,7 +591,7 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   fall_state.frame_count = pipeline->win_count;
 
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* GRU window-based (1×40×27): run every frame, alarm after window is full */
+  /* GRU window-based (1×40×74): run every frame, alarm after window is full */
   fall_state.window_ready = PosePipeline_WindowFull(pipeline);
 
   if (!fall_state.window_ready)
@@ -700,11 +719,12 @@ static void FallDetection_Invalidate(PosePipeline_t *pipeline)
 {
   if (pipeline != NULL)
   {
-    /* We don't call PosePipeline_Init here anymore because it clears the filters.
-     * Instead, we just reset the window count to clear old features, 
-     * but keep the filters in their last known state to prevent 'snapping' when re-detected. */
+    /* We don't call PosePipeline_Init here because it clears the One-Euro filters.
+     * Reset the window and derivative state so re-entry starts clean, but keep
+     * the filters in their last known state to prevent coordinate snapping. */
     pipeline->win_count = 0u;
-    pipeline->win_head = 0u;
+    pipeline->win_head  = 0u;
+    pipeline->deriv_initialized = 0u;
   }
 
   fall_state.window_ready = 0u;

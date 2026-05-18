@@ -1,8 +1,8 @@
-Src/pose_pipeline.c:17:25:clamp01	3
-Src/pose_pipeline.c:40:18:euro_filter_apply	3
-Src/pose_pipeline.c:141:6:PosePipeline_Init	1
-Src/pose_pipeline.c:159:6:PosePipeline_Process	15
-Src/pose_pipeline.c:232:6:PosePipeline_GetWindowFeaturesFirst	4
-Src/pose_pipeline.c:247:6:PosePipeline_GetWindowTimeFirst	3
-Src/pose_pipeline.c:259:9:PosePipeline_WindowFull	1
-Src/pose_pipeline.c:264:6:PosePipeline_GetLatestFeature	2
+Src/pose_pipeline.c:31:25:clamp01	3
+Src/pose_pipeline.c:45:18:euro_filter_apply	4
+Src/pose_pipeline.c:168:6:PosePipeline_Init	1
+Src/pose_pipeline.c:173:6:PosePipeline_Process	23
+Src/pose_pipeline.c:334:6:PosePipeline_GetWindowFeaturesFirst	4
+Src/pose_pipeline.c:346:6:PosePipeline_GetWindowTimeFirst	3
+Src/pose_pipeline.c:357:9:PosePipeline_WindowFull	1
+Src/pose_pipeline.c:362:6:PosePipeline_GetLatestFeature	2

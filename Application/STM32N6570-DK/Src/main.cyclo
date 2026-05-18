@@ -1,0 +1,15 @@
+../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:679:22:LL_MEM_EnableClock	1
+../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:785:22:LL_MEM_EnableClockLowPower	1
+../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:2065:22:LL_AHB5_GRP1_EnableClockLowPower	1
+Src/main.c:831:12:clamp_point	6
+Src/main.c:848:13:convert_length	1
+Src/main.c:854:13:convert_point	1
+Src/main.c:1201:13:SystemClock_Config	4
+Src/main.c:860:13:Display_binding_line	1
+Src/main.c:222:5:main	80
+Src/main.c:824:6:IAC_IRQHandler	1
+Src/main.c:1174:19:MX_DCMIPP_ClockConfig	2
+Src/main.c:1335:5:_write	2
+Src/main.c:1349:6:npu_cache_enable_clocks_and_reset	1
+Src/main.c:1357:6:npu_cache_disable_clocks_and_reset	1
+Src/main.c:1365:6:assert_failed	1

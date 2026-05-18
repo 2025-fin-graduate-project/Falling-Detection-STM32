@@ -13,6 +13,7 @@ MEMORY
 {
   AXISRAM1_S (xrw)      : ORIGIN = 0x34000400, LENGTH =  1023K
   PSRAM (xrw)           : ORIGIN = 0x91000000, LENGTH =  16M
+  XSPI2FLASH (rx)       : ORIGIN = 0x70680000, LENGTH =  2M
 }
 
 /* Sections */
@@ -52,6 +53,16 @@ SECTIONS
     *(.gnu.sgstubs*)   /* Secure Gateway stubs */
     . = ALIGN(4);
   } >AXISRAM1_S
+
+  /* GRU model weights — placed in XIP-mapped external flash (0x70680000).
+   * Excluded from the application binary; flashed separately via flash_gru_weights.
+   * Must appear before .rodata to claim gru_network_data.o's sections first. */
+  .gru_weights :
+  {
+    . = ALIGN(8);
+    */gru_network_data.o(.rodata*)
+    . = ALIGN(8);
+  } >XSPI2FLASH
 
   /* Constant data into "RAM" Ram type memory */
   .rodata :

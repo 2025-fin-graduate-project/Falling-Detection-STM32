@@ -1,0 +1,201 @@
+ST Edge AI Core v4.0.0-20500 359356bb0
+Created date          : 2026-05-18 18:01:03
+Parameters            : generate --model p37_kp7_compat.keras --type keras --target stm32n6 --input-data-type float32 --output-data-type float32 --optimization time --name gru_network --output st_ai_output_gru_p37kp7
+
+Exec/report summary (generate)
+--------------------------------------------------------------------------------------------------------------------
+model file         :   /home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/p37_kp7_compat.keras      
+type               :   keras                                                                                        
+c_name             :   gru_network                                                                                  
+compression        :   lossless                                                                                     
+options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai                               
+optimization       :   time                                                                                         
+target/series      :   stm32n6                                                                                      
+workspace dir      :   /home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_ws                  
+output dir         :   /home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7   
+model_fmt          :   float                                                                                        
+model_name         :   p37_kp7_compat                                                                               
+model_hash         :   0xf9bb7efca9985ce1afcddde1d7d592a6                                                           
+params #           :   145,282 items (567.51 KiB)                                                                   
+--------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_layer', f32(1x40x27), 4.22 KBytes, activations                                        
+output 1/1         :   'dense_1', f32(1x2), 8 Bytes, activations                                                    
+macc               :   5,613,472                                                                                    
+weights (ro)       :   581,128 B (567.51 KiB) (1 segment)                                                           
+activations (rw)   :   33,792 B (33.00 KiB) (1 segment) *                                                           
+ram (total)        :   33,792 B (33.00 KiB) = 33,792 + 0 + 0                                                        
+--------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - p37_kp7_compat
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+m_id   layer (type,original)              oshape             param/size              macc      connected to   | c_size   c_macc            c_type                          
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+0      input_layer (Input, InputLayer)    [b:1,h:40,c:27]                                                     |                            
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+1      conv1d_conv2d (Conv2D, Conv1D)     [b:1,h:40,c:64]    8,704/34,816         345,664       input_layer   |          +2,560(+0.7%)     Conv2D_/Nonlinearity_[0, 1]     
+       conv1d (Nonlinearity, Conv1D)      [b:1,h:40,c:64]                           2,560     conv1d_conv2d   |          -2,560(-100.0%)   
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+2      conv1d_1_conv2d (Conv2D, Conv1D)   [b:1,h:40,c:64]    20,544/82,176        819,264            conv1d   |          +2,560(+0.3%)     Conv2D_/Nonlinearity_[2, 3]     
+       conv1d_1 (Nonlinearity, Conv1D)    [b:1,h:40,c:64]                           2,560   conv1d_1_conv2d   |          -2,560(-100.0%)   
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+3      gru (GRU, GRU)                     [b:1,h:40,c:128]   74,496/297,984     2,959,360          conv1d_1   |                            GRU_[4]                         
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+4      gru_1 (GRU, GRU)                   [b:1,c:64]         37,248/148,992     1,479,680               gru   |                            GRU_[5]                         
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+5      dense_dense (Dense, Dense)         [b:1,c:64]         4,160/16,640           4,160             gru_1   |          +64(+1.5%)        Dense_/Nonlinearity_[6, 7]      
+       dense (Nonlinearity, Dense)        [b:1,c:64]                                   64       dense_dense   |          -64(-100.0%)      
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+7      dense_1_dense (Dense, Dense)       [b:1,c:2]          130/520                  130             dense   |          +30(+23.1%)       Dense_/Nonlinearity_[o][8, 9]   
+       dense_1 (Nonlinearity, Dense)      [b:1,c:2]                                    30     dense_1_dense   |          -30(-100.0%)      
+------ ---------------------------------- ------------------ ---------------- ----------- ----------------- --- -------- ----------------- ------------------------------- 
+model/c-model: macc=5,613,472/5,613,472  weights=581,128/581,128  activations=--/33,792 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : p37_kp7_compat
+c-name                : gru_network
+c-node #              : 10
+c-array #             : 29
+activations size      : 33792 (1 segment)
+weights size          : 581128 (1 segment)
+macc                  : 5613472
+inputs                : ['input_layer_output']
+outputs               : ['dense_1_output']
+
+C-Arrays (29)
+------ -------------------------- -------------- ------------------------- ------------- --------- 
+c_id   name (*_array)             item/size      domain/mem-pool           c-type        comment   
+------ -------------------------- -------------- ------------------------- ------------- --------- 
+0      conv1d_1_conv2d_bias       64/256         weights/weights           const float             
+1      conv1d_1_conv2d_output     2560/10240     activations/**default**   float                   
+2      conv1d_1_conv2d_scratch0   320/1280       activations/**default**   float                   
+3      conv1d_1_conv2d_weights    20480/81920    weights/weights           const float             
+4      conv1d_1_output            2560/10240     activations/**default**   float                   
+5      conv1d_conv2d_bias         64/256         weights/weights           const float             
+6      conv1d_conv2d_output       2560/10240     activations/**default**   float                   
+7      conv1d_conv2d_scratch0     135/540        activations/**default**   float                   
+8      conv1d_conv2d_weights      8640/34560     weights/weights           const float             
+9      conv1d_output              2560/10240     activations/**default**   float                   
+10     dense_1_dense_bias         2/8            weights/weights           const float             
+11     dense_1_dense_output       2/8            activations/**default**   float                   
+12     dense_1_dense_weights      128/512        weights/weights           const float             
+13     dense_1_output             2/8            activations/**default**   float         /output   
+14     dense_dense_bias           64/256         weights/weights           const float             
+15     dense_dense_output         64/256         activations/**default**   float                   
+16     dense_dense_weights        4096/16384     weights/weights           const float             
+17     dense_output               64/256         activations/**default**   float                   
+18     gru_1_bias                 384/1536       weights/weights           const float             
+19     gru_1_kernel               24576/98304    weights/weights           const float             
+20     gru_1_output0              64/256         activations/**default**   float                   
+21     gru_1_recurrent            12288/49152    weights/weights           const float             
+22     gru_1_scratch0             384/1536       activations/**default**   float                   
+23     gru_bias                   768/3072       weights/weights           const float             
+24     gru_kernel                 24576/98304    weights/weights           const float             
+25     gru_output0                5120/20480     activations/**default**   float                   
+26     gru_recurrent              49152/196608   weights/weights           const float             
+27     gru_scratch0               768/3072       activations/**default**   float                   
+28     input_layer_output         1080/4320      activations/**default**   float         /input    
+------ -------------------------- -------------- ------------------------- ------------- --------- 
+
+C-Layers (10)
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+c_id   name (*_layer)    id   layer_type      macc      rom      tensors                       shape (array id)     
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+0      conv1d_conv2d     1    Conv2D          345664    34816    I: input_layer_output         f32(1x40x27) (28)    
+                                                                 S: conv1d_conv2d_scratch0                          
+                                                                 W: conv1d_conv2d_weights      f32(64x5x1x27) (8)   
+                                                                 W: conv1d_conv2d_bias         f32(64) (5)          
+                                                                 O: conv1d_conv2d_output       f32(1x40x64) (6)     
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+1      conv1d            1    Nonlinearity    2560      0        I: conv1d_conv2d_output       f32(1x40x64) (6)     
+                                                                 O: conv1d_output              f32(1x40x64) (9)     
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+2      conv1d_1_conv2d   2    Conv2D          819264    82176    I: conv1d_output              f32(1x40x64) (9)     
+                                                                 S: conv1d_1_conv2d_scratch0                        
+                                                                 W: conv1d_1_conv2d_weights    f32(64x5x1x64) (3)   
+                                                                 W: conv1d_1_conv2d_bias       f32(64) (0)          
+                                                                 O: conv1d_1_conv2d_output     f32(1x40x64) (1)     
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+3      conv1d_1          2    Nonlinearity    2560      0        I: conv1d_1_conv2d_output     f32(1x40x64) (1)     
+                                                                 O: conv1d_1_output            f32(1x40x64) (4)     
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+4      gru               3    GRU             2959360   297984   I: conv1d_1_output            f32(1x40x64) (4)     
+                                                                 S: gru_scratch0                                    
+                                                                 W: gru_kernel                 f32(384x64) (24)     
+                                                                 W: gru_recurrent              f32(384x128) (26)    
+                                                                 W: gru_bias                   f32(2x384) (23)      
+                                                                 O: gru_output0                f32(1x40x128) (25)   
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+5      gru_1             4    GRU             1479680   148992   I: gru_output0                f32(1x40x128) (25)   
+                                                                 S: gru_1_scratch0                                  
+                                                                 W: gru_1_kernel               f32(192x128) (19)    
+                                                                 W: gru_1_recurrent            f32(192x64) (21)     
+                                                                 W: gru_1_bias                 f32(2x192) (18)      
+                                                                 O: gru_1_output0              f32(1x64) (20)       
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+6      dense_dense       5    Dense           4160      16640    I: gru_1_output0              f32(1x64) (20)       
+                                                                 W: dense_dense_weights        f32(64x64) (16)      
+                                                                 W: dense_dense_bias           f32(64) (14)         
+                                                                 O: dense_dense_output         f32(1x64) (15)       
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+7      dense             5    Nonlinearity    64        0        I: dense_dense_output         f32(1x64) (15)       
+                                                                 O: dense_output               f32(1x64) (17)       
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+8      dense_1_dense     7    Dense           130       520      I: dense_output               f32(1x64) (17)       
+                                                                 W: dense_1_dense_weights      f32(2x64) (12)       
+                                                                 W: dense_1_dense_bias         f32(2) (10)          
+                                                                 O: dense_1_dense_output       f32(1x2) (11)        
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+9      dense_1           7    Nonlinearity    30        0        I: dense_1_dense_output       f32(1x2) (11)        
+                                                                 O: dense_1_output             f32(1x2) (13)        
+------ ----------------- ---- --------------- --------- -------- ----------------------------- -------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ --------------------------- ----------- -------------- 
+c_id    m_id   name (type)                         #op           type 
+------- ------ --------------------------- ----------- -------------- 
+0       1      conv1d_conv2d (Conv2D)          345,664   smul_f32_f32 
+1       1      conv1d (Nonlinearity)             2,560     op_f32_f32 
+2       2      conv1d_1_conv2d (Conv2D)        819,264   smul_f32_f32 
+3       2      conv1d_1 (Nonlinearity)           2,560     op_f32_f32 
+4       3      gru (GRU)                     2,959,360   smul_f32_f32 
+5       4      gru_1 (GRU)                   1,479,680   smul_f32_f32 
+6       5      dense_dense (Dense)               4,160   smul_f32_f32 
+7       5      dense (Nonlinearity)                 64     op_f32_f32 
+8       7      dense_1_dense (Dense)               130   smul_f32_f32 
+9       7      dense_1 (Nonlinearity)               30     op_f32_f32 
+------- ------ --------------------------- ----------- -------------- 
+total                                        5,613,472 
+
+Number of operation types
+---------------- ----------- ----------- 
+operation type             #           % 
+---------------- ----------- ----------- 
+smul_f32_f32       5,608,258       99.9% 
+op_f32_f32             5,214        0.1% 
+
+Complexity report (model)
+------ ----------------- ------------------------- ------------------------- -------- 
+m_id   name              c_macc                    c_rom                     c_id     
+------ ----------------- ------------------------- ------------------------- -------- 
+1      conv1d_conv2d     ||                 6.2%   ||                 6.0%   [0, 1]   
+2      conv1d_1_conv2d   |||||             14.6%   |||||             14.1%   [2, 3]   
+3      gru               ||||||||||||||||  52.7%   ||||||||||||||||  51.3%   [4]      
+4      gru_1             ||||||||          26.4%   ||||||||          25.6%   [5]      
+5      dense_dense       |                  0.1%   |                  2.9%   [6, 7]   
+7      dense_1_dense     |                  0.0%   |                  0.1%   [8, 9]   
+------ ----------------- ------------------------- ------------------------- -------- 
+macc=5,613,472 weights=581,128 act=33,792 ram_io=0
+
+Generated files (5)
+------------------------------------------------------------------------------------------------------------------ 
+/home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7/gru_network_data.h      
+/home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7/gru_network_data.c      
+/home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7/gru_network.h           
+/home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7/gru_network.c           
+/home/min/Workspace/Graduate-Project/Falling-Detection-STM32/Model/st_ai_output_gru_p37kp7/gru_network_details.h   

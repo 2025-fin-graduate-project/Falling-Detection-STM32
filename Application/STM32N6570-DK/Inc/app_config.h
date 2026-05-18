@@ -38,7 +38,7 @@
 #define FALL_MODEL_GRU  1
 #define FALL_DETECTION_MODEL  FALL_MODEL_GRU
 
-/* GRU window-based (1×40×27): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
+/* GRU window-based (1×40×74): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
 #define GRU_WARMUP_FRAMES       40
 /* Softmax fall score must reach this to count as a fall frame — P27-vm0 INT8 val reselection */
 #define GRU_FALL_SCORE_THRESHOLD  0.50f

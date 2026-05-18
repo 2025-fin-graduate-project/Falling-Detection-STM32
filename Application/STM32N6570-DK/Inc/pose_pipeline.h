@@ -4,19 +4,20 @@
  * @brief   Pose keypoint feature window builder for fall detection.
  *
  *          Pipeline D — matches the offline preprocessing in
- *          scripts/build_filtered_dataset.py (Python, model dev repo).
+ *          scripts/build_filtered_v2_splits.py (Python, model dev repo).
  *
- *          Feature layout per frame (57 floats):
- *            [0..50]  kp0..kp16 × (y, x, conf)           — 51
- *            [51]     HSSC_y  — upper-body centre y        — 1
- *            [52]     HSSC_x  — upper-body centre x        — 1
- *            [53]     RWHC    — bounding-box aspect ratio  — 1
- *            [54]     VHSSC   — EMA-smoothed vertical vel  — 1
- *            [55]     AHSSC   — vertical acceleration      — 1  (NEW)
- *            [56]     AHSSC_x — horizontal acceleration    — 1  (NEW)
+ *          Feature layout per frame (74 floats):
+ *            [0..38]  kp0,5..16 × (y, x, conf)             — 39
+ *            [39]     HSSC_y  — upper-body centre y          — 1
+ *            [40]     HSSC_x  — upper-body centre x          — 1
+ *            [41]     RWHC    — bounding-box aspect ratio    — 1
+ *            [42]     VHSSC   — EMA-smoothed vertical vel    — 1
+ *            [43]     AHSSC   — vertical acceleration        — 1
+ *            [44]     AHSSC_x — horizontal acceleration      — 1
+ *            [45..73] Δ(kp y/x for all 13 kp + HSSC_y/x + AHSSC_x) — 29
+ *                     (raw frame-to-frame diff, computed before normalization)
  *
- *  NOTE: POSE_FEATURE_COUNT changed 55 → 57.
- *        Requires GRU model retrained on the filtered 57-feature dataset.
+ *  Normalization: P37-pure-vel-kp13-w40-gru training statistics.
  ******************************************************************************
  */
 #ifndef POSE_PIPELINE_H
@@ -33,11 +34,13 @@ extern "C" {
 /* Compile-time constants                                               */
 /* ------------------------------------------------------------------ */
 
-#define POSE_KP_COUNT        17     /* COCO 17-keypoint MoveNet (all used for HSSC/RWHC) */
-#define POSE_KP7_COUNT        7     /* kp7 subset stored in feature vector */
-#define POSE_ENG_FEAT_COUNT   6     /* HSSC_Y, HSSC_X, RWHC, VHSSC, AHSSC, AHSSC_x */
-#define POSE_FEATURE_COUNT   (POSE_KP7_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 27 */
-#define POSE_WINDOW_SIZE     40     /* timesteps (15 fps × ~2.7 s) */
+#define POSE_KP_COUNT         17    /* COCO 17-keypoint MoveNet (all used for HSSC/RWHC) */
+#define POSE_KP13_COUNT       13    /* kp13 subset stored in feature vector */
+#define POSE_ENG_FEAT_COUNT    6    /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */
+#define POSE_BASE_FEAT_COUNT  (POSE_KP13_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 45 */
+#define POSE_VEL_COUNT        29    /* velocity features (Δy/Δx per kp + ΔHSSC + ΔAHSSC_x) */
+#define POSE_FEATURE_COUNT    (POSE_BASE_FEAT_COUNT + POSE_VEL_COUNT)       /* 74 */
+#define POSE_WINDOW_SIZE      40    /* timesteps (15 fps × ~2.7 s) */
 
 /* --- One-Euro Filter (Pipeline D) -----------------------------------
  * Tuned for training-data quality; softer than STM32 v1 (1.0 / 0.5).
@@ -57,8 +60,7 @@ extern "C" {
 #define POSE_CONF_MASK_THRESHOLD  (0.15f)
 
 /* --- Confidence EMA -------------------------------------------------
- * Matches Python Pipeline D exactly (alpha=0.5).
- * Previous asymmetric version (0.8/0.5) removed for better alignment. */
+ * Matches Python Pipeline D exactly (alpha=0.5). */
 #define POSE_CONF_EMA_ALPHA       (0.5f)
 
 /* --- VHSSC EMA (Pipeline D) ----------------------------------------
@@ -67,36 +69,81 @@ extern "C" {
 #define POSE_VHSSC_EMA_ALPHA      (0.4f)
 
 /* ------------------------------------------------------------------ */
-/* MinMax normalization — P27-vm0 (kp7 + filtered, 27 features)        */
-/* Applied after computing raw features, before storing to window buf. */
-/* feat_norm = (feat_raw - min) / scale                                */
+/* MinMax normalization — P37-pure-vel-kp13-w40-gru training stats     */
+/* Applied after computing raw features (incl. velocity), clipped [0,1] */
+/* feat_norm = clip((feat_raw - min) / scale, 0, 1)                   */
 /* ------------------------------------------------------------------ */
 #define POSE_NORM_MIN { \
+    /* kp0..kp16 (y, x, conf) × 13 keypoints = 39 */ \
     0.000000f, 0.000000f, 0.002383f, \
-    0.000002f, 0.000000f, 0.004055f, \
-    0.000000f, 0.000000f, 0.002157f, \
-    0.001145f, 0.000001f, 0.001560f, \
-    0.001290f, 0.002396f, 0.004167f, \
-    0.008567f, 0.002751f, 0.008049f, \
+    0.000000f, 0.000000f, 0.004055f, \
+    0.000000f, 0.000000f, 0.001079f, \
+    0.001145f, 0.000000f, 0.001560f, \
+    0.001290f, 0.000724f, 0.004059f, \
+    0.005291f, 0.000000f, 0.004168f, \
+    0.002378f, 0.000000f, 0.004263f, \
+    0.008567f, 0.000359f, 0.008049f, \
     0.002279f, 0.000000f, 0.006607f, \
-    0.000137f, 0.000158f, 0.024745f, \
-    -2.220820f, -18.393295f, -67.749054f }
+    0.021298f, 0.000248f, 0.005414f, \
+    0.017672f, 0.000000f, 0.004014f, \
+    0.021160f, 0.001553f, 0.000135f, \
+    0.028301f, 0.000000f, 0.000181f, \
+    /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */ \
+    0.000088f, 0.000158f, 0.024745f, -2.220820f, -18.393295f, -67.749054f, \
+    /* velocity: Δkp_y/x (13 kp × 2) + ΔHSSC_y/x + ΔAHSSC_x = 29 */ \
+    -0.326340f, -0.370308f, \
+    -0.330223f, -0.367651f, \
+    -0.295398f, -0.361651f, \
+    -0.350462f, -0.361591f, \
+    -0.343730f, -0.346354f, \
+    -0.326175f, -0.344907f, \
+    -0.334965f, -0.358773f, \
+    -0.354925f, -0.348700f, \
+    -0.322721f, -0.338775f, \
+    -0.338234f, -0.369034f, \
+    -0.334703f, -0.352386f, \
+    -0.333270f, -0.352124f, \
+    -0.295971f, -0.366540f, \
+    -0.258068f, -0.296806f, \
+    -71.751724f }
 
 #define POSE_NORM_SCALE { \
-    0.999908f, 0.999997f, 0.870511f, \
-    0.997730f, 0.999995f, 0.968784f, \
-    0.983443f, 0.999999f, 0.962983f, \
-    0.997804f, 0.999956f, 0.972651f, \
-    0.986192f, 0.994499f, 0.963977f, \
-    0.991426f, 0.997080f, 0.941503f, \
+    /* kp0..kp16 (y, x, conf) × 13 keypoints = 39 */ \
+    0.999908f, 0.999997f, 0.880732f, \
+    0.997732f, 0.999995f, 0.968784f, \
+    0.984889f, 0.999999f, 0.965219f, \
+    0.998121f, 0.999957f, 0.981908f, \
+    0.989397f, 0.996170f, 0.967367f, \
+    0.994656f, 1.000000f, 0.957223f, \
+    0.997243f, 0.998899f, 0.948190f, \
+    0.991431f, 0.999545f, 0.944041f, \
     0.997647f, 0.999300f, 0.938715f, \
-    0.991539f, 0.998045f, 21.949295f, \
-    5.239275f, 45.194557f, 125.179825f }
+    0.978090f, 0.998411f, 0.965195f, \
+    0.981398f, 0.995599f, 0.969497f, \
+    0.978840f, 0.996987f, 0.965499f, \
+    0.971697f, 0.999525f, 0.968101f, \
+    /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */ \
+    0.991588f, 0.998811f, 21.949295f, 5.239275f, 45.194557f, 125.428223f, \
+    /* velocity: 29 features */ \
+    0.641402f, 0.732577f, \
+    0.632868f, 0.738794f, \
+    0.602938f, 0.727628f, \
+    0.662161f, 0.723614f, \
+    0.666761f, 0.708053f, \
+    0.657091f, 0.694968f, \
+    0.653508f, 0.709945f, \
+    0.678645f, 0.705804f, \
+    0.640663f, 0.694200f, \
+    0.654983f, 0.733996f, \
+    0.654903f, 0.704164f, \
+    0.660538f, 0.709521f, \
+    0.620174f, 0.713176f, \
+    0.554145f, 0.633213f, \
+    131.219452f }
 
 /* ------------------------------------------------------------------ */
 /* HSSC upper-body keypoint indices                                     */
 /* nose=0, l_eye=1, r_eye=2, l_ear=3, r_ear=4, l_sho=5, r_sho=6      */
-/* (Same as original 17-kp pipeline — HSSC computed from kp0-kp6)     */
 /* ------------------------------------------------------------------ */
 #define POSE_HSSC_INDICES_COUNT  7
 
@@ -123,7 +170,7 @@ extern "C" {
 /* State structures                                                     */
 /* ------------------------------------------------------------------ */
 
-/** Output of one processed frame (57 features) */
+/** Output of one processed frame (74 features) */
 typedef struct {
     float32_t f[POSE_FEATURE_COUNT];
     uint8_t   valid;
@@ -152,11 +199,14 @@ typedef struct {
 
     /* Horizontal kinematics (AHSSC_x) */
     float32_t hssc_x_prev;    /* previous HSSC_x */
-    float32_t vhssc_x_ema;    /* EMA-smoothed horizontal velocity */
+    float32_t vhssc_x_ema;    /* previous raw VHSSC_x (no EMA — matches Python Pipeline D) */
 
-    uint8_t   deriv_initialized;
+    /* Previous raw base features at velocity source indices (for delta) */
+    float32_t prev_raw_vel[POSE_VEL_COUNT];
 
-    /* Circular sliding window for GRU/TCN */
+    uint8_t   deriv_initialized;  /* VHSSC/AHSSC and velocity share first-frame guard */
+
+    /* Circular sliding window for GRU */
     float32_t win_buf[POSE_WINDOW_SIZE][POSE_FEATURE_COUNT];
     uint32_t  win_head;
     uint32_t  win_count;
@@ -172,14 +222,17 @@ void PosePipeline_Init(PosePipeline_t *s);
  * @brief  Process one frame through Pipeline D.
  *
  *  1. Clamp raw coordinates to [0, 1].
- *  2. If KP confidence < POSE_CONF_MASK_THRESHOLD: hold last filtered value
- *     (real-time equivalent of offline mask→interpolate).
+ *  2. If KP confidence < POSE_CONF_MASK_THRESHOLD: hold last filtered value.
  *  3. Apply One-Euro filter (min_cutoff=0.5, beta=0.3) to coordinates.
- *  4. Apply asymmetric EMA to confidence.
- *  5. Compute HSSC_y/x, RWHC, VHSSC.
- *  6. Apply EMA (alpha=0.4) to VHSSC → stored as VHSSC feature.
- *  7. Derive AHSSC = d(VHSSC_ema)/dt and AHSSC_x = d(VHSSC_x_ema)/dt.
- *  8. Append 57-float vector to circular window.
+ *  4. Apply EMA (alpha=0.5) to confidence.
+ *  5. Compute HSSC_y/x, RWHC, raw VHSSC.
+ *  6. Apply EMA (alpha=0.4) to VHSSC → VHSSC feature.
+ *  7. Derive AHSSC = d(VHSSC_ema)/dt and AHSSC_x = d(VHSSC_x)/dt.
+ *  8. Assemble raw 45-feat base vector [kp13 × 3, HSSC_y/x, RWHC, VHSSC, AHSSC, AHSSC_x].
+ *  9. Compute velocity (29): Δ of raw base at vel_src_indices (forward diff, first frame = 0).
+ * 10. Concatenate [base(45), vel(29)] = 74 features.
+ * 11. Normalize + clip [0,1] using P37-vel training stats.
+ * 12. Append 74-float vector to circular window.
  */
 void PosePipeline_Process(PosePipeline_t *s,
                           const spe_pp_outBuffer_t *kp_raw,

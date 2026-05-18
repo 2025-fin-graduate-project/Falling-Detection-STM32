@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccARejm9.s 			page 1
+ARM GAS  /tmp/ccA2Mu0s.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -36,34 +36,48 @@ ARM GAS  /tmp/ccARejm9.s 			page 1
    1:Src/pose_pipeline.c **** /**
    2:Src/pose_pipeline.c ****  ******************************************************************************
    3:Src/pose_pipeline.c ****  * @file    pose_pipeline.c
-   4:Src/pose_pipeline.c ****  * @brief   Pose feature window builder for fall detection.
+   4:Src/pose_pipeline.c ****  * @brief   Pose feature window builder — Pipeline D (kp13 + velocity)
    5:Src/pose_pipeline.c ****  *
-   6:Src/pose_pipeline.c ****  *          The fall models were trained from the MoveNet postprocessing output,
-   7:Src/pose_pipeline.c ****  *          so this file keeps the same raw keypoint layout:
-   8:Src/pose_pipeline.c ****  *          [y0,x0,score0, ..., y16,x16,score16, HSSC_Y,HSSC_X,RWHC,VHSSC].
-   9:Src/pose_pipeline.c ****  ******************************************************************************
-  10:Src/pose_pipeline.c ****  */
-  11:Src/pose_pipeline.c **** #include "pose_pipeline.h"
-  12:Src/pose_pipeline.c **** #include <string.h>
-  13:Src/pose_pipeline.c **** #include <math.h>
-  14:Src/pose_pipeline.c **** 
-  15:Src/pose_pipeline.c **** #define POSE_TWO_PI  (6.2831853071795864769f)
-  16:Src/pose_pipeline.c **** 
-  17:Src/pose_pipeline.c **** static inline float32_t clamp01(float32_t v)
-  18:Src/pose_pipeline.c **** {
-  34              		.loc 1 18 1 view -0
+   6:Src/pose_pipeline.c ****  *  Implements the same preprocessing as train_window_phase37.py:
+   7:Src/pose_pipeline.c ****  *
+   8:Src/pose_pipeline.c ****  *  Step 1  Coordinate clamp to [0, 1]
+   9:Src/pose_pipeline.c ****  *  Step 2  Low-confidence hold  (conf < POSE_CONF_MASK_THRESHOLD)
+  10:Src/pose_pipeline.c ****  *  Step 3  One-Euro filter on coordinates  (min_cutoff=0.5, beta=0.3)
+  11:Src/pose_pipeline.c ****  *  Step 4  EMA on confidence  (alpha=0.5)
+  12:Src/pose_pipeline.c ****  *  Step 5  HSSC_y/x, RWHC, raw VHSSC
+  13:Src/pose_pipeline.c ****  *  Step 6  EMA on VHSSC  (alpha=0.4) → VHSSC output feature
+  14:Src/pose_pipeline.c ****  *  Step 7  AHSSC = d(VHSSC_ema)/dt,  AHSSC_x = d(VHSSC_x)/dt
+  15:Src/pose_pipeline.c ****  *  Step 8  Assemble raw 45-feat base vector
+  16:Src/pose_pipeline.c ****  *  Step 9  Velocity (29): Δ of raw base at vel_src_indices (first frame = 0)
+  17:Src/pose_pipeline.c ****  *  Step 10 Concatenate [base(45), vel(29)] = 74 features
+  18:Src/pose_pipeline.c ****  *  Step 11 Normalize + clip [0,1]  (P37-vel training stats)
+  19:Src/pose_pipeline.c ****  ******************************************************************************
+  20:Src/pose_pipeline.c ****  */
+  21:Src/pose_pipeline.c **** #include "pose_pipeline.h"
+  22:Src/pose_pipeline.c **** #include <string.h>
+  23:Src/pose_pipeline.c **** #include <math.h>
+  24:Src/pose_pipeline.c **** 
+  25:Src/pose_pipeline.c **** #define POSE_TWO_PI  (6.2831853071795864769f)
+ARM GAS  /tmp/ccA2Mu0s.s 			page 2
+
+
+  26:Src/pose_pipeline.c **** 
+  27:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+  28:Src/pose_pipeline.c **** /* Internal helpers                                                     */
+  29:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+  30:Src/pose_pipeline.c **** 
+  31:Src/pose_pipeline.c **** static inline float32_t clamp01(float32_t v)
+  32:Src/pose_pipeline.c **** {
+  34              		.loc 1 32 1 view -0
   35              		.cfi_startproc
   36              		@ args = 0, pretend = 0, frame = 0
   37              		@ frame_needed = 0, uses_anonymous_args = 0
   38              		@ link register save eliminated.
-  19:Src/pose_pipeline.c ****   if (!isfinite(v))
-  39              		.loc 1 19 3 view .LVU1
-ARM GAS  /tmp/ccARejm9.s 			page 2
-
-
-  40              		.loc 1 19 8 is_stmt 0 view .LVU2
+  33:Src/pose_pipeline.c ****     if (!isfinite(v)) return 0.0f;
+  39              		.loc 1 33 5 view .LVU1
+  40              		.loc 1 33 10 is_stmt 0 view .LVU2
   41 0000 B0EEC07A 		vabs.f32	s14, s0
-  42              		.loc 1 19 6 view .LVU3
+  42              		.loc 1 33 8 view .LVU3
   43 0004 DFED0B7A 		vldr.32	s15, .L5
   44 0008 B4EE677A 		vcmp.f32	s14, s15
   45 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
@@ -71,56 +85,47 @@ ARM GAS  /tmp/ccARejm9.s 			page 1
   47              	.LVL1:
   48              	.LBB12:
   49              	.LBI12:
-  17:Src/pose_pipeline.c **** {
-  50              		.loc 1 17 25 is_stmt 1 view .LVU4
+  31:Src/pose_pipeline.c **** {
+  50              		.loc 1 31 25 is_stmt 1 view .LVU4
   51              	.LBB13:
-  20:Src/pose_pipeline.c ****   {
-  21:Src/pose_pipeline.c ****     return 0.0f;
-  22:Src/pose_pipeline.c ****   }
-  23:Src/pose_pipeline.c ****   if (v < 0.0f)
-  52              		.loc 1 23 3 view .LVU5
-  53              		.loc 1 23 6 is_stmt 0 view .LVU6
+  34:Src/pose_pipeline.c ****     if (v < 0.0f)     return 0.0f;
+  52              		.loc 1 34 5 view .LVU5
+  53              		.loc 1 34 8 is_stmt 0 view .LVU6
   54 0012 B5EEC00A 		vcmpe.f32	s0, #0
   55 0016 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
   56 001a 08D4     		bmi	.L4
-  24:Src/pose_pipeline.c ****   {
-  25:Src/pose_pipeline.c ****     return 0.0f;
-  26:Src/pose_pipeline.c ****   }
-  27:Src/pose_pipeline.c ****   if (v > 1.0f)
-  57              		.loc 1 27 3 is_stmt 1 view .LVU7
+  35:Src/pose_pipeline.c ****     if (v > 1.0f)     return 1.0f;
+  57              		.loc 1 35 5 is_stmt 1 view .LVU7
   58 001c F7EE007A 		vmov.f32	s15, #1.0e+0
   59 0020 B4EEE70A 		vcmpe.f32	s0, s15
   60 0024 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
   61 0028 37FE800A 		vselgt.f32	s0, s15, s0
   62              	.LVL2:
-  63              		.loc 1 27 3 is_stmt 0 view .LVU8
+  63              		.loc 1 35 5 is_stmt 0 view .LVU8
   64 002c 7047     		bx	lr
   65              	.LVL3:
   66              	.L4:
-  67              		.loc 1 27 3 view .LVU9
+  67              		.loc 1 35 5 view .LVU9
   68              	.LBE13:
   69              	.LBE12:
-  21:Src/pose_pipeline.c ****   }
-  70              		.loc 1 21 12 view .LVU10
+  33:Src/pose_pipeline.c ****     if (v < 0.0f)     return 0.0f;
+  70              		.loc 1 33 30 discriminator 1 view .LVU10
   71 002e 9FED020A 		vldr.32	s0, .L5+4
   72              	.LVL4:
-  28:Src/pose_pipeline.c ****   {
-  29:Src/pose_pipeline.c ****     return 1.0f;
-  30:Src/pose_pipeline.c ****   }
-  31:Src/pose_pipeline.c ****   return v;
-  32:Src/pose_pipeline.c **** }
-  73              		.loc 1 32 1 view .LVU11
+  36:Src/pose_pipeline.c ****     return v;
+  37:Src/pose_pipeline.c **** }
+  73              		.loc 1 37 1 view .LVU11
   74 0032 7047     		bx	lr
   75              	.L6:
   76              		.align	2
+ARM GAS  /tmp/ccA2Mu0s.s 			page 3
+
+
   77              	.L5:
   78 0034 FFFF7F7F 		.word	2139095039
   79 0038 00000000 		.word	0
   80              		.cfi_endproc
   81              	.LFE774:
-ARM GAS  /tmp/ccARejm9.s 			page 3
-
-
   83              		.section	.text.euro_filter_apply,"ax",%progbits
   84              		.align	1
   85              		.syntax unified
@@ -129,1468 +134,2126 @@ ARM GAS  /tmp/ccARejm9.s 			page 1
   89              	euro_filter_apply:
   90              	.LVL5:
   91              	.LFB776:
-  33:Src/pose_pipeline.c **** 
-  34:Src/pose_pipeline.c **** static float32_t euro_alpha(float32_t dt, float32_t cutoff)
-  35:Src/pose_pipeline.c **** {
-  36:Src/pose_pipeline.c ****   float32_t r = POSE_TWO_PI * cutoff * dt;
-  37:Src/pose_pipeline.c ****   return r / (r + 1.0f);
-  38:Src/pose_pipeline.c **** }
-  39:Src/pose_pipeline.c **** 
-  40:Src/pose_pipeline.c **** static float32_t euro_filter_apply(PoseEuroFilter_t *filter, float32_t x, float32_t dt)
-  41:Src/pose_pipeline.c **** {
-  92              		.loc 1 41 1 is_stmt 1 view -0
+  38:Src/pose_pipeline.c **** 
+  39:Src/pose_pipeline.c **** static inline float32_t euro_alpha(float32_t dt, float32_t cutoff)
+  40:Src/pose_pipeline.c **** {
+  41:Src/pose_pipeline.c ****     float32_t r = POSE_TWO_PI * cutoff * dt;
+  42:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+  43:Src/pose_pipeline.c **** }
+  44:Src/pose_pipeline.c **** 
+  45:Src/pose_pipeline.c **** static float32_t euro_filter_apply(PoseEuroFilter_t *f, float32_t x, float32_t dt)
+  46:Src/pose_pipeline.c **** {
+  92              		.loc 1 46 1 is_stmt 1 view -0
   93              		.cfi_startproc
   94              		@ args = 0, pretend = 0, frame = 0
   95              		@ frame_needed = 0, uses_anonymous_args = 0
   96              		@ link register save eliminated.
-  42:Src/pose_pipeline.c ****   if ((filter == NULL) || !isfinite(x))
-  97              		.loc 1 42 3 view .LVU13
-  98              		.loc 1 42 28 is_stmt 0 discriminator 1 view .LVU14
+  47:Src/pose_pipeline.c ****     if (!isfinite(x)) return f->initialized ? f->x_prev : 0.0f;
+  97              		.loc 1 47 5 view .LVU13
+  98              		.loc 1 47 10 is_stmt 0 view .LVU14
   99 0000 B0EEC07A 		vabs.f32	s14, s0
- 100              		.loc 1 42 24 discriminator 1 view .LVU15
- 101 0004 DFED2A7A 		vldr.32	s15, .L11
+ 100              		.loc 1 47 8 view .LVU15
+ 101 0004 DFED267A 		vldr.32	s15, .L15
  102 0008 B4EE677A 		vcmp.f32	s14, s15
  103 000c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 104 0010 4CD8     		bhi	.L10
-  43:Src/pose_pipeline.c ****   {
-  44:Src/pose_pipeline.c ****     return x;
-  45:Src/pose_pipeline.c ****   }
-  46:Src/pose_pipeline.c **** 
-  47:Src/pose_pipeline.c ****   if (!filter->initialized)
- 105              		.loc 1 47 3 is_stmt 1 view .LVU16
- 106              		.loc 1 47 6 is_stmt 0 view .LVU17
- 107 0012 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
- 108 0014 33B9     		cbnz	r3, .L9
-  48:Src/pose_pipeline.c ****   {
-  49:Src/pose_pipeline.c ****     filter->x_prev = x;
- 109              		.loc 1 49 5 is_stmt 1 view .LVU18
-  50:Src/pose_pipeline.c ****     filter->dx_prev = 0.0f;
- 110              		.loc 1 50 21 is_stmt 0 view .LVU19
- 111 0016 0023     		movs	r3, #0
- 112 0018 4360     		str	r3, [r0, #4]	@ float
-  51:Src/pose_pipeline.c ****     filter->initialized = 1u;
- 113              		.loc 1 51 25 view .LVU20
- 114 001a 0123     		movs	r3, #1
-  49:Src/pose_pipeline.c ****     filter->dx_prev = 0.0f;
- 115              		.loc 1 49 20 view .LVU21
- 116 001c 80ED000A 		vstr.32	s0, [r0]
-  50:Src/pose_pipeline.c ****     filter->dx_prev = 0.0f;
- 117              		.loc 1 50 5 is_stmt 1 view .LVU22
- 118              		.loc 1 51 5 view .LVU23
- 119              		.loc 1 51 25 is_stmt 0 view .LVU24
-ARM GAS  /tmp/ccARejm9.s 			page 4
+ 104              		.loc 1 47 31 discriminator 1 view .LVU16
+ 105 0010 037A     		ldrb	r3, [r0, #8]	@ zero_extendqisi2
+ 106              		.loc 1 47 8 view .LVU17
+ 107 0012 04D9     		bls	.L14
+ 108              		.loc 1 47 23 is_stmt 1 discriminator 1 view .LVU18
+ 109              		.loc 1 47 57 is_stmt 0 discriminator 1 view .LVU19
+ 110 0014 002B     		cmp	r3, #0
+ 111 0016 3FD0     		beq	.L12
+ 112              		.loc 1 47 57 discriminator 2 view .LVU20
+ 113 0018 90ED000A 		vldr.32	s0, [r0]
+ 114              	.LVL6:
+ 115              		.loc 1 47 57 discriminator 2 view .LVU21
+ 116 001c 7047     		bx	lr
+ 117              	.LVL7:
+ 118              	.L14:
+  48:Src/pose_pipeline.c **** 
+  49:Src/pose_pipeline.c ****     if (!f->initialized)
+ 119              		.loc 1 49 5 is_stmt 1 view .LVU22
+ 120              		.loc 1 49 8 is_stmt 0 view .LVU23
+ 121 001e 33B9     		cbnz	r3, .L11
+  50:Src/pose_pipeline.c ****     {
+  51:Src/pose_pipeline.c ****         f->x_prev      = x;
+ARM GAS  /tmp/ccA2Mu0s.s 			page 4
 
 
- 120 0020 0372     		strb	r3, [r0, #8]
-  52:Src/pose_pipeline.c ****     return x;
- 121              		.loc 1 52 5 is_stmt 1 view .LVU25
- 122              		.loc 1 52 12 is_stmt 0 view .LVU26
- 123 0022 7047     		bx	lr
- 124              	.L9:
- 125              	.LVL6:
- 126              	.LBB20:
- 127              	.LBI20:
-  40:Src/pose_pipeline.c **** {
- 128              		.loc 1 40 18 is_stmt 1 view .LVU27
- 129              	.LBB21:
-  53:Src/pose_pipeline.c ****   }
-  54:Src/pose_pipeline.c **** 
-  55:Src/pose_pipeline.c ****   /* Velocity Cap: Prevent any single-frame jump larger than 0.25 (25% of screen).
-  56:Src/pose_pipeline.c ****    * 0.25 is enough to capture a very fast fall at 15fps, but still blocks 
-  57:Src/pose_pipeline.c ****    * the extreme coordinate 'explosions' caused by model noise. */
-  58:Src/pose_pipeline.c ****   float32_t max_dist = 0.25f;
- 130              		.loc 1 58 3 view .LVU28
-  59:Src/pose_pipeline.c ****   if (x > filter->x_prev + max_dist) x = filter->x_prev + max_dist;
- 131              		.loc 1 59 3 view .LVU29
- 132              		.loc 1 59 17 is_stmt 0 view .LVU30
- 133 0024 D0ED005A 		vldr.32	s11, [r0]
- 134              		.loc 1 59 26 view .LVU31
- 135 0028 B5EE007A 		vmov.f32	s14, #2.5e-1
- 136 002c 75EE877A 		vadd.f32	s15, s11, s14
- 137 0030 B4EEE70A 		vcmpe.f32	s0, s15
- 138 0034 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
-  60:Src/pose_pipeline.c ****   if (x < filter->x_prev - max_dist) x = filter->x_prev - max_dist;
- 139              		.loc 1 60 26 view .LVU32
- 140 0038 35EEC77A 		vsub.f32	s14, s11, s14
- 141 003c 77FE807A 		vselgt.f32	s15, s15, s0
- 142              	.LVL7:
- 143              		.loc 1 60 3 is_stmt 1 view .LVU33
- 144 0040 B4EEE77A 		vcmpe.f32	s14, s15
- 145              	.LBB22:
- 146              	.LBB23:
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 147              		.loc 1 36 13 is_stmt 0 view .LVU34
- 148 0044 9FED1B5A 		vldr.32	s10, .L11+4
- 149 0048 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 150 004c 60EE856A 		vmul.f32	s13, s1, s10
- 151 0050 37FE277A 		vselgt.f32	s14, s14, s15
- 152              	.LVL8:
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 153              		.loc 1 36 13 view .LVU35
- 154              	.LBE23:
- 155              	.LBE22:
-  61:Src/pose_pipeline.c **** 
-  62:Src/pose_pipeline.c ****   float32_t dx = (x - filter->x_prev) / dt;
- 156              		.loc 1 62 3 is_stmt 1 view .LVU36
-  63:Src/pose_pipeline.c ****   float32_t dx_alpha = euro_alpha(dt, POSE_EURO_D_CUTOFF);
- 157              		.loc 1 63 3 view .LVU37
+ 122              		.loc 1 51 9 is_stmt 1 view .LVU24
+  52:Src/pose_pipeline.c ****         f->dx_prev     = 0.0f;
+ 123              		.loc 1 52 24 is_stmt 0 view .LVU25
+ 124 0020 0023     		movs	r3, #0
+ 125 0022 4360     		str	r3, [r0, #4]	@ float
+  53:Src/pose_pipeline.c ****         f->initialized = 1u;
+ 126              		.loc 1 53 24 view .LVU26
+ 127 0024 0123     		movs	r3, #1
+  51:Src/pose_pipeline.c ****         f->dx_prev     = 0.0f;
+ 128              		.loc 1 51 24 view .LVU27
+ 129 0026 80ED000A 		vstr.32	s0, [r0]
+  52:Src/pose_pipeline.c ****         f->dx_prev     = 0.0f;
+ 130              		.loc 1 52 9 is_stmt 1 view .LVU28
+ 131              		.loc 1 53 9 view .LVU29
+ 132              		.loc 1 53 24 is_stmt 0 view .LVU30
+ 133 002a 0372     		strb	r3, [r0, #8]
+  54:Src/pose_pipeline.c ****         return x;
+ 134              		.loc 1 54 9 is_stmt 1 view .LVU31
+ 135              		.loc 1 54 16 is_stmt 0 view .LVU32
+ 136 002c 7047     		bx	lr
+ 137              	.L11:
+ 138              	.LVL8:
+ 139              	.LBB20:
+ 140              	.LBI20:
+  45:Src/pose_pipeline.c **** {
+ 141              		.loc 1 45 18 is_stmt 1 view .LVU33
+ 142              	.LBB21:
+  55:Src/pose_pipeline.c ****     }
+  56:Src/pose_pipeline.c **** 
+  57:Src/pose_pipeline.c ****     float32_t dx     = (x - f->x_prev) / dt;
+ 143              		.loc 1 57 5 view .LVU34
+ 144              	.LBB22:
+ 145              	.LBB23:
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ 146              		.loc 1 41 15 is_stmt 0 view .LVU35
+ 147 002e DFED1D5A 		vldr.32	s11, .L15+4
+  42:Src/pose_pipeline.c **** }
+ 148              		.loc 1 42 19 view .LVU36
+ 149 0032 F7EE007A 		vmov.f32	s15, #1.0e+0
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ 150              		.loc 1 41 15 view .LVU37
+ 151 0036 60EEA56A 		vmul.f32	s13, s1, s11
+ 152              	.LBE23:
+ 153              	.LBE22:
+ 154              		.loc 1 57 30 view .LVU38
+ 155 003a 90ED006A 		vldr.32	s12, [r0]
+ 156              	.LVL9:
+  58:Src/pose_pipeline.c ****     float32_t ad     = euro_alpha(dt, POSE_EURO_D_CUTOFF);
+ 157              		.loc 1 58 5 is_stmt 1 view .LVU39
  158              	.LBB25:
  159              	.LBI22:
-  34:Src/pose_pipeline.c **** {
- 160              		.loc 1 34 18 view .LVU38
-ARM GAS  /tmp/ccARejm9.s 			page 5
-
-
+  39:Src/pose_pipeline.c **** {
+ 160              		.loc 1 39 25 view .LVU40
  161              	.LBB24:
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 162              		.loc 1 36 3 view .LVU39
-  37:Src/pose_pipeline.c **** }
- 163              		.loc 1 37 3 view .LVU40
-  37:Src/pose_pipeline.c **** }
- 164              		.loc 1 37 17 is_stmt 0 view .LVU41
- 165 0054 F7EE007A 		vmov.f32	s15, #1.0e+0
- 166 0058 76EEA74A 		vadd.f32	s9, s13, s15
-  37:Src/pose_pipeline.c **** }
- 167              		.loc 1 37 12 view .LVU42
- 168 005c 86EEA46A 		vdiv.f32	s12, s13, s9
- 169              	.LVL9:
-  37:Src/pose_pipeline.c **** }
- 170              		.loc 1 37 12 view .LVU43
- 171              	.LBE24:
- 172              	.LBE25:
-  64:Src/pose_pipeline.c ****   float32_t dx_hat = (dx_alpha * dx) + ((1.0f - dx_alpha) * filter->dx_prev);
- 173              		.loc 1 64 3 is_stmt 1 view .LVU44
-  62:Src/pose_pipeline.c ****   float32_t dx_alpha = euro_alpha(dt, POSE_EURO_D_CUTOFF);
- 174              		.loc 1 62 21 is_stmt 0 view .LVU45
- 175 0060 77EE656A 		vsub.f32	s13, s14, s11
- 176              		.loc 1 64 59 view .LVU46
- 177 0064 90ED014A 		vldr.32	s8, [r0, #4]
-  62:Src/pose_pipeline.c ****   float32_t dx_alpha = euro_alpha(dt, POSE_EURO_D_CUTOFF);
- 178              		.loc 1 62 13 view .LVU47
- 179 0068 C6EEA04A 		vdiv.f32	s9, s13, s1
- 180              	.LVL10:
- 181              		.loc 1 64 47 view .LVU48
- 182 006c 77EEC66A 		vsub.f32	s13, s15, s12
- 183              		.loc 1 64 59 view .LVU49
- 184 0070 66EE846A 		vmul.f32	s13, s13, s8
- 185              		.loc 1 64 13 view .LVU50
- 186 0074 E4EE866A 		vfma.f32	s13, s9, s12
- 187              	.LVL11:
-  65:Src/pose_pipeline.c ****   float32_t cutoff = POSE_EURO_MIN_CUTOFF + (POSE_EURO_BETA * fabsf(dx_hat));
- 188              		.loc 1 65 3 is_stmt 1 view .LVU51
- 189              		.loc 1 65 13 is_stmt 0 view .LVU52
- 190 0078 F6EE004A 		vmov.f32	s9, #5.0e-1
- 191              	.LVL12:
- 192              		.loc 1 65 63 view .LVU53
- 193 007c B0EEE64A 		vabs.f32	s8, s13
- 194              		.loc 1 65 13 view .LVU54
- 195 0080 B0EE676A 		vmov.f32	s12, s15
- 196              	.LVL13:
- 197              		.loc 1 65 13 view .LVU55
- 198 0084 A4EE246A 		vfma.f32	s12, s8, s9
- 199              	.LVL14:
-  66:Src/pose_pipeline.c ****   float32_t x_alpha = euro_alpha(dt, cutoff);
- 200              		.loc 1 66 3 is_stmt 1 view .LVU56
- 201              	.LBB26:
- 202              	.LBI26:
-  34:Src/pose_pipeline.c **** {
- 203              		.loc 1 34 18 view .LVU57
- 204              	.LBB27:
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 205              		.loc 1 36 3 view .LVU58
-ARM GAS  /tmp/ccARejm9.s 			page 6
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ 162              		.loc 1 41 5 view .LVU41
+  42:Src/pose_pipeline.c **** }
+ARM GAS  /tmp/ccA2Mu0s.s 			page 5
 
 
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 206              		.loc 1 36 29 is_stmt 0 view .LVU59
- 207 0088 26EE056A 		vmul.f32	s12, s12, s10
- 208              	.LVL15:
-  36:Src/pose_pipeline.c ****   return r / (r + 1.0f);
- 209              		.loc 1 36 13 view .LVU60
- 210 008c 66EE200A 		vmul.f32	s1, s12, s1
- 211              	.LVL16:
-  37:Src/pose_pipeline.c **** }
- 212              		.loc 1 37 3 is_stmt 1 view .LVU61
-  37:Src/pose_pipeline.c **** }
- 213              		.loc 1 37 17 is_stmt 0 view .LVU62
- 214 0090 30EEA75A 		vadd.f32	s10, s1, s15
- 215              	.LVL17:
-  37:Src/pose_pipeline.c **** }
- 216              		.loc 1 37 12 view .LVU63
- 217 0094 80EE856A 		vdiv.f32	s12, s1, s10
- 218              	.LVL18:
-  37:Src/pose_pipeline.c **** }
- 219              		.loc 1 37 12 view .LVU64
- 220              	.LBE27:
- 221              	.LBE26:
-  67:Src/pose_pipeline.c ****   float32_t x_hat = (x_alpha * x) + ((1.0f - x_alpha) * filter->x_prev);
- 222              		.loc 1 67 3 is_stmt 1 view .LVU65
- 223              		.loc 1 67 44 is_stmt 0 view .LVU66
- 224 0098 37EEC60A 		vsub.f32	s0, s15, s12
- 225              	.LVL19:
- 226              		.loc 1 67 55 view .LVU67
- 227 009c 20EE250A 		vmul.f32	s0, s0, s11
- 228              		.loc 1 67 13 view .LVU68
- 229 00a0 A7EE060A 		vfma.f32	s0, s14, s12
- 230              	.LVL20:
+ 163              		.loc 1 42 5 view .LVU42
+  42:Src/pose_pipeline.c **** }
+ 164              		.loc 1 42 19 is_stmt 0 view .LVU43
+ 165 003e 36EEA75A 		vadd.f32	s10, s13, s15
+  42:Src/pose_pipeline.c **** }
+ 166              		.loc 1 42 14 view .LVU44
+ 167 0042 86EE857A 		vdiv.f32	s14, s13, s10
+ 168              	.LVL10:
+  42:Src/pose_pipeline.c **** }
+ 169              		.loc 1 42 14 view .LVU45
+ 170              	.LBE24:
+ 171              	.LBE25:
+  59:Src/pose_pipeline.c ****     float32_t dx_hat = ad * dx + (1.0f - ad) * f->dx_prev;
+ 172              		.loc 1 59 5 is_stmt 1 view .LVU46
+  57:Src/pose_pipeline.c ****     float32_t ad     = euro_alpha(dt, POSE_EURO_D_CUTOFF);
+ 173              		.loc 1 57 27 is_stmt 0 view .LVU47
+ 174 0046 70EE466A 		vsub.f32	s13, s0, s12
+ 175              		.loc 1 59 46 view .LVU48
+ 176 004a D0ED014A 		vldr.32	s9, [r0, #4]
+  57:Src/pose_pipeline.c ****     float32_t ad     = euro_alpha(dt, POSE_EURO_D_CUTOFF);
+ 177              		.loc 1 57 15 view .LVU49
+ 178 004e 86EEA05A 		vdiv.f32	s10, s13, s1
+ 179              	.LVL11:
+ 180              		.loc 1 59 40 view .LVU50
+ 181 0052 77EEC76A 		vsub.f32	s13, s15, s14
+ 182              		.loc 1 59 46 view .LVU51
+ 183 0056 66EEA46A 		vmul.f32	s13, s13, s9
+ 184              		.loc 1 59 15 view .LVU52
+ 185 005a E5EE076A 		vfma.f32	s13, s10, s14
+ 186              	.LVL12:
+  60:Src/pose_pipeline.c ****     float32_t cutoff = POSE_EURO_MIN_CUTOFF + POSE_EURO_BETA * fabsf(dx_hat);
+ 187              		.loc 1 60 5 is_stmt 1 view .LVU53
+ 188              		.loc 1 60 15 is_stmt 0 view .LVU54
+ 189 005e 9FED125A 		vldr.32	s10, .L15+8
+ 190              	.LVL13:
+ 191              		.loc 1 60 64 view .LVU55
+ 192 0062 F0EEE64A 		vabs.f32	s9, s13
+ 193              		.loc 1 60 15 view .LVU56
+ 194 0066 B6EE007A 		vmov.f32	s14, #5.0e-1
+ 195              	.LVL14:
+ 196              		.loc 1 60 15 view .LVU57
+ 197 006a A4EE857A 		vfma.f32	s14, s9, s10
+ 198              	.LVL15:
+  61:Src/pose_pipeline.c ****     float32_t a      = euro_alpha(dt, cutoff);
+ 199              		.loc 1 61 5 is_stmt 1 view .LVU58
+ 200              	.LBB26:
+ 201              	.LBI26:
+  39:Src/pose_pipeline.c **** {
+ 202              		.loc 1 39 25 view .LVU59
+ 203              	.LBB27:
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ 204              		.loc 1 41 5 view .LVU60
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ 205              		.loc 1 41 31 is_stmt 0 view .LVU61
+ 206 006e 27EE257A 		vmul.f32	s14, s14, s11
+ 207              	.LVL16:
+  41:Src/pose_pipeline.c ****     return r / (r + 1.0f);
+ARM GAS  /tmp/ccA2Mu0s.s 			page 6
+
+
+ 208              		.loc 1 41 15 view .LVU62
+ 209 0072 67EE200A 		vmul.f32	s1, s14, s1
+ 210              	.LVL17:
+  42:Src/pose_pipeline.c **** }
+ 211              		.loc 1 42 5 is_stmt 1 view .LVU63
+  42:Src/pose_pipeline.c **** }
+ 212              		.loc 1 42 19 is_stmt 0 view .LVU64
+ 213 0076 70EEA75A 		vadd.f32	s11, s1, s15
+ 214              	.LVL18:
+  42:Src/pose_pipeline.c **** }
+ 215              		.loc 1 42 14 view .LVU65
+ 216 007a 80EEA57A 		vdiv.f32	s14, s1, s11
+ 217              	.LVL19:
+  42:Src/pose_pipeline.c **** }
+ 218              		.loc 1 42 14 view .LVU66
+ 219              	.LBE27:
+ 220              	.LBE26:
+  62:Src/pose_pipeline.c ****     float32_t x_hat  = a * x + (1.0f - a) * f->x_prev;
+ 221              		.loc 1 62 5 is_stmt 1 view .LVU67
+ 222              		.loc 1 62 38 is_stmt 0 view .LVU68
+ 223 007e 77EEC77A 		vsub.f32	s15, s15, s14
+ 224              	.LVL20:
+ 225              		.loc 1 62 43 view .LVU69
+ 226 0082 67EE867A 		vmul.f32	s15, s15, s12
+ 227              		.loc 1 62 15 view .LVU70
+ 228 0086 E0EE077A 		vfma.f32	s15, s0, s14
+  63:Src/pose_pipeline.c **** 
+  64:Src/pose_pipeline.c ****     f->x_prev  = x_hat;
+  65:Src/pose_pipeline.c ****     f->dx_prev = dx_hat;
+ 229              		.loc 1 65 16 view .LVU71
+ 230 008a C0ED016A 		vstr.32	s13, [r0, #4]
+  62:Src/pose_pipeline.c ****     float32_t x_hat  = a * x + (1.0f - a) * f->x_prev;
+ 231              		.loc 1 62 15 view .LVU72
+ 232 008e B0EE670A 		vmov.f32	s0, s15
+ 233              	.LVL21:
+  64:Src/pose_pipeline.c ****     f->dx_prev = dx_hat;
+ 234              		.loc 1 64 5 is_stmt 1 view .LVU73
+  64:Src/pose_pipeline.c ****     f->dx_prev = dx_hat;
+ 235              		.loc 1 64 16 is_stmt 0 view .LVU74
+ 236 0092 C0ED007A 		vstr.32	s15, [r0]
+ 237              		.loc 1 65 5 is_stmt 1 view .LVU75
+  66:Src/pose_pipeline.c ****     return x_hat;
+ 238              		.loc 1 66 5 view .LVU76
+ 239              	.LVL22:
+ 240              		.loc 1 66 5 is_stmt 0 view .LVU77
+ 241 0096 7047     		bx	lr
+ 242              	.LVL23:
+ 243              	.L12:
+ 244              		.loc 1 66 5 view .LVU78
+ 245              	.LBE21:
+ 246              	.LBE20:
+  47:Src/pose_pipeline.c **** 
+ 247              		.loc 1 47 57 discriminator 3 view .LVU79
+ 248 0098 9FED040A 		vldr.32	s0, .L15+12
+ 249              	.LVL24:
+  67:Src/pose_pipeline.c **** }
+ 250              		.loc 1 67 1 view .LVU80
+ARM GAS  /tmp/ccA2Mu0s.s 			page 7
+
+
+ 251 009c 7047     		bx	lr
+ 252              	.L16:
+ 253 009e 00BF     		.align	2
+ 254              	.L15:
+ 255 00a0 FFFF7F7F 		.word	2139095039
+ 256 00a4 DB0FC940 		.word	1086918619
+ 257 00a8 9A99993E 		.word	1050253722
+ 258 00ac 00000000 		.word	0
+ 259              		.cfi_endproc
+ 260              	.LFE776:
+ 262              		.section	.text.PosePipeline_Init,"ax",%progbits
+ 263              		.align	1
+ 264              		.global	PosePipeline_Init
+ 265              		.syntax unified
+ 266              		.thumb
+ 267              		.thumb_func
+ 269              	PosePipeline_Init:
+ 270              	.LVL25:
+ 271              	.LFB780:
   68:Src/pose_pipeline.c **** 
-  69:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 231              		.loc 1 69 3 is_stmt 1 view .LVU69
-  70:Src/pose_pipeline.c ****   filter->dx_prev = dx_hat;
- 232              		.loc 1 70 19 is_stmt 0 view .LVU70
- 233 00a4 C0ED016A 		vstr.32	s13, [r0, #4]
-  69:Src/pose_pipeline.c ****   filter->dx_prev = dx_hat;
- 234              		.loc 1 69 18 view .LVU71
- 235 00a8 80ED000A 		vstr.32	s0, [r0]
- 236              		.loc 1 70 3 is_stmt 1 view .LVU72
-  71:Src/pose_pipeline.c ****   return x_hat;
- 237              		.loc 1 71 3 view .LVU73
- 238              	.LVL21:
- 239              	.L10:
- 240              		.loc 1 71 3 is_stmt 0 view .LVU74
- 241              	.LBE21:
- 242              	.LBE20:
-  72:Src/pose_pipeline.c **** }
- 243              		.loc 1 72 1 view .LVU75
- 244 00ac 7047     		bx	lr
- 245              	.L12:
- 246 00ae 00BF     		.align	2
- 247              	.L11:
- 248 00b0 FFFF7F7F 		.word	2139095039
- 249 00b4 DB0FC940 		.word	1086918619
-ARM GAS  /tmp/ccARejm9.s 			page 7
-
-
- 250              		.cfi_endproc
- 251              	.LFE776:
- 253              		.section	.text.PosePipeline_Init,"ax",%progbits
- 254              		.align	1
- 255              		.global	PosePipeline_Init
- 256              		.syntax unified
- 257              		.thumb
- 258              		.thumb_func
- 260              	PosePipeline_Init:
- 261              	.LVL22:
- 262              	.LFB779:
-  73:Src/pose_pipeline.c **** 
-  74:Src/pose_pipeline.c **** static const uint8_t hssc_indices[POSE_HSSC_INDICES_COUNT] = {
-  75:Src/pose_pipeline.c ****   POSE_KP_NOSE,
-  76:Src/pose_pipeline.c ****   POSE_KP_LEFT_EYE,
-  77:Src/pose_pipeline.c ****   POSE_KP_RIGHT_EYE,
-  78:Src/pose_pipeline.c ****   POSE_KP_LEFT_EAR,
-  79:Src/pose_pipeline.c ****   POSE_KP_RIGHT_EAR,
-  80:Src/pose_pipeline.c ****   POSE_KP_LEFT_SHOULDER,
-  81:Src/pose_pipeline.c ****   POSE_KP_RIGHT_SHOULDER
-  82:Src/pose_pipeline.c **** };
-  83:Src/pose_pipeline.c **** 
-  84:Src/pose_pipeline.c **** static void compute_hssc(const float32_t features[POSE_FEATURE_COUNT],
-  85:Src/pose_pipeline.c ****                          float32_t *hssc_x,
-  86:Src/pose_pipeline.c ****                          float32_t *hssc_y)
-  87:Src/pose_pipeline.c **** {
-  88:Src/pose_pipeline.c ****   float32_t sum_x = 0.0f;
-  89:Src/pose_pipeline.c ****   float32_t sum_y = 0.0f;
-  90:Src/pose_pipeline.c **** 
-  91:Src/pose_pipeline.c ****   for (uint32_t i = 0; i < POSE_HSSC_INDICES_COUNT; i++)
-  92:Src/pose_pipeline.c ****   {
-  93:Src/pose_pipeline.c ****     uint32_t idx = hssc_indices[i];
-  94:Src/pose_pipeline.c ****     sum_y += features[idx * 3 + 0];
-  95:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
-  96:Src/pose_pipeline.c ****   }
+  69:Src/pose_pipeline.c **** static float32_t ema_filter_apply(PoseEmaFilter_t *f, float32_t x, float32_t alpha)
+  70:Src/pose_pipeline.c **** {
+  71:Src/pose_pipeline.c ****     if (!f->initialized)
+  72:Src/pose_pipeline.c ****     {
+  73:Src/pose_pipeline.c ****         f->x_prev      = x;
+  74:Src/pose_pipeline.c ****         f->initialized = 1u;
+  75:Src/pose_pipeline.c ****         return x;
+  76:Src/pose_pipeline.c ****     }
+  77:Src/pose_pipeline.c ****     float32_t x_hat = alpha * x + (1.0f - alpha) * f->x_prev;
+  78:Src/pose_pipeline.c ****     f->x_prev = x_hat;
+  79:Src/pose_pipeline.c ****     return x_hat;
+  80:Src/pose_pipeline.c **** }
+  81:Src/pose_pipeline.c **** 
+  82:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+  83:Src/pose_pipeline.c **** /* Feature computation helpers                                          */
+  84:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+  85:Src/pose_pipeline.c **** 
+  86:Src/pose_pipeline.c **** /* kp13 subset: COCO indices [nose, L/R shoulder, L/R elbow, L/R wrist,
+  87:Src/pose_pipeline.c ****  *                             L/R hip, L/R knee, L/R ankle]           */
+  88:Src/pose_pipeline.c **** static const uint8_t kp13_indices[POSE_KP13_COUNT] = {
+  89:Src/pose_pipeline.c ****     POSE_KP_NOSE,
+  90:Src/pose_pipeline.c ****     POSE_KP_LEFT_SHOULDER,  POSE_KP_RIGHT_SHOULDER,
+  91:Src/pose_pipeline.c ****     POSE_KP_LEFT_ELBOW,     POSE_KP_RIGHT_ELBOW,
+  92:Src/pose_pipeline.c ****     POSE_KP_LEFT_WRIST,     POSE_KP_RIGHT_WRIST,
+  93:Src/pose_pipeline.c ****     POSE_KP_LEFT_HIP,       POSE_KP_RIGHT_HIP,
+  94:Src/pose_pipeline.c ****     POSE_KP_LEFT_KNEE,      POSE_KP_RIGHT_KNEE,
+  95:Src/pose_pipeline.c ****     POSE_KP_LEFT_ANKLE,     POSE_KP_RIGHT_ANKLE,
+  96:Src/pose_pipeline.c **** };
   97:Src/pose_pipeline.c **** 
-  98:Src/pose_pipeline.c ****   *hssc_x = sum_x / (float32_t)POSE_HSSC_INDICES_COUNT;
-  99:Src/pose_pipeline.c ****   *hssc_y = sum_y / (float32_t)POSE_HSSC_INDICES_COUNT;
- 100:Src/pose_pipeline.c **** }
- 101:Src/pose_pipeline.c **** 
- 102:Src/pose_pipeline.c **** static float32_t compute_rwhc(const float32_t features[POSE_FEATURE_COUNT])
- 103:Src/pose_pipeline.c **** {
- 104:Src/pose_pipeline.c ****   float32_t min_x = features[1];
- 105:Src/pose_pipeline.c ****   float32_t max_x = features[1];
- 106:Src/pose_pipeline.c ****   float32_t min_y = features[0];
- 107:Src/pose_pipeline.c ****   float32_t max_y = features[0];
- 108:Src/pose_pipeline.c **** 
- 109:Src/pose_pipeline.c ****   for (uint32_t i = 1; i < POSE_KP_COUNT; i++)
- 110:Src/pose_pipeline.c ****   {
- 111:Src/pose_pipeline.c ****     float32_t y = features[i * 3 + 0];
- 112:Src/pose_pipeline.c ****     float32_t x = features[i * 3 + 1];
- 113:Src/pose_pipeline.c **** 
- 114:Src/pose_pipeline.c ****     if (x < min_x)
- 115:Src/pose_pipeline.c ****     {
- 116:Src/pose_pipeline.c ****       min_x = x;
- 117:Src/pose_pipeline.c ****     }
- 118:Src/pose_pipeline.c ****     if (x > max_x)
-ARM GAS  /tmp/ccARejm9.s 			page 8
+  98:Src/pose_pipeline.c **** /* HSSC uses kp0-kp6 (nose, eyes, ears, shoulders) */
+  99:Src/pose_pipeline.c **** static const uint8_t hssc_indices[POSE_HSSC_INDICES_COUNT] = {
+ 100:Src/pose_pipeline.c ****     POSE_KP_NOSE,
+ 101:Src/pose_pipeline.c ****     POSE_KP_LEFT_EYE,  POSE_KP_RIGHT_EYE,
+ 102:Src/pose_pipeline.c ****     POSE_KP_LEFT_EAR,  POSE_KP_RIGHT_EAR,
+ 103:Src/pose_pipeline.c ****     POSE_KP_LEFT_SHOULDER, POSE_KP_RIGHT_SHOULDER
+ 104:Src/pose_pipeline.c **** };
+ 105:Src/pose_pipeline.c **** 
+ARM GAS  /tmp/ccA2Mu0s.s 			page 8
 
 
- 119:Src/pose_pipeline.c ****     {
- 120:Src/pose_pipeline.c ****       max_x = x;
- 121:Src/pose_pipeline.c ****     }
- 122:Src/pose_pipeline.c ****     if (y < min_y)
- 123:Src/pose_pipeline.c ****     {
- 124:Src/pose_pipeline.c ****       min_y = y;
- 125:Src/pose_pipeline.c ****     }
- 126:Src/pose_pipeline.c ****     if (y > max_y)
- 127:Src/pose_pipeline.c ****     {
- 128:Src/pose_pipeline.c ****       max_y = y;
- 129:Src/pose_pipeline.c ****     }
- 130:Src/pose_pipeline.c ****   }
- 131:Src/pose_pipeline.c **** 
- 132:Src/pose_pipeline.c ****   float32_t height = max_y - min_y;
- 133:Src/pose_pipeline.c ****   if (height <= 0.0f)
- 134:Src/pose_pipeline.c ****   {
- 135:Src/pose_pipeline.c ****     height = 0.001f;
- 136:Src/pose_pipeline.c ****   }
- 137:Src/pose_pipeline.c **** 
- 138:Src/pose_pipeline.c ****   return (max_x - min_x) / height;
- 139:Src/pose_pipeline.c **** }
- 140:Src/pose_pipeline.c **** 
- 141:Src/pose_pipeline.c **** void PosePipeline_Init(PosePipeline_t *s)
- 142:Src/pose_pipeline.c **** {
- 263              		.loc 1 142 1 is_stmt 1 view -0
- 264              		.cfi_startproc
- 265              		@ args = 0, pretend = 0, frame = 0
- 266              		@ frame_needed = 0, uses_anonymous_args = 0
- 267              		@ link register save eliminated.
- 143:Src/pose_pipeline.c ****   memset(s, 0, sizeof(PosePipeline_t));
- 268              		.loc 1 143 3 view .LVU77
- 269 0000 43F2C452 		movw	r2, #13764
- 270 0004 0021     		movs	r1, #0
- 271 0006 FFF7FEBF 		b	memset
- 272              	.LVL23:
- 273              		.loc 1 143 3 is_stmt 0 view .LVU78
- 274              		.cfi_endproc
- 275              	.LFE779:
- 277              		.section	.text.PosePipeline_Process,"ax",%progbits
- 278              		.align	1
- 279              		.global	PosePipeline_Process
- 280              		.syntax unified
- 281              		.thumb
- 282              		.thumb_func
- 284              	PosePipeline_Process:
- 285              	.LVL24:
- 286              	.LFB781:
+ 106:Src/pose_pipeline.c **** /* Velocity source indices into the 45-feat base array.
+ 107:Src/pose_pipeline.c ****  * Matches KP13_VEL_BASE = columns ending in _y or _x from KP13_COLS.
+ 108:Src/pose_pipeline.c ****  * Order: kp0_y,kp0_x, kp5_y,kp5_x, ..., kp16_y,kp16_x, HSSC_y, HSSC_x, AHSSC_x */
+ 109:Src/pose_pipeline.c **** static const uint8_t vel_src_indices[POSE_VEL_COUNT] = {
+ 110:Src/pose_pipeline.c ****      0,  1,   /* kp0  y, x */
+ 111:Src/pose_pipeline.c ****      3,  4,   /* kp5  y, x */
+ 112:Src/pose_pipeline.c ****      6,  7,   /* kp6  y, x */
+ 113:Src/pose_pipeline.c ****      9, 10,   /* kp7  y, x */
+ 114:Src/pose_pipeline.c ****     12, 13,   /* kp8  y, x */
+ 115:Src/pose_pipeline.c ****     15, 16,   /* kp9  y, x */
+ 116:Src/pose_pipeline.c ****     18, 19,   /* kp10 y, x */
+ 117:Src/pose_pipeline.c ****     21, 22,   /* kp11 y, x */
+ 118:Src/pose_pipeline.c ****     24, 25,   /* kp12 y, x */
+ 119:Src/pose_pipeline.c ****     27, 28,   /* kp13 y, x */
+ 120:Src/pose_pipeline.c ****     30, 31,   /* kp14 y, x */
+ 121:Src/pose_pipeline.c ****     33, 34,   /* kp15 y, x */
+ 122:Src/pose_pipeline.c ****     36, 37,   /* kp16 y, x */
+ 123:Src/pose_pipeline.c ****     39, 40,   /* HSSC_y, HSSC_x */
+ 124:Src/pose_pipeline.c ****     44        /* AHSSC_x */
+ 125:Src/pose_pipeline.c **** };
+ 126:Src/pose_pipeline.c **** 
+ 127:Src/pose_pipeline.c **** /* MinMax normalization parameters — P37-pure-vel-kp13-w40-gru (74 features) */
+ 128:Src/pose_pipeline.c **** static const float32_t norm_min[POSE_FEATURE_COUNT]   = POSE_NORM_MIN;
+ 129:Src/pose_pipeline.c **** static const float32_t norm_scale[POSE_FEATURE_COUNT] = POSE_NORM_SCALE;
+ 130:Src/pose_pipeline.c **** 
+ 131:Src/pose_pipeline.c **** static void compute_hssc(const float32_t all_kp[POSE_KP_COUNT * 3u],
+ 132:Src/pose_pipeline.c ****                          float32_t *hssc_x, float32_t *hssc_y)
+ 133:Src/pose_pipeline.c **** {
+ 134:Src/pose_pipeline.c ****     float32_t sum_x = 0.0f;
+ 135:Src/pose_pipeline.c ****     float32_t sum_y = 0.0f;
+ 136:Src/pose_pipeline.c ****     for (uint32_t i = 0u; i < POSE_HSSC_INDICES_COUNT; i++)
+ 137:Src/pose_pipeline.c ****     {
+ 138:Src/pose_pipeline.c ****         uint32_t idx = hssc_indices[i];
+ 139:Src/pose_pipeline.c ****         sum_y += all_kp[idx * 3u + 0u];
+ 140:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 141:Src/pose_pipeline.c ****     }
+ 142:Src/pose_pipeline.c ****     *hssc_y = sum_y / (float32_t)POSE_HSSC_INDICES_COUNT;
+ 143:Src/pose_pipeline.c ****     *hssc_x = sum_x / (float32_t)POSE_HSSC_INDICES_COUNT;
  144:Src/pose_pipeline.c **** }
  145:Src/pose_pipeline.c **** 
- 146:Src/pose_pipeline.c **** static float32_t ema_filter_apply(PoseEmaFilter_t *filter, float32_t x, float32_t alpha)
+ 146:Src/pose_pipeline.c **** static float32_t compute_rwhc(const float32_t all_kp[POSE_KP_COUNT * 3u])
  147:Src/pose_pipeline.c **** {
- 148:Src/pose_pipeline.c ****   if (filter == NULL) return x;
- 149:Src/pose_pipeline.c ****   if (!filter->initialized) {
- 150:Src/pose_pipeline.c ****     filter->x_prev = x;
- 151:Src/pose_pipeline.c ****     filter->initialized = 1u;
- 152:Src/pose_pipeline.c ****     return x;
- 153:Src/pose_pipeline.c ****   }
-ARM GAS  /tmp/ccARejm9.s 			page 9
+ 148:Src/pose_pipeline.c ****     float32_t min_x = all_kp[1u], max_x = all_kp[1u];
+ 149:Src/pose_pipeline.c ****     float32_t min_y = all_kp[0u], max_y = all_kp[0u];
+ 150:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 151:Src/pose_pipeline.c ****     {
+ 152:Src/pose_pipeline.c ****         float32_t y = all_kp[i * 3u + 0u];
+ 153:Src/pose_pipeline.c ****         float32_t x = all_kp[i * 3u + 1u];
+ 154:Src/pose_pipeline.c ****         if (x < min_x) min_x = x;
+ 155:Src/pose_pipeline.c ****         if (x > max_x) max_x = x;
+ 156:Src/pose_pipeline.c ****         if (y < min_y) min_y = y;
+ 157:Src/pose_pipeline.c ****         if (y > max_y) max_y = y;
+ 158:Src/pose_pipeline.c ****     }
+ 159:Src/pose_pipeline.c ****     float32_t height = max_y - min_y;
+ 160:Src/pose_pipeline.c ****     if (height <= 0.0f) height = 0.001f;
+ 161:Src/pose_pipeline.c ****     return (max_x - min_x) / height;
+ 162:Src/pose_pipeline.c **** }
+ARM GAS  /tmp/ccA2Mu0s.s 			page 9
 
 
- 154:Src/pose_pipeline.c ****   float32_t x_hat = (alpha * x) + ((1.0f - alpha) * filter->x_prev);
- 155:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 156:Src/pose_pipeline.c ****   return x_hat;
- 157:Src/pose_pipeline.c **** }
- 158:Src/pose_pipeline.c **** 
- 159:Src/pose_pipeline.c **** void PosePipeline_Process(PosePipeline_t *s,
- 160:Src/pose_pipeline.c ****                           const spe_pp_outBuffer_t *kp_raw,
- 161:Src/pose_pipeline.c ****                           float32_t dt,
- 162:Src/pose_pipeline.c ****                           PoseFeatureVec_t *out)
- 163:Src/pose_pipeline.c **** {
- 287              		.loc 1 163 1 is_stmt 1 view -0
- 288              		.cfi_startproc
- 289              		@ args = 0, pretend = 0, frame = 224
- 290              		@ frame_needed = 0, uses_anonymous_args = 0
- 164:Src/pose_pipeline.c ****   if (out != NULL)
- 291              		.loc 1 164 3 view .LVU80
- 163:Src/pose_pipeline.c ****   if (out != NULL)
- 292              		.loc 1 163 1 is_stmt 0 view .LVU81
- 293 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
- 294              		.cfi_def_cfa_offset 32
- 295              		.cfi_offset 4, -32
- 296              		.cfi_offset 5, -28
- 297              		.cfi_offset 6, -24
- 298              		.cfi_offset 7, -20
- 299              		.cfi_offset 8, -16
- 300              		.cfi_offset 9, -12
- 301              		.cfi_offset 10, -8
- 302              		.cfi_offset 14, -4
- 303 0004 F0EE403A 		vmov.f32	s7, s0
- 304 0008 0446     		mov	r4, r0
- 305              		.loc 1 164 6 view .LVU82
- 306 000a 1546     		mov	r5, r2
- 163:Src/pose_pipeline.c ****   if (out != NULL)
- 307              		.loc 1 163 1 view .LVU83
- 308 000c B8B0     		sub	sp, sp, #224
- 309              		.cfi_def_cfa_offset 256
- 310              		.loc 1 164 6 view .LVU84
- 311 000e 12B1     		cbz	r2, .L15
- 165:Src/pose_pipeline.c ****   {
- 166:Src/pose_pipeline.c ****     out->valid = 0u;
- 312              		.loc 1 166 5 is_stmt 1 view .LVU85
- 313              		.loc 1 166 16 is_stmt 0 view .LVU86
- 314 0010 0023     		movs	r3, #0
- 315 0012 82F8DC30 		strb	r3, [r2, #220]
- 316              	.L15:
- 167:Src/pose_pipeline.c ****   }
- 168:Src/pose_pipeline.c **** 
- 169:Src/pose_pipeline.c ****   if ((s == NULL) || (kp_raw == NULL))
- 317              		.loc 1 169 3 is_stmt 1 view .LVU87
- 318              		.loc 1 169 6 is_stmt 0 view .LVU88
- 319 0016 002C     		cmp	r4, #0
- 320 0018 00F0FB80 		beq	.L14
- 321              		.loc 1 169 19 discriminator 1 view .LVU89
- 322 001c 0029     		cmp	r1, #0
- 323 001e 00F0F880 		beq	.L14
- 170:Src/pose_pipeline.c ****   {
- 171:Src/pose_pipeline.c ****     return;
-ARM GAS  /tmp/ccARejm9.s 			page 10
+ 163:Src/pose_pipeline.c **** 
+ 164:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+ 165:Src/pose_pipeline.c **** /* Public API                                                           */
+ 166:Src/pose_pipeline.c **** /* ------------------------------------------------------------------ */
+ 167:Src/pose_pipeline.c **** 
+ 168:Src/pose_pipeline.c **** void PosePipeline_Init(PosePipeline_t *s)
+ 169:Src/pose_pipeline.c **** {
+ 272              		.loc 1 169 1 is_stmt 1 view -0
+ 273              		.cfi_startproc
+ 274              		@ args = 0, pretend = 0, frame = 0
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276              		@ link register save eliminated.
+ 170:Src/pose_pipeline.c ****     memset(s, 0, sizeof(PosePipeline_t));
+ 277              		.loc 1 170 5 view .LVU82
+ 278 0000 43F2F002 		movw	r2, #12528
+ 279 0004 0021     		movs	r1, #0
+ 280 0006 FFF7FEBF 		b	memset
+ 281              	.LVL26:
+ 282              		.loc 1 170 5 is_stmt 0 view .LVU83
+ 283              		.cfi_endproc
+ 284              	.LFE780:
+ 286              		.section	.text.PosePipeline_Process,"ax",%progbits
+ 287              		.align	1
+ 288              		.global	PosePipeline_Process
+ 289              		.syntax unified
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	PosePipeline_Process:
+ 294              	.LVL27:
+ 295              	.LFB781:
+ 171:Src/pose_pipeline.c **** }
+ 172:Src/pose_pipeline.c **** 
+ 173:Src/pose_pipeline.c **** void PosePipeline_Process(PosePipeline_t *s,
+ 174:Src/pose_pipeline.c ****                           const spe_pp_outBuffer_t *kp_raw,
+ 175:Src/pose_pipeline.c ****                           float32_t dt,
+ 176:Src/pose_pipeline.c ****                           PoseFeatureVec_t *out)
+ 177:Src/pose_pipeline.c **** {
+ 296              		.loc 1 177 1 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 800
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178:Src/pose_pipeline.c ****     if (out != NULL) out->valid = 0u;
+ 300              		.loc 1 178 5 view .LVU85
+ 177:Src/pose_pipeline.c ****     if (out != NULL) out->valid = 0u;
+ 301              		.loc 1 177 1 is_stmt 0 view .LVU86
+ 302 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 303              		.cfi_def_cfa_offset 36
+ 304              		.cfi_offset 4, -36
+ 305              		.cfi_offset 5, -32
+ 306              		.cfi_offset 6, -28
+ 307              		.cfi_offset 7, -24
+ 308              		.cfi_offset 8, -20
+ 309              		.cfi_offset 9, -16
+ 310              		.cfi_offset 10, -12
+ 311              		.cfi_offset 11, -8
+ 312              		.cfi_offset 14, -4
+ 313 0004 2DED048B 		vpush.64	{d8, d9}
+ARM GAS  /tmp/ccA2Mu0s.s 			page 10
 
 
- 172:Src/pose_pipeline.c ****   }
- 173:Src/pose_pipeline.c **** 
- 174:Src/pose_pipeline.c ****   if (!isfinite(dt) || (dt <= 1e-6f))
- 324              		.loc 1 174 3 is_stmt 1 view .LVU90
- 325              		.loc 1 174 8 is_stmt 0 view .LVU91
- 326 0022 F0EEE37A 		vabs.f32	s15, s7
- 327              		.loc 1 174 6 view .LVU92
- 328 0026 9FED857A 		vldr.32	s14, .L49
- 329 002a F4EE477A 		vcmp.f32	s15, s14
- 330 002e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 331 0032 00F2F180 		bhi	.L32
- 332              		.loc 1 174 21 discriminator 1 view .LVU93
- 333 0036 DFED827A 		vldr.32	s15, .L49+4
- 334 003a F4EEE73A 		vcmpe.f32	s7, s15
- 335 003e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 336 0042 40F2E980 		bls	.L32
- 337              	.L20:
- 338              	.LVL25:
- 175:Src/pose_pipeline.c ****   {
- 176:Src/pose_pipeline.c ****     dt = 1.0f / 15.0f;
- 177:Src/pose_pipeline.c ****   }
- 178:Src/pose_pipeline.c **** 
- 179:Src/pose_pipeline.c ****   float32_t features[POSE_FEATURE_COUNT];
- 339              		.loc 1 179 3 is_stmt 1 view .LVU94
+ 314              		.cfi_def_cfa_offset 52
+ 315              		.cfi_offset 80, -52
+ 316              		.cfi_offset 81, -48
+ 317              		.cfi_offset 82, -44
+ 318              		.cfi_offset 83, -40
+ 319 0008 0446     		mov	r4, r0
+ 320 000a B0EE404A 		vmov.f32	s8, s0
+ 321              		.loc 1 178 8 view .LVU87
+ 322 000e 9046     		mov	r8, r2
+ 177:Src/pose_pipeline.c ****     if (out != NULL) out->valid = 0u;
+ 323              		.loc 1 177 1 view .LVU88
+ 324 0010 ADF5497D 		sub	sp, sp, #804
+ 325              		.cfi_def_cfa_offset 856
+ 326              		.loc 1 178 8 view .LVU89
+ 327 0014 12B1     		cbz	r2, .L19
+ 328              		.loc 1 178 22 is_stmt 1 discriminator 1 view .LVU90
+ 329              		.loc 1 178 33 is_stmt 0 discriminator 1 view .LVU91
+ 330 0016 0023     		movs	r3, #0
+ 331 0018 82F82831 		strb	r3, [r2, #296]
+ 332              	.L19:
+ 179:Src/pose_pipeline.c ****     if ((s == NULL) || (kp_raw == NULL)) return;
+ 333              		.loc 1 179 5 is_stmt 1 view .LVU92
+ 334              		.loc 1 179 8 is_stmt 0 view .LVU93
+ 335 001c 002C     		cmp	r4, #0
+ 336 001e 00F0A281 		beq	.L18
+ 337              		.loc 1 179 21 discriminator 2 view .LVU94
+ 338 0022 0029     		cmp	r1, #0
+ 339 0024 00F09F81 		beq	.L18
  180:Src/pose_pipeline.c **** 
- 181:Src/pose_pipeline.c ****   for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
- 340              		.loc 1 181 3 view .LVU95
- 341              	.LBB40:
- 342              		.loc 1 181 8 view .LVU96
- 343              		.loc 1 181 26 discriminator 1 view .LVU97
- 344 0046 01AA     		add	r2, sp, #4
- 345              	.LVL26:
- 346              		.loc 1 181 26 is_stmt 0 discriminator 1 view .LVU98
- 347 0048 A046     		mov	r8, r4
- 348              	.LBE40:
- 176:Src/pose_pipeline.c ****   }
- 349              		.loc 1 176 8 view .LVU99
- 350 004a 2646     		mov	r6, r4
- 351 004c 1746     		mov	r7, r2
- 352              	.LBB52:
- 353              	.LBB41:
- 354              	.LBB42:
- 355              	.LBB43:
- 154:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 356              		.loc 1 154 42 view .LVU100
- 357 004e F7EE002A 		vmov.f32	s5, #1.0e+0
- 358              	.LBE43:
- 359              	.LBE42:
- 182:Src/pose_pipeline.c ****   {
- 183:Src/pose_pipeline.c ****     float32_t y = clamp01(kp_raw[i].y_center);
- 184:Src/pose_pipeline.c ****     float32_t x = clamp01(kp_raw[i].x_center);
+ 181:Src/pose_pipeline.c ****     if (!isfinite(dt) || (dt <= 1e-6f)) dt = 1.0f / 15.0f;
+ 340              		.loc 1 181 5 is_stmt 1 view .LVU95
+ 341              		.loc 1 181 10 is_stmt 0 view .LVU96
+ 342 0028 F0EEC47A 		vabs.f32	s15, s8
+ 343              		.loc 1 181 8 view .LVU97
+ 344 002c 9FEDE47A 		vldr.32	s14, .L74
+ 345 0030 F4EE477A 		vcmp.f32	s15, s14
+ 346 0034 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 347 0038 00F29B81 		bhi	.L45
+ 348              		.loc 1 181 23 discriminator 2 view .LVU98
+ 349 003c DFEDE17A 		vldr.32	s15, .L74+4
+ 350 0040 B4EEE74A 		vcmpe.f32	s8, s15
+ 351 0044 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 352 0048 40F29381 		bls	.L45
+ 353              	.L24:
+ 354              	.LVL28:
+ 182:Src/pose_pipeline.c **** 
+ 183:Src/pose_pipeline.c ****     /* Internal full-17kp buffer for HSSC/RWHC */
+ 184:Src/pose_pipeline.c ****     float32_t all_kp[POSE_KP_COUNT * 3u];
+ 355              		.loc 1 184 5 is_stmt 1 view .LVU99
  185:Src/pose_pipeline.c **** 
- 186:Src/pose_pipeline.c ****     features[i * 3 + 0] = clamp01(euro_filter_apply(&s->y_filter[i], y, dt));
- 187:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 188:Src/pose_pipeline.c **** 
- 189:Src/pose_pipeline.c ****     /* Confidence Smoothing (EMA) with asymmetrical response:
- 190:Src/pose_pipeline.c ****      * - Fast Attack (0.8): React almost instantly when a keypoint is detected.
-ARM GAS  /tmp/ccARejm9.s 			page 11
+ 186:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 187:Src/pose_pipeline.c ****      * Steps 1–4 : per-keypoint filtering (all 17 kp)
+ 188:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 189:Src/pose_pipeline.c ****     for (uint32_t i = 0u; i < POSE_KP_COUNT; i++)
+ 356              		.loc 1 189 5 view .LVU100
+ 357              	.LBB46:
+ 358              		.loc 1 189 10 view .LVU101
+ARM GAS  /tmp/ccA2Mu0s.s 			page 11
 
 
- 191:Src/pose_pipeline.c ****      * - Slow Decay (POSE_CONF_EMA_ALPHA): Hold slightly but not as strong as before. */
- 192:Src/pose_pipeline.c ****     float32_t current_conf = kp_raw[i].proba;
- 193:Src/pose_pipeline.c ****     float32_t alpha = (current_conf > s->conf_filter[i].x_prev) ? 0.8f : POSE_CONF_EMA_ALPHA;
- 360              		.loc 1 193 72 discriminator 1 view .LVU101
- 361 0052 DFF800A2 		ldr	r10, .L49+24
- 362 0056 0DF1D009 		add	r9, sp, #208
- 363              	.LVL27:
- 364              	.L25:
- 183:Src/pose_pipeline.c ****     float32_t x = clamp01(kp_raw[i].x_center);
- 365              		.loc 1 183 5 is_stmt 1 view .LVU102
- 183:Src/pose_pipeline.c ****     float32_t x = clamp01(kp_raw[i].x_center);
- 366              		.loc 1 183 19 is_stmt 0 view .LVU103
- 367 005a 91ED010A 		vldr.32	s0, [r1, #4]
- 368 005e FFF7FEFF 		bl	clamp01
- 369              	.LVL28:
- 370 0062 F0EE406A 		vmov.f32	s13, s0
- 371              	.LVL29:
- 184:Src/pose_pipeline.c **** 
- 372              		.loc 1 184 5 is_stmt 1 view .LVU104
- 184:Src/pose_pipeline.c **** 
- 373              		.loc 1 184 19 is_stmt 0 view .LVU105
- 374 0066 91ED000A 		vldr.32	s0, [r1]
- 375              	.LVL30:
- 184:Src/pose_pipeline.c **** 
- 376              		.loc 1 184 19 view .LVU106
- 377 006a FFF7FEFF 		bl	clamp01
- 378              	.LVL31:
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 379              		.loc 1 186 27 view .LVU107
- 380 006e F0EE630A 		vmov.f32	s1, s7
- 184:Src/pose_pipeline.c **** 
- 381              		.loc 1 184 19 view .LVU108
- 382 0072 B0EE403A 		vmov.f32	s6, s0
- 383              	.LVL32:
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 384              		.loc 1 186 5 is_stmt 1 view .LVU109
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 385              		.loc 1 186 27 is_stmt 0 view .LVU110
- 386 0076 4046     		mov	r0, r8
- 387 0078 B0EE660A 		vmov.f32	s0, s13
- 388              	.LVL33:
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 389              		.loc 1 186 27 view .LVU111
- 390 007c FFF7FEFF 		bl	euro_filter_apply
- 391              	.LVL34:
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 392              		.loc 1 186 27 discriminator 1 view .LVU112
- 393 0080 FFF7FEFF 		bl	clamp01
- 394              	.LVL35:
- 187:Src/pose_pipeline.c **** 
- 395              		.loc 1 187 27 view .LVU113
- 396 0084 F0EE630A 		vmov.f32	s1, s7
- 186:Src/pose_pipeline.c ****     features[i * 3 + 1] = clamp01(euro_filter_apply(&s->x_filter[i], x, dt));
- 397              		.loc 1 186 25 discriminator 2 view .LVU114
- 398 0088 87ED000A 		vstr.32	s0, [r7]
- 187:Src/pose_pipeline.c **** 
- 399              		.loc 1 187 5 is_stmt 1 view .LVU115
-ARM GAS  /tmp/ccARejm9.s 			page 12
+ 359              		.loc 1 189 29 discriminator 1 view .LVU102
+ 360 004c 4BAD     		add	r5, sp, #300
+ 361              	.LBE46:
+ 181:Src/pose_pipeline.c **** 
+ 362              		.loc 1 181 44 is_stmt 0 discriminator 3 view .LVU103
+ 363 004e 2246     		mov	r2, r4
+ 364              	.LVL29:
+ 181:Src/pose_pipeline.c **** 
+ 365              		.loc 1 181 44 discriminator 3 view .LVU104
+ 366 0050 2646     		mov	r6, r4
+ 367 0052 AA46     		mov	r10, r5
+ 368 0054 A946     		mov	r9, r5
+ 369              	.LBB58:
+ 370              	.LBB47:
+ 190:Src/pose_pipeline.c ****     {
+ 191:Src/pose_pipeline.c ****         float32_t raw_y = clamp01(kp_raw[i].y_center);
+ 192:Src/pose_pipeline.c ****         float32_t raw_x = clamp01(kp_raw[i].x_center);
+ 193:Src/pose_pipeline.c ****         float32_t conf  = kp_raw[i].proba;
+ 194:Src/pose_pipeline.c **** 
+ 195:Src/pose_pipeline.c ****         float32_t filt_y;
+ 196:Src/pose_pipeline.c ****         float32_t filt_x;
+ 197:Src/pose_pipeline.c **** 
+ 198:Src/pose_pipeline.c ****         if (conf >= POSE_CONF_MASK_THRESHOLD)
+ 371              		.loc 1 198 12 view .LVU105
+ 372 0056 DFEDDC1A 		vldr.32	s3, .L74+8
+ 373              	.LBB48:
+ 374              	.LBB49:
+  77:Src/pose_pipeline.c ****     f->x_prev = x_hat;
+ 375              		.loc 1 77 50 view .LVU106
+ 376 005a B6EE002A 		vmov.f32	s4, #5.0e-1
+  74:Src/pose_pipeline.c ****         return x;
+ 377              		.loc 1 74 24 view .LVU107
+ 378 005e 4FF0010B 		mov	fp, #1
+ 379 0062 7EAF     		add	r7, sp, #504
+ 380              	.LVL30:
+ 381              	.L31:
+  74:Src/pose_pipeline.c ****         return x;
+ 382              		.loc 1 74 24 view .LVU108
+ 383              	.LBE49:
+ 384              	.LBE48:
+ 191:Src/pose_pipeline.c ****         float32_t raw_x = clamp01(kp_raw[i].x_center);
+ 385              		.loc 1 191 9 is_stmt 1 view .LVU109
+ 191:Src/pose_pipeline.c ****         float32_t raw_x = clamp01(kp_raw[i].x_center);
+ 386              		.loc 1 191 27 is_stmt 0 view .LVU110
+ 387 0064 91ED010A 		vldr.32	s0, [r1, #4]
+ 388 0068 FFF7FEFF 		bl	clamp01
+ 389              	.LVL31:
+ 390 006c B0EE403A 		vmov.f32	s6, s0
+ 391              	.LVL32:
+ 192:Src/pose_pipeline.c ****         float32_t conf  = kp_raw[i].proba;
+ 392              		.loc 1 192 9 is_stmt 1 view .LVU111
+ 192:Src/pose_pipeline.c ****         float32_t conf  = kp_raw[i].proba;
+ 393              		.loc 1 192 27 is_stmt 0 view .LVU112
+ 394 0070 91ED000A 		vldr.32	s0, [r1]
+ 395              	.LVL33:
+ 192:Src/pose_pipeline.c ****         float32_t conf  = kp_raw[i].proba;
+ 396              		.loc 1 192 27 view .LVU113
+ARM GAS  /tmp/ccA2Mu0s.s 			page 12
 
 
- 187:Src/pose_pipeline.c **** 
- 400              		.loc 1 187 27 is_stmt 0 view .LVU116
- 401 008c 08F1CC00 		add	r0, r8, #204
- 402 0090 B0EE430A 		vmov.f32	s0, s6
- 403 0094 FFF7FEFF 		bl	euro_filter_apply
- 404              	.LVL36:
- 187:Src/pose_pipeline.c **** 
- 405              		.loc 1 187 27 discriminator 1 view .LVU117
- 406 0098 FFF7FEFF 		bl	clamp01
- 407              	.LVL37:
- 408              		.loc 1 193 56 view .LVU118
- 409 009c D6ED666A 		vldr.32	s13, [r6, #408]
- 187:Src/pose_pipeline.c **** 
- 410              		.loc 1 187 25 discriminator 2 view .LVU119
- 411 00a0 87ED010A 		vstr.32	s0, [r7, #4]
- 192:Src/pose_pipeline.c ****     float32_t alpha = (current_conf > s->conf_filter[i].x_prev) ? 0.8f : POSE_CONF_EMA_ALPHA;
- 412              		.loc 1 192 5 is_stmt 1 view .LVU120
- 192:Src/pose_pipeline.c ****     float32_t alpha = (current_conf > s->conf_filter[i].x_prev) ? 0.8f : POSE_CONF_EMA_ALPHA;
- 413              		.loc 1 192 15 is_stmt 0 view .LVU121
- 414 00a4 91ED020A 		vldr.32	s0, [r1, #8]
- 415              	.LVL38:
- 416              		.loc 1 193 5 is_stmt 1 view .LVU122
- 417              		.loc 1 193 72 is_stmt 0 view .LVU123
- 418 00a8 F4EEC06A 		vcmpe.f32	s13, s0
- 419 00ac F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 420              	.LBB47:
- 421              	.LBB44:
- 149:Src/pose_pipeline.c ****     filter->x_prev = x;
- 422              		.loc 1 149 6 view .LVU124
- 423 00b0 96F89C31 		ldrb	r3, [r6, #412]	@ zero_extendqisi2
- 424              	.LBE44:
- 425              	.LBE47:
- 426              		.loc 1 193 72 discriminator 1 view .LVU125
- 427 00b4 07EE10AA 		vmov	s14, r10
- 428              		.loc 1 193 72 discriminator 2 view .LVU126
- 429 00b8 58BF     		it	pl
- 430 00ba B6EE007A 		vmovpl.f32	s14, #5.0e-1
- 431              	.LBB48:
- 432              	.LBB45:
- 149:Src/pose_pipeline.c ****     filter->x_prev = x;
- 433              		.loc 1 149 3 is_stmt 1 view .LVU127
- 149:Src/pose_pipeline.c ****     filter->x_prev = x;
- 434              		.loc 1 149 6 is_stmt 0 view .LVU128
- 435 00be 002B     		cmp	r3, #0
- 436 00c0 40F0AD80 		bne	.L23
- 150:Src/pose_pipeline.c ****     filter->initialized = 1u;
- 437              		.loc 1 150 5 is_stmt 1 view .LVU129
- 151:Src/pose_pipeline.c ****     return x;
- 438              		.loc 1 151 25 is_stmt 0 view .LVU130
- 439 00c4 0123     		movs	r3, #1
- 150:Src/pose_pipeline.c ****     filter->initialized = 1u;
- 440              		.loc 1 150 20 view .LVU131
- 441 00c6 86ED660A 		vstr.32	s0, [r6, #408]
- 151:Src/pose_pipeline.c ****     return x;
- 442              		.loc 1 151 5 is_stmt 1 view .LVU132
- 151:Src/pose_pipeline.c ****     return x;
- 443              		.loc 1 151 25 is_stmt 0 view .LVU133
-ARM GAS  /tmp/ccARejm9.s 			page 13
-
-
- 444 00ca 86F89C31 		strb	r3, [r6, #412]
- 152:Src/pose_pipeline.c ****   }
- 445              		.loc 1 152 5 is_stmt 1 view .LVU134
- 446              	.LVL39:
- 447              	.L24:
- 152:Src/pose_pipeline.c ****   }
- 448              		.loc 1 152 5 is_stmt 0 view .LVU135
- 449              	.LBE45:
- 450              	.LBE48:
- 194:Src/pose_pipeline.c ****     features[i * 3 + 2] = clamp01(ema_filter_apply(&s->conf_filter[i], current_conf, alpha));
- 451              		.loc 1 194 27 discriminator 1 view .LVU136
- 452 00ce FFF7FEFF 		bl	clamp01
- 453              	.LVL40:
- 454              	.LBE41:
- 181:Src/pose_pipeline.c ****   {
- 455              		.loc 1 181 26 discriminator 1 view .LVU137
- 456 00d2 0C37     		adds	r7, r7, #12
- 457              	.LBB50:
- 458              		.loc 1 194 25 discriminator 2 view .LVU138
- 459 00d4 07ED010A 		vstr.32	s0, [r7, #-4]
- 460              	.LBE50:
- 181:Src/pose_pipeline.c ****   {
- 461              		.loc 1 181 44 is_stmt 1 discriminator 2 view .LVU139
- 181:Src/pose_pipeline.c ****   {
- 462              		.loc 1 181 26 discriminator 1 view .LVU140
- 463 00d8 4F45     		cmp	r7, r9
- 464 00da 01F10C01 		add	r1, r1, #12
- 465 00de 08F10C08 		add	r8, r8, #12
- 466 00e2 06F10806 		add	r6, r6, #8
- 467 00e6 B8D1     		bne	.L25
- 468              	.LBE52:
- 469              	.LBB53:
- 470              	.LBB54:
-  88:Src/pose_pipeline.c ****   float32_t sum_y = 0.0f;
- 471              		.loc 1 88 13 is_stmt 0 view .LVU141
- 472 00e8 DFED567A 		vldr.32	s15, .L49+8
- 473              	.LBB55:
- 474              	.LBB56:
-  95:Src/pose_pipeline.c ****   }
- 475              		.loc 1 95 22 view .LVU142
- 476 00ec 0723     		movs	r3, #7
- 477              	.LBE56:
- 478              	.LBE55:
-  89:Src/pose_pipeline.c **** 
- 479              		.loc 1 89 13 view .LVU143
- 480 00ee B0EE677A 		vmov.f32	s14, s15
- 481              	.LBB58:
- 482              	.LBB57:
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 483              		.loc 1 94 22 view .LVU144
- 484 00f2 0C27     		movs	r7, #12
-  95:Src/pose_pipeline.c ****   }
- 485              		.loc 1 95 22 view .LVU145
- 486 00f4 43F001E0 		dls	lr, r3
- 487 00f8 5349     		ldr	r1, .L49+12
- 488 00fa 02A8     		add	r0, sp, #8
- 489              	.L26:
-ARM GAS  /tmp/ccARejm9.s 			page 14
-
-
- 490              	.LVL41:
-  93:Src/pose_pipeline.c ****     sum_y += features[idx * 3 + 0];
- 491              		.loc 1 93 5 is_stmt 1 view .LVU146
-  93:Src/pose_pipeline.c ****     sum_y += features[idx * 3 + 0];
- 492              		.loc 1 93 32 is_stmt 0 view .LVU147
- 493 00fc 11F8013B 		ldrb	r3, [r1], #1	@ zero_extendqisi2
- 494              	.LVL42:
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 495              		.loc 1 94 5 is_stmt 1 view .LVU148
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 496              		.loc 1 94 22 is_stmt 0 view .LVU149
- 497 0100 7B43     		muls	r3, r7, r3
- 498              	.LVL43:
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 499              		.loc 1 94 22 view .LVU150
- 500 0102 D618     		adds	r6, r2, r3
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 501              		.loc 1 94 11 view .LVU151
- 502 0104 D6ED006A 		vldr.32	s13, [r6]
-  95:Src/pose_pipeline.c ****   }
- 503              		.loc 1 95 22 view .LVU152
- 504 0108 0344     		add	r3, r3, r0
-  94:Src/pose_pipeline.c ****     sum_x += features[idx * 3 + 1];
- 505              		.loc 1 94 11 view .LVU153
- 506 010a 37EE267A 		vadd.f32	s14, s14, s13
- 507              	.LVL44:
-  95:Src/pose_pipeline.c ****   }
- 508              		.loc 1 95 5 is_stmt 1 view .LVU154
-  95:Src/pose_pipeline.c ****   }
- 509              		.loc 1 95 11 is_stmt 0 view .LVU155
- 510 010e D3ED006A 		vldr.32	s13, [r3]
- 511 0112 77EEA67A 		vadd.f32	s15, s15, s13
- 512              	.LVL45:
-  95:Src/pose_pipeline.c ****   }
- 513              		.loc 1 95 11 view .LVU156
- 514              	.LBE57:
-  91:Src/pose_pipeline.c ****   {
- 515              		.loc 1 91 54 is_stmt 1 discriminator 3 view .LVU157
-  91:Src/pose_pipeline.c ****   {
- 516              		.loc 1 91 26 discriminator 1 view .LVU158
- 517 0116 0FF00FC8 		le	lr, .L26
- 518              	.LBE58:
-  98:Src/pose_pipeline.c ****   *hssc_y = sum_y / (float32_t)POSE_HSSC_INDICES_COUNT;
- 519              		.loc 1 98 3 view .LVU159
-  98:Src/pose_pipeline.c ****   *hssc_y = sum_y / (float32_t)POSE_HSSC_INDICES_COUNT;
- 520              		.loc 1 98 19 is_stmt 0 view .LVU160
- 521 011a F1EE0C6A 		vmov.f32	s13, #7.0e+0
- 522              	.LBE54:
- 523              	.LBE53:
- 524              	.LBB60:
- 525              	.LBB61:
- 106:Src/pose_pipeline.c ****   float32_t max_y = features[0];
- 526              		.loc 1 106 13 view .LVU161
- 527 011e 9DED016A 		vldr.32	s12, [sp, #4]
- 528              	.LBE61:
- 529              	.LBE60:
- 530              	.LBB67:
-ARM GAS  /tmp/ccARejm9.s 			page 15
-
-
- 531              	.LBB59:
-  98:Src/pose_pipeline.c ****   *hssc_y = sum_y / (float32_t)POSE_HSSC_INDICES_COUNT;
- 532              		.loc 1 98 19 view .LVU162
- 533 0122 87EEA64A 		vdiv.f32	s8, s15, s13
- 534              	.LVL46:
-  99:Src/pose_pipeline.c **** }
- 535              		.loc 1 99 3 is_stmt 1 view .LVU163
-  99:Src/pose_pipeline.c **** }
- 536              		.loc 1 99 19 is_stmt 0 view .LVU164
- 537 0126 C7EE264A 		vdiv.f32	s9, s14, s13
- 538              	.LVL47:
-  99:Src/pose_pipeline.c **** }
- 539              		.loc 1 99 19 view .LVU165
- 540              	.LBE59:
- 541              	.LBE67:
- 195:Src/pose_pipeline.c ****   }
+ 397 0074 FFF7FEFF 		bl	clamp01
+ 398              	.LVL34:
+ 193:Src/pose_pipeline.c **** 
+ 399              		.loc 1 193 19 view .LVU114
+ 400 0078 D1ED022A 		vldr.32	s5, [r1, #8]
+ 401              		.loc 1 198 12 view .LVU115
+ 402 007c F4EEE12A 		vcmpe.f32	s5, s3
+ 403 0080 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 192:Src/pose_pipeline.c ****         float32_t conf  = kp_raw[i].proba;
+ 404              		.loc 1 192 27 view .LVU116
+ 405 0084 F0EE403A 		vmov.f32	s7, s0
+ 406              	.LVL35:
+ 193:Src/pose_pipeline.c **** 
+ 407              		.loc 1 193 9 is_stmt 1 view .LVU117
+ 195:Src/pose_pipeline.c ****         float32_t filt_x;
+ 408              		.loc 1 195 9 view .LVU118
  196:Src/pose_pipeline.c **** 
- 197:Src/pose_pipeline.c ****   float32_t hssc_x;
- 198:Src/pose_pipeline.c ****   float32_t hssc_y;
- 199:Src/pose_pipeline.c ****   compute_hssc(features, &hssc_x, &hssc_y);
- 200:Src/pose_pipeline.c ****   float32_t rwhc = compute_rwhc(features);
- 542              		.loc 1 200 3 is_stmt 1 view .LVU166
- 543              	.LBB68:
- 544              	.LBI60:
- 102:Src/pose_pipeline.c **** {
- 545              		.loc 1 102 18 view .LVU167
- 546              	.LBB65:
- 104:Src/pose_pipeline.c ****   float32_t max_x = features[1];
- 547              		.loc 1 104 3 view .LVU168
- 106:Src/pose_pipeline.c ****   float32_t max_y = features[0];
- 548              		.loc 1 106 13 is_stmt 0 view .LVU169
- 549 012a 1023     		movs	r3, #16
- 104:Src/pose_pipeline.c ****   float32_t max_x = features[1];
- 550              		.loc 1 104 13 view .LVU170
- 551 012c DDED026A 		vldr.32	s13, [sp, #8]
- 552              	.LVL48:
- 105:Src/pose_pipeline.c ****   float32_t min_y = features[0];
- 553              		.loc 1 105 3 is_stmt 1 view .LVU171
- 106:Src/pose_pipeline.c ****   float32_t max_y = features[0];
- 554              		.loc 1 106 3 view .LVU172
- 107:Src/pose_pipeline.c **** 
- 555              		.loc 1 107 3 view .LVU173
- 109:Src/pose_pipeline.c ****   {
- 556              		.loc 1 109 3 view .LVU174
- 557              	.LBB62:
- 109:Src/pose_pipeline.c ****   {
- 558              		.loc 1 109 8 view .LVU175
- 109:Src/pose_pipeline.c ****   {
- 559              		.loc 1 109 26 discriminator 1 view .LVU176
- 560              	.LBE62:
- 107:Src/pose_pipeline.c **** 
- 561              		.loc 1 107 13 is_stmt 0 view .LVU177
- 562 0130 F0EE467A 		vmov.f32	s15, s12
- 105:Src/pose_pipeline.c ****   float32_t min_y = features[0];
- 563              		.loc 1 105 13 view .LVU178
- 564 0134 B0EE667A 		vmov.f32	s14, s13
- 106:Src/pose_pipeline.c ****   float32_t max_y = features[0];
-ARM GAS  /tmp/ccARejm9.s 			page 16
+ 409              		.loc 1 196 9 view .LVU119
+ 410              		.loc 1 198 9 view .LVU120
+ 411              		.loc 1 198 12 is_stmt 0 view .LVU121
+ 412 0088 C0F27681 		blt	.L72
+ 199:Src/pose_pipeline.c ****         {
+ 200:Src/pose_pipeline.c ****             filt_y = clamp01(euro_filter_apply(&s->y_filter[i], raw_y, dt));
+ 413              		.loc 1 200 13 is_stmt 1 view .LVU122
+ 414              		.loc 1 200 22 is_stmt 0 view .LVU123
+ 415 008c F0EE440A 		vmov.f32	s1, s8
+ 416 0090 B0EE430A 		vmov.f32	s0, s6
+ 417              	.LVL36:
+ 418              		.loc 1 200 22 view .LVU124
+ 419 0094 1046     		mov	r0, r2
+ 420 0096 FFF7FEFF 		bl	euro_filter_apply
+ 421              	.LVL37:
+ 422              		.loc 1 200 22 discriminator 1 view .LVU125
+ 423 009a FFF7FEFF 		bl	clamp01
+ 424              	.LVL38:
+ 201:Src/pose_pipeline.c ****             filt_x = clamp01(euro_filter_apply(&s->x_filter[i], raw_x, dt));
+ 425              		.loc 1 201 22 view .LVU126
+ 426 009e F0EE440A 		vmov.f32	s1, s8
+ 200:Src/pose_pipeline.c ****             filt_x = clamp01(euro_filter_apply(&s->x_filter[i], raw_x, dt));
+ 427              		.loc 1 200 22 discriminator 1 view .LVU127
+ 428 00a2 B0EE403A 		vmov.f32	s6, s0
+ 429              	.LVL39:
+ 430              		.loc 1 201 13 is_stmt 1 view .LVU128
+ 431              		.loc 1 201 22 is_stmt 0 view .LVU129
+ 432 00a6 02F1CC00 		add	r0, r2, #204
+ 433 00aa B0EE630A 		vmov.f32	s0, s7
+ 434              	.LVL40:
+ 435              		.loc 1 201 22 view .LVU130
+ 436 00ae FFF7FEFF 		bl	euro_filter_apply
+ 437              	.LVL41:
+ 438              	.L73:
+ 202:Src/pose_pipeline.c ****         }
+ 203:Src/pose_pipeline.c ****         else
+ 204:Src/pose_pipeline.c ****         {
+ 205:Src/pose_pipeline.c ****             filt_y = s->y_filter[i].initialized ? clamp01(s->y_filter[i].x_prev) : raw_y;
+ 206:Src/pose_pipeline.c ****             filt_x = s->x_filter[i].initialized ? clamp01(s->x_filter[i].x_prev) : raw_x;
+ 439              		.loc 1 206 51 discriminator 1 view .LVU131
+ARM GAS  /tmp/ccA2Mu0s.s 			page 13
 
 
- 565              		.loc 1 106 13 view .LVU179
- 566 0138 43F001E0 		dls	lr, r3
- 567              	.LVL49:
- 568              	.L27:
- 569              	.LBB64:
- 570              	.LBB63:
- 111:Src/pose_pipeline.c ****     float32_t x = features[i * 3 + 1];
- 571              		.loc 1 111 5 is_stmt 1 view .LVU180
- 112:Src/pose_pipeline.c **** 
- 572              		.loc 1 112 15 is_stmt 0 view .LVU181
- 573 013c 92ED045A 		vldr.32	s10, [r2, #16]
- 574 0140 F4EEC56A 		vcmpe.f32	s13, s10
- 111:Src/pose_pipeline.c ****     float32_t x = features[i * 3 + 1];
- 575              		.loc 1 111 15 view .LVU182
- 576 0144 D2ED035A 		vldr.32	s11, [r2, #12]
- 577              	.LVL50:
- 112:Src/pose_pipeline.c **** 
- 578              		.loc 1 112 5 is_stmt 1 view .LVU183
- 114:Src/pose_pipeline.c ****     {
- 579              		.loc 1 114 5 view .LVU184
- 580 0148 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 581 014c B4EEC75A 		vcmpe.f32	s10, s14
- 582 0150 75FE266A 		vselgt.f32	s13, s10, s13
- 583              	.LVL51:
- 118:Src/pose_pipeline.c ****     {
- 584              		.loc 1 118 5 view .LVU185
- 585 0154 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 586 0158 B4EEE56A 		vcmpe.f32	s12, s11
- 587 015c 35FE077A 		vselgt.f32	s14, s10, s14
- 588              	.LVL52:
- 122:Src/pose_pipeline.c ****     {
- 589              		.loc 1 122 5 view .LVU186
- 590 0160 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 591 0164 F4EEE75A 		vcmpe.f32	s11, s15
- 592 0168 35FE866A 		vselgt.f32	s12, s11, s12
- 593              	.LVL53:
- 126:Src/pose_pipeline.c ****     {
- 594              		.loc 1 126 5 view .LVU187
- 595 016c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 596              	.LBE63:
- 109:Src/pose_pipeline.c ****   {
- 597              		.loc 1 109 26 is_stmt 0 discriminator 1 view .LVU188
- 598 0170 02F10C02 		add	r2, r2, #12
- 599 0174 75FEA77A 		vselgt.f32	s15, s11, s15
- 600              	.LVL54:
- 109:Src/pose_pipeline.c ****   {
- 601              		.loc 1 109 44 is_stmt 1 discriminator 2 view .LVU189
- 109:Src/pose_pipeline.c ****   {
- 602              		.loc 1 109 26 discriminator 1 view .LVU190
- 603 0178 0FF021C0 		le	lr, .L27
- 604              	.LBE64:
- 132:Src/pose_pipeline.c ****   if (height <= 0.0f)
- 605              		.loc 1 132 3 view .LVU191
- 132:Src/pose_pipeline.c ****   if (height <= 0.0f)
- 606              		.loc 1 132 13 is_stmt 0 view .LVU192
- 607 017c 77EEC67A 		vsub.f32	s15, s15, s12
- 608              	.LVL55:
-ARM GAS  /tmp/ccARejm9.s 			page 17
-
-
- 133:Src/pose_pipeline.c ****   {
- 609              		.loc 1 133 3 is_stmt 1 view .LVU193
- 133:Src/pose_pipeline.c ****   {
- 610              		.loc 1 133 6 is_stmt 0 view .LVU194
- 611 0180 F5EEC07A 		vcmpe.f32	s15, #0
- 133:Src/pose_pipeline.c ****   {
- 612              		.loc 1 133 6 view .LVU195
- 613 0184 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
- 138:Src/pose_pipeline.c **** }
- 614              		.loc 1 138 17 view .LVU196
- 615 0188 37EE667A 		vsub.f32	s14, s14, s13
- 616              	.LVL56:
- 135:Src/pose_pipeline.c ****   }
- 617              		.loc 1 135 12 view .LVU197
- 618 018c 98BF     		it	ls
- 619 018e DFED2F7A 		vldrls.32	s15, .L49+16
- 620              	.LVL57:
- 138:Src/pose_pipeline.c **** }
- 621              		.loc 1 138 3 is_stmt 1 view .LVU198
- 622              	.LBE65:
- 623              	.LBE68:
- 201:Src/pose_pipeline.c **** 
- 202:Src/pose_pipeline.c ****   float32_t vhssc = 0.0f;
- 203:Src/pose_pipeline.c **** 
- 204:Src/pose_pipeline.c ****   if (s->deriv_initialized)
- 624              		.loc 1 204 6 is_stmt 0 view .LVU199
- 625 0192 94F82832 		ldrb	r3, [r4, #552]	@ zero_extendqisi2
- 626              	.LBB69:
- 627              	.LBB66:
- 138:Src/pose_pipeline.c **** }
- 628              		.loc 1 138 26 view .LVU200
- 629 0196 C7EE276A 		vdiv.f32	s13, s14, s15
- 630              	.LVL58:
- 138:Src/pose_pipeline.c **** }
- 631              		.loc 1 138 26 view .LVU201
- 632              	.LBE66:
- 633              	.LBE69:
- 202:Src/pose_pipeline.c **** 
- 634              		.loc 1 202 3 is_stmt 1 view .LVU202
- 635              		.loc 1 204 3 view .LVU203
- 636              		.loc 1 204 6 is_stmt 0 view .LVU204
- 637 019a 002B     		cmp	r3, #0
- 638 019c 4AD0     		beq	.L35
- 205:Src/pose_pipeline.c ****   {
- 206:Src/pose_pipeline.c ****     vhssc = (hssc_y - s->hssc_y_prev) / dt;
- 639              		.loc 1 206 5 is_stmt 1 view .LVU205
- 640              		.loc 1 206 21 is_stmt 0 view .LVU206
- 641 019e 94ED887A 		vldr.32	s14, [r4, #544]
- 642 01a2 34EEC77A 		vsub.f32	s14, s9, s14
- 643              		.loc 1 206 11 view .LVU207
- 644 01a6 C7EE237A 		vdiv.f32	s15, s14, s7
- 645              	.LVL59:
- 646              	.L29:
- 207:Src/pose_pipeline.c ****   }
+ 440 00b2 FFF7FEFF 		bl	clamp01
+ 441              	.LVL42:
+ 442 00b6 F0EE403A 		vmov.f32	s7, s0
+ 443              	.LVL43:
+ 444              	.L27:
+ 207:Src/pose_pipeline.c ****         }
  208:Src/pose_pipeline.c **** 
- 209:Src/pose_pipeline.c ****   s->hssc_y_prev = hssc_y;
- 647              		.loc 1 209 3 is_stmt 1 view .LVU208
-ARM GAS  /tmp/ccARejm9.s 			page 18
+ 209:Src/pose_pipeline.c ****         all_kp[i * 3u + 0u] = filt_y;
+ 445              		.loc 1 209 9 is_stmt 1 view .LVU132
+ 446              	.LBB53:
+ 447              	.LBB50:
+  71:Src/pose_pipeline.c ****     {
+ 448              		.loc 1 71 8 is_stmt 0 view .LVU133
+ 449 00ba 96F89C31 		ldrb	r3, [r6, #412]	@ zero_extendqisi2
+ 450              	.LBE50:
+ 451              	.LBE53:
+ 452              		.loc 1 209 29 view .LVU134
+ 453 00be 8AED003A 		vstr.32	s6, [r10]
+ 210:Src/pose_pipeline.c ****         all_kp[i * 3u + 1u] = filt_x;
+ 454              		.loc 1 210 9 is_stmt 1 view .LVU135
+ 455              		.loc 1 210 29 is_stmt 0 view .LVU136
+ 456 00c2 CAED013A 		vstr.32	s7, [r10, #4]
+ 211:Src/pose_pipeline.c ****         all_kp[i * 3u + 2u] = clamp01(ema_filter_apply(&s->conf_filter[i], conf, POSE_CONF_EMA_ALPH
+ 457              		.loc 1 211 9 is_stmt 1 view .LVU137
+ 458              	.LVL44:
+ 459              	.LBB54:
+ 460              	.LBI48:
+  69:Src/pose_pipeline.c **** {
+ 461              		.loc 1 69 18 view .LVU138
+ 462              	.LBB51:
+  71:Src/pose_pipeline.c ****     {
+ 463              		.loc 1 71 5 view .LVU139
+  71:Src/pose_pipeline.c ****     {
+ 464              		.loc 1 71 8 is_stmt 0 view .LVU140
+ 465 00c6 002B     		cmp	r3, #0
+ 466 00c8 40F06681 		bne	.L29
+  73:Src/pose_pipeline.c ****         f->initialized = 1u;
+ 467              		.loc 1 73 9 is_stmt 1 view .LVU141
+  73:Src/pose_pipeline.c ****         f->initialized = 1u;
+ 468              		.loc 1 73 24 is_stmt 0 view .LVU142
+ 469 00cc C6ED662A 		vstr.32	s5, [r6, #408]
+  74:Src/pose_pipeline.c ****         return x;
+ 470              		.loc 1 74 9 is_stmt 1 view .LVU143
+  74:Src/pose_pipeline.c ****         return x;
+ 471              		.loc 1 74 24 is_stmt 0 view .LVU144
+ 472 00d0 86F89CB1 		strb	fp, [r6, #412]
+  75:Src/pose_pipeline.c ****     }
+ 473              		.loc 1 75 9 is_stmt 1 view .LVU145
+ 474              	.LVL45:
+ 475              	.L30:
+  75:Src/pose_pipeline.c ****     }
+ 476              		.loc 1 75 9 is_stmt 0 view .LVU146
+ 477              	.LBE51:
+ 478              	.LBE54:
+ 479              		.loc 1 211 31 discriminator 1 view .LVU147
+ 480 00d4 B0EE620A 		vmov.f32	s0, s5
+ 481 00d8 FFF7FEFF 		bl	clamp01
+ARM GAS  /tmp/ccA2Mu0s.s 			page 14
 
 
- 210:Src/pose_pipeline.c ****   s->vhssc_prev = vhssc;
- 211:Src/pose_pipeline.c ****   s->deriv_initialized = 1u;
- 648              		.loc 1 211 24 is_stmt 0 view .LVU209
- 649 01aa 0126     		movs	r6, #1
- 209:Src/pose_pipeline.c ****   s->vhssc_prev = vhssc;
- 650              		.loc 1 209 18 view .LVU210
- 651 01ac C4ED884A 		vstr.32	s9, [r4, #544]
- 210:Src/pose_pipeline.c ****   s->vhssc_prev = vhssc;
- 652              		.loc 1 210 3 is_stmt 1 view .LVU211
- 210:Src/pose_pipeline.c ****   s->vhssc_prev = vhssc;
- 653              		.loc 1 210 17 is_stmt 0 view .LVU212
- 654 01b0 C4ED897A 		vstr.32	s15, [r4, #548]
- 655              		.loc 1 211 3 is_stmt 1 view .LVU213
- 212:Src/pose_pipeline.c **** 
- 213:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 0] = hssc_y;
- 656              		.loc 1 213 35 is_stmt 0 view .LVU214
- 657 01b4 CDED344A 		vstr.32	s9, [sp, #208]
- 214:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 1] = hssc_x;
- 658              		.loc 1 214 35 view .LVU215
- 659 01b8 8DED354A 		vstr.32	s8, [sp, #212]
- 215:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 2] = rwhc;
- 660              		.loc 1 215 35 view .LVU216
- 661 01bc CDED366A 		vstr.32	s13, [sp, #216]
- 216:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 3] = vhssc;
- 662              		.loc 1 216 35 view .LVU217
- 663 01c0 CDED377A 		vstr.32	s15, [sp, #220]
- 211:Src/pose_pipeline.c **** 
- 664              		.loc 1 211 24 view .LVU218
- 665 01c4 84F82862 		strb	r6, [r4, #552]
- 213:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 1] = hssc_x;
- 666              		.loc 1 213 3 is_stmt 1 view .LVU219
- 214:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 2] = rwhc;
- 667              		.loc 1 214 3 view .LVU220
- 215:Src/pose_pipeline.c ****   features[POSE_KP_COUNT * 3 + 3] = vhssc;
- 668              		.loc 1 215 3 view .LVU221
- 669              		.loc 1 216 3 view .LVU222
- 217:Src/pose_pipeline.c **** 
- 218:Src/pose_pipeline.c ****   if (out != NULL)
- 670              		.loc 1 218 3 view .LVU223
- 671              		.loc 1 218 6 is_stmt 0 view .LVU224
- 672 01c8 35B1     		cbz	r5, .L30
- 219:Src/pose_pipeline.c ****   {
- 220:Src/pose_pipeline.c ****     memcpy(out->f, features, sizeof(features));
- 673              		.loc 1 220 5 is_stmt 1 view .LVU225
- 674 01ca DC22     		movs	r2, #220
- 675 01cc 2846     		mov	r0, r5
- 676 01ce 01A9     		add	r1, sp, #4
- 677 01d0 FFF7FEFF 		bl	memcpy
- 678              	.LVL60:
- 221:Src/pose_pipeline.c ****     out->valid = 1u;
- 679              		.loc 1 221 5 view .LVU226
- 680              		.loc 1 221 16 is_stmt 0 view .LVU227
- 681 01d4 85F8DC60 		strb	r6, [r5, #220]
- 682              	.L30:
- 222:Src/pose_pipeline.c ****   }
- 223:Src/pose_pipeline.c **** 
- 224:Src/pose_pipeline.c ****   memcpy(s->win_buf[s->win_head], features, sizeof(features));
-ARM GAS  /tmp/ccARejm9.s 			page 19
+ 482              	.LVL46:
+ 483              	.LBE47:
+ 189:Src/pose_pipeline.c ****     {
+ 484              		.loc 1 189 29 discriminator 1 view .LVU148
+ 485 00dc 0AF10C0A 		add	r10, r10, #12
+ 486              	.LBB56:
+ 487              		.loc 1 211 29 discriminator 2 view .LVU149
+ 488 00e0 0AED010A 		vstr.32	s0, [r10, #-4]
+ 489              	.LBE56:
+ 189:Src/pose_pipeline.c ****     {
+ 490              		.loc 1 189 47 is_stmt 1 discriminator 2 view .LVU150
+ 189:Src/pose_pipeline.c ****     {
+ 491              		.loc 1 189 29 discriminator 1 view .LVU151
+ 492 00e4 BA45     		cmp	r10, r7
+ 493 00e6 01F10C01 		add	r1, r1, #12
+ 494 00ea 06F10806 		add	r6, r6, #8
+ 495 00ee 02F10C02 		add	r2, r2, #12
+ 496 00f2 B7D1     		bne	.L31
+ 497              	.LBE58:
+ 498              	.LBB59:
+ 499              	.LBB60:
+ 134:Src/pose_pipeline.c ****     float32_t sum_y = 0.0f;
+ 500              		.loc 1 134 15 is_stmt 0 view .LVU152
+ 501 00f4 DFEDB57A 		vldr.32	s15, .L74+12
+ 502              	.LBB61:
+ 503              	.LBB62:
+ 140:Src/pose_pipeline.c ****     }
+ 504              		.loc 1 140 24 view .LVU153
+ 505 00f8 0723     		movs	r3, #7
+ 506              	.LBE62:
+ 507              	.LBE61:
+ 135:Src/pose_pipeline.c ****     for (uint32_t i = 0u; i < POSE_HSSC_INDICES_COUNT; i++)
+ 508              		.loc 1 135 15 view .LVU154
+ 509 00fa B0EE677A 		vmov.f32	s14, s15
+ 510              	.LBB64:
+ 511              	.LBB63:
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 512              		.loc 1 139 24 view .LVU155
+ 513 00fe 0C26     		movs	r6, #12
+ 140:Src/pose_pipeline.c ****     }
+ 514              		.loc 1 140 24 view .LVU156
+ 515 0100 43F001E0 		dls	lr, r3
+ 516 0104 B24A     		ldr	r2, .L74+16
+ 517 0106 4CA9     		add	r1, sp, #304
+ 518              	.L32:
+ 519              	.LVL47:
+ 138:Src/pose_pipeline.c ****         sum_y += all_kp[idx * 3u + 0u];
+ 520              		.loc 1 138 9 is_stmt 1 view .LVU157
+ 138:Src/pose_pipeline.c ****         sum_y += all_kp[idx * 3u + 0u];
+ 521              		.loc 1 138 36 is_stmt 0 view .LVU158
+ 522 0108 12F8013B 		ldrb	r3, [r2], #1	@ zero_extendqisi2
+ 523              	.LVL48:
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 524              		.loc 1 139 9 is_stmt 1 view .LVU159
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 525              		.loc 1 139 24 is_stmt 0 view .LVU160
+ 526 010c 7343     		muls	r3, r6, r3
+ARM GAS  /tmp/ccA2Mu0s.s 			page 15
 
 
- 683              		.loc 1 224 3 is_stmt 1 view .LVU228
- 684              		.loc 1 224 20 is_stmt 0 view .LVU229
- 685 01d8 DC22     		movs	r2, #220
- 686              		.loc 1 224 22 view .LVU230
- 687 01da 04F54055 		add	r5, r4, #12288
- 688              	.LVL61:
- 689              		.loc 1 224 20 view .LVU231
- 690 01de D5F8BC35 		ldr	r3, [r5, #1468]
- 691              		.loc 1 224 3 view .LVU232
- 692 01e2 01A9     		add	r1, sp, #4
- 693              		.loc 1 224 20 view .LVU233
- 694 01e4 02FB0340 		mla	r0, r2, r3, r4
- 695              		.loc 1 224 3 view .LVU234
- 696 01e8 00F50B70 		add	r0, r0, #556
- 697 01ec FFF7FEFF 		bl	memcpy
- 698              	.LVL62:
- 225:Src/pose_pipeline.c ****   s->win_head = (s->win_head + 1u) % POSE_WINDOW_SIZE;
- 699              		.loc 1 225 3 is_stmt 1 view .LVU235
- 700              		.loc 1 225 36 is_stmt 0 view .LVU236
- 701 01f0 3C22     		movs	r2, #60
- 702              		.loc 1 225 30 view .LVU237
- 703 01f2 D5F8BC35 		ldr	r3, [r5, #1468]
- 704 01f6 0133     		adds	r3, r3, #1
- 705              		.loc 1 225 36 view .LVU238
- 706 01f8 B3FBF2F1 		udiv	r1, r3, r2
- 707 01fc 02FB1133 		mls	r3, r2, r1, r3
- 708              		.loc 1 225 15 view .LVU239
- 709 0200 C5F8BC35 		str	r3, [r5, #1468]
- 226:Src/pose_pipeline.c ****   if (s->win_count < POSE_WINDOW_SIZE)
- 710              		.loc 1 226 3 is_stmt 1 view .LVU240
- 711              		.loc 1 226 8 is_stmt 0 view .LVU241
- 712 0204 D5F8C035 		ldr	r3, [r5, #1472]
- 713              		.loc 1 226 6 view .LVU242
- 714 0208 3B2B     		cmp	r3, #59
- 227:Src/pose_pipeline.c ****   {
- 228:Src/pose_pipeline.c ****     s->win_count++;
- 715              		.loc 1 228 5 is_stmt 1 view .LVU243
- 716              		.loc 1 228 17 is_stmt 0 view .LVU244
- 717 020a 9CBF     		itt	ls
- 718 020c 0133     		addls	r3, r3, #1
- 719 020e C5F8C035 		strls	r3, [r5, #1472]
- 720              	.LVL63:
- 721              	.L14:
- 229:Src/pose_pipeline.c ****   }
- 230:Src/pose_pipeline.c **** }
- 722              		.loc 1 230 1 view .LVU245
- 723 0212 38B0     		add	sp, sp, #224
- 724              		.cfi_remember_state
- 725              		.cfi_def_cfa_offset 32
- 726              		@ sp needed
- 727 0214 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
- 728              	.LVL64:
- 729              	.L32:
- 730              		.cfi_restore_state
- 176:Src/pose_pipeline.c ****   }
- 731              		.loc 1 176 8 view .LVU246
- 732 0218 DFED0D3A 		vldr.32	s7, .L49+20
-ARM GAS  /tmp/ccARejm9.s 			page 20
+ 527              	.LVL49:
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 528              		.loc 1 139 24 view .LVU161
+ 529 010e E818     		adds	r0, r5, r3
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 530              		.loc 1 139 15 view .LVU162
+ 531 0110 D0ED006A 		vldr.32	s13, [r0]
+ 140:Src/pose_pipeline.c ****     }
+ 532              		.loc 1 140 24 view .LVU163
+ 533 0114 0B44     		add	r3, r3, r1
+ 139:Src/pose_pipeline.c ****         sum_x += all_kp[idx * 3u + 1u];
+ 534              		.loc 1 139 15 view .LVU164
+ 535 0116 37EE267A 		vadd.f32	s14, s14, s13
+ 536              	.LVL50:
+ 140:Src/pose_pipeline.c ****     }
+ 537              		.loc 1 140 9 is_stmt 1 view .LVU165
+ 140:Src/pose_pipeline.c ****     }
+ 538              		.loc 1 140 15 is_stmt 0 view .LVU166
+ 539 011a D3ED006A 		vldr.32	s13, [r3]
+ 540 011e 77EEA67A 		vadd.f32	s15, s15, s13
+ 541              	.LVL51:
+ 140:Src/pose_pipeline.c ****     }
+ 542              		.loc 1 140 15 view .LVU167
+ 543              	.LBE63:
+ 136:Src/pose_pipeline.c ****     {
+ 544              		.loc 1 136 57 is_stmt 1 discriminator 3 view .LVU168
+ 136:Src/pose_pipeline.c ****     {
+ 545              		.loc 1 136 29 discriminator 1 view .LVU169
+ 546 0122 0FF00FC8 		le	lr, .L32
+ 547              	.LBE64:
+ 142:Src/pose_pipeline.c ****     *hssc_x = sum_x / (float32_t)POSE_HSSC_INDICES_COUNT;
+ 548              		.loc 1 142 5 view .LVU170
+ 142:Src/pose_pipeline.c ****     *hssc_x = sum_x / (float32_t)POSE_HSSC_INDICES_COUNT;
+ 549              		.loc 1 142 21 is_stmt 0 view .LVU171
+ 550 0126 F1EE0C6A 		vmov.f32	s13, #7.0e+0
+ 551              	.LBE60:
+ 552              	.LBE59:
+ 553              	.LBB66:
+ 554              	.LBB67:
+ 149:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 555              		.loc 1 149 15 view .LVU172
+ 556 012a 95ED006A 		vldr.32	s12, [r5]
+ 557              	.LBE67:
+ 558              	.LBE66:
+ 559              	.LBB73:
+ 560              	.LBB65:
+ 142:Src/pose_pipeline.c ****     *hssc_x = sum_x / (float32_t)POSE_HSSC_INDICES_COUNT;
+ 561              		.loc 1 142 21 view .LVU173
+ 562 012e C7EE269A 		vdiv.f32	s19, s14, s13
+ 563              	.LVL52:
+ 143:Src/pose_pipeline.c **** }
+ 564              		.loc 1 143 5 is_stmt 1 view .LVU174
+ 143:Src/pose_pipeline.c **** }
+ 565              		.loc 1 143 21 is_stmt 0 view .LVU175
+ 566 0132 87EEA69A 		vdiv.f32	s18, s15, s13
+ 567              	.LVL53:
+ 143:Src/pose_pipeline.c **** }
+ARM GAS  /tmp/ccA2Mu0s.s 			page 16
 
 
- 733 021c 13E7     		b	.L20
- 734              	.LVL65:
- 735              	.L23:
- 736              	.LBB70:
- 737              	.LBB51:
- 738              	.LBB49:
- 739              	.LBB46:
- 154:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 740              		.loc 1 154 3 is_stmt 1 view .LVU247
- 154:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 741              		.loc 1 154 42 is_stmt 0 view .LVU248
- 742 021e 72EEC77A 		vsub.f32	s15, s5, s14
- 154:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 743              		.loc 1 154 51 view .LVU249
- 744 0222 67EEA67A 		vmul.f32	s15, s15, s13
- 154:Src/pose_pipeline.c ****   filter->x_prev = x_hat;
- 745              		.loc 1 154 13 view .LVU250
- 746 0226 E0EE077A 		vfma.f32	s15, s0, s14
- 747 022a B0EE670A 		vmov.f32	s0, s15
- 748              	.LVL66:
- 155:Src/pose_pipeline.c ****   return x_hat;
- 749              		.loc 1 155 3 is_stmt 1 view .LVU251
- 155:Src/pose_pipeline.c ****   return x_hat;
- 750              		.loc 1 155 18 is_stmt 0 view .LVU252
- 751 022e C6ED667A 		vstr.32	s15, [r6, #408]
- 752              	.LVL67:
- 156:Src/pose_pipeline.c **** }
- 753              		.loc 1 156 3 is_stmt 1 view .LVU253
- 156:Src/pose_pipeline.c **** }
- 754              		.loc 1 156 10 is_stmt 0 view .LVU254
- 755 0232 4CE7     		b	.L24
- 756              	.LVL68:
- 757              	.L35:
- 156:Src/pose_pipeline.c **** }
- 758              		.loc 1 156 10 view .LVU255
- 759              	.LBE46:
- 760              	.LBE49:
- 761              	.LBE51:
- 762              	.LBE70:
- 202:Src/pose_pipeline.c **** 
- 763              		.loc 1 202 13 view .LVU256
- 764 0234 DFED037A 		vldr.32	s15, .L49+8
- 765 0238 B7E7     		b	.L29
- 766              	.L50:
- 767 023a 00BF     		.align	2
- 768              	.L49:
- 769 023c FFFF7F7F 		.word	2139095039
- 770 0240 BD378635 		.word	897988541
- 771 0244 00000000 		.word	0
- 772 0248 00000000 		.word	hssc_indices
- 773 024c 6F12833A 		.word	981668463
- 774 0250 8988883D 		.word	1032358025
- 775 0254 CDCC4C3F 		.word	1061997773
- 776              		.cfi_endproc
- 777              	.LFE781:
- 779              		.section	.text.PosePipeline_GetWindowFeaturesFirst,"ax",%progbits
- 780              		.align	1
-ARM GAS  /tmp/ccARejm9.s 			page 21
+ 568              		.loc 1 143 21 view .LVU176
+ 569              	.LBE65:
+ 570              	.LBE73:
+ 212:Src/pose_pipeline.c ****     }
+ 213:Src/pose_pipeline.c **** 
+ 214:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 215:Src/pose_pipeline.c ****      * Step 5 : HSSC_y/x and RWHC
+ 216:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 217:Src/pose_pipeline.c ****     float32_t hssc_x;
+ 218:Src/pose_pipeline.c ****     float32_t hssc_y;
+ 219:Src/pose_pipeline.c ****     compute_hssc(all_kp, &hssc_x, &hssc_y);
+ 220:Src/pose_pipeline.c ****     float32_t rwhc = compute_rwhc(all_kp);
+ 571              		.loc 1 220 5 is_stmt 1 view .LVU177
+ 572              	.LBB74:
+ 573              	.LBI66:
+ 146:Src/pose_pipeline.c **** {
+ 574              		.loc 1 146 18 view .LVU178
+ 575              	.LBB71:
+ 148:Src/pose_pipeline.c ****     float32_t min_y = all_kp[0u], max_y = all_kp[0u];
+ 576              		.loc 1 148 5 view .LVU179
+ 149:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 577              		.loc 1 149 15 is_stmt 0 view .LVU180
+ 578 0136 1023     		movs	r3, #16
+ 148:Src/pose_pipeline.c ****     float32_t min_y = all_kp[0u], max_y = all_kp[0u];
+ 579              		.loc 1 148 15 view .LVU181
+ 580 0138 D5ED016A 		vldr.32	s13, [r5, #4]
+ 581              	.LVL54:
+ 149:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 582              		.loc 1 149 5 is_stmt 1 view .LVU182
+ 150:Src/pose_pipeline.c ****     {
+ 583              		.loc 1 150 5 view .LVU183
+ 584              	.LBB68:
+ 150:Src/pose_pipeline.c ****     {
+ 585              		.loc 1 150 10 view .LVU184
+ 150:Src/pose_pipeline.c ****     {
+ 586              		.loc 1 150 29 discriminator 1 view .LVU185
+ 587              	.LBE68:
+ 149:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 588              		.loc 1 149 35 is_stmt 0 view .LVU186
+ 589 013c F0EE467A 		vmov.f32	s15, s12
+ 148:Src/pose_pipeline.c ****     float32_t min_y = all_kp[0u], max_y = all_kp[0u];
+ 590              		.loc 1 148 35 view .LVU187
+ 591 0140 B0EE667A 		vmov.f32	s14, s13
+ 149:Src/pose_pipeline.c ****     for (uint32_t i = 1u; i < POSE_KP_COUNT; i++)
+ 592              		.loc 1 149 15 view .LVU188
+ 593 0144 43F001E0 		dls	lr, r3
+ 594              	.LVL55:
+ 595              	.L33:
+ 596              	.LBB70:
+ 597              	.LBB69:
+ 152:Src/pose_pipeline.c ****         float32_t x = all_kp[i * 3u + 1u];
+ 598              		.loc 1 152 9 is_stmt 1 view .LVU189
+ 153:Src/pose_pipeline.c ****         if (x < min_x) min_x = x;
+ 599              		.loc 1 153 19 is_stmt 0 view .LVU190
+ 600 0148 95ED045A 		vldr.32	s10, [r5, #16]
+ 601 014c F4EEC56A 		vcmpe.f32	s13, s10
+ 152:Src/pose_pipeline.c ****         float32_t x = all_kp[i * 3u + 1u];
+ARM GAS  /tmp/ccA2Mu0s.s 			page 17
 
 
- 781              		.global	PosePipeline_GetWindowFeaturesFirst
- 782              		.syntax unified
- 783              		.thumb
- 784              		.thumb_func
- 786              	PosePipeline_GetWindowFeaturesFirst:
- 787              	.LVL69:
- 788              	.LFB782:
- 231:Src/pose_pipeline.c **** 
- 232:Src/pose_pipeline.c **** void PosePipeline_GetWindowFeaturesFirst(const PosePipeline_t *s,
- 233:Src/pose_pipeline.c ****                                          float32_t dst[POSE_FEATURE_COUNT][POSE_WINDOW_SIZE])
- 234:Src/pose_pipeline.c **** {
- 789              		.loc 1 234 1 is_stmt 1 view -0
- 790              		.cfi_startproc
- 791              		@ args = 0, pretend = 0, frame = 0
- 792              		@ frame_needed = 0, uses_anonymous_args = 0
- 235:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 793              		.loc 1 235 3 view .LVU258
- 794              		.loc 1 235 23 is_stmt 0 view .LVU259
- 795 0000 00F54053 		add	r3, r0, #12288
- 796              		.loc 1 235 60 view .LVU260
- 797 0004 D3F8C025 		ldr	r2, [r3, #1472]
- 234:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 798              		.loc 1 234 1 view .LVU261
- 799 0008 F0B5     		push	{r4, r5, r6, r7, lr}
- 800              		.cfi_def_cfa_offset 20
- 801              		.cfi_offset 4, -20
- 802              		.cfi_offset 5, -16
- 803              		.cfi_offset 6, -12
- 804              		.cfi_offset 7, -8
- 805              		.cfi_offset 14, -4
- 806              		.loc 1 235 60 view .LVU262
- 807 000a 3B2A     		cmp	r2, #59
- 808              		.loc 1 235 60 discriminator 2 view .LVU263
- 809 000c 98BF     		it	ls
- 810 000e 0024     		movls	r4, #0
- 811              	.LBB71:
- 236:Src/pose_pipeline.c **** 
- 237:Src/pose_pipeline.c ****   for (uint32_t t = 0; t < POSE_WINDOW_SIZE; t++)
- 812              		.loc 1 237 17 view .LVU264
- 813 0010 4FF00002 		mov	r2, #0
- 814              	.LBB72:
- 238:Src/pose_pipeline.c ****   {
- 239:Src/pose_pipeline.c ****     uint32_t src_t = (oldest + t) % POSE_WINDOW_SIZE;
- 815              		.loc 1 239 14 view .LVU265
- 816 0014 4FF03C05 		mov	r5, #60
- 817 0018 4FF0DC07 		mov	r7, #220
- 818              	.LBE72:
- 819              	.LBE71:
- 235:Src/pose_pipeline.c **** 
- 820              		.loc 1 235 60 discriminator 1 view .LVU266
- 821 001c 88BF     		it	hi
- 822 001e D3F8BC45 		ldrhi	r4, [r3, #1468]
- 823              	.LVL70:
- 237:Src/pose_pipeline.c ****   {
- 824              		.loc 1 237 3 is_stmt 1 view .LVU267
- 825              	.LBB76:
- 237:Src/pose_pipeline.c ****   {
-ARM GAS  /tmp/ccARejm9.s 			page 22
+ 602              		.loc 1 152 19 view .LVU191
+ 603 0150 D5ED035A 		vldr.32	s11, [r5, #12]
+ 604              	.LVL56:
+ 153:Src/pose_pipeline.c ****         if (x < min_x) min_x = x;
+ 605              		.loc 1 153 9 is_stmt 1 view .LVU192
+ 154:Src/pose_pipeline.c ****         if (x > max_x) max_x = x;
+ 606              		.loc 1 154 9 view .LVU193
+ 607 0154 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 608 0158 B4EEC75A 		vcmpe.f32	s10, s14
+ 609 015c 75FE266A 		vselgt.f32	s13, s10, s13
+ 610              	.LVL57:
+ 155:Src/pose_pipeline.c ****         if (y < min_y) min_y = y;
+ 611              		.loc 1 155 9 view .LVU194
+ 612 0160 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 613 0164 B4EEE56A 		vcmpe.f32	s12, s11
+ 614 0168 35FE077A 		vselgt.f32	s14, s10, s14
+ 615              	.LVL58:
+ 156:Src/pose_pipeline.c ****         if (y > max_y) max_y = y;
+ 616              		.loc 1 156 9 view .LVU195
+ 617 016c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 618 0170 F4EEE75A 		vcmpe.f32	s11, s15
+ 619 0174 35FE866A 		vselgt.f32	s12, s11, s12
+ 620              	.LVL59:
+ 157:Src/pose_pipeline.c ****     }
+ 621              		.loc 1 157 9 view .LVU196
+ 622 0178 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 623              	.LBE69:
+ 150:Src/pose_pipeline.c ****     {
+ 624              		.loc 1 150 29 is_stmt 0 discriminator 1 view .LVU197
+ 625 017c 05F10C05 		add	r5, r5, #12
+ 626 0180 75FEA77A 		vselgt.f32	s15, s11, s15
+ 627              	.LVL60:
+ 150:Src/pose_pipeline.c ****     {
+ 628              		.loc 1 150 47 is_stmt 1 discriminator 2 view .LVU198
+ 150:Src/pose_pipeline.c ****     {
+ 629              		.loc 1 150 29 discriminator 1 view .LVU199
+ 630 0184 0FF021C0 		le	lr, .L33
+ 631              	.LBE70:
+ 159:Src/pose_pipeline.c ****     if (height <= 0.0f) height = 0.001f;
+ 632              		.loc 1 159 5 view .LVU200
+ 159:Src/pose_pipeline.c ****     if (height <= 0.0f) height = 0.001f;
+ 633              		.loc 1 159 15 is_stmt 0 view .LVU201
+ 634 0188 77EEC67A 		vsub.f32	s15, s15, s12
+ 635              	.LVL61:
+ 160:Src/pose_pipeline.c ****     return (max_x - min_x) / height;
+ 636              		.loc 1 160 5 is_stmt 1 view .LVU202
+ 160:Src/pose_pipeline.c ****     return (max_x - min_x) / height;
+ 637              		.loc 1 160 8 is_stmt 0 view .LVU203
+ 638 018c F5EEC07A 		vcmpe.f32	s15, #0
+ 160:Src/pose_pipeline.c ****     return (max_x - min_x) / height;
+ 639              		.loc 1 160 8 view .LVU204
+ 640 0190 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 161:Src/pose_pipeline.c **** }
+ 641              		.loc 1 161 19 view .LVU205
+ 642 0194 37EE667A 		vsub.f32	s14, s14, s13
+ 643              	.LVL62:
+ 160:Src/pose_pipeline.c ****     return (max_x - min_x) / height;
+ARM GAS  /tmp/ccA2Mu0s.s 			page 18
 
 
- 826              		.loc 1 237 8 view .LVU268
- 237:Src/pose_pipeline.c ****   {
- 827              		.loc 1 237 26 discriminator 1 view .LVU269
- 828              	.L54:
- 829              	.LBB75:
- 830              		.loc 1 239 5 view .LVU270
- 240:Src/pose_pipeline.c ****     for (uint32_t f = 0; f < POSE_FEATURE_COUNT; f++)
- 831              		.loc 1 240 5 view .LVU271
- 832              	.LBB73:
- 833              		.loc 1 240 10 view .LVU272
- 834              		.loc 1 240 28 discriminator 1 view .LVU273
- 835              	.LBE73:
- 239:Src/pose_pipeline.c ****     for (uint32_t f = 0; f < POSE_FEATURE_COUNT; f++)
- 836              		.loc 1 239 14 is_stmt 0 view .LVU274
- 837 0022 4FF0370C 		mov	ip, #55
- 239:Src/pose_pipeline.c ****     for (uint32_t f = 0; f < POSE_FEATURE_COUNT; f++)
- 838              		.loc 1 239 30 view .LVU275
- 839 0026 A318     		adds	r3, r4, r2
- 239:Src/pose_pipeline.c ****     for (uint32_t f = 0; f < POSE_FEATURE_COUNT; f++)
- 840              		.loc 1 239 14 view .LVU276
- 841 0028 B3FBF5F6 		udiv	r6, r3, r5
- 842 002c 4CF001E0 		dls	lr, ip
- 843 0030 05FB1633 		mls	r3, r5, r6, r3
- 844 0034 07FB0303 		mla	r3, r7, r3, r0
- 845 0038 01EB8206 		add	r6, r1, r2, lsl #2
- 846 003c 03F50B73 		add	r3, r3, #556
- 847              	.LVL71:
- 848              	.L53:
- 849              	.LBB74:
+ 644              		.loc 1 160 32 discriminator 1 view .LVU206
+ 645 0198 98BF     		it	ls
+ 646 019a DFED8E7A 		vldrls.32	s15, .L74+20
+ 647              	.LVL63:
+ 161:Src/pose_pipeline.c **** }
+ 648              		.loc 1 161 5 is_stmt 1 view .LVU207
+ 649              	.LBE71:
+ 650              	.LBE74:
+ 221:Src/pose_pipeline.c **** 
+ 222:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 223:Src/pose_pipeline.c ****      * Steps 6–7 : VHSSC EMA → AHSSC / AHSSC_x
+ 224:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 225:Src/pose_pipeline.c ****     float32_t vhssc_raw   = 0.0f;
+ 226:Src/pose_pipeline.c ****     float32_t vhssc_x_raw = 0.0f;
+ 227:Src/pose_pipeline.c **** 
+ 228:Src/pose_pipeline.c ****     if (s->deriv_initialized)
+ 651              		.loc 1 228 10 is_stmt 0 view .LVU208
+ 652 019e 94F8A412 		ldrb	r1, [r4, #676]	@ zero_extendqisi2
+ 653              	.LBB75:
+ 654              	.LBB72:
+ 161:Src/pose_pipeline.c **** }
+ 655              		.loc 1 161 28 view .LVU209
+ 656 01a2 87EE276A 		vdiv.f32	s12, s14, s15
+ 657              	.LVL64:
+ 161:Src/pose_pipeline.c **** }
+ 658              		.loc 1 161 28 view .LVU210
+ 659              	.LBE72:
+ 660              	.LBE75:
+ 225:Src/pose_pipeline.c ****     float32_t vhssc_x_raw = 0.0f;
+ 661              		.loc 1 225 5 is_stmt 1 view .LVU211
+ 226:Src/pose_pipeline.c **** 
+ 662              		.loc 1 226 5 view .LVU212
+ 663              		.loc 1 228 5 view .LVU213
+ 664              		.loc 1 228 8 is_stmt 0 view .LVU214
+ 665 01a6 0029     		cmp	r1, #0
+ 666 01a8 00F00181 		beq	.L47
+ 229:Src/pose_pipeline.c ****     {
+ 230:Src/pose_pipeline.c ****         vhssc_raw   = (hssc_y - s->hssc_y_prev) / dt;
+ 667              		.loc 1 230 9 is_stmt 1 view .LVU215
+ 668              	.LVL65:
+ 231:Src/pose_pipeline.c ****         vhssc_x_raw = (hssc_x - s->hssc_x_prev) / dt;
+ 669              		.loc 1 231 9 view .LVU216
+ 670              		.loc 1 231 31 is_stmt 0 view .LVU217
+ 671 01ac D4ED8A7A 		vldr.32	s15, [r4, #552]
+ 230:Src/pose_pipeline.c ****         vhssc_x_raw = (hssc_x - s->hssc_x_prev) / dt;
+ 672              		.loc 1 230 31 view .LVU218
+ 673 01b0 94ED887A 		vldr.32	s14, [r4, #544]
+ 674              		.loc 1 231 31 view .LVU219
+ 675 01b4 79EE677A 		vsub.f32	s15, s18, s15
+ 230:Src/pose_pipeline.c ****         vhssc_x_raw = (hssc_x - s->hssc_x_prev) / dt;
+ 676              		.loc 1 230 31 view .LVU220
+ 677 01b8 39EEC77A 		vsub.f32	s14, s19, s14
+ 678              		.loc 1 231 21 view .LVU221
+ 679 01bc C7EE848A 		vdiv.f32	s17, s15, s8
+ 680              	.LVL66:
+ 232:Src/pose_pipeline.c ****     }
+ 233:Src/pose_pipeline.c **** 
+ARM GAS  /tmp/ccA2Mu0s.s 			page 19
+
+
+ 234:Src/pose_pipeline.c ****     float32_t vhssc_ema;
+ 681              		.loc 1 234 5 is_stmt 1 view .LVU222
+ 235:Src/pose_pipeline.c ****     if (s->deriv_initialized)
+ 682              		.loc 1 235 5 view .LVU223
+ 236:Src/pose_pipeline.c ****     {
+ 237:Src/pose_pipeline.c ****         vhssc_ema = POSE_VHSSC_EMA_ALPHA * vhssc_raw
+ 683              		.loc 1 237 9 view .LVU224
+ 238:Src/pose_pipeline.c ****                     + (1.0f - POSE_VHSSC_EMA_ALPHA) * s->vhssc_ema;
+ 684              		.loc 1 238 53 is_stmt 0 view .LVU225
+ 685 01c0 9FED858A 		vldr.32	s16, .L74+24
+ 686              		.loc 1 238 56 view .LVU226
+ 687 01c4 D4ED897A 		vldr.32	s15, [r4, #548]
+ 230:Src/pose_pipeline.c ****         vhssc_x_raw = (hssc_x - s->hssc_x_prev) / dt;
+ 688              		.loc 1 230 21 view .LVU227
+ 689 01c8 C7EE046A 		vdiv.f32	s13, s14, s8
+ 690              	.LVL67:
+ 691              		.loc 1 238 53 view .LVU228
+ 692 01cc 27EE888A 		vmul.f32	s16, s15, s16
+ 237:Src/pose_pipeline.c ****                     + (1.0f - POSE_VHSSC_EMA_ALPHA) * s->vhssc_ema;
+ 693              		.loc 1 237 19 view .LVU229
+ 694 01d0 9FED827A 		vldr.32	s14, .L74+28
+ 695 01d4 A6EE878A 		vfma.f32	s16, s13, s14
+ 696              	.LVL68:
+ 239:Src/pose_pipeline.c ****     }
+ 240:Src/pose_pipeline.c ****     else
  241:Src/pose_pipeline.c ****     {
- 242:Src/pose_pipeline.c ****       dst[f][t] = s->win_buf[src_t][f];
- 850              		.loc 1 242 7 is_stmt 1 view .LVU277
- 851              		.loc 1 242 36 is_stmt 0 view .LVU278
- 852 0040 53F804CB 		ldr	ip, [r3], #4	@ float
- 853              		.loc 1 242 17 view .LVU279
- 854 0044 46F8F0CB 		str	ip, [r6], #240	@ float
- 240:Src/pose_pipeline.c ****     {
- 855              		.loc 1 240 51 is_stmt 1 discriminator 3 view .LVU280
- 240:Src/pose_pipeline.c ****     {
- 856              		.loc 1 240 28 discriminator 1 view .LVU281
- 857 0048 0FF007C0 		le	lr, .L53
- 858              	.LBE74:
- 859              	.LBE75:
- 237:Src/pose_pipeline.c ****   {
- 860              		.loc 1 237 47 discriminator 2 view .LVU282
- 861 004c 0132     		adds	r2, r2, #1
- 862              	.LVL72:
- 237:Src/pose_pipeline.c ****   {
- 863              		.loc 1 237 26 discriminator 1 view .LVU283
- 864 004e 3C2A     		cmp	r2, #60
- 865 0050 E7D1     		bne	.L54
- 866              	.LBE76:
+ 242:Src/pose_pipeline.c ****         vhssc_ema = 0.0f;
  243:Src/pose_pipeline.c ****     }
- 244:Src/pose_pipeline.c ****   }
- 245:Src/pose_pipeline.c **** }
- 867              		.loc 1 245 1 is_stmt 0 view .LVU284
- 868 0052 F0BD     		pop	{r4, r5, r6, r7, pc}
-ARM GAS  /tmp/ccARejm9.s 			page 23
+ 244:Src/pose_pipeline.c **** 
+ 245:Src/pose_pipeline.c ****     float32_t ahssc   = 0.0f;
+ 697              		.loc 1 245 5 is_stmt 1 view .LVU230
+ 246:Src/pose_pipeline.c ****     float32_t ahssc_x = 0.0f;
+ 698              		.loc 1 246 5 view .LVU231
+ 247:Src/pose_pipeline.c **** 
+ 248:Src/pose_pipeline.c ****     if (s->deriv_initialized)
+ 699              		.loc 1 248 5 view .LVU232
+ 249:Src/pose_pipeline.c ****     {
+ 250:Src/pose_pipeline.c ****         ahssc   = (vhssc_ema   - s->vhssc_ema)   / dt;
+ 700              		.loc 1 250 9 view .LVU233
+ 701              		.loc 1 250 32 is_stmt 0 view .LVU234
+ 702 01d8 78EE677A 		vsub.f32	s15, s16, s15
+ 703              		.loc 1 250 17 view .LVU235
+ 704 01dc C7EE846A 		vdiv.f32	s13, s15, s8
+ 705              	.LVL69:
+ 251:Src/pose_pipeline.c ****         ahssc_x = (vhssc_x_raw - s->vhssc_x_ema) / dt;
+ 706              		.loc 1 251 9 is_stmt 1 view .LVU236
+ 707              		.loc 1 251 32 is_stmt 0 view .LVU237
+ 708 01e0 D4ED8B7A 		vldr.32	s15, [r4, #556]
+ 709 01e4 78EEE77A 		vsub.f32	s15, s17, s15
+ 710              		.loc 1 251 17 view .LVU238
+ 711 01e8 87EE847A 		vdiv.f32	s14, s15, s8
+ 712              	.LVL70:
+ 713              	.L35:
+ 252:Src/pose_pipeline.c ****     }
+ 253:Src/pose_pipeline.c **** 
+ 254:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 255:Src/pose_pipeline.c ****      * Step 8 : Assemble raw 45-feat base vector
+ARM GAS  /tmp/ccA2Mu0s.s 			page 20
 
 
- 869              		.loc 1 245 1 view .LVU285
- 870              		.cfi_endproc
- 871              	.LFE782:
- 873              		.section	.text.PosePipeline_GetWindowTimeFirst,"ax",%progbits
- 874              		.align	1
- 875              		.global	PosePipeline_GetWindowTimeFirst
- 876              		.syntax unified
- 877              		.thumb
- 878              		.thumb_func
- 880              	PosePipeline_GetWindowTimeFirst:
- 881              	.LVL73:
- 882              	.LFB783:
+ 256:Src/pose_pipeline.c ****      *   [0..38]  kp13 × (y, x, conf)  — 39 features
+ 257:Src/pose_pipeline.c ****      *   [39..44] HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x
+ 258:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 259:Src/pose_pipeline.c ****     float32_t raw_base[POSE_BASE_FEAT_COUNT];
+ 714              		.loc 1 259 5 is_stmt 1 view .LVU239
+ 260:Src/pose_pipeline.c **** 
+ 261:Src/pose_pipeline.c ****     for (uint32_t k = 0u; k < POSE_KP13_COUNT; k++)
+ 715              		.loc 1 261 5 view .LVU240
+ 716              	.LBB76:
+ 717              		.loc 1 261 10 view .LVU241
+ 718              		.loc 1 261 29 discriminator 1 view .LVU242
+ 719              	.LBE76:
+ 245:Src/pose_pipeline.c ****     float32_t ahssc_x = 0.0f;
+ 720              		.loc 1 245 15 is_stmt 0 view .LVU243
+ 721 01ec 0D26     		movs	r6, #13
+ 722 01ee 1EAA     		add	r2, sp, #120
+ 723 01f0 1546     		mov	r5, r2
+ 724 01f2 46F001E0 		dls	lr, r6
+ 725 01f6 7A48     		ldr	r0, .L74+32
+ 726              	.LVL71:
+ 727              	.L36:
+ 728              	.LBB80:
+ 729              	.LBB77:
+ 262:Src/pose_pipeline.c ****     {
+ 263:Src/pose_pipeline.c ****         uint32_t src = kp13_indices[k];
+ 730              		.loc 1 263 9 is_stmt 1 view .LVU244
+ 731              		.loc 1 263 36 is_stmt 0 view .LVU245
+ 732 01f8 10F8013B 		ldrb	r3, [r0], #1	@ zero_extendqisi2
+ 733              	.LVL72:
+ 264:Src/pose_pipeline.c ****         raw_base[k * 3u + 0u] = all_kp[src * 3u + 0u];
+ 734              		.loc 1 264 9 is_stmt 1 view .LVU246
+ 735              	.LBE77:
+ 261:Src/pose_pipeline.c ****     {
+ 736              		.loc 1 261 29 is_stmt 0 discriminator 1 view .LVU247
+ 737 01fc 013E     		subs	r6, r6, #1
+ 738              	.LBB78:
+ 739              		.loc 1 264 49 view .LVU248
+ 740 01fe 03EB4303 		add	r3, r3, r3, lsl #1
+ 741              	.LVL73:
+ 742              		.loc 1 264 39 view .LVU249
+ 743 0202 09EB830C 		add	ip, r9, r3, lsl #2
+ 744              		.loc 1 264 31 view .LVU250
+ 745 0206 DCF800C0 		ldr	ip, [ip]	@ float
+ 746              	.LBE78:
+ 261:Src/pose_pipeline.c ****     {
+ 747              		.loc 1 261 29 discriminator 1 view .LVU251
+ 748 020a 0C32     		adds	r2, r2, #12
+ 749              	.LBB79:
+ 750              		.loc 1 264 31 view .LVU252
+ 751 020c 42F80CCC 		str	ip, [r2, #-12]	@ float
+ 265:Src/pose_pipeline.c ****         raw_base[k * 3u + 1u] = all_kp[src * 3u + 1u];
+ 752              		.loc 1 265 9 is_stmt 1 view .LVU253
+ 753              		.loc 1 265 39 is_stmt 0 view .LVU254
+ 754 0210 09EB830C 		add	ip, r9, r3, lsl #2
+ 266:Src/pose_pipeline.c ****         raw_base[k * 3u + 2u] = all_kp[src * 3u + 2u];
+ 755              		.loc 1 266 39 view .LVU255
+ 756 0214 09EB8303 		add	r3, r9, r3, lsl #2
+ARM GAS  /tmp/ccA2Mu0s.s 			page 21
+
+
+ 265:Src/pose_pipeline.c ****         raw_base[k * 3u + 1u] = all_kp[src * 3u + 1u];
+ 757              		.loc 1 265 31 view .LVU256
+ 758 0218 DCF804C0 		ldr	ip, [ip, #4]	@ float
+ 759              		.loc 1 266 31 view .LVU257
+ 760 021c 9B68     		ldr	r3, [r3, #8]	@ float
+ 265:Src/pose_pipeline.c ****         raw_base[k * 3u + 1u] = all_kp[src * 3u + 1u];
+ 761              		.loc 1 265 31 view .LVU258
+ 762 021e 42F808CC 		str	ip, [r2, #-8]	@ float
+ 763              		.loc 1 266 9 is_stmt 1 view .LVU259
+ 764              		.loc 1 266 31 is_stmt 0 view .LVU260
+ 765 0222 42F8043C 		str	r3, [r2, #-4]	@ float
+ 766              	.LBE79:
+ 261:Src/pose_pipeline.c ****     {
+ 767              		.loc 1 261 49 is_stmt 1 discriminator 3 view .LVU261
+ 768              	.LVL74:
+ 261:Src/pose_pipeline.c ****     {
+ 769              		.loc 1 261 29 discriminator 1 view .LVU262
+ 770 0226 0FF019C8 		le	lr, .L36
+ 771              	.LBE80:
+ 267:Src/pose_pipeline.c ****     }
+ 268:Src/pose_pipeline.c **** 
+ 269:Src/pose_pipeline.c ****     raw_base[39u] = hssc_y;
+ 772              		.loc 1 269 5 view .LVU263
+ 773              		.loc 1 269 19 is_stmt 0 view .LVU264
+ 774 022a C5ED279A 		vstr.32	s19, [r5, #156]
+ 270:Src/pose_pipeline.c ****     raw_base[40u] = hssc_x;
+ 775              		.loc 1 270 5 is_stmt 1 view .LVU265
+ 776              		.loc 1 270 19 is_stmt 0 view .LVU266
+ 777 022e 85ED289A 		vstr.32	s18, [r5, #160]
+ 271:Src/pose_pipeline.c ****     raw_base[41u] = rwhc;
+ 778              		.loc 1 271 5 is_stmt 1 view .LVU267
+ 779              		.loc 1 271 19 is_stmt 0 view .LVU268
+ 780 0232 85ED296A 		vstr.32	s12, [r5, #164]
+ 272:Src/pose_pipeline.c ****     raw_base[42u] = vhssc_ema;
+ 781              		.loc 1 272 5 is_stmt 1 view .LVU269
+ 782              		.loc 1 272 19 is_stmt 0 view .LVU270
+ 783 0236 85ED2A8A 		vstr.32	s16, [r5, #168]
+ 273:Src/pose_pipeline.c ****     raw_base[43u] = ahssc;
+ 784              		.loc 1 273 5 is_stmt 1 view .LVU271
+ 785              		.loc 1 273 19 is_stmt 0 view .LVU272
+ 786 023a C5ED2B6A 		vstr.32	s13, [r5, #172]
+ 274:Src/pose_pipeline.c ****     raw_base[44u] = ahssc_x;
+ 787              		.loc 1 274 5 is_stmt 1 view .LVU273
+ 788              		.loc 1 274 19 is_stmt 0 view .LVU274
+ 789 023e 85ED2C7A 		vstr.32	s14, [r5, #176]
+ 275:Src/pose_pipeline.c **** 
+ 276:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 277:Src/pose_pipeline.c ****      * Step 9 : Velocity — forward diff of raw base at vel_src_indices
+ 278:Src/pose_pipeline.c ****      *   Matches Python: add_velocity(frames, vel_idx) with delta[0] = 0
+ 279:Src/pose_pipeline.c ****      *   Computed BEFORE normalization (same as training pipeline).
+ 280:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 281:Src/pose_pipeline.c ****     float32_t vel[POSE_VEL_COUNT];
+ 790              		.loc 1 281 5 is_stmt 1 view .LVU275
+ 282:Src/pose_pipeline.c **** 
+ 283:Src/pose_pipeline.c ****     if (s->deriv_initialized)
+ 791              		.loc 1 283 5 view .LVU276
+ 792 0242 04F50C7A 		add	r10, r4, #560
+ARM GAS  /tmp/ccA2Mu0s.s 			page 22
+
+
+ 793 0246 04F52979 		add	r9, r4, #676
+ 794              		.loc 1 283 8 is_stmt 0 view .LVU277
+ 795 024a 0029     		cmp	r1, #0
+ 796 024c 00F0D280 		beq	.L37
+ 797              		.loc 1 283 8 view .LVU278
+ 798 0250 4FF01D0E 		mov	lr, #29
+ 799 0254 5146     		mov	r1, r10
+ 800 0256 4EF001E0 		dls	lr, lr
+ 801 025a 6248     		ldr	r0, .L74+36
+ 802              	.LVL75:
+ 803              		.loc 1 283 8 view .LVU279
+ 804 025c 01AA     		add	r2, sp, #4
+ 805              	.LVL76:
+ 806              	.L38:
+ 807              	.LBB81:
+ 284:Src/pose_pipeline.c ****     {
+ 285:Src/pose_pipeline.c ****         for (uint32_t i = 0u; i < POSE_VEL_COUNT; i++)
+ 286:Src/pose_pipeline.c ****         {
+ 287:Src/pose_pipeline.c ****             vel[i] = raw_base[vel_src_indices[i]] - s->prev_raw_vel[i];
+ 808              		.loc 1 287 13 is_stmt 1 view .LVU280
+ 809              		.loc 1 287 46 is_stmt 0 view .LVU281
+ 810 025e 10F8013B 		ldrb	r3, [r0], #1	@ zero_extendqisi2
+ 811              	.LVL77:
+ 812              		.loc 1 287 68 view .LVU282
+ 813 0262 B1EC017A 		vldmia.32	r1!, {s14}
+ 814              		.loc 1 287 30 view .LVU283
+ 815 0266 05EB8303 		add	r3, r5, r3, lsl #2
+ 816              		.loc 1 287 51 view .LVU284
+ 817 026a D3ED007A 		vldr.32	s15, [r3]
+ 818 026e 77EEC77A 		vsub.f32	s15, s15, s14
+ 819              		.loc 1 287 20 view .LVU285
+ 820 0272 E2EC017A 		vstmia.32	r2!, {s15}
+ 285:Src/pose_pipeline.c ****         {
+ 821              		.loc 1 285 52 is_stmt 1 discriminator 3 view .LVU286
+ 822              	.LVL78:
+ 285:Src/pose_pipeline.c ****         {
+ 823              		.loc 1 285 33 discriminator 1 view .LVU287
+ 824 0276 0FF00FC0 		le	lr, .L38
+ 825              	.LVL79:
+ 826              	.L39:
+ 285:Src/pose_pipeline.c ****         {
+ 827              		.loc 1 285 33 is_stmt 0 discriminator 1 view .LVU288
+ 828              	.LBE81:
+ 829              	.LBB82:
+ 288:Src/pose_pipeline.c ****         }
+ 289:Src/pose_pipeline.c ****     }
+ 290:Src/pose_pipeline.c ****     else
+ 291:Src/pose_pipeline.c ****     {
+ 292:Src/pose_pipeline.c ****         memset(vel, 0, sizeof(vel));
+ 293:Src/pose_pipeline.c ****     }
+ 294:Src/pose_pipeline.c **** 
+ 295:Src/pose_pipeline.c ****     /* Update state */
+ 296:Src/pose_pipeline.c ****     for (uint32_t i = 0u; i < POSE_VEL_COUNT; i++)
+ 830              		.loc 1 296 29 is_stmt 1 discriminator 1 view .LVU289
+ 831 027a A9EB0A0E 		sub	lr, r9, r10
+ 832 027e AEF1040E 		sub	lr, lr, #4
+ 833 0282 4FEA9E0E 		lsr	lr, lr, #2
+ARM GAS  /tmp/ccA2Mu0s.s 			page 23
+
+
+ 834 0286 0EF1010E 		add	lr, lr, #1
+ 835 028a 4EF001E0 		dls	lr, lr
+ 836 028e 554A     		ldr	r2, .L74+36
+ 837              	.LVL80:
+ 838              	.L40:
+ 297:Src/pose_pipeline.c ****     {
+ 298:Src/pose_pipeline.c ****         s->prev_raw_vel[i] = raw_base[vel_src_indices[i]];
+ 839              		.loc 1 298 9 view .LVU290
+ 840              		.loc 1 298 54 is_stmt 0 view .LVU291
+ 841 0290 12F8013B 		ldrb	r3, [r2], #1	@ zero_extendqisi2
+ 842              	.LVL81:
+ 843              		.loc 1 298 38 view .LVU292
+ 844 0294 05EB8303 		add	r3, r5, r3, lsl #2
+ 845              		.loc 1 298 28 view .LVU293
+ 846 0298 1B68     		ldr	r3, [r3]	@ float
+ 847 029a 4AF8043B 		str	r3, [r10], #4	@ float
+ 296:Src/pose_pipeline.c ****     {
+ 848              		.loc 1 296 48 is_stmt 1 discriminator 3 view .LVU294
+ 849              	.LVL82:
+ 296:Src/pose_pipeline.c ****     {
+ 850              		.loc 1 296 29 discriminator 1 view .LVU295
+ 851 029e 0FF009C8 		le	lr, .L40
+ 852              	.LBE82:
+ 299:Src/pose_pipeline.c ****     }
+ 300:Src/pose_pipeline.c ****     s->hssc_y_prev       = hssc_y;
+ 853              		.loc 1 300 5 view .LVU296
+ 301:Src/pose_pipeline.c ****     s->hssc_x_prev       = hssc_x;
+ 302:Src/pose_pipeline.c ****     s->vhssc_ema         = vhssc_ema;
+ 303:Src/pose_pipeline.c ****     s->vhssc_x_ema       = vhssc_x_raw;
+ 304:Src/pose_pipeline.c ****     s->deriv_initialized = 1u;
+ 854              		.loc 1 304 26 is_stmt 0 view .LVU297
+ 855 02a2 0123     		movs	r3, #1
+ 305:Src/pose_pipeline.c **** 
+ 306:Src/pose_pipeline.c ****     /* ------------------------------------------------------------------
+ 307:Src/pose_pipeline.c ****      * Step 10 : Assemble full 74-feat vector [base(45) | vel(29)]
+ 308:Src/pose_pipeline.c ****      * Step 11 : Normalize + clip [0, 1]
+ 309:Src/pose_pipeline.c ****      * ------------------------------------------------------------------ */
+ 310:Src/pose_pipeline.c ****     float32_t features[POSE_FEATURE_COUNT];
+ 311:Src/pose_pipeline.c **** 
+ 312:Src/pose_pipeline.c ****     memcpy(features,                  raw_base, POSE_BASE_FEAT_COUNT * sizeof(float32_t));
+ 856              		.loc 1 312 5 view .LVU298
+ 857 02a4 B422     		movs	r2, #180
+ 858              	.LVL83:
+ 304:Src/pose_pipeline.c **** 
+ 859              		.loc 1 304 26 view .LVU299
+ 860 02a6 84F8A432 		strb	r3, [r4, #676]
+ 861              		.loc 1 312 5 view .LVU300
+ 862 02aa 2946     		mov	r1, r5
+ 300:Src/pose_pipeline.c ****     s->hssc_x_prev       = hssc_x;
+ 863              		.loc 1 300 26 view .LVU301
+ 864 02ac C4ED889A 		vstr.32	s19, [r4, #544]
+ 301:Src/pose_pipeline.c ****     s->vhssc_ema         = vhssc_ema;
+ 865              		.loc 1 301 5 is_stmt 1 view .LVU302
+ 301:Src/pose_pipeline.c ****     s->vhssc_ema         = vhssc_ema;
+ 866              		.loc 1 301 26 is_stmt 0 view .LVU303
+ 867 02b0 84ED8A9A 		vstr.32	s18, [r4, #552]
+ 302:Src/pose_pipeline.c ****     s->vhssc_x_ema       = vhssc_x_raw;
+ARM GAS  /tmp/ccA2Mu0s.s 			page 24
+
+
+ 868              		.loc 1 302 5 is_stmt 1 view .LVU304
+ 302:Src/pose_pipeline.c ****     s->vhssc_x_ema       = vhssc_x_raw;
+ 869              		.loc 1 302 26 is_stmt 0 view .LVU305
+ 870 02b4 84ED898A 		vstr.32	s16, [r4, #548]
+ 303:Src/pose_pipeline.c ****     s->deriv_initialized = 1u;
+ 871              		.loc 1 303 5 is_stmt 1 view .LVU306
+ 303:Src/pose_pipeline.c ****     s->deriv_initialized = 1u;
+ 872              		.loc 1 303 26 is_stmt 0 view .LVU307
+ 873 02b8 C4ED8B8A 		vstr.32	s17, [r4, #556]
+ 304:Src/pose_pipeline.c **** 
+ 874              		.loc 1 304 5 is_stmt 1 view .LVU308
+ 310:Src/pose_pipeline.c **** 
+ 875              		.loc 1 310 5 view .LVU309
+ 876              		.loc 1 312 5 view .LVU310
+ 877 02bc 3846     		mov	r0, r7
+ 878 02be FFF7FEFF 		bl	memcpy
+ 879              	.LVL84:
+ 313:Src/pose_pipeline.c ****     memcpy(features + POSE_BASE_FEAT_COUNT, vel, POSE_VEL_COUNT      * sizeof(float32_t));
+ 880              		.loc 1 313 5 view .LVU311
+ 881 02c2 7422     		movs	r2, #116
+ 882 02c4 01A9     		add	r1, sp, #4
+ 883 02c6 ABA8     		add	r0, sp, #684
+ 884 02c8 FFF7FEFF 		bl	memcpy
+ 885              	.LVL85:
+ 314:Src/pose_pipeline.c **** 
+ 315:Src/pose_pipeline.c ****     for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 886              		.loc 1 315 5 view .LVU312
+ 887              	.LBB83:
+ 888              		.loc 1 315 10 view .LVU313
+ 889              		.loc 1 315 29 discriminator 1 view .LVU314
+ 890 02cc 3B46     		mov	r3, r7
+ 891              	.LBB84:
+ 316:Src/pose_pipeline.c ****     {
+ 317:Src/pose_pipeline.c ****         float32_t v = (features[f] - norm_min[f]) / norm_scale[f];
+ 318:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 892              		.loc 1 318 30 is_stmt 0 discriminator 1 view .LVU315
+ 893 02ce 0020     		movs	r0, #0
+ 894 02d0 F7EE006A 		vmov.f32	s13, #1.0e+0
+ 895 02d4 4449     		ldr	r1, .L74+40
+ 896 02d6 454A     		ldr	r2, .L74+44
+ 897 02d8 C6F14A06 		rsb	r6, r6, #74
+ 898              	.LVL86:
+ 899              	.L42:
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 900              		.loc 1 317 9 is_stmt 1 view .LVU316
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 901              		.loc 1 317 46 is_stmt 0 view .LVU317
+ 902 02dc F1EC017A 		vldmia.32	r1!, {s15}
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 903              		.loc 1 317 32 view .LVU318
+ 904 02e0 B3EC017A 		vldmia.32	r3!, {s14}
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 905              		.loc 1 317 63 view .LVU319
+ 906 02e4 B2EC016A 		vldmia.32	r2!, {s12}
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 907              		.loc 1 317 36 view .LVU320
+ 908 02e8 37EE677A 		vsub.f32	s14, s14, s15
+ARM GAS  /tmp/ccA2Mu0s.s 			page 25
+
+
+ 317:Src/pose_pipeline.c ****         if      (v < 0.0f) v = 0.0f;
+ 909              		.loc 1 317 19 view .LVU321
+ 910 02ec C7EE067A 		vdiv.f32	s15, s14, s12
+ 911              	.LVL87:
+ 912              		.loc 1 318 9 is_stmt 1 view .LVU322
+ 913              		.loc 1 318 17 is_stmt 0 view .LVU323
+ 914 02f0 F5EEC07A 		vcmpe.f32	s15, #0
+ 915 02f4 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 916              		.loc 1 318 30 discriminator 1 view .LVU324
+ 917 02f8 07EE100A 		vmov	s14, r0
+ 918              		.loc 1 318 17 view .LVU325
+ 919 02fc 05D4     		bmi	.L41
+ 319:Src/pose_pipeline.c ****         else if (v > 1.0f) v = 1.0f;
+ 920              		.loc 1 319 14 is_stmt 1 view .LVU326
+ 921 02fe F4EEE67A 		vcmpe.f32	s15, s13
+ 922 0302 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 923 0306 36FEA77A 		vselgt.f32	s14, s13, s15
+ 924              	.L41:
+ 925              	.LVL88:
+ 320:Src/pose_pipeline.c ****         features[f] = v;
+ 926              		.loc 1 320 9 view .LVU327
+ 927              	.LBE84:
+ 315:Src/pose_pipeline.c ****     {
+ 928              		.loc 1 315 29 is_stmt 0 discriminator 1 view .LVU328
+ 929 030a 013E     		subs	r6, r6, #1
+ 930              	.LBB85:
+ 931              		.loc 1 320 21 view .LVU329
+ 932 030c 03ED017A 		vstr.32	s14, [r3, #-4]
+ 933              	.LBE85:
+ 315:Src/pose_pipeline.c ****     {
+ 934              		.loc 1 315 52 is_stmt 1 discriminator 2 view .LVU330
+ 315:Src/pose_pipeline.c ****     {
+ 935              		.loc 1 315 29 discriminator 1 view .LVU331
+ 936 0310 E4D1     		bne	.L42
+ 937              	.LBE83:
+ 321:Src/pose_pipeline.c ****     }
+ 322:Src/pose_pipeline.c **** 
+ 323:Src/pose_pipeline.c ****     if (out != NULL)
+ 938              		.loc 1 323 5 view .LVU332
+ 939              		.loc 1 323 8 is_stmt 0 view .LVU333
+ 940 0312 B8F1000F 		cmp	r8, #0
+ 941 0316 08D0     		beq	.L43
+ 324:Src/pose_pipeline.c ****     {
+ 325:Src/pose_pipeline.c ****         memcpy(out->f, features, sizeof(features));
+ 942              		.loc 1 325 9 is_stmt 1 view .LVU334
+ 943 0318 4FF49472 		mov	r2, #296
+ 944 031c 3946     		mov	r1, r7
+ 945 031e 4046     		mov	r0, r8
+ 946 0320 FFF7FEFF 		bl	memcpy
+ 947              	.LVL89:
+ 326:Src/pose_pipeline.c ****         out->valid = 1u;
+ 948              		.loc 1 326 9 view .LVU335
+ 949              		.loc 1 326 20 is_stmt 0 view .LVU336
+ 950 0324 0123     		movs	r3, #1
+ 951 0326 88F82831 		strb	r3, [r8, #296]
+ 952              	.L43:
+ 327:Src/pose_pipeline.c ****     }
+ARM GAS  /tmp/ccA2Mu0s.s 			page 26
+
+
+ 328:Src/pose_pipeline.c **** 
+ 329:Src/pose_pipeline.c ****     memcpy(s->win_buf[s->win_head], features, sizeof(features));
+ 953              		.loc 1 329 5 is_stmt 1 view .LVU337
+ 954              		.loc 1 329 22 is_stmt 0 view .LVU338
+ 955 032a 4FF49472 		mov	r2, #296
+ 956              		.loc 1 329 24 view .LVU339
+ 957 032e 04F54055 		add	r5, r4, #12288
+ 958              		.loc 1 329 22 view .LVU340
+ 959 0332 D5F8E830 		ldr	r3, [r5, #232]
+ 960              		.loc 1 329 5 view .LVU341
+ 961 0336 3946     		mov	r1, r7
+ 962              		.loc 1 329 22 view .LVU342
+ 963 0338 02FB0340 		mla	r0, r2, r3, r4
+ 964              		.loc 1 329 5 view .LVU343
+ 965 033c 00F52A70 		add	r0, r0, #680
+ 966 0340 FFF7FEFF 		bl	memcpy
+ 967              	.LVL90:
+ 330:Src/pose_pipeline.c ****     s->win_head = (s->win_head + 1u) % POSE_WINDOW_SIZE;
+ 968              		.loc 1 330 5 is_stmt 1 view .LVU344
+ 969              		.loc 1 330 38 is_stmt 0 view .LVU345
+ 970 0344 2822     		movs	r2, #40
+ 971              		.loc 1 330 32 view .LVU346
+ 972 0346 D5F8E830 		ldr	r3, [r5, #232]
+ 973 034a 0133     		adds	r3, r3, #1
+ 974              		.loc 1 330 38 view .LVU347
+ 975 034c B3FBF2F1 		udiv	r1, r3, r2
+ 976 0350 02FB1133 		mls	r3, r2, r1, r3
+ 977              		.loc 1 330 17 view .LVU348
+ 978 0354 C5F8E830 		str	r3, [r5, #232]
+ 331:Src/pose_pipeline.c ****     if (s->win_count < POSE_WINDOW_SIZE) s->win_count++;
+ 979              		.loc 1 331 5 is_stmt 1 view .LVU349
+ 980              		.loc 1 331 10 is_stmt 0 view .LVU350
+ 981 0358 D5F8EC30 		ldr	r3, [r5, #236]
+ 982              		.loc 1 331 8 view .LVU351
+ 983 035c 272B     		cmp	r3, #39
+ 984              		.loc 1 331 42 is_stmt 1 discriminator 1 view .LVU352
+ 985              		.loc 1 331 54 is_stmt 0 discriminator 1 view .LVU353
+ 986 035e 9CBF     		itt	ls
+ 987 0360 0133     		addls	r3, r3, #1
+ 988 0362 C5F8EC30 		strls	r3, [r5, #236]
+ 989              	.LVL91:
+ 990              	.L18:
+ 332:Src/pose_pipeline.c **** }
+ 991              		.loc 1 332 1 view .LVU354
+ 992 0366 0DF5497D 		add	sp, sp, #804
+ 993              		.cfi_remember_state
+ 994              		.cfi_def_cfa_offset 52
+ 995              		@ sp needed
+ 996 036a BDEC048B 		vldm	sp!, {d8-d9}
+ 997              		.cfi_restore 82
+ 998              		.cfi_restore 83
+ 999              		.cfi_restore 80
+ 1000              		.cfi_restore 81
+ 1001              		.cfi_def_cfa_offset 36
+ 1002 036e BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1003              	.LVL92:
+ 1004              	.L45:
+ARM GAS  /tmp/ccA2Mu0s.s 			page 27
+
+
+ 1005              		.cfi_restore_state
+ 181:Src/pose_pipeline.c **** 
+ 1006              		.loc 1 181 44 discriminator 3 view .LVU355
+ 1007 0372 9FED1F4A 		vldr.32	s8, .L74+48
+ 1008 0376 69E6     		b	.L24
+ 1009              	.LVL93:
+ 1010              	.L72:
+ 1011              	.LBB86:
+ 1012              	.LBB57:
+ 205:Src/pose_pipeline.c ****             filt_x = s->x_filter[i].initialized ? clamp01(s->x_filter[i].x_prev) : raw_x;
+ 1013              		.loc 1 205 13 is_stmt 1 view .LVU356
+ 205:Src/pose_pipeline.c ****             filt_x = s->x_filter[i].initialized ? clamp01(s->x_filter[i].x_prev) : raw_x;
+ 1014              		.loc 1 205 82 is_stmt 0 view .LVU357
+ 1015 0378 137A     		ldrb	r3, [r2, #8]	@ zero_extendqisi2
+ 1016 037a 2BB1     		cbz	r3, .L28
+ 205:Src/pose_pipeline.c ****             filt_x = s->x_filter[i].initialized ? clamp01(s->x_filter[i].x_prev) : raw_x;
+ 1017              		.loc 1 205 51 discriminator 1 view .LVU358
+ 1018 037c 92ED000A 		vldr.32	s0, [r2]
+ 1019              	.LVL94:
+ 205:Src/pose_pipeline.c ****             filt_x = s->x_filter[i].initialized ? clamp01(s->x_filter[i].x_prev) : raw_x;
+ 1020              		.loc 1 205 51 discriminator 1 view .LVU359
+ 1021 0380 FFF7FEFF 		bl	clamp01
+ 1022              	.LVL95:
+ 1023 0384 B0EE403A 		vmov.f32	s6, s0
+ 1024              	.LVL96:
+ 1025              	.L28:
+ 206:Src/pose_pipeline.c ****         }
+ 1026              		.loc 1 206 13 is_stmt 1 view .LVU360
+ 206:Src/pose_pipeline.c ****         }
+ 1027              		.loc 1 206 82 is_stmt 0 view .LVU361
+ 1028 0388 92F8D430 		ldrb	r3, [r2, #212]	@ zero_extendqisi2
+ 1029 038c 002B     		cmp	r3, #0
+ 1030 038e 3FF494AE 		beq	.L27
+ 206:Src/pose_pipeline.c ****         }
+ 1031              		.loc 1 206 51 discriminator 1 view .LVU362
+ 1032 0392 92ED330A 		vldr.32	s0, [r2, #204]
+ 1033 0396 8CE6     		b	.L73
+ 1034              	.LVL97:
+ 1035              	.L29:
+ 1036              	.LBB55:
+ 1037              	.LBB52:
+  77:Src/pose_pipeline.c ****     f->x_prev = x_hat;
+ 1038              		.loc 1 77 5 is_stmt 1 view .LVU363
+  77:Src/pose_pipeline.c ****     f->x_prev = x_hat;
+ 1039              		.loc 1 77 50 is_stmt 0 view .LVU364
+ 1040 0398 D6ED667A 		vldr.32	s15, [r6, #408]
+ 1041 039c 67EE827A 		vmul.f32	s15, s15, s4
+  77:Src/pose_pipeline.c ****     f->x_prev = x_hat;
+ 1042              		.loc 1 77 15 view .LVU365
+ 1043 03a0 E2EE827A 		vfma.f32	s15, s5, s4
+ 1044 03a4 F0EE672A 		vmov.f32	s5, s15
+ 1045              	.LVL98:
+  78:Src/pose_pipeline.c ****     return x_hat;
+ 1046              		.loc 1 78 5 is_stmt 1 view .LVU366
+  78:Src/pose_pipeline.c ****     return x_hat;
+ 1047              		.loc 1 78 15 is_stmt 0 view .LVU367
+ 1048 03a8 C6ED667A 		vstr.32	s15, [r6, #408]
+ARM GAS  /tmp/ccA2Mu0s.s 			page 28
+
+
+  79:Src/pose_pipeline.c **** }
+ 1049              		.loc 1 79 5 is_stmt 1 view .LVU368
+  79:Src/pose_pipeline.c **** }
+ 1050              		.loc 1 79 12 is_stmt 0 view .LVU369
+ 1051 03ac 92E6     		b	.L30
+ 1052              	.LVL99:
+ 1053              	.L47:
+  79:Src/pose_pipeline.c **** }
+ 1054              		.loc 1 79 12 view .LVU370
+ 1055              	.LBE52:
+ 1056              	.LBE55:
+ 1057              	.LBE57:
+ 1058              	.LBE86:
+ 1059 03ae 9FED078A 		vldr.32	s16, .L74+12
+ 226:Src/pose_pipeline.c **** 
+ 1060              		.loc 1 226 15 view .LVU371
+ 1061 03b2 F0EE488A 		vmov.f32	s17, s16
  246:Src/pose_pipeline.c **** 
- 247:Src/pose_pipeline.c **** void PosePipeline_GetWindowTimeFirst(const PosePipeline_t *s,
- 248:Src/pose_pipeline.c ****                                      float32_t dst[POSE_WINDOW_SIZE][POSE_FEATURE_COUNT])
- 249:Src/pose_pipeline.c **** {
- 883              		.loc 1 249 1 is_stmt 1 view -0
- 884              		.cfi_startproc
- 885              		@ args = 0, pretend = 0, frame = 0
- 886              		@ frame_needed = 0, uses_anonymous_args = 0
- 250:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 887              		.loc 1 250 3 view .LVU287
- 249:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 888              		.loc 1 249 1 is_stmt 0 view .LVU288
- 889 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
- 890              		.cfi_def_cfa_offset 32
- 891              		.cfi_offset 3, -32
- 892              		.cfi_offset 4, -28
- 893              		.cfi_offset 5, -24
- 894              		.cfi_offset 6, -20
- 895              		.cfi_offset 7, -16
- 896              		.cfi_offset 8, -12
- 897              		.cfi_offset 9, -8
- 898              		.cfi_offset 14, -4
- 899              		.loc 1 250 23 view .LVU289
- 900 0004 00F54053 		add	r3, r0, #12288
- 901              		.loc 1 250 60 view .LVU290
- 902 0008 D3F8C025 		ldr	r2, [r3, #1472]
- 249:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 903              		.loc 1 249 1 view .LVU291
- 904 000c 0546     		mov	r5, r0
- 905              		.loc 1 250 60 view .LVU292
- 906 000e 3B2A     		cmp	r2, #59
- 249:Src/pose_pipeline.c ****   uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
- 907              		.loc 1 249 1 view .LVU293
- 908 0010 0E46     		mov	r6, r1
- 909              		.loc 1 250 60 discriminator 2 view .LVU294
- 910 0012 98BF     		it	ls
- 911 0014 4FF00009 		movls	r9, #0
- 912              	.LBB77:
- 251:Src/pose_pipeline.c **** 
- 252:Src/pose_pipeline.c ****   for (uint32_t t = 0; t < POSE_WINDOW_SIZE; t++)
- 913              		.loc 1 252 17 view .LVU295
- 914 0018 4FF00004 		mov	r4, #0
- 915              	.LBB78:
- 253:Src/pose_pipeline.c ****   {
- 254:Src/pose_pipeline.c ****     uint32_t src_t = (oldest + t) % POSE_WINDOW_SIZE;
-ARM GAS  /tmp/ccARejm9.s 			page 24
+ 1062              		.loc 1 246 15 view .LVU372
+ 1063 03b6 B0EE487A 		vmov.f32	s14, s16
+ 245:Src/pose_pipeline.c ****     float32_t ahssc_x = 0.0f;
+ 1064              		.loc 1 245 15 view .LVU373
+ 1065 03ba F0EE486A 		vmov.f32	s13, s16
+ 1066 03be 15E7     		b	.L35
+ 1067              	.L75:
+ 1068              		.align	2
+ 1069              	.L74:
+ 1070 03c0 FFFF7F7F 		.word	2139095039
+ 1071 03c4 BD378635 		.word	897988541
+ 1072 03c8 9A99193E 		.word	1041865114
+ 1073 03cc 00000000 		.word	0
+ 1074 03d0 00000000 		.word	hssc_indices
+ 1075 03d4 6F12833A 		.word	981668463
+ 1076 03d8 9A99193F 		.word	1058642330
+ 1077 03dc CDCCCC3E 		.word	1053609165
+ 1078 03e0 00000000 		.word	kp13_indices
+ 1079 03e4 00000000 		.word	vel_src_indices
+ 1080 03e8 00000000 		.word	norm_min
+ 1081 03ec 00000000 		.word	norm_scale
+ 1082 03f0 8988883D 		.word	1032358025
+ 1083              	.LVL100:
+ 1084              	.L37:
+ 292:Src/pose_pipeline.c ****     }
+ 1085              		.loc 1 292 9 is_stmt 1 view .LVU374
+ 1086 03f4 7422     		movs	r2, #116
+ 1087 03f6 01A8     		add	r0, sp, #4
+ 1088              	.LVL101:
+ 292:Src/pose_pipeline.c ****     }
+ 1089              		.loc 1 292 9 is_stmt 0 view .LVU375
+ 1090 03f8 FFF7FEFF 		bl	memset
+ 1091              	.LVL102:
+ 292:Src/pose_pipeline.c ****     }
+ 1092              		.loc 1 292 9 view .LVU376
+ 1093 03fc 3DE7     		b	.L39
+ 1094              		.cfi_endproc
+ 1095              	.LFE781:
+ 1097 03fe 00BF     		.section	.text.PosePipeline_GetWindowFeaturesFirst,"ax",%progbits
+ARM GAS  /tmp/ccA2Mu0s.s 			page 29
 
 
- 255:Src/pose_pipeline.c ****     memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
- 916              		.loc 1 255 15 view .LVU296
- 917 001c 4FF0DC07 		mov	r7, #220
- 254:Src/pose_pipeline.c ****     memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
- 918              		.loc 1 254 14 view .LVU297
- 919 0020 4FF03C08 		mov	r8, #60
- 920              	.LBE78:
- 921              	.LBE77:
- 250:Src/pose_pipeline.c **** 
- 922              		.loc 1 250 60 discriminator 1 view .LVU298
- 923 0024 88BF     		it	hi
- 924 0026 D3F8BC95 		ldrhi	r9, [r3, #1468]
- 925              	.LVL74:
- 252:Src/pose_pipeline.c ****   {
- 926              		.loc 1 252 3 is_stmt 1 view .LVU299
- 927              	.LBB81:
- 252:Src/pose_pipeline.c ****   {
- 928              		.loc 1 252 8 view .LVU300
- 252:Src/pose_pipeline.c ****   {
- 929              		.loc 1 252 26 discriminator 1 view .LVU301
- 930              	.L60:
- 931              	.LBB79:
- 254:Src/pose_pipeline.c ****     memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
- 932              		.loc 1 254 5 view .LVU302
- 933              		.loc 1 255 5 view .LVU303
- 254:Src/pose_pipeline.c ****     memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
- 934              		.loc 1 254 30 is_stmt 0 view .LVU304
- 935 002a 09EB0403 		add	r3, r9, r4
- 254:Src/pose_pipeline.c ****     memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
- 936              		.loc 1 254 14 view .LVU305
- 937 002e B3FBF8F2 		udiv	r2, r3, r8
- 938 0032 08FB1233 		mls	r3, r8, r2, r3
- 939              		.loc 1 255 30 view .LVU306
- 940 0036 07FB0353 		mla	r3, r7, r3, r5
- 941              		.loc 1 255 5 view .LVU307
- 942 003a 07FB0460 		mla	r0, r7, r4, r6
- 943 003e DC22     		movs	r2, #220
- 944 0040 03F50B71 		add	r1, r3, #556
- 945              	.LBE79:
- 252:Src/pose_pipeline.c ****   {
- 946              		.loc 1 252 47 discriminator 3 view .LVU308
- 947 0044 0134     		adds	r4, r4, #1
- 948              	.LVL75:
- 949              	.LBB80:
- 950              		.loc 1 255 5 view .LVU309
- 951 0046 FFF7FEFF 		bl	memcpy
- 952              	.LVL76:
- 953              	.LBE80:
- 252:Src/pose_pipeline.c ****   {
- 954              		.loc 1 252 47 is_stmt 1 discriminator 3 view .LVU310
- 252:Src/pose_pipeline.c ****   {
- 955              		.loc 1 252 26 discriminator 1 view .LVU311
- 956 004a 3C2C     		cmp	r4, #60
- 957 004c EDD1     		bne	.L60
- 958              	.LBE81:
- 256:Src/pose_pipeline.c ****   }
- 257:Src/pose_pipeline.c **** }
-ARM GAS  /tmp/ccARejm9.s 			page 25
+ 1098              		.align	1
+ 1099              		.global	PosePipeline_GetWindowFeaturesFirst
+ 1100              		.syntax unified
+ 1101              		.thumb
+ 1102              		.thumb_func
+ 1104              	PosePipeline_GetWindowFeaturesFirst:
+ 1105              	.LVL103:
+ 1106              	.LFB782:
+ 333:Src/pose_pipeline.c **** 
+ 334:Src/pose_pipeline.c **** void PosePipeline_GetWindowFeaturesFirst(const PosePipeline_t *s,
+ 335:Src/pose_pipeline.c ****                                          float32_t dst[POSE_FEATURE_COUNT][POSE_WINDOW_SIZE])
+ 336:Src/pose_pipeline.c **** {
+ 1107              		.loc 1 336 1 is_stmt 1 view -0
+ 1108              		.cfi_startproc
+ 1109              		@ args = 0, pretend = 0, frame = 0
+ 1110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1111              		.loc 1 337 5 view .LVU378
+ 1112              		.loc 1 337 25 is_stmt 0 view .LVU379
+ 1113 0000 00F54053 		add	r3, r0, #12288
+ 1114              		.loc 1 337 62 view .LVU380
+ 1115 0004 D3F8EC20 		ldr	r2, [r3, #236]
+ 336:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1116              		.loc 1 336 1 view .LVU381
+ 1117 0008 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1118              		.cfi_def_cfa_offset 20
+ 1119              		.cfi_offset 4, -20
+ 1120              		.cfi_offset 5, -16
+ 1121              		.cfi_offset 6, -12
+ 1122              		.cfi_offset 7, -8
+ 1123              		.cfi_offset 14, -4
+ 1124              		.loc 1 337 62 view .LVU382
+ 1125 000a 272A     		cmp	r2, #39
+ 1126              		.loc 1 337 62 discriminator 2 view .LVU383
+ 1127 000c 98BF     		it	ls
+ 1128 000e 0024     		movls	r4, #0
+ 1129              	.LBB87:
+ 338:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1130              		.loc 1 338 19 view .LVU384
+ 1131 0010 4FF00002 		mov	r2, #0
+ 1132              	.LBB88:
+ 339:Src/pose_pipeline.c ****     {
+ 340:Src/pose_pipeline.c ****         uint32_t src_t = (oldest + t) % POSE_WINDOW_SIZE;
+ 1133              		.loc 1 340 18 view .LVU385
+ 1134 0014 4FF02805 		mov	r5, #40
+ 1135 0018 4FF49477 		mov	r7, #296
+ 1136              	.LBE88:
+ 1137              	.LBE87:
+ 337:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1138              		.loc 1 337 62 discriminator 1 view .LVU386
+ 1139 001c 88BF     		it	hi
+ 1140 001e D3F8E840 		ldrhi	r4, [r3, #232]
+ 1141              	.LVL104:
+ 338:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1142              		.loc 1 338 5 is_stmt 1 view .LVU387
+ 1143              	.LBB92:
+ 338:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ARM GAS  /tmp/ccA2Mu0s.s 			page 30
 
 
- 959              		.loc 1 257 1 is_stmt 0 view .LVU312
- 960 004e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
- 961              		.loc 1 257 1 view .LVU313
- 962              		.cfi_endproc
- 963              	.LFE783:
- 965              		.section	.text.PosePipeline_WindowFull,"ax",%progbits
- 966              		.align	1
- 967              		.global	PosePipeline_WindowFull
- 968              		.syntax unified
- 969              		.thumb
- 970              		.thumb_func
- 972              	PosePipeline_WindowFull:
- 973              	.LVL77:
- 974              	.LFB784:
- 258:Src/pose_pipeline.c **** 
- 259:Src/pose_pipeline.c **** uint8_t PosePipeline_WindowFull(const PosePipeline_t *s)
- 260:Src/pose_pipeline.c **** {
- 975              		.loc 1 260 1 is_stmt 1 view -0
- 976              		.cfi_startproc
- 977              		@ args = 0, pretend = 0, frame = 0
- 978              		@ frame_needed = 0, uses_anonymous_args = 0
- 979              		@ link register save eliminated.
- 261:Src/pose_pipeline.c ****   return (s->win_count >= POSE_WINDOW_SIZE) ? 1u : 0u;
- 980              		.loc 1 261 3 view .LVU315
- 981              		.loc 1 261 12 is_stmt 0 view .LVU316
- 982 0000 00F54050 		add	r0, r0, #12288
- 983              	.LVL78:
- 984              		.loc 1 261 50 view .LVU317
- 985 0004 D0F8C005 		ldr	r0, [r0, #1472]
- 986              	.LVL79:
- 262:Src/pose_pipeline.c **** }
- 987              		.loc 1 262 1 view .LVU318
- 988 0008 3B28     		cmp	r0, #59
- 989 000a 94BF     		ite	ls
- 990 000c 0020     		movls	r0, #0
- 991 000e 0120     		movhi	r0, #1
- 992 0010 7047     		bx	lr
- 993              		.cfi_endproc
- 994              	.LFE784:
- 996              		.section	.text.PosePipeline_GetLatestFeature,"ax",%progbits
- 997              		.align	1
- 998              		.global	PosePipeline_GetLatestFeature
- 999              		.syntax unified
- 1000              		.thumb
- 1001              		.thumb_func
- 1003              	PosePipeline_GetLatestFeature:
- 1004              	.LVL80:
- 1005              	.LFB785:
- 263:Src/pose_pipeline.c **** 
- 264:Src/pose_pipeline.c **** void PosePipeline_GetLatestFeature(const PosePipeline_t *s,
- 265:Src/pose_pipeline.c ****                                    float32_t dst[POSE_FEATURE_COUNT])
- 266:Src/pose_pipeline.c **** {
- 1006              		.loc 1 266 1 is_stmt 1 view -0
- 1007              		.cfi_startproc
- 1008              		@ args = 0, pretend = 0, frame = 0
- 1009              		@ frame_needed = 0, uses_anonymous_args = 0
- 1010              		@ link register save eliminated.
-ARM GAS  /tmp/ccARejm9.s 			page 26
+ 1144              		.loc 1 338 10 view .LVU388
+ 338:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1145              		.loc 1 338 29 discriminator 1 view .LVU389
+ 1146              	.L79:
+ 1147              	.LBB91:
+ 1148              		.loc 1 340 9 view .LVU390
+ 341:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1149              		.loc 1 341 9 view .LVU391
+ 1150              	.LBB89:
+ 1151              		.loc 1 341 14 view .LVU392
+ 1152              		.loc 1 341 33 discriminator 1 view .LVU393
+ 1153              	.LBE89:
+ 340:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1154              		.loc 1 340 18 is_stmt 0 view .LVU394
+ 1155 0022 4FF04A0C 		mov	ip, #74
+ 340:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1156              		.loc 1 340 34 view .LVU395
+ 1157 0026 A318     		adds	r3, r4, r2
+ 340:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1158              		.loc 1 340 18 view .LVU396
+ 1159 0028 B3FBF5F6 		udiv	r6, r3, r5
+ 1160 002c 4CF001E0 		dls	lr, ip
+ 1161 0030 05FB1633 		mls	r3, r5, r6, r3
+ 1162 0034 07FB0303 		mla	r3, r7, r3, r0
+ 1163 0038 01EB8206 		add	r6, r1, r2, lsl #2
+ 1164 003c 03F52A73 		add	r3, r3, #680
+ 1165              	.LVL105:
+ 1166              	.L78:
+ 1167              	.LBB90:
+ 342:Src/pose_pipeline.c ****             dst[f][t] = s->win_buf[src_t][f];
+ 1168              		.loc 1 342 13 is_stmt 1 view .LVU397
+ 1169              		.loc 1 342 42 is_stmt 0 view .LVU398
+ 1170 0040 53F804CB 		ldr	ip, [r3], #4	@ float
+ 1171              		.loc 1 342 23 view .LVU399
+ 1172 0044 46F8A0CB 		str	ip, [r6], #160	@ float
+ 341:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1173              		.loc 1 341 56 is_stmt 1 discriminator 3 view .LVU400
+ 341:Src/pose_pipeline.c ****         for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
+ 1174              		.loc 1 341 33 discriminator 1 view .LVU401
+ 1175 0048 0FF007C0 		le	lr, .L78
+ 1176              	.LBE90:
+ 1177              	.LBE91:
+ 338:Src/pose_pipeline.c ****     {
+ 1178              		.loc 1 338 50 discriminator 2 view .LVU402
+ 1179 004c 0132     		adds	r2, r2, #1
+ 1180              	.LVL106:
+ 338:Src/pose_pipeline.c ****     {
+ 1181              		.loc 1 338 29 discriminator 1 view .LVU403
+ 1182 004e 282A     		cmp	r2, #40
+ 1183 0050 E7D1     		bne	.L79
+ 1184              	.LBE92:
+ 343:Src/pose_pipeline.c ****     }
+ 344:Src/pose_pipeline.c **** }
+ 1185              		.loc 1 344 1 is_stmt 0 view .LVU404
+ 1186 0052 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1187              		.loc 1 344 1 view .LVU405
+ 1188              		.cfi_endproc
+ARM GAS  /tmp/ccA2Mu0s.s 			page 31
 
 
- 267:Src/pose_pipeline.c ****   uint32_t last = (s->win_head == 0) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
- 1011              		.loc 1 267 3 view .LVU320
- 266:Src/pose_pipeline.c ****   uint32_t last = (s->win_head == 0) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
- 1012              		.loc 1 266 1 is_stmt 0 view .LVU321
- 1013 0000 0346     		mov	r3, r0
- 1014              		.loc 1 267 21 view .LVU322
- 1015 0002 03F54052 		add	r2, r3, #12288
- 266:Src/pose_pipeline.c ****   uint32_t last = (s->win_head == 0) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
- 1016              		.loc 1 266 1 view .LVU323
- 1017 0006 10B4     		push	{r4}
- 1018              		.cfi_def_cfa_offset 4
- 1019              		.cfi_offset 4, -4
- 1020              		.loc 1 267 21 view .LVU324
- 1021 0008 D2F8BC45 		ldr	r4, [r2, #1468]
- 266:Src/pose_pipeline.c ****   uint32_t last = (s->win_head == 0) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
- 1022              		.loc 1 266 1 view .LVU325
- 1023 000c 0846     		mov	r0, r1
- 1024              	.LVL81:
- 1025              		.loc 1 267 64 view .LVU326
- 1026 000e 4CB1     		cbz	r4, .L66
- 1027              		.loc 1 267 64 discriminator 1 view .LVU327
- 1028 0010 013C     		subs	r4, r4, #1
- 1029              	.L65:
- 1030              	.LVL82:
- 268:Src/pose_pipeline.c ****   memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
- 1031              		.loc 1 268 3 is_stmt 1 view .LVU328
- 1032              		.loc 1 268 25 is_stmt 0 view .LVU329
- 1033 0012 DC22     		movs	r2, #220
- 1034 0014 02FB0433 		mla	r3, r2, r4, r3
- 1035              	.LVL83:
- 269:Src/pose_pipeline.c **** }
- 1036              		.loc 1 269 1 view .LVU330
- 1037 0018 5DF8044B 		ldr	r4, [sp], #4
- 1038              	.LVL84:
- 268:Src/pose_pipeline.c ****   memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
- 1039              		.loc 1 268 3 view .LVU331
- 1040 001c 03F50B71 		add	r1, r3, #556
- 1041              	.LVL85:
- 268:Src/pose_pipeline.c ****   memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
- 1042              		.loc 1 268 3 view .LVU332
- 1043 0020 FFF7FEBF 		b	memcpy
- 1044              	.LVL86:
- 1045              	.L66:
- 267:Src/pose_pipeline.c ****   memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
- 1046              		.loc 1 267 64 discriminator 2 view .LVU333
- 1047 0024 3B24     		movs	r4, #59
- 1048 0026 F4E7     		b	.L65
- 1049              		.cfi_endproc
- 1050              	.LFE785:
- 1052              		.section	.rodata.hssc_indices,"a"
- 1055              	hssc_indices:
- 1056 0000 00010203 		.ascii	"\000\001\002\003\004\005\006"
- 1056      040506
- 1057              		.text
- 1058              	.Letext0:
- 1059              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 1060              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
-ARM GAS  /tmp/ccARejm9.s 			page 27
+ 1189              	.LFE782:
+ 1191              		.section	.text.PosePipeline_GetWindowTimeFirst,"ax",%progbits
+ 1192              		.align	1
+ 1193              		.global	PosePipeline_GetWindowTimeFirst
+ 1194              		.syntax unified
+ 1195              		.thumb
+ 1196              		.thumb_func
+ 1198              	PosePipeline_GetWindowTimeFirst:
+ 1199              	.LVL107:
+ 1200              	.LFB783:
+ 345:Src/pose_pipeline.c **** 
+ 346:Src/pose_pipeline.c **** void PosePipeline_GetWindowTimeFirst(const PosePipeline_t *s,
+ 347:Src/pose_pipeline.c ****                                      float32_t dst[POSE_WINDOW_SIZE][POSE_FEATURE_COUNT])
+ 348:Src/pose_pipeline.c **** {
+ 1201              		.loc 1 348 1 is_stmt 1 view -0
+ 1202              		.cfi_startproc
+ 1203              		@ args = 0, pretend = 0, frame = 0
+ 1204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 349:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1205              		.loc 1 349 5 view .LVU407
+ 348:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1206              		.loc 1 348 1 is_stmt 0 view .LVU408
+ 1207 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1208              		.cfi_def_cfa_offset 32
+ 1209              		.cfi_offset 3, -32
+ 1210              		.cfi_offset 4, -28
+ 1211              		.cfi_offset 5, -24
+ 1212              		.cfi_offset 6, -20
+ 1213              		.cfi_offset 7, -16
+ 1214              		.cfi_offset 8, -12
+ 1215              		.cfi_offset 9, -8
+ 1216              		.cfi_offset 14, -4
+ 1217              		.loc 1 349 25 view .LVU409
+ 1218 0004 00F54053 		add	r3, r0, #12288
+ 1219              		.loc 1 349 62 view .LVU410
+ 1220 0008 D3F8EC20 		ldr	r2, [r3, #236]
+ 348:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1221              		.loc 1 348 1 view .LVU411
+ 1222 000c 0546     		mov	r5, r0
+ 1223              		.loc 1 349 62 view .LVU412
+ 1224 000e 272A     		cmp	r2, #39
+ 348:Src/pose_pipeline.c ****     uint32_t oldest = (s->win_count < POSE_WINDOW_SIZE) ? 0u : s->win_head;
+ 1225              		.loc 1 348 1 view .LVU413
+ 1226 0010 0E46     		mov	r6, r1
+ 1227              		.loc 1 349 62 discriminator 2 view .LVU414
+ 1228 0012 98BF     		it	ls
+ 1229 0014 4FF00009 		movls	r9, #0
+ 1230              	.LBB93:
+ 350:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1231              		.loc 1 350 19 view .LVU415
+ 1232 0018 4FF00004 		mov	r4, #0
+ 1233              	.LBB94:
+ 351:Src/pose_pipeline.c ****     {
+ 352:Src/pose_pipeline.c ****         uint32_t src_t = (oldest + t) % POSE_WINDOW_SIZE;
+ 353:Src/pose_pipeline.c ****         memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
+ 1234              		.loc 1 353 19 view .LVU416
+ 1235 001c 4FF49477 		mov	r7, #296
+ARM GAS  /tmp/ccA2Mu0s.s 			page 32
 
 
- 1061              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
- 1062              		.file 5 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/spe_pp_outp
- 1063              		.file 6 "Inc/pose_pipeline.h"
- 1064              		.file 7 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 1065              		.file 8 "<built-in>"
-ARM GAS  /tmp/ccARejm9.s 			page 28
+ 352:Src/pose_pipeline.c ****         memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
+ 1236              		.loc 1 352 18 view .LVU417
+ 1237 0020 4FF02808 		mov	r8, #40
+ 1238              	.LBE94:
+ 1239              	.LBE93:
+ 349:Src/pose_pipeline.c ****     for (uint32_t t = 0u; t < POSE_WINDOW_SIZE; t++)
+ 1240              		.loc 1 349 62 discriminator 1 view .LVU418
+ 1241 0024 88BF     		it	hi
+ 1242 0026 D3F8E890 		ldrhi	r9, [r3, #232]
+ 1243              	.LVL108:
+ 350:Src/pose_pipeline.c ****     {
+ 1244              		.loc 1 350 5 is_stmt 1 view .LVU419
+ 1245              	.LBB97:
+ 350:Src/pose_pipeline.c ****     {
+ 1246              		.loc 1 350 10 view .LVU420
+ 350:Src/pose_pipeline.c ****     {
+ 1247              		.loc 1 350 29 discriminator 1 view .LVU421
+ 1248              	.L85:
+ 1249              	.LBB95:
+ 352:Src/pose_pipeline.c ****         memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
+ 1250              		.loc 1 352 9 view .LVU422
+ 1251              		.loc 1 353 9 view .LVU423
+ 352:Src/pose_pipeline.c ****         memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
+ 1252              		.loc 1 352 34 is_stmt 0 view .LVU424
+ 1253 002a 09EB0403 		add	r3, r9, r4
+ 352:Src/pose_pipeline.c ****         memcpy(dst[t], s->win_buf[src_t], sizeof(dst[t]));
+ 1254              		.loc 1 352 18 view .LVU425
+ 1255 002e B3FBF8F2 		udiv	r2, r3, r8
+ 1256 0032 08FB1233 		mls	r3, r8, r2, r3
+ 1257              		.loc 1 353 34 view .LVU426
+ 1258 0036 07FB0353 		mla	r3, r7, r3, r5
+ 1259              		.loc 1 353 9 view .LVU427
+ 1260 003a 07FB0460 		mla	r0, r7, r4, r6
+ 1261 003e 4FF49472 		mov	r2, #296
+ 1262 0042 03F52A71 		add	r1, r3, #680
+ 1263              	.LBE95:
+ 350:Src/pose_pipeline.c ****     {
+ 1264              		.loc 1 350 50 discriminator 3 view .LVU428
+ 1265 0046 0134     		adds	r4, r4, #1
+ 1266              	.LVL109:
+ 1267              	.LBB96:
+ 1268              		.loc 1 353 9 view .LVU429
+ 1269 0048 FFF7FEFF 		bl	memcpy
+ 1270              	.LVL110:
+ 1271              	.LBE96:
+ 350:Src/pose_pipeline.c ****     {
+ 1272              		.loc 1 350 50 is_stmt 1 discriminator 3 view .LVU430
+ 350:Src/pose_pipeline.c ****     {
+ 1273              		.loc 1 350 29 discriminator 1 view .LVU431
+ 1274 004c 282C     		cmp	r4, #40
+ 1275 004e ECD1     		bne	.L85
+ 1276              	.LBE97:
+ 354:Src/pose_pipeline.c ****     }
+ 355:Src/pose_pipeline.c **** }
+ 1277              		.loc 1 355 1 is_stmt 0 view .LVU432
+ 1278 0050 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1279              		.loc 1 355 1 view .LVU433
+ARM GAS  /tmp/ccA2Mu0s.s 			page 33
+
+
+ 1280              		.cfi_endproc
+ 1281              	.LFE783:
+ 1283              		.section	.text.PosePipeline_WindowFull,"ax",%progbits
+ 1284              		.align	1
+ 1285              		.global	PosePipeline_WindowFull
+ 1286              		.syntax unified
+ 1287              		.thumb
+ 1288              		.thumb_func
+ 1290              	PosePipeline_WindowFull:
+ 1291              	.LVL111:
+ 1292              	.LFB784:
+ 356:Src/pose_pipeline.c **** 
+ 357:Src/pose_pipeline.c **** uint8_t PosePipeline_WindowFull(const PosePipeline_t *s)
+ 358:Src/pose_pipeline.c **** {
+ 1293              		.loc 1 358 1 is_stmt 1 view -0
+ 1294              		.cfi_startproc
+ 1295              		@ args = 0, pretend = 0, frame = 0
+ 1296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1297              		@ link register save eliminated.
+ 359:Src/pose_pipeline.c ****     return (s->win_count >= POSE_WINDOW_SIZE) ? 1u : 0u;
+ 1298              		.loc 1 359 5 view .LVU435
+ 1299              		.loc 1 359 14 is_stmt 0 view .LVU436
+ 1300 0000 00F54050 		add	r0, r0, #12288
+ 1301              	.LVL112:
+ 1302              		.loc 1 359 52 view .LVU437
+ 1303 0004 D0F8EC00 		ldr	r0, [r0, #236]
+ 1304              	.LVL113:
+ 360:Src/pose_pipeline.c **** }
+ 1305              		.loc 1 360 1 view .LVU438
+ 1306 0008 2728     		cmp	r0, #39
+ 1307 000a 94BF     		ite	ls
+ 1308 000c 0020     		movls	r0, #0
+ 1309 000e 0120     		movhi	r0, #1
+ 1310 0010 7047     		bx	lr
+ 1311              		.cfi_endproc
+ 1312              	.LFE784:
+ 1314              		.section	.text.PosePipeline_GetLatestFeature,"ax",%progbits
+ 1315              		.align	1
+ 1316              		.global	PosePipeline_GetLatestFeature
+ 1317              		.syntax unified
+ 1318              		.thumb
+ 1319              		.thumb_func
+ 1321              	PosePipeline_GetLatestFeature:
+ 1322              	.LVL114:
+ 1323              	.LFB785:
+ 361:Src/pose_pipeline.c **** 
+ 362:Src/pose_pipeline.c **** void PosePipeline_GetLatestFeature(const PosePipeline_t *s,
+ 363:Src/pose_pipeline.c ****                                    float32_t dst[POSE_FEATURE_COUNT])
+ 364:Src/pose_pipeline.c **** {
+ 1324              		.loc 1 364 1 is_stmt 1 view -0
+ 1325              		.cfi_startproc
+ 1326              		@ args = 0, pretend = 0, frame = 0
+ 1327              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1328              		@ link register save eliminated.
+ 365:Src/pose_pipeline.c ****     uint32_t last = (s->win_head == 0u) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
+ 1329              		.loc 1 365 5 view .LVU440
+ 364:Src/pose_pipeline.c ****     uint32_t last = (s->win_head == 0u) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
+ARM GAS  /tmp/ccA2Mu0s.s 			page 34
+
+
+ 1330              		.loc 1 364 1 is_stmt 0 view .LVU441
+ 1331 0000 0346     		mov	r3, r0
+ 1332              		.loc 1 365 23 view .LVU442
+ 1333 0002 03F54052 		add	r2, r3, #12288
+ 364:Src/pose_pipeline.c ****     uint32_t last = (s->win_head == 0u) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
+ 1334              		.loc 1 364 1 view .LVU443
+ 1335 0006 10B4     		push	{r4}
+ 1336              		.cfi_def_cfa_offset 4
+ 1337              		.cfi_offset 4, -4
+ 1338              		.loc 1 365 23 view .LVU444
+ 1339 0008 D2F8E840 		ldr	r4, [r2, #232]
+ 364:Src/pose_pipeline.c ****     uint32_t last = (s->win_head == 0u) ? (POSE_WINDOW_SIZE - 1u) : (s->win_head - 1u);
+ 1340              		.loc 1 364 1 view .LVU445
+ 1341 000c 0846     		mov	r0, r1
+ 1342              	.LVL115:
+ 1343              		.loc 1 365 67 view .LVU446
+ 1344 000e 54B1     		cbz	r4, .L91
+ 1345              		.loc 1 365 67 discriminator 1 view .LVU447
+ 1346 0010 013C     		subs	r4, r4, #1
+ 1347              	.L90:
+ 1348              	.LVL116:
+ 366:Src/pose_pipeline.c ****     memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
+ 1349              		.loc 1 366 5 is_stmt 1 view .LVU448
+ 1350              		.loc 1 366 27 is_stmt 0 view .LVU449
+ 1351 0012 4FF49472 		mov	r2, #296
+ 1352 0016 02FB0433 		mla	r3, r2, r4, r3
+ 1353              	.LVL117:
+ 367:Src/pose_pipeline.c **** }
+ 1354              		.loc 1 367 1 view .LVU450
+ 1355 001a 5DF8044B 		ldr	r4, [sp], #4
+ 1356              	.LVL118:
+ 366:Src/pose_pipeline.c ****     memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
+ 1357              		.loc 1 366 5 view .LVU451
+ 1358 001e 03F52A71 		add	r1, r3, #680
+ 1359              	.LVL119:
+ 366:Src/pose_pipeline.c ****     memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
+ 1360              		.loc 1 366 5 view .LVU452
+ 1361 0022 FFF7FEBF 		b	memcpy
+ 1362              	.LVL120:
+ 1363              	.L91:
+ 365:Src/pose_pipeline.c ****     memcpy(dst, s->win_buf[last], POSE_FEATURE_COUNT * sizeof(float32_t));
+ 1364              		.loc 1 365 67 discriminator 2 view .LVU453
+ 1365 0026 2724     		movs	r4, #39
+ 1366 0028 F3E7     		b	.L90
+ 1367              		.cfi_endproc
+ 1368              	.LFE785:
+ 1370              		.section	.rodata.norm_scale,"a"
+ 1371              		.align	2
+ 1374              	norm_scale:
+ 1375 0000 F8F97F3F 		.word	1065351672
+ 1376 0004 CEFF7F3F 		.word	1065353166
+ 1377 0008 A777613F 		.word	1063352231
+ 1378 000c 5D6B7F3F 		.word	1065315165
+ 1379 0010 ACFF7F3F 		.word	1065353132
+ 1380 0014 3A02783F 		.word	1064829498
+ 1381 0018 AF217C3F 		.word	1065099695
+ 1382 001c EFFF7F3F 		.word	1065353199
+ARM GAS  /tmp/ccA2Mu0s.s 			page 35
+
+
+ 1383 0020 9818773F 		.word	1064769688
+ 1384 0024 DC847F3F 		.word	1065321692
+ 1385 0028 2FFD7F3F 		.word	1065352495
+ 1386 002c 535E7B3F 		.word	1065049683
+ 1387 0030 1F497D3F 		.word	1065175327
+ 1388 0034 FF047F3F 		.word	1065288959
+ 1389 0038 5DA5773F 		.word	1064805725
+ 1390 003c C7A17E3F 		.word	1065263559
+ 1391 0040 0000803F 		.word	1065353216
+ 1392 0044 910C753F 		.word	1064635537
+ 1393 0048 514B7F3F 		.word	1065306961
+ 1394 004c D8B77F3F 		.word	1065334744
+ 1395 0050 94BC723F 		.word	1064483988
+ 1396 0054 6CCE7D3F 		.word	1065209452
+ 1397 0058 2EE27F3F 		.word	1065345582
+ 1398 005c ACAC713F 		.word	1064414380
+ 1399 0060 CB657F3F 		.word	1065313739
+ 1400 0064 20D27F3F 		.word	1065341472
+ 1401 0068 A04F703F 		.word	1064325024
+ 1402 006c 1B647A3F 		.word	1064985627
+ 1403 0070 DD977F3F 		.word	1065326557
+ 1404 0074 0517773F 		.word	1064769285
+ 1405 0078 E63C7B3F 		.word	1065041126
+ 1406 007c 93DF7E3F 		.word	1065279379
+ 1407 0080 F530783F 		.word	1064841461
+ 1408 0084 42957A3F 		.word	1064998210
+ 1409 0088 8A3A7F3F 		.word	1065302666
+ 1410 008c F12A773F 		.word	1064774385
+ 1411 0090 22C1783F 		.word	1064878370
+ 1412 0094 DFE07F3F 		.word	1065345247
+ 1413 0098 78D5773F 		.word	1064818040
+ 1414 009c B6D87D3F 		.word	1065212086
+ 1415 00a0 14B27F3F 		.word	1065333268
+ 1416 00a4 2898AF41 		.word	1102026792
+ 1417 00a8 24A8A740 		.word	1084729380
+ 1418 00ac 3AC73442 		.word	1110755130
+ 1419 00b0 40DBFA42 		.word	1123736384
+ 1420 00b4 EC32243F 		.word	1059336940
+ 1421 00b8 2B8A3B3F 		.word	1060866603
+ 1422 00bc A303223F 		.word	1059193763
+ 1423 00c0 9B213D3F 		.word	1060970907
+ 1424 00c4 255A1A3F 		.word	1058691621
+ 1425 00c8 D4453A3F 		.word	1060783572
+ 1426 00cc 6283293F 		.word	1059685218
+ 1427 00d0 C43E393F 		.word	1060716228
+ 1428 00d4 D9B02A3F 		.word	1059762393
+ 1429 00d8 F642353F 		.word	1060455158
+ 1430 00dc 1E37283F 		.word	1059600158
+ 1431 00e0 6CE9313F 		.word	1060235628
+ 1432 00e4 4D4C273F 		.word	1059540045
+ 1433 00e8 F5BE353F 		.word	1060486901
+ 1434 00ec AEBB2D3F 		.word	1059961774
+ 1435 00f0 92AF343F 		.word	1060417426
+ 1436 00f4 7E02243F 		.word	1059324542
+ 1437 00f8 17B7313F 		.word	1060222743
+ 1438 00fc F7AC273F 		.word	1059564791
+ 1439 0100 29E73B3F 		.word	1060890409
+ARM GAS  /tmp/ccA2Mu0s.s 			page 36
+
+
+ 1440 0104 B9A7273F 		.word	1059563449
+ 1441 0108 1844343F 		.word	1060389912
+ 1442 010c 0519293F 		.word	1059657989
+ 1443 0110 2BA3353F 		.word	1060479787
+ 1444 0114 B9C31E3F 		.word	1058980793
+ 1445 0118 B492363F 		.word	1060541108
+ 1446 011c 72DC0D3F 		.word	1057873010
+ 1447 0120 3F1A223F 		.word	1059199551
+ 1448 0124 2E380343 		.word	1124284462
+ 1449              		.section	.rodata.norm_min,"a"
+ 1450              		.align	2
+ 1453              	norm_min:
+ 1454 0000 00000000 		.word	0
+ 1455 0004 00000000 		.word	0
+ 1456 0008 1B2C1C3B 		.word	991702043
+ 1457 000c 00000000 		.word	0
+ 1458 0010 00000000 		.word	0
+ 1459 0014 CEDF843B 		.word	998563790
+ 1460 0018 00000000 		.word	0
+ 1461 001c 00000000 		.word	0
+ 1462 0020 3B6D8D3A 		.word	982347067
+ 1463 0024 D313963A 		.word	982914003
+ 1464 0028 00000000 		.word	0
+ 1465 002c EA78CC3A 		.word	986478826
+ 1466 0030 3815A93A 		.word	984159544
+ 1467 0034 D1CA3D3A 		.word	977128145
+ 1468 0038 5C01853B 		.word	998572380
+ 1469 003c 2060AD3B 		.word	1001218080
+ 1470 0040 00000000 		.word	0
+ 1471 0044 B893883B 		.word	998806456
+ 1472 0048 38D81B3B 		.word	991680568
+ 1473 004c 00000000 		.word	0
+ 1474 0050 A3B08B3B 		.word	999010467
+ 1475 0054 9A5C0C3C 		.word	1007443098
+ 1476 0058 2A38BC39 		.word	968636458
+ 1477 005c F4DF033C 		.word	1006886900
+ 1478 0060 465B153B 		.word	991255366
+ 1479 0064 00000000 		.word	0
+ 1480 0068 887FD83B 		.word	1004044168
+ 1481 006c 2579AE3C 		.word	1018067237
+ 1482 0070 FF058239 		.word	964822527
+ 1483 0074 EC67B13B 		.word	1001482220
+ 1484 0078 DFC4903C 		.word	1016120543
+ 1485 007c 00000000 		.word	0
+ 1486 0080 DF87833B 		.word	998475743
+ 1487 0084 BC57AD3C 		.word	1017993148
+ 1488 0088 088ECB3A 		.word	986418696
+ 1489 008c C98E0D39 		.word	957189833
+ 1490 0090 80D7E73C 		.word	1021826944
+ 1491 0094 00000000 		.word	0
+ 1492 0098 D1CA3D39 		.word	960350929
+ 1493 009c A48CB838 		.word	951618724
+ 1494 00a0 CDAC2539 		.word	958770381
+ 1495 00a4 07B6CA3C 		.word	1019917831
+ 1496 00a8 EA210EC0 		.word	-1072815638
+ 1497 00ac 782593C1 		.word	-1047321224
+ 1498 00b0 847F87C2 		.word	-1031307388
+ARM GAS  /tmp/ccA2Mu0s.s 			page 37
+
+
+ 1499 00b4 0916A7BE 		.word	-1096346103
+ 1500 00b8 0399BDBE 		.word	-1094870781
+ 1501 00bc FD12A9BE 		.word	-1096215811
+ 1502 00c0 C03CBCBE 		.word	-1094959936
+ 1503 00c4 683E97BE 		.word	-1097384344
+ 1504 00c8 522AB9BE 		.word	-1095161262
+ 1505 00cc C16FB3BE 		.word	-1095536703
+ 1506 00d0 7522B9BE 		.word	-1095163275
+ 1507 00d4 61FDAFBE 		.word	-1095762591
+ 1508 00d8 5055B1BE 		.word	-1095674544
+ 1509 00dc 6900A7BE 		.word	-1096351639
+ 1510 00e0 A697B0BE 		.word	-1095723098
+ 1511 00e4 8880ABBE 		.word	-1096056696
+ 1512 00e8 18B1B7BE 		.word	-1095257832
+ 1513 00ec BBB8B5BE 		.word	-1095386949
+ 1514 00f0 CE88B2BE 		.word	-1095595826
+ 1515 00f4 B03BA5BE 		.word	-1096467536
+ 1516 00f8 EB73ADBE 		.word	-1095928853
+ 1517 00fc 022DADBE 		.word	-1095947006
+ 1518 0100 06F2BCBE 		.word	-1094913530
+ 1519 0104 315EABBE 		.word	-1096065487
+ 1520 0108 F06BB4BE 		.word	-1095472144
+ 1521 010c 5EA2AABE 		.word	-1096113570
+ 1522 0110 9949B4BE 		.word	-1095480935
+ 1523 0114 838997BE 		.word	-1097365117
+ 1524 0118 22ABBBBE 		.word	-1094997214
+ 1525 011c 7D2184BE 		.word	-1098636931
+ 1526 0120 F5F697BE 		.word	-1097337099
+ 1527 0124 E2808FC2 		.word	-1030782750
+ 1528              		.section	.rodata.vel_src_indices,"a"
+ 1531              	vel_src_indices:
+ 1532 0000 00010304 		.ascii	"\000\001\003\004\006\007\011\012\014\015\017\020\022"
+ 1532      0607090A 
+ 1532      0C0D0F10 
+ 1532      12
+ 1533 000d 13151618 		.ascii	"\023\025\026\030\031\033\034\036\037!\"$%'(,"
+ 1533      191B1C1E 
+ 1533      1F212224 
+ 1533      2527282C 
+ 1534              		.section	.rodata.hssc_indices,"a"
+ 1537              	hssc_indices:
+ 1538 0000 00010203 		.ascii	"\000\001\002\003\004\005\006"
+ 1538      040506
+ 1539              		.section	.rodata.kp13_indices,"a"
+ 1542              	kp13_indices:
+ 1543 0000 00050607 		.ascii	"\000\005\006\007\010\011\012\013\014\015\016\017\020"
+ 1543      08090A0B 
+ 1543      0C0D0E0F 
+ 1543      10
+ 1544              		.text
+ 1545              	.Letext0:
+ 1546              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 1547              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 1548              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 1549              		.file 5 "../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc/spe_pp_outp
+ 1550              		.file 6 "Inc/pose_pipeline.h"
+ 1551              		.file 7 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ARM GAS  /tmp/ccA2Mu0s.s 			page 38
+
+
+ 1552              		.file 8 "<built-in>"
+ARM GAS  /tmp/ccA2Mu0s.s 			page 39
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 pose_pipeline.c
-     /tmp/ccARejm9.s:26     .text.clamp01:00000000 $t
-     /tmp/ccARejm9.s:31     .text.clamp01:00000000 clamp01
-     /tmp/ccARejm9.s:78     .text.clamp01:00000034 $d
-     /tmp/ccARejm9.s:84     .text.euro_filter_apply:00000000 $t
-     /tmp/ccARejm9.s:89     .text.euro_filter_apply:00000000 euro_filter_apply
-     /tmp/ccARejm9.s:248    .text.euro_filter_apply:000000b0 $d
-     /tmp/ccARejm9.s:254    .text.PosePipeline_Init:00000000 $t
-     /tmp/ccARejm9.s:260    .text.PosePipeline_Init:00000000 PosePipeline_Init
-     /tmp/ccARejm9.s:278    .text.PosePipeline_Process:00000000 $t
-     /tmp/ccARejm9.s:284    .text.PosePipeline_Process:00000000 PosePipeline_Process
-     /tmp/ccARejm9.s:769    .text.PosePipeline_Process:0000023c $d
-     /tmp/ccARejm9.s:1055   .rodata.hssc_indices:00000000 hssc_indices
-     /tmp/ccARejm9.s:780    .text.PosePipeline_GetWindowFeaturesFirst:00000000 $t
-     /tmp/ccARejm9.s:786    .text.PosePipeline_GetWindowFeaturesFirst:00000000 PosePipeline_GetWindowFeaturesFirst
-     /tmp/ccARejm9.s:874    .text.PosePipeline_GetWindowTimeFirst:00000000 $t
-     /tmp/ccARejm9.s:880    .text.PosePipeline_GetWindowTimeFirst:00000000 PosePipeline_GetWindowTimeFirst
-     /tmp/ccARejm9.s:966    .text.PosePipeline_WindowFull:00000000 $t
-     /tmp/ccARejm9.s:972    .text.PosePipeline_WindowFull:00000000 PosePipeline_WindowFull
-     /tmp/ccARejm9.s:997    .text.PosePipeline_GetLatestFeature:00000000 $t
-     /tmp/ccARejm9.s:1003   .text.PosePipeline_GetLatestFeature:00000000 PosePipeline_GetLatestFeature
+     /tmp/ccA2Mu0s.s:26     .text.clamp01:00000000 $t
+     /tmp/ccA2Mu0s.s:31     .text.clamp01:00000000 clamp01
+     /tmp/ccA2Mu0s.s:78     .text.clamp01:00000034 $d
+     /tmp/ccA2Mu0s.s:84     .text.euro_filter_apply:00000000 $t
+     /tmp/ccA2Mu0s.s:89     .text.euro_filter_apply:00000000 euro_filter_apply
+     /tmp/ccA2Mu0s.s:255    .text.euro_filter_apply:000000a0 $d
+     /tmp/ccA2Mu0s.s:263    .text.PosePipeline_Init:00000000 $t
+     /tmp/ccA2Mu0s.s:269    .text.PosePipeline_Init:00000000 PosePipeline_Init
+     /tmp/ccA2Mu0s.s:287    .text.PosePipeline_Process:00000000 $t
+     /tmp/ccA2Mu0s.s:293    .text.PosePipeline_Process:00000000 PosePipeline_Process
+     /tmp/ccA2Mu0s.s:1070   .text.PosePipeline_Process:000003c0 $d
+     /tmp/ccA2Mu0s.s:1537   .rodata.hssc_indices:00000000 hssc_indices
+     /tmp/ccA2Mu0s.s:1542   .rodata.kp13_indices:00000000 kp13_indices
+     /tmp/ccA2Mu0s.s:1531   .rodata.vel_src_indices:00000000 vel_src_indices
+     /tmp/ccA2Mu0s.s:1453   .rodata.norm_min:00000000 norm_min
+     /tmp/ccA2Mu0s.s:1374   .rodata.norm_scale:00000000 norm_scale
+     /tmp/ccA2Mu0s.s:1086   .text.PosePipeline_Process:000003f4 $t
+     /tmp/ccA2Mu0s.s:1098   .text.PosePipeline_GetWindowFeaturesFirst:00000000 $t
+     /tmp/ccA2Mu0s.s:1104   .text.PosePipeline_GetWindowFeaturesFirst:00000000 PosePipeline_GetWindowFeaturesFirst
+     /tmp/ccA2Mu0s.s:1192   .text.PosePipeline_GetWindowTimeFirst:00000000 $t
+     /tmp/ccA2Mu0s.s:1198   .text.PosePipeline_GetWindowTimeFirst:00000000 PosePipeline_GetWindowTimeFirst
+     /tmp/ccA2Mu0s.s:1284   .text.PosePipeline_WindowFull:00000000 $t
+     /tmp/ccA2Mu0s.s:1290   .text.PosePipeline_WindowFull:00000000 PosePipeline_WindowFull
+     /tmp/ccA2Mu0s.s:1315   .text.PosePipeline_GetLatestFeature:00000000 $t
+     /tmp/ccA2Mu0s.s:1321   .text.PosePipeline_GetLatestFeature:00000000 PosePipeline_GetLatestFeature
+     /tmp/ccA2Mu0s.s:1371   .rodata.norm_scale:00000000 $d
+     /tmp/ccA2Mu0s.s:1450   .rodata.norm_min:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.arm_math_types.h.28.9e71aea5cdf6aebdd83091bf39b4832a
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
@@ -1619,6 +2282,9 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.string.h.177.59a005921fa78485abc80a0267de5752
                            .group:00000000 wm4.math.h.13.47cfc34cae8a1153323939c4d32cf7c2
                            .group:00000000 wm4.float.h.29.0e9d9baf95ec39f9555dc80c6e28186b
+ARM GAS  /tmp/ccA2Mu0s.s 			page 40
+
+
                            .group:00000000 wm4.syslimits.h.34.de5cbd310098bc5895998b6bde577ed2
                            .group:00000000 wm4.limits.h.9.70fb0ada6f71b16202a66baaa6d8ea70
                            .group:00000000 wm4.limits.h.60.56a1ae353e2028a24298ec6463b8b593
@@ -1626,9 +2292,6 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.stdbool.h.29.c08aa3eec75cf5b9b5003883f43253f0
                            .group:00000000 wm4.arm_mve.h.48.53b982d307987e8d8669fd51fdc5e583
                            .group:00000000 wm4.arm_math_types.h.605.32c5d7843b3dcaa8f5174feea7de7445
-ARM GAS  /tmp/ccARejm9.s 			page 29
-
-
                            .group:00000000 wm4.arm_math_memory.h.28.3ee75b06517df8378241b72d6c61e5b0
                            .group:00000000 wm4.none.h.185.db055cca83e83f96d8d0bb450fbdf4bb
                            .group:00000000 wm4.utils.h.41.820d6032ed1c0d7dd5bd2ed80938ee65
@@ -1637,7 +2300,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.controller_functions.h.28.388735b97ccd96442b0ac9e554629f36
                            .group:00000000 wm4.filtering_functions.h.46.6cf1424fb1f86d5f9958d208b83340a1
                            .group:00000000 wm4.spe_pp_output_if.h.11.cb67d0d15a71c95e0e8b7fee8a9755fe
-                           .group:00000000 wm4.pose_pipeline.h.24.64a3bfd20f702b3b9429cc1df05e8a1e
+                           .group:00000000 wm4.pose_pipeline.h.37.c1bc6cb652499f03e8c6fb9e62ea5ef0
 
 UNDEFINED SYMBOLS
 memset

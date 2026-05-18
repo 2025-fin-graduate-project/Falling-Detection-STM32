@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccbEZti8.s 			page 1
+ARM GAS  /tmp/ccZ3NgTe.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
   22:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #include "isp_services.h"
   23:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #include "isp_ae_algo.h"
   24:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #include "isp_awb_algo.h"
-ARM GAS  /tmp/ccbEZti8.s 			page 2
+ARM GAS  /tmp/ccZ3NgTe.s 			page 2
 
 
   25:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #include <limits.h>
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
   79:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** ISP_StatusTypeDef ISP_Algo_SensorDelay_Process(void *hIsp, void *pAlgo);
   80:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #endif
   81:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
-ARM GAS  /tmp/ccbEZti8.s 			page 3
+ARM GAS  /tmp/ccZ3NgTe.s 			page 3
 
 
   82:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** /* Private variables ---------------------------------------------------------*/
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  136:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ISP_MW_SW_AWB_ALGO_SUPPORT
  137:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     &ISP_Algo_AWB,
  138:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #endif /* ISP_MW_SW_AWB_ALGO_SUPPORT */
-ARM GAS  /tmp/ccbEZti8.s 			page 4
+ARM GAS  /tmp/ccZ3NgTe.s 			page 4
 
 
  139:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ISP_MW_TUNING_TOOL_SUPPORT
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  167:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  hIsp:  ISP device handle. To cast in (ISP_HandleTypeDef *).
  168:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  pAlgo: ISP algorithm handle. To cast in (ISP_AlgoTypeDef *).
  169:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @retval operation result
-ARM GAS  /tmp/ccbEZti8.s 			page 5
+ARM GAS  /tmp/ccZ3NgTe.s 			page 5
 
 
  170:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  200:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   {
  201:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     return ISP_OK;
  202:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   }
-ARM GAS  /tmp/ccbEZti8.s 			page 6
+ARM GAS  /tmp/ccZ3NgTe.s 			page 6
 
 
  203:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  257:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @brief  ISP_Algo_AEC_Init
  258:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   *         Initialize the AEC algorithm
  259:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  hIsp:  ISP device handle. To cast in (ISP_HandleTypeDef *).
-ARM GAS  /tmp/ccbEZti8.s 			page 7
+ARM GAS  /tmp/ccZ3NgTe.s 			page 7
 
 
  260:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  pAlgo: ISP algorithm handle. To cast in (ISP_AlgoTypeDef *).
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  314:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  hIsp:  ISP device handle. To cast in (ISP_HandleTypeDef *).
  315:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  pAlgo: ISP algorithm handle. To cast in (ISP_AlgoTypeDef *).
  316:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @retval operation result
-ARM GAS  /tmp/ccbEZti8.s 			page 8
+ARM GAS  /tmp/ccZ3NgTe.s 			page 8
 
 
  317:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  345:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  pAlgo: ISP algorithm handle. To cast in (ISP_AlgoTypeDef *).
  346:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @retval operation result
  347:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   */
-ARM GAS  /tmp/ccbEZti8.s 			page 9
+ARM GAS  /tmp/ccZ3NgTe.s 			page 9
 
 
  348:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** ISP_StatusTypeDef ISP_Algo_AEC_Process(void *hIsp, void *pAlgo)
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  402:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #endif
  403:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     avgL = stats.down.averageL;
  404:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ALGO_AEC_DBG_LOGS
-ARM GAS  /tmp/ccbEZti8.s 			page 10
+ARM GAS  /tmp/ccZ3NgTe.s 			page 10
 
 
  405:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     if (avgL != currentL)
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  459:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****         {
  460:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****           return ret;
  461:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****         }
-ARM GAS  /tmp/ccbEZti8.s 			page 11
+ARM GAS  /tmp/ccZ3NgTe.s 			page 11
 
 
  462:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  516:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #endif /* ISP_MW_SW_AEC_ALGO_SUPPORT */
  517:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  518:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ISP_MW_SW_AWB_ALGO_SUPPORT
-ARM GAS  /tmp/ccbEZti8.s 			page 12
+ARM GAS  /tmp/ccZ3NgTe.s 			page 12
 
 
  519:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** /**
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  573:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  574:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     *outR = (uint32_t) ccR;
  575:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     *outG = (uint32_t) ccG;
-ARM GAS  /tmp/ccbEZti8.s 			page 13
+ARM GAS  /tmp/ccZ3NgTe.s 			page 13
 
 
  576:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     *outB = (uint32_t) ccB;
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  630:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @brief  ISP_Algo_AWB_StatCb
  631:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   *         Callback informing that statistics are available
  632:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @param  pAlgo: ISP algorithm handle.
-ARM GAS  /tmp/ccbEZti8.s 			page 14
+ARM GAS  /tmp/ccZ3NgTe.s 			page 14
 
 
  633:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   * @retval operation result
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  191:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   uint32_t CurrentFrameId;
  157              		.loc 1 191 3 view .LVU31
  192:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_BadPixelTypeDef BadPixelConfig;
-ARM GAS  /tmp/ccbEZti8.s 			page 15
+ARM GAS  /tmp/ccZ3NgTe.s 			page 15
 
 
  158              		.loc 1 192 3 view .LVU32
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  198              		.loc 1 205 3 is_stmt 1 view .LVU46
  205:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   if (CurrentFrameId == LastFrameId)
  199              		.loc 1 205 20 is_stmt 0 view .LVU47
-ARM GAS  /tmp/ccbEZti8.s 			page 16
+ARM GAS  /tmp/ccZ3NgTe.s 			page 16
 
 
  200 0016 2046     		mov	r0, r4
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  237 003c 0028     		cmp	r0, #0
  238 003e E8D1     		bne	.L11
  220:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   }
-ARM GAS  /tmp/ccbEZti8.s 			page 17
+ARM GAS  /tmp/ccZ3NgTe.s 			page 17
 
 
  239              		.loc 1 220 5 is_stmt 1 view .LVU65
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  240:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     ret = ISP_SVC_ISP_SetBadPixel(hIsp, &BadPixelConfig);
  278              		.loc 1 240 27 is_stmt 0 view .LVU81
  279 006e 0123     		movs	r3, #1
-ARM GAS  /tmp/ccbEZti8.s 			page 18
+ARM GAS  /tmp/ccZ3NgTe.s 			page 18
 
 
  241:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     if (ret != ISP_OK)
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  317 0096 00BF     		.align	2
  318              	.L21:
  319 0098 00000000 		.word	LastFrameId.8
-ARM GAS  /tmp/ccbEZti8.s 			page 19
+ARM GAS  /tmp/ccZ3NgTe.s 			page 19
 
 
  320 009c 00000000 		.word	Step.7
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  363              		.loc 1 272 19 view .LVU111
  364 000a 0646     		mov	r6, r0
  365              	.LVL24:
-ARM GAS  /tmp/ccbEZti8.s 			page 20
+ARM GAS  /tmp/ccZ3NgTe.s 			page 20
 
 
  273:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  309:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  404              		.loc 1 309 1 is_stmt 0 view .LVU128
  405 0032 03B0     		add	sp, sp, #12
-ARM GAS  /tmp/ccbEZti8.s 			page 21
+ARM GAS  /tmp/ccZ3NgTe.s 			page 21
 
 
  406              		.cfi_remember_state
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  445 0052 D4F88430 		ldr	r3, [r4, #132]
  446 0056 0093     		str	r3, [sp]
  296:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     }
-ARM GAS  /tmp/ccbEZti8.s 			page 22
+ARM GAS  /tmp/ccZ3NgTe.s 			page 22
 
 
  447              		.loc 1 296 7 is_stmt 1 view .LVU144
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  488              		.cfi_def_cfa_offset 20
  489              		.cfi_offset 4, -20
  490              		.cfi_offset 5, -16
-ARM GAS  /tmp/ccbEZti8.s 			page 23
+ARM GAS  /tmp/ccZ3NgTe.s 			page 23
 
 
  491              		.cfi_offset 6, -12
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  529 0022 71       		.byte	(.L39-.L42)/2
  530 0023 1A       		.byte	(.L41-.L42)/2
  531              		.p2align 1
-ARM GAS  /tmp/ccbEZti8.s 			page 24
+ARM GAS  /tmp/ccZ3NgTe.s 			page 24
 
 
  532              	.L44:
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  573              	.LVL43:
  574              	.L41:
  403:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ALGO_AEC_DBG_LOGS
-ARM GAS  /tmp/ccbEZti8.s 			page 25
+ARM GAS  /tmp/ccZ3NgTe.s 			page 25
 
 
  575              		.loc 1 403 5 view .LVU181
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  430:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
  613              		.loc 1 430 5 is_stmt 1 view .LVU198
  430:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
-ARM GAS  /tmp/ccbEZti8.s 			page 26
+ARM GAS  /tmp/ccZ3NgTe.s 			page 26
 
 
  614              		.loc 1 430 8 is_stmt 0 view .LVU199
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  656              	.LVL55:
  499:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****                                 ISP_STAT_TYPE_AVG, IQParamConfig->sensorDelay.delay);
  657              		.loc 1 499 11 view .LVU212
-ARM GAS  /tmp/ccbEZti8.s 			page 27
+ARM GAS  /tmp/ccZ3NgTe.s 			page 27
 
 
  658 00ac 0293     		str	r3, [sp, #8]
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  698              		.loc 1 458 12 is_stmt 0 view .LVU226
  699 00dc 0028     		cmp	r0, #0
  700 00de DED0     		beq	.L50
-ARM GAS  /tmp/ccbEZti8.s 			page 28
+ARM GAS  /tmp/ccZ3NgTe.s 			page 28
 
 
  701 00e0 10E0     		b	.L45
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  349:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   static ISP_SVC_StatStateTypeDef stats;
  741              		.loc 1 349 1 is_stmt 0 view .LVU241
  742 0102 0020     		movs	r0, #0
-ARM GAS  /tmp/ccbEZti8.s 			page 29
+ARM GAS  /tmp/ccZ3NgTe.s 			page 29
 
 
  743              	.LVL68:
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  663:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_ISPGainTypeDef ISPGainConfig;
  664:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_AlgoTypeDef *algo = (ISP_AlgoTypeDef *)pAlgo;
  665:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_StatusTypeDef ret_stat, ret = ISP_OK;
-ARM GAS  /tmp/ccbEZti8.s 			page 30
+ARM GAS  /tmp/ccZ3NgTe.s 			page 30
 
 
  666:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   uint32_t estimatedColorTemp = 0;
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  720:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  721:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   case ISP_ALGO_STATE_STAT_READY:
  722:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #ifdef ALGO_PERF_DBG_LOGS
-ARM GAS  /tmp/ccbEZti8.s 			page 31
+ARM GAS  /tmp/ccZ3NgTe.s 			page 31
 
 
  723:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     static float sum_calc, sum_process = 0;
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  777:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
  778:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       printf("AWB time  = %.3f us (calc in %.3f us)\r\n", sum_process / MEAS_ITERATION, sum_calc / 
  779:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       sum_process = 0;
-ARM GAS  /tmp/ccbEZti8.s 			page 32
+ARM GAS  /tmp/ccZ3NgTe.s 			page 32
 
 
  780:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       sum_calc = 0;
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  834:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  835:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   return ISP_OK;
  836:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** }
-ARM GAS  /tmp/ccbEZti8.s 			page 33
+ARM GAS  /tmp/ccZ3NgTe.s 			page 33
 
 
  837:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  891:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     if (ret != ISP_OK)
  892:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
  893:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       return ret;
-ARM GAS  /tmp/ccbEZti8.s 			page 34
+ARM GAS  /tmp/ccZ3NgTe.s 			page 34
 
 
  894:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     }
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  948:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   case ISP_ALGO_STATE_NEED_STAT:
  949:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     break;
  950:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
-ARM GAS  /tmp/ccbEZti8.s 			page 35
+ARM GAS  /tmp/ccZ3NgTe.s 			page 35
 
 
  951:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   case ISP_ALGO_STATE_WAITING_STAT:
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1005:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       /* Find the max valid delay (ALGO_DELAY_MAX being considered as invalid) */
 1006:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       sensorDelay = 0;
 1007:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       for (i = 0; i < ALGO_DELAY_NB_CONFIG - 1; i++)
-ARM GAS  /tmp/ccbEZti8.s 			page 36
+ARM GAS  /tmp/ccZ3NgTe.s 			page 36
 
 
 1008:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       {
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1062:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** {
 1063:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   /* Update State */
 1064:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   pAlgo->state = ISP_ALGO_STATE_STAT_READY;
-ARM GAS  /tmp/ccbEZti8.s 			page 37
+ARM GAS  /tmp/ccZ3NgTe.s 			page 37
 
 
 1065:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  781              		.loc 1 1109 1 is_stmt 0 view .LVU247
  782 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
  783              		.cfi_def_cfa_offset 32
-ARM GAS  /tmp/ccbEZti8.s 			page 38
+ARM GAS  /tmp/ccZ3NgTe.s 			page 38
 
 
  784              		.cfi_offset 4, -16
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1109:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   static ISP_SVC_StatStateTypeDef stats;
  816              		.loc 1 1109 1 view .LVU260
  817 0020 0020     		movs	r0, #0
-ARM GAS  /tmp/ccbEZti8.s 			page 39
+ARM GAS  /tmp/ccZ3NgTe.s 			page 39
 
 
  818              	.LVL74:
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1162:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     /* Reset state to ISP_ALGO_STATE_INIT */
  833              		.loc 1 1162 5 is_stmt 1 view .LVU263
  834 002c 1248     		ldr	r0, .L78
-ARM GAS  /tmp/ccbEZti8.s 			page 40
+ARM GAS  /tmp/ccZ3NgTe.s 			page 40
 
 
  835              	.LVL76:
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1154:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****                                 ISP_STAT_TYPE_AVG, IQParamConfig->sensorDelay.delay);
  876              		.loc 1 1154 11 is_stmt 0 view .LVU277
  877 005a 90F86532 		ldrb	r3, [r0, #613]	@ zero_extendqisi2
-ARM GAS  /tmp/ccbEZti8.s 			page 41
+ARM GAS  /tmp/ccZ3NgTe.s 			page 41
 
 
  878 005e 0226     		movs	r6, #2
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  927              		.loc 1 597 3 is_stmt 1 view .LVU284
  599:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   if (pRestartState && pRestartState->awbConfigured)
  928              		.loc 1 599 3 view .LVU285
-ARM GAS  /tmp/ccbEZti8.s 			page 42
+ARM GAS  /tmp/ccZ3NgTe.s 			page 42
 
 
  599:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   if (pRestartState && pRestartState->awbConfigured)
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  968              		.global	ISP_Algo_AWB_Process
  969              		.syntax unified
  970              		.thumb
-ARM GAS  /tmp/ccbEZti8.s 			page 43
+ARM GAS  /tmp/ccZ3NgTe.s 			page 43
 
 
  971              		.thumb_func
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  666:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  1011              		.loc 1 666 3 view .LVU313
  668:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
-ARM GAS  /tmp/ccbEZti8.s 			page 44
+ARM GAS  /tmp/ccZ3NgTe.s 			page 44
 
 
  1012              		.loc 1 668 3 view .LVU314
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1052 002e 7270     		strb	r2, [r6, #1]
  679:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     reconfigureRequest = true;
  1053              		.loc 1 679 5 is_stmt 1 view .LVU329
-ARM GAS  /tmp/ccbEZti8.s 			page 45
+ARM GAS  /tmp/ccZ3NgTe.s 			page 45
 
 
  679:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     reconfigureRequest = true;
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1094              		.loc 1 706 5 is_stmt 1 view .LVU343
  706:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****                                 ISP_STAT_TYPE_AVG, ALGO_ISP_LATENCY + ALGO_AWB_ADDITIONAL_LATENCY);
  1095              		.loc 1 706 11 is_stmt 0 view .LVU344
-ARM GAS  /tmp/ccbEZti8.s 			page 46
+ARM GAS  /tmp/ccZ3NgTe.s 			page 46
 
 
  1096 0062 0123     		movs	r3, #1
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  735:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
  1139              		.loc 1 735 5 is_stmt 1 view .LVU356
  1140 009e DFF8A8A0 		ldr	r10, .L123+4
-ARM GAS  /tmp/ccbEZti8.s 			page 47
+ARM GAS  /tmp/ccZ3NgTe.s 			page 47
 
 
  735:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     {
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1181              		.loc 1 737 10 view .LVU370
  1182 00d4 059A     		ldr	r2, [sp, #20]
  1183 00d6 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/ccbEZti8.s 			page 48
+ARM GAS  /tmp/ccZ3NgTe.s 			page 48
 
 
  1184 00d8 9A42     		cmp	r2, r3
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1223 0102 1361     		str	r3, [r2, #16]
  748:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  1224              		.loc 1 748 13 is_stmt 1 view .LVU386
-ARM GAS  /tmp/ccbEZti8.s 			page 49
+ARM GAS  /tmp/ccZ3NgTe.s 			page 49
 
 
  748:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1263              	.L94:
  795:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     /* Reset state to ISP_ALGO_STATE_INIT */
  1264              		.loc 1 795 5 is_stmt 1 view .LVU403
-ARM GAS  /tmp/ccbEZti8.s 			page 50
+ARM GAS  /tmp/ccZ3NgTe.s 			page 50
 
 
  1265 0138 0848     		ldr	r0, .L123+24
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  318:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** {
  1318              		.loc 1 318 19 view -0
  1319              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccbEZti8.s 			page 51
+ARM GAS  /tmp/ccZ3NgTe.s 			page 51
 
 
  1320              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1377              		@ args = 0, pretend = 0, frame = 0
  1378              		@ frame_needed = 0, uses_anonymous_args = 0
  1379              		@ link register save eliminated.
-ARM GAS  /tmp/ccbEZti8.s 			page 52
+ARM GAS  /tmp/ccZ3NgTe.s 			page 52
 
 
  1380 0000 0323     		movs	r3, #3
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1425              		.loc 1 532 21 view .LVU423
  1426 0016 B8EE488A 		vcvt.f32.u32	s16, s16
  1427              	.LVL123:
-ARM GAS  /tmp/ccbEZti8.s 			page 53
+ARM GAS  /tmp/ccZ3NgTe.s 			page 53
 
 
  532:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   }
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1476              	.LVL128:
  1477              	.LFB892:
  554:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_ColorConvTypeDef colorConv;
-ARM GAS  /tmp/ccbEZti8.s 			page 54
+ARM GAS  /tmp/ccZ3NgTe.s 			page 54
 
 
  1478              		.loc 1 554 1 is_stmt 1 view -0
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1520 0024 019B     		ldr	r3, [sp, #4]
  1521 0026 DA17     		asrs	r2, r3, #31
  561:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     ccG = (int64_t) inR * colorConv.coeff[1][0] + (int64_t) inG * colorConv.coeff[1][1] + (int64_t)
-ARM GAS  /tmp/ccbEZti8.s 			page 55
+ARM GAS  /tmp/ccZ3NgTe.s 			page 55
 
 
  1522              		.loc 1 561 25 view .LVU445
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  562:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     ccB = (int64_t) inR * colorConv.coeff[2][0] + (int64_t) inG * colorConv.coeff[2][1] + (int64_t)
  1561              		.loc 1 562 49 view .LVU461
  1562 006e 18EB0208 		adds	r8, r8, r2
-ARM GAS  /tmp/ccbEZti8.s 			page 56
+ARM GAS  /tmp/ccZ3NgTe.s 			page 56
 
 
  562:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     ccB = (int64_t) inR * colorConv.coeff[2][0] + (int64_t) inG * colorConv.coeff[2][1] + (int64_t)
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1602 00ba 9C18     		adds	r4, r3, r2
  1603              	.LVL135:
  565:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     ccG /= ISP_CCM_PRECISION_FACTOR;
-ARM GAS  /tmp/ccbEZti8.s 			page 57
+ARM GAS  /tmp/ccZ3NgTe.s 			page 57
 
 
  1604              		.loc 1 565 9 view .LVU477
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1644 00f8 71F10001 		sbcs	r1, r1, #0
  567:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
  1645              		.loc 1 567 9 view .LVU492
-ARM GAS  /tmp/ccbEZti8.s 			page 58
+ARM GAS  /tmp/ccZ3NgTe.s 			page 58
 
 
  1646 00fc 2046     		mov	r0, r4
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1688              		.loc 1 574 11 view .LVU504
  1689 0132 149B     		ldr	r3, [sp, #80]
  1690 0134 1E60     		str	r6, [r3]
-ARM GAS  /tmp/ccbEZti8.s 			page 59
+ARM GAS  /tmp/ccZ3NgTe.s 			page 59
 
 
  575:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     *outB = (uint32_t) ccB;
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1185:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   hIsp->algorithm = ISP_Algo_List;
  1729              		.loc 1 1185 3 view .LVU513
 1180:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_AlgoTypeDef *algo;
-ARM GAS  /tmp/ccbEZti8.s 			page 60
+ARM GAS  /tmp/ccZ3NgTe.s 			page 60
 
 
  1730              		.loc 1 1180 1 is_stmt 0 view .LVU514
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1202:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   DWT->CYCCNT = 0;
 1203:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 1204:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** #endif
-ARM GAS  /tmp/ccbEZti8.s 			page 61
+ARM GAS  /tmp/ccZ3NgTe.s 			page 61
 
 
 1205:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1215:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** ISP_StatusTypeDef ISP_Algo_DeInit(ISP_HandleTypeDef *hIsp)
 1216:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** {
  1804              		.loc 1 1216 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccbEZti8.s 			page 62
+ARM GAS  /tmp/ccZ3NgTe.s 			page 62
 
 
  1805              		.cfi_startproc
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1229:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****         return ret;
 1230:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****       }
 1231:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****     }
-ARM GAS  /tmp/ccbEZti8.s 			page 63
+ARM GAS  /tmp/ccZ3NgTe.s 			page 63
 
 
 1232:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   }
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1879              		.cfi_startproc
  1880              		@ args = 0, pretend = 0, frame = 0
  1881              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccbEZti8.s 			page 64
+ARM GAS  /tmp/ccZ3NgTe.s 			page 64
 
 
 1245:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   ISP_AlgoTypeDef *algo;
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
 1260:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   }
 1261:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c **** 
 1262:../../Middlewares/stm32-mw-camera/ISP_Library/isp/Src/isp_algo.c ****   return ISP_OK;
-ARM GAS  /tmp/ccbEZti8.s 			page 65
+ARM GAS  /tmp/ccZ3NgTe.s 			page 65
 
 
  1916              		.loc 1 1262 10 view .LVU572
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  1964 0000 00       		.space	1
  1965              		.section	.bss.enableCurrent.4,"aw",%nobits
  1968              	enableCurrent.4:
-ARM GAS  /tmp/ccbEZti8.s 			page 66
+ARM GAS  /tmp/ccZ3NgTe.s 			page 66
 
 
  1969 0000 00       		.space	1
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  2027              	ISP_Algo_AWB:
  2028 0000 03       		.byte	3
  2029 0001 000000   		.space	3
-ARM GAS  /tmp/ccbEZti8.s 			page 67
+ARM GAS  /tmp/ccZ3NgTe.s 			page 67
 
 
  2030 0004 00000000 		.word	ISP_Algo_AWB_Init
@@ -3999,103 +3999,103 @@ ARM GAS  /tmp/ccbEZti8.s 			page 1
  2057      00000000 
  2058              		.text
  2059              	.Letext0:
- 2060              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 2061              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 2060              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 2061              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
  2062              		.file 4 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Inc/isp_core.h"
  2063              		.file 5 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Inc/isp_services.h"
  2064              		.file 6 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Inc/isp_awb_algo.h"
  2065              		.file 7 "../../Middlewares/stm32-mw-camera/ISP_Library/isp/Inc/isp_ae_algo.h"
- 2066              		.file 8 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 2066              		.file 8 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
  2067              		.file 9 "<built-in>"
-ARM GAS  /tmp/ccbEZti8.s 			page 68
+ARM GAS  /tmp/ccZ3NgTe.s 			page 68
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 isp_algo.c
-     /tmp/ccbEZti8.s:26     .text.ISP_Algo_BadPixel_Init:00000000 $t
-     /tmp/ccbEZti8.s:32     .text.ISP_Algo_BadPixel_Init:00000000 ISP_Algo_BadPixel_Init
-     /tmp/ccbEZti8.s:54     .text.ISP_Algo_BadPixel_DeInit:00000000 $t
-     /tmp/ccbEZti8.s:60     .text.ISP_Algo_BadPixel_DeInit:00000000 ISP_Algo_BadPixel_DeInit
-     /tmp/ccbEZti8.s:80     .text.ISP_Algo_AEC_StatCb:00000000 $t
-     /tmp/ccbEZti8.s:86     .text.ISP_Algo_AEC_StatCb:00000000 ISP_Algo_AEC_StatCb
-     /tmp/ccbEZti8.s:108    .text.ISP_Algo_AWB_StatCb:00000000 $t
-     /tmp/ccbEZti8.s:114    .text.ISP_Algo_AWB_StatCb:00000000 ISP_Algo_AWB_StatCb
-     /tmp/ccbEZti8.s:141    .text.ISP_Algo_BadPixel_Process:00000000 $t
-     /tmp/ccbEZti8.s:147    .text.ISP_Algo_BadPixel_Process:00000000 ISP_Algo_BadPixel_Process
-     /tmp/ccbEZti8.s:319    .text.ISP_Algo_BadPixel_Process:00000098 $d
-     /tmp/ccbEZti8.s:1991   .bss.LastFrameId.8:00000000 LastFrameId.8
-     /tmp/ccbEZti8.s:1985   .bss.Step.7:00000000 Step.7
-     /tmp/ccbEZti8.s:1980   .bss.BadPixelCount.6:00000000 BadPixelCount.6
-     /tmp/ccbEZti8.s:326    .text.ISP_Algo_AEC_Init:00000000 $t
-     /tmp/ccbEZti8.s:332    .text.ISP_Algo_AEC_Init:00000000 ISP_Algo_AEC_Init
-     /tmp/ccbEZti8.s:471    .text.ISP_Algo_AEC_Process:00000000 $t
-     /tmp/ccbEZti8.s:477    .text.ISP_Algo_AEC_Process:00000000 ISP_Algo_AEC_Process
-     /tmp/ccbEZti8.s:527    .text.ISP_Algo_AEC_Process:00000020 $d
-     /tmp/ccbEZti8.s:531    .text.ISP_Algo_AEC_Process:00000024 $t
-     /tmp/ccbEZti8.s:755    .text.ISP_Algo_AEC_Process:00000108 $d
-     /tmp/ccbEZti8.s:1974   .bss.stats.5:00000000 stats.5
-     /tmp/ccbEZti8.s:766    .text.ISP_Algo_Background_Process:00000000 $t
-     /tmp/ccbEZti8.s:772    .text.ISP_Algo_Background_Process:00000000 ISP_Algo_Background_Process
-     /tmp/ccbEZti8.s:894    .text.ISP_Algo_Background_Process:00000078 $d
-     /tmp/ccbEZti8.s:1946   .bss.stats.0:00000000 stats.0
-     /tmp/ccbEZti8.s:1373   .text.ISP_Algo_Background_StatCb:00000000 ISP_Algo_Background_StatCb
-     /tmp/ccbEZti8.s:901    .text.ISP_Algo_AWB_Init:00000000 $t
-     /tmp/ccbEZti8.s:907    .text.ISP_Algo_AWB_Init:00000000 ISP_Algo_AWB_Init
-     /tmp/ccbEZti8.s:967    .text.ISP_Algo_AWB_Process:00000000 $t
-     /tmp/ccbEZti8.s:973    .text.ISP_Algo_AWB_Process:00000000 ISP_Algo_AWB_Process
-     /tmp/ccbEZti8.s:1075   .text.ISP_Algo_AWB_Process:00000048 $d
-     /tmp/ccbEZti8.s:1079   .text.ISP_Algo_AWB_Process:00000058 $t
-     /tmp/ccbEZti8.s:1279   .text.ISP_Algo_AWB_Process:00000144 $d
-     /tmp/ccbEZti8.s:1968   .bss.enableCurrent.4:00000000 enableCurrent.4
-     /tmp/ccbEZti8.s:1963   .bss.reconfigureRequest.3:00000000 reconfigureRequest.3
-     /tmp/ccbEZti8.s:1958   .bss.stats.2:00000000 stats.2
-     /tmp/ccbEZti8.s:1952   .bss.currentColorTemp.1:00000000 currentColorTemp.1
-     /tmp/ccbEZti8.s:1998   .bss.Meta:00000000 Meta
-     /tmp/ccbEZti8.s:1290   .text.ISP_Algo_Background_DeInit:00000000 $t
-     /tmp/ccbEZti8.s:1296   .text.ISP_Algo_Background_DeInit:00000000 ISP_Algo_Background_DeInit
-     /tmp/ccbEZti8.s:1309   .text.ISP_Algo_AEC_DeInit:00000000 $t
-     /tmp/ccbEZti8.s:1315   .text.ISP_Algo_AEC_DeInit:00000000 ISP_Algo_AEC_DeInit
-     /tmp/ccbEZti8.s:1328   .text.ISP_Algo_AWB_DeInit:00000000 $t
-     /tmp/ccbEZti8.s:1334   .text.ISP_Algo_AWB_DeInit:00000000 ISP_Algo_AWB_DeInit
-     /tmp/ccbEZti8.s:1347   .text.ISP_Algo_Background_Init:00000000 $t
-     /tmp/ccbEZti8.s:1353   .text.ISP_Algo_Background_Init:00000000 ISP_Algo_Background_Init
-     /tmp/ccbEZti8.s:1367   .text.ISP_Algo_Background_StatCb:00000000 $t
-     /tmp/ccbEZti8.s:1388   .text.ISP_Algo_ApplyGammaInverse:00000000 $t
-     /tmp/ccbEZti8.s:1394   .text.ISP_Algo_ApplyGammaInverse:00000000 ISP_Algo_ApplyGammaInverse
-     /tmp/ccbEZti8.s:1460   .text.ISP_Algo_ApplyGammaInverse:00000040 $d
-     /tmp/ccbEZti8.s:1469   .text.ISP_Algo_ApplyCConv:00000000 $t
-     /tmp/ccbEZti8.s:1475   .text.ISP_Algo_ApplyCConv:00000000 ISP_Algo_ApplyCConv
-     /tmp/ccbEZti8.s:1707   .text.ISP_Algo_ApplyCConv:00000148 $d
-     /tmp/ccbEZti8.s:1713   .text.ISP_Algo_Init:00000000 $t
-ARM GAS  /tmp/ccbEZti8.s 			page 69
+     /tmp/ccZ3NgTe.s:26     .text.ISP_Algo_BadPixel_Init:00000000 $t
+     /tmp/ccZ3NgTe.s:32     .text.ISP_Algo_BadPixel_Init:00000000 ISP_Algo_BadPixel_Init
+     /tmp/ccZ3NgTe.s:54     .text.ISP_Algo_BadPixel_DeInit:00000000 $t
+     /tmp/ccZ3NgTe.s:60     .text.ISP_Algo_BadPixel_DeInit:00000000 ISP_Algo_BadPixel_DeInit
+     /tmp/ccZ3NgTe.s:80     .text.ISP_Algo_AEC_StatCb:00000000 $t
+     /tmp/ccZ3NgTe.s:86     .text.ISP_Algo_AEC_StatCb:00000000 ISP_Algo_AEC_StatCb
+     /tmp/ccZ3NgTe.s:108    .text.ISP_Algo_AWB_StatCb:00000000 $t
+     /tmp/ccZ3NgTe.s:114    .text.ISP_Algo_AWB_StatCb:00000000 ISP_Algo_AWB_StatCb
+     /tmp/ccZ3NgTe.s:141    .text.ISP_Algo_BadPixel_Process:00000000 $t
+     /tmp/ccZ3NgTe.s:147    .text.ISP_Algo_BadPixel_Process:00000000 ISP_Algo_BadPixel_Process
+     /tmp/ccZ3NgTe.s:319    .text.ISP_Algo_BadPixel_Process:00000098 $d
+     /tmp/ccZ3NgTe.s:1991   .bss.LastFrameId.8:00000000 LastFrameId.8
+     /tmp/ccZ3NgTe.s:1985   .bss.Step.7:00000000 Step.7
+     /tmp/ccZ3NgTe.s:1980   .bss.BadPixelCount.6:00000000 BadPixelCount.6
+     /tmp/ccZ3NgTe.s:326    .text.ISP_Algo_AEC_Init:00000000 $t
+     /tmp/ccZ3NgTe.s:332    .text.ISP_Algo_AEC_Init:00000000 ISP_Algo_AEC_Init
+     /tmp/ccZ3NgTe.s:471    .text.ISP_Algo_AEC_Process:00000000 $t
+     /tmp/ccZ3NgTe.s:477    .text.ISP_Algo_AEC_Process:00000000 ISP_Algo_AEC_Process
+     /tmp/ccZ3NgTe.s:527    .text.ISP_Algo_AEC_Process:00000020 $d
+     /tmp/ccZ3NgTe.s:531    .text.ISP_Algo_AEC_Process:00000024 $t
+     /tmp/ccZ3NgTe.s:755    .text.ISP_Algo_AEC_Process:00000108 $d
+     /tmp/ccZ3NgTe.s:1974   .bss.stats.5:00000000 stats.5
+     /tmp/ccZ3NgTe.s:766    .text.ISP_Algo_Background_Process:00000000 $t
+     /tmp/ccZ3NgTe.s:772    .text.ISP_Algo_Background_Process:00000000 ISP_Algo_Background_Process
+     /tmp/ccZ3NgTe.s:894    .text.ISP_Algo_Background_Process:00000078 $d
+     /tmp/ccZ3NgTe.s:1946   .bss.stats.0:00000000 stats.0
+     /tmp/ccZ3NgTe.s:1373   .text.ISP_Algo_Background_StatCb:00000000 ISP_Algo_Background_StatCb
+     /tmp/ccZ3NgTe.s:901    .text.ISP_Algo_AWB_Init:00000000 $t
+     /tmp/ccZ3NgTe.s:907    .text.ISP_Algo_AWB_Init:00000000 ISP_Algo_AWB_Init
+     /tmp/ccZ3NgTe.s:967    .text.ISP_Algo_AWB_Process:00000000 $t
+     /tmp/ccZ3NgTe.s:973    .text.ISP_Algo_AWB_Process:00000000 ISP_Algo_AWB_Process
+     /tmp/ccZ3NgTe.s:1075   .text.ISP_Algo_AWB_Process:00000048 $d
+     /tmp/ccZ3NgTe.s:1079   .text.ISP_Algo_AWB_Process:00000058 $t
+     /tmp/ccZ3NgTe.s:1279   .text.ISP_Algo_AWB_Process:00000144 $d
+     /tmp/ccZ3NgTe.s:1968   .bss.enableCurrent.4:00000000 enableCurrent.4
+     /tmp/ccZ3NgTe.s:1963   .bss.reconfigureRequest.3:00000000 reconfigureRequest.3
+     /tmp/ccZ3NgTe.s:1958   .bss.stats.2:00000000 stats.2
+     /tmp/ccZ3NgTe.s:1952   .bss.currentColorTemp.1:00000000 currentColorTemp.1
+     /tmp/ccZ3NgTe.s:1998   .bss.Meta:00000000 Meta
+     /tmp/ccZ3NgTe.s:1290   .text.ISP_Algo_Background_DeInit:00000000 $t
+     /tmp/ccZ3NgTe.s:1296   .text.ISP_Algo_Background_DeInit:00000000 ISP_Algo_Background_DeInit
+     /tmp/ccZ3NgTe.s:1309   .text.ISP_Algo_AEC_DeInit:00000000 $t
+     /tmp/ccZ3NgTe.s:1315   .text.ISP_Algo_AEC_DeInit:00000000 ISP_Algo_AEC_DeInit
+     /tmp/ccZ3NgTe.s:1328   .text.ISP_Algo_AWB_DeInit:00000000 $t
+     /tmp/ccZ3NgTe.s:1334   .text.ISP_Algo_AWB_DeInit:00000000 ISP_Algo_AWB_DeInit
+     /tmp/ccZ3NgTe.s:1347   .text.ISP_Algo_Background_Init:00000000 $t
+     /tmp/ccZ3NgTe.s:1353   .text.ISP_Algo_Background_Init:00000000 ISP_Algo_Background_Init
+     /tmp/ccZ3NgTe.s:1367   .text.ISP_Algo_Background_StatCb:00000000 $t
+     /tmp/ccZ3NgTe.s:1388   .text.ISP_Algo_ApplyGammaInverse:00000000 $t
+     /tmp/ccZ3NgTe.s:1394   .text.ISP_Algo_ApplyGammaInverse:00000000 ISP_Algo_ApplyGammaInverse
+     /tmp/ccZ3NgTe.s:1460   .text.ISP_Algo_ApplyGammaInverse:00000040 $d
+     /tmp/ccZ3NgTe.s:1469   .text.ISP_Algo_ApplyCConv:00000000 $t
+     /tmp/ccZ3NgTe.s:1475   .text.ISP_Algo_ApplyCConv:00000000 ISP_Algo_ApplyCConv
+     /tmp/ccZ3NgTe.s:1707   .text.ISP_Algo_ApplyCConv:00000148 $d
+     /tmp/ccZ3NgTe.s:1713   .text.ISP_Algo_Init:00000000 $t
+ARM GAS  /tmp/ccZ3NgTe.s 			page 69
 
 
-     /tmp/ccbEZti8.s:1719   .text.ISP_Algo_Init:00000000 ISP_Algo_Init
-     /tmp/ccbEZti8.s:1790   .text.ISP_Algo_Init:0000002c $d
-     /tmp/ccbEZti8.s:2005   .data.ISP_Algo_List:00000000 ISP_Algo_List
-     /tmp/ccbEZti8.s:1795   .text.ISP_Algo_DeInit:00000000 $t
-     /tmp/ccbEZti8.s:1801   .text.ISP_Algo_DeInit:00000000 ISP_Algo_DeInit
-     /tmp/ccbEZti8.s:1869   .text.ISP_Algo_Process:00000000 $t
-     /tmp/ccbEZti8.s:1875   .text.ISP_Algo_Process:00000000 ISP_Algo_Process
-     /tmp/ccbEZti8.s:1943   .bss.stats.0:00000000 $d
-     /tmp/ccbEZti8.s:1949   .bss.currentColorTemp.1:00000000 $d
-     /tmp/ccbEZti8.s:1955   .bss.stats.2:00000000 $d
-     /tmp/ccbEZti8.s:1964   .bss.reconfigureRequest.3:00000000 $d
-     /tmp/ccbEZti8.s:1969   .bss.enableCurrent.4:00000000 $d
-     /tmp/ccbEZti8.s:1971   .bss.stats.5:00000000 $d
-     /tmp/ccbEZti8.s:1977   .bss.BadPixelCount.6:00000000 $d
-     /tmp/ccbEZti8.s:1986   .bss.Step.7:00000000 $d
-     /tmp/ccbEZti8.s:1988   .bss.LastFrameId.8:00000000 $d
-     /tmp/ccbEZti8.s:1995   .bss.Meta:00000000 $d
-     /tmp/ccbEZti8.s:2002   .data.ISP_Algo_List:00000000 $d
-     /tmp/ccbEZti8.s:2015   .data.ISP_Algo_Background:00000000 ISP_Algo_Background
-     /tmp/ccbEZti8.s:2051   .data.ISP_Algo_BadPixel:00000000 ISP_Algo_BadPixel
-     /tmp/ccbEZti8.s:2039   .data.ISP_Algo_AEC:00000000 ISP_Algo_AEC
-     /tmp/ccbEZti8.s:2027   .data.ISP_Algo_AWB:00000000 ISP_Algo_AWB
-     /tmp/ccbEZti8.s:2012   .data.ISP_Algo_Background:00000000 $d
-     /tmp/ccbEZti8.s:2024   .data.ISP_Algo_AWB:00000000 $d
-     /tmp/ccbEZti8.s:2036   .data.ISP_Algo_AEC:00000000 $d
-     /tmp/ccbEZti8.s:2048   .data.ISP_Algo_BadPixel:00000000 $d
+     /tmp/ccZ3NgTe.s:1719   .text.ISP_Algo_Init:00000000 ISP_Algo_Init
+     /tmp/ccZ3NgTe.s:1790   .text.ISP_Algo_Init:0000002c $d
+     /tmp/ccZ3NgTe.s:2005   .data.ISP_Algo_List:00000000 ISP_Algo_List
+     /tmp/ccZ3NgTe.s:1795   .text.ISP_Algo_DeInit:00000000 $t
+     /tmp/ccZ3NgTe.s:1801   .text.ISP_Algo_DeInit:00000000 ISP_Algo_DeInit
+     /tmp/ccZ3NgTe.s:1869   .text.ISP_Algo_Process:00000000 $t
+     /tmp/ccZ3NgTe.s:1875   .text.ISP_Algo_Process:00000000 ISP_Algo_Process
+     /tmp/ccZ3NgTe.s:1943   .bss.stats.0:00000000 $d
+     /tmp/ccZ3NgTe.s:1949   .bss.currentColorTemp.1:00000000 $d
+     /tmp/ccZ3NgTe.s:1955   .bss.stats.2:00000000 $d
+     /tmp/ccZ3NgTe.s:1964   .bss.reconfigureRequest.3:00000000 $d
+     /tmp/ccZ3NgTe.s:1969   .bss.enableCurrent.4:00000000 $d
+     /tmp/ccZ3NgTe.s:1971   .bss.stats.5:00000000 $d
+     /tmp/ccZ3NgTe.s:1977   .bss.BadPixelCount.6:00000000 $d
+     /tmp/ccZ3NgTe.s:1986   .bss.Step.7:00000000 $d
+     /tmp/ccZ3NgTe.s:1988   .bss.LastFrameId.8:00000000 $d
+     /tmp/ccZ3NgTe.s:1995   .bss.Meta:00000000 $d
+     /tmp/ccZ3NgTe.s:2002   .data.ISP_Algo_List:00000000 $d
+     /tmp/ccZ3NgTe.s:2015   .data.ISP_Algo_Background:00000000 ISP_Algo_Background
+     /tmp/ccZ3NgTe.s:2051   .data.ISP_Algo_BadPixel:00000000 ISP_Algo_BadPixel
+     /tmp/ccZ3NgTe.s:2039   .data.ISP_Algo_AEC:00000000 ISP_Algo_AEC
+     /tmp/ccZ3NgTe.s:2027   .data.ISP_Algo_AWB:00000000 ISP_Algo_AWB
+     /tmp/ccZ3NgTe.s:2012   .data.ISP_Algo_Background:00000000 $d
+     /tmp/ccZ3NgTe.s:2024   .data.ISP_Algo_AWB:00000000 $d
+     /tmp/ccZ3NgTe.s:2036   .data.ISP_Algo_AEC:00000000 $d
+     /tmp/ccZ3NgTe.s:2048   .data.ISP_Algo_BadPixel:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.isp_conf.h.21.f38432dbfef47e2ce2a64e60ef6a2d79
                            .group:00000000 wm4.stm32n6xx_hal_conf.h.21.e6f895f5dec93fd886896ef3aa220611
@@ -4127,7 +4127,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.config.h.224.10ee1ad185d877c6e334e6581faab44d
                            .group:00000000 wm4._ansi.h.31.de524f58584151836e90d8620a16f8e8
                            .group:00000000 wm4.cdefs.h.49.56fd742369e655e7e8a7e365e706e208
-ARM GAS  /tmp/ccbEZti8.s 			page 70
+ARM GAS  /tmp/ccZ3NgTe.s 			page 70
 
 
                            .group:00000000 wm4._types.h.20.dd0d04dca3800a0d2a6129b87f3adbb2
@@ -4187,7 +4187,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.inttypes.h.14.b28deb26920e51e0da310220ef0f9003
                            .group:00000000 wm4.inttypes.h.28.684aa7736e7ecc9a6ffc44acc61c7a90
 
-ARM GAS  /tmp/ccbEZti8.s 			page 71
+ARM GAS  /tmp/ccZ3NgTe.s 			page 71
 
 
 UNDEFINED SYMBOLS

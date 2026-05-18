@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccAGibT0.s 			page 1
+ARM GAS  /tmp/ccg7jAob.s 			page 1
 
 
    1              		.arch armv8.1-m.main
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
   23:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #include "vd55g1_patch_cut_2.c"
   24:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
   25:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #define VD55G1_REG_MODEL_ID                           0x0000
-ARM GAS  /tmp/ccAGibT0.s 			page 2
+ARM GAS  /tmp/ccg7jAob.s 			page 2
 
 
   26:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   #define VD55G1_MODEL_ID_VD55G1                      0x53354731
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
   80:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   #define VD55G1_EXP_MODE_AUTO                        0
   81:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   #define VD55G1_EXP_MODE_FREEZE                      1
   82:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   #define VD55G1_EXP_MODE_MANUAL                      2
-ARM GAS  /tmp/ccAGibT0.s 			page 3
+ARM GAS  /tmp/ccg7jAob.s 			page 3
 
 
   83:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #define VD55G1_REG_MANUAL_ANALOG_GAIN                 0x0501
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  137:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #ifndef CEIL
  138:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #define CEIL(num) ((num) == (int)(num) ? (int)(num) : (num) > 0 ? (int)((num) + 1) : (int)(num))
  139:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #endif
-ARM GAS  /tmp/ccAGibT0.s 			page 4
+ARM GAS  /tmp/ccg7jAob.s 			page 4
 
 
  140:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  194:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       .left = 82,
  195:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       .top = 112,
  196:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       .width = 640,
-ARM GAS  /tmp/ccAGibT0.s 			page 5
+ARM GAS  /tmp/ccg7jAob.s 			page 5
 
 
  197:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       .height = 480,
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  251:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** #define VD55G1_dbg(_ctx_, _lvl_, _fmt_, ...) do { \
  252:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_log_impl(_ctx_, VD55G1_LVL_DBG(_lvl_), "VD55G1_DG%d-%d : " _fmt_, _lvl_, __LINE__, ##__VA_
  253:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** } while(0)
-ARM GAS  /tmp/ccAGibT0.s 			page 6
+ARM GAS  /tmp/ccg7jAob.s 			page 6
 
 
  254:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  308:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint8_t val;
  309:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
  310:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 7
+ARM GAS  /tmp/ccg7jAob.s 			page 7
 
 
  311:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   while (--loop_nb) {
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  365:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  366:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   switch (drv_ctx->config_save.flip_mirror_mode) {
  367:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   case VD55G1_MIRROR_FLIP_NONE:
-ARM GAS  /tmp/ccAGibT0.s 			page 8
+ARM GAS  /tmp/ccg7jAob.s 			page 8
 
 
  368:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     ctx->bayer = VD55G1_BAYER_RGGB;
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  422:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  423:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** static int VD55G1_ApplyPatch(VD55G1_Ctx_t *ctx, uint8_t *patch_array, int patch_len, uint8_t patch_
  424:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****                              uint8_t patch_minor)
-ARM GAS  /tmp/ccAGibT0.s 			page 9
+ARM GAS  /tmp/ccg7jAob.s 			page 9
 
 
  425:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** {
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  479:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   return 0;
  480:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
  481:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 10
+ARM GAS  /tmp/ccg7jAob.s 			page 10
 
 
  482:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** static int VD55G1_Gpios(VD55G1_Ctx_t *ctx)
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  536:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return mipi_data_rate * 2;
  537:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   else if (mipi_data_rate <= 300000000 && mipi_data_rate >= 250000000)
  538:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return mipi_data_rate * 4;
-ARM GAS  /tmp/ccAGibT0.s 			page 11
+ARM GAS  /tmp/ccg7jAob.s 			page 11
 
 
  539:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
   69              		.loc 1 548 3 is_stmt 1 view .LVU12
  549:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return 0;
   70              		.loc 1 549 12 is_stmt 0 view .LVU13
-ARM GAS  /tmp/ccAGibT0.s 			page 12
+ARM GAS  /tmp/ccg7jAob.s 			page 12
 
 
   71 000e 0020     		movs	r0, #0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  536:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   else if (mipi_data_rate <= 300000000 && mipi_data_rate >= 250000000)
  106              		.loc 1 536 5 is_stmt 1 view .LVU24
  536:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   else if (mipi_data_rate <= 300000000 && mipi_data_rate >= 250000000)
-ARM GAS  /tmp/ccAGibT0.s 			page 13
+ARM GAS  /tmp/ccg7jAob.s 			page 13
 
 
  107              		.loc 1 536 27 is_stmt 0 view .LVU25
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  145              		.loc 1 537 8 is_stmt 1 view .LVU41
  537:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return mipi_data_rate * 4;
  146              		.loc 1 537 40 is_stmt 0 view .LVU42
-ARM GAS  /tmp/ccAGibT0.s 			page 14
+ARM GAS  /tmp/ccg7jAob.s 			page 14
 
 
  147 0048 0A4B     		ldr	r3, .L11+28
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  240:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   va_list ap;
  193              		.loc 1 240 1 is_stmt 1 view -0
  194              		.cfi_startproc
-ARM GAS  /tmp/ccAGibT0.s 			page 15
+ARM GAS  /tmp/ccg7jAob.s 			page 15
 
 
  195              		@ args = 4, pretend = 8, frame = 8
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  240 0000 56443535 		.ascii	"VD55G1_DG%d-%d : current state %d\012\000"
  240      47315F44 
  240      4725642D 
-ARM GAS  /tmp/ccAGibT0.s 			page 16
+ARM GAS  /tmp/ccg7jAob.s 			page 16
 
 
  240      2564203A 
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  283 0016 9847     		blx	r3
  284              	.LVL13:
  313:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       return ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 17
+ARM GAS  /tmp/ccg7jAob.s 			page 17
 
 
  285              		.loc 1 313 5 is_stmt 1 view .LVU75
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  325              	.LVL18:
  326              	.L18:
  323:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 18
+ARM GAS  /tmp/ccg7jAob.s 			page 18
 
 
  327              		.loc 1 323 1 view .LVU90
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  370              		.cfi_offset 4, -16
  371              		.cfi_offset 5, -12
  372              		.cfi_offset 6, -8
-ARM GAS  /tmp/ccAGibT0.s 			page 19
+ARM GAS  /tmp/ccg7jAob.s 			page 19
 
 
  373              		.cfi_offset 14, -4
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  337:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** {
  415              		.loc 1 337 12 is_stmt 1 view .LVU108
  416              	.LBB15:
-ARM GAS  /tmp/ccAGibT0.s 			page 20
+ARM GAS  /tmp/ccg7jAob.s 			page 20
 
 
  344:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  454              		.align	1
  455              		.syntax unified
  456              		.thumb
-ARM GAS  /tmp/ccAGibT0.s 			page 21
+ARM GAS  /tmp/ccg7jAob.s 			page 21
 
 
  457              		.thumb_func
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  500              	.L31:
  273:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_error(ctx, "ERROR_CODE : 0x%04x\n", reg16);
  501              		.loc 1 273 3 discriminator 1 view .LVU128
-ARM GAS  /tmp/ccAGibT0.s 			page 22
+ARM GAS  /tmp/ccg7jAob.s 			page 22
 
 
  502              	.LBE19:
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  540              		.align	1
  541              		.syntax unified
  542              		.thumb
-ARM GAS  /tmp/ccAGibT0.s 			page 23
+ARM GAS  /tmp/ccg7jAob.s 			page 23
 
 
  543              		.thumb_func
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  610:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  611:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   /* Be sure we got value 0 or 1 */
  612:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   out_itf->clock_lane_swap_enable = !!out_itf->clock_lane_swap_enable;
-ARM GAS  /tmp/ccAGibT0.s 			page 24
+ARM GAS  /tmp/ccg7jAob.s 			page 24
 
 
  613:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   out_itf->data_lane_swap_enable = !!out_itf->data_lane_swap_enable;
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  667:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint16_t width;
  668:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
  669:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 25
+ARM GAS  /tmp/ccg7jAob.s 			page 25
 
 
  670:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->read16(ctx, VD55G1_REG_X_WIDTH, &width);
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  576              		.loc 1 693 9 view .LVU146
  577 000e 8368     		ldr	r3, [r0, #8]
  578 0010 07AA     		add	r2, sp, #28
-ARM GAS  /tmp/ccAGibT0.s 			page 26
+ARM GAS  /tmp/ccg7jAob.s 			page 26
 
 
  579              	.LVL39:
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  626              	.LVL44:
  627              		.loc 1 697 3 is_stmt 1 discriminator 3 view .LVU164
  628              		.loc 1 697 3 discriminator 3 view .LVU165
-ARM GAS  /tmp/ccAGibT0.s 			page 27
+ARM GAS  /tmp/ccg7jAob.s 			page 27
 
 
  629              		.loc 1 697 3 discriminator 4 view .LVU166
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  675 007a A8F80030 		strh	r3, [r8]	@ movhi
  703:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  704:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_dbg(ctx, 1, "frame_length to MAX(%d, %d) = %d to reach %d fps\n", min_frame_length, req_fr
-ARM GAS  /tmp/ccAGibT0.s 			page 28
+ARM GAS  /tmp/ccg7jAob.s 			page 28
 
 
  676              		.loc 1 704 3 is_stmt 1 view .LVU187
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  718:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
  719:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  720:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_ComputeFrameLength(ctx, drv_ctx->config_save.frame_rate, &frame_length);
-ARM GAS  /tmp/ccAGibT0.s 			page 29
+ARM GAS  /tmp/ccg7jAob.s 			page 29
 
 
  721:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  752 0016 40F20151 		movw	r1, #1281
  753 001a 2046     		mov	r0, r4
  754              	.LVL56:
-ARM GAS  /tmp/ccAGibT0.s 			page 30
+ARM GAS  /tmp/ccg7jAob.s 			page 30
 
 
  755              		.loc 1 738 9 view .LVU209
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  795              		.loc 1 750 1 is_stmt 0 view .LVU223
  796 004c 2846     		mov	r0, r5
  797 004e 05B0     		add	sp, sp, #20
-ARM GAS  /tmp/ccAGibT0.s 			page 31
+ARM GAS  /tmp/ccg7jAob.s 			page 31
 
 
  798              		.cfi_remember_state
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  835 006c 40F20651 		movw	r1, #1286
  836 0070 2046     		mov	r0, r4
  837              	.LVL64:
-ARM GAS  /tmp/ccAGibT0.s 			page 32
+ARM GAS  /tmp/ccg7jAob.s 			page 32
 
 
  742:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  876              	.L59:
  745:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->write16(ctx, VD55G1_REG_MANUAL_DIGITAL_GAIN_CH3, drv_ctx->manual_digital_gain);
  877              		.loc 1 745 3 discriminator 3 view .LVU257
-ARM GAS  /tmp/ccAGibT0.s 			page 33
+ARM GAS  /tmp/ccg7jAob.s 			page 33
 
 
  745:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->write16(ctx, VD55G1_REG_MANUAL_DIGITAL_GAIN_CH3, drv_ctx->manual_digital_gain);
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  757:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int max_fps;
  758:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint8_t reg;
  759:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 34
+ARM GAS  /tmp/ccg7jAob.s 			page 34
 
 
  760:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  814:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   default:
  815:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return -1;
  816:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   }
-ARM GAS  /tmp/ccAGibT0.s 			page 35
+ARM GAS  /tmp/ccg7jAob.s 			page 35
 
 
  817:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  859:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint16_t mode;
  925              		.loc 1 859 1 is_stmt 0 view .LVU272
  926 0000 30B5     		push	{r4, r5, lr}
-ARM GAS  /tmp/ccAGibT0.s 			page 36
+ARM GAS  /tmp/ccg7jAob.s 			page 36
 
 
  927              		.cfi_def_cfa_offset 12
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  966              		.loc 1 878 3 discriminator 3 view .LVU282
  967              		.loc 1 878 3 discriminator 4 view .LVU283
  968 0030 2846     		mov	r0, r5
-ARM GAS  /tmp/ccAGibT0.s 			page 37
+ARM GAS  /tmp/ccg7jAob.s 			page 37
 
 
  969 0032 FFF7FEFF 		bl	display_error
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  893:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  894:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_SetupClocks(ctx);
  895:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 38
+ARM GAS  /tmp/ccg7jAob.s 			page 38
 
 
  896:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  940:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
  1012              		.loc 1 940 1 is_stmt 0 view .LVU289
  1013 0000 30B5     		push	{r4, r5, lr}
-ARM GAS  /tmp/ccAGibT0.s 			page 39
+ARM GAS  /tmp/ccg7jAob.s 			page 39
 
 
  1014              		.cfi_def_cfa_offset 12
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  948:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  949:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_WaitState(ctx, VD55G1_SYSTEM_FSM_SW_STBY);
  950:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 40
+ARM GAS  /tmp/ccg7jAob.s 			page 40
 
 
  1060              		.loc 1 950 3 is_stmt 0 discriminator 1 view .LVU307
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1107              		.loc 1 950 3 discriminator 6 view .LVU328
  1108              		.loc 1 950 3 view .LVU329
  951:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 41
+ARM GAS  /tmp/ccg7jAob.s 			page 41
 
 
  952:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_notice(ctx, "Streaming is off\n");
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1156 0000 70B5     		push	{r4, r5, r6, lr}
  1157              		.cfi_def_cfa_offset 16
  1158              		.cfi_offset 4, -16
-ARM GAS  /tmp/ccAGibT0.s 			page 42
+ARM GAS  /tmp/ccg7jAob.s 			page 42
 
 
  1159              		.cfi_offset 5, -12
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1198 0024 88B1     		cbz	r0, .L84
  298:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  1199              		.loc 1 298 3 discriminator 1 view .LVU357
-ARM GAS  /tmp/ccAGibT0.s 			page 43
+ARM GAS  /tmp/ccg7jAob.s 			page 43
 
 
  298:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1242 0054 00000000 		.word	.LC6
  1243              		.cfi_endproc
  1244              	.LFE4:
-ARM GAS  /tmp/ccAGibT0.s 			page 44
+ARM GAS  /tmp/ccg7jAob.s 			page 44
 
 
  1246              		.section	.text.VD55G1_Copy8,"ax",%progbits
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1288 0012 0446     		mov	r4, r0
  1289 0014 58B9     		cbnz	r0, .L93
  283:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->write8(ctx, dst, reg8);
-ARM GAS  /tmp/ccAGibT0.s 			page 45
+ARM GAS  /tmp/ccg7jAob.s 			page 45
 
 
  1290              		.loc 1 283 3 discriminator 6 view .LVU383
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  285:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  1330              		.loc 1 285 3 discriminator 4 view .LVU398
  1331 0044 2846     		mov	r0, r5
-ARM GAS  /tmp/ccAGibT0.s 			page 46
+ARM GAS  /tmp/ccg7jAob.s 			page 46
 
 
  1332 0046 FFF7FEFF 		bl	display_error
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1378              		.cfi_def_cfa_offset 40
  584:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint16_t line_len;
  1379              		.loc 1 584 1 view .LVU409
-ARM GAS  /tmp/ccAGibT0.s 			page 47
+ARM GAS  /tmp/ccg7jAob.s 			page 47
 
 
  1380 0004 0E46     		mov	r6, r1
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1417              		.loc 1 590 3 discriminator 1 view .LVU426
  1418 0028 40F24E23 		movw	r3, #590
  1419 002c 0C4A     		ldr	r2, .L106
-ARM GAS  /tmp/ccAGibT0.s 			page 48
+ARM GAS  /tmp/ccg7jAob.s 			page 48
 
 
  1420 002e 0290     		str	r0, [sp, #8]
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1462 005c 3060     		str	r0, [r6]
  600:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
  1463              		.loc 1 600 3 is_stmt 1 view .LVU439
-ARM GAS  /tmp/ccAGibT0.s 			page 49
+ARM GAS  /tmp/ccg7jAob.s 			page 49
 
 
  600:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1510 000e 9847     		blx	r3
  1511              	.LVL125:
  357:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 50
+ARM GAS  /tmp/ccg7jAob.s 			page 50
 
 
  1512              		.loc 1 357 3 is_stmt 1 view .LVU450
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  357:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  1551              		.loc 1 357 3 discriminator 3 view .LVU466
  357:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 51
+ARM GAS  /tmp/ccg7jAob.s 			page 51
 
 
  1552              		.loc 1 357 3 discriminator 4 view .LVU467
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1595              		.loc 1 374 16 is_stmt 0 view .LVU478
  1596 006a 0223     		movs	r3, #2
  1597 006c F8E7     		b	.L120
-ARM GAS  /tmp/ccAGibT0.s 			page 52
+ARM GAS  /tmp/ccg7jAob.s 			page 52
 
 
  1598              	.L114:
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1633 009e 56443535 		.ascii	"VD55G1_DG%d-%d : rom = 0x%04x\012\000"
  1633      47315F44 
  1633      4725642D 
-ARM GAS  /tmp/ccAGibT0.s 			page 53
+ARM GAS  /tmp/ccg7jAob.s 			page 53
 
 
  1633      2564203A 
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  966:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  967:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_WaitState(ctx, VD55G1_SYSTEM_FSM_STREAMING_AWU);
  968:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 54
+ARM GAS  /tmp/ccg7jAob.s 			page 54
 
 
  969:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1023:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
 1024:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->read16(ctx, VD55G1_REG_CONTEXT_NEXT_CONTEXT, &reg16);
 1025:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 55
+ARM GAS  /tmp/ccg7jAob.s 			page 55
 
 
 1026:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1080:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_AutoWakeNextContextInvalid(ctx);
 1081:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
 1082:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 56
+ARM GAS  /tmp/ccg7jAob.s 			page 56
 
 
 1083:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1673 0006 0546     		mov	r5, r0
  1674              	.LVL133:
 1114:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 57
+ARM GAS  /tmp/ccg7jAob.s 			page 57
 
 
  1675              		.loc 1 1114 3 is_stmt 1 view .LVU489
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1147:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ctx->delay(ctx, 10);
 1148:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
 1149:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_Boot(ctx);
-ARM GAS  /tmp/ccAGibT0.s 			page 58
+ARM GAS  /tmp/ccg7jAob.s 			page 58
 
 
 1150:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1733 0042 0FC6     		stmia	r6!, {r0, r1, r2, r3}
  1734 0044 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
  1735              	.LVL137:
-ARM GAS  /tmp/ccAGibT0.s 			page 59
+ARM GAS  /tmp/ccg7jAob.s 			page 59
 
 
 1138:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   drv_ctx->exposure_mode = VD55G1_EXPOSURE_MODE_AUTO;
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1145:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ctx->shutdown_pin(ctx, 1);
  1772              		.loc 1 1145 3 view .LVU528
  1773 0072 0A21     		movs	r1, #10
-ARM GAS  /tmp/ccAGibT0.s 			page 60
+ARM GAS  /tmp/ccg7jAob.s 			page 60
 
 
  1774 0074 2846     		mov	r0, r5
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1815              		.loc 1 388 3 view .LVU541
  389:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint16_t reg16;
  1816              		.loc 1 389 3 view .LVU542
-ARM GAS  /tmp/ccAGibT0.s 			page 61
+ARM GAS  /tmp/ccg7jAob.s 			page 61
 
 
  390:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1855 00be 059B     		ldr	r3, [sp, #20]
  396:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     VD55G1_error(ctx, "Bad model id got 0x%04x\n", reg32);
  1856              		.loc 1 396 6 view .LVU559
-ARM GAS  /tmp/ccAGibT0.s 			page 62
+ARM GAS  /tmp/ccg7jAob.s 			page 62
 
 
  1857 00c0 924A     		ldr	r2, .L175+4
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1898 0102 9342     		cmp	r3, r2
  1899 0104 20D0     		beq	.L132
  412:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return -1;
-ARM GAS  /tmp/ccAGibT0.s 			page 63
+ARM GAS  /tmp/ccg7jAob.s 			page 63
 
 
  1900              		.loc 1 412 5 view .LVU573
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1942              		.loc 1 1150 3 is_stmt 1 view .LVU585
  1943 012c 76E7     		b	.L123
  1944              	.LVL158:
-ARM GAS  /tmp/ccAGibT0.s 			page 64
+ARM GAS  /tmp/ccg7jAob.s 			page 64
 
 
  1945              	.L129:
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  1987              		.loc 1 416 3 is_stmt 1 view .LVU597
  416:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
  1988              		.loc 1 416 9 is_stmt 0 view .LVU598
-ARM GAS  /tmp/ccAGibT0.s 			page 65
+ARM GAS  /tmp/ccg7jAob.s 			page 65
 
 
  1989 014a 0821     		movs	r1, #8
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  453:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   struct drv_ctx *drv_ctx = &ctx->ctx;
  2028              		.loc 1 453 3 view .LVU614
  454:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 66
+ARM GAS  /tmp/ccg7jAob.s 			page 66
 
 
  2029              		.loc 1 454 3 view .LVU615
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  427:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  2071              		.loc 1 427 3 view .LVU628
  429:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 67
+ARM GAS  /tmp/ccg7jAob.s 			page 67
 
 
  2072              		.loc 1 429 3 view .LVU629
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2112              		.loc 1 460 5 is_stmt 1 view .LVU643
  460:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     break;
  2113              		.loc 1 460 5 view .LVU644
-ARM GAS  /tmp/ccAGibT0.s 			page 68
+ARM GAS  /tmp/ccg7jAob.s 			page 68
 
 
  2114              	.L139:
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2152 01e6 2846     		mov	r0, r5
  2153              	.LVL175:
  435:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 69
+ARM GAS  /tmp/ccg7jAob.s 			page 69
 
 
  2154              		.loc 1 435 9 view .LVU661
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  439:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_dbg(ctx, 0, "patch = 0x%04x\n", reg16);
  2192              		.loc 1 439 3 discriminator 1 view .LVU678
  2193 020e 40F2B713 		movw	r3, #439
-ARM GAS  /tmp/ccAGibT0.s 			page 70
+ARM GAS  /tmp/ccg7jAob.s 			page 70
 
 
  2194 0212 0290     		str	r0, [sp, #8]
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2234 024e 2846     		mov	r0, r5
  2235 0250 3A4A     		ldr	r2, .L175+52
  2236 0252 FFF7FEFF 		bl	VD55G1_log_impl
-ARM GAS  /tmp/ccAGibT0.s 			page 71
+ARM GAS  /tmp/ccg7jAob.s 			page 71
 
 
  2237              	.LVL181:
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2274 0270 2846     		mov	r0, r5
  2275 0272 FFF7FEFF 		bl	VD55G1_WaitState
  2276              	.LVL184:
-ARM GAS  /tmp/ccAGibT0.s 			page 72
+ARM GAS  /tmp/ccg7jAob.s 			page 72
 
 
  476:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2314              	.LBB39:
  488:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   {
  2315              		.loc 1 488 18 discriminator 1 view .LVU727
-ARM GAS  /tmp/ccAGibT0.s 			page 73
+ARM GAS  /tmp/ccg7jAob.s 			page 73
 
 
  2316 029c 40F22158 		movw	r8, #1313
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2358 02cc 0446     		mov	r4, r0
  2359 02ce 60B9     		cbnz	r0, .L148
  465:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     ret = VD55G1_PollReg8(ctx, VD55G1_REG_BOOT, VD55G1_CMD_ACK);
-ARM GAS  /tmp/ccAGibT0.s 			page 74
+ARM GAS  /tmp/ccg7jAob.s 			page 74
 
 
  2360              		.loc 1 465 5 discriminator 3 view .LVU740
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2399              	.LBE58:
  2400              	.LBB59:
  2401              	.LBB40:
-ARM GAS  /tmp/ccAGibT0.s 			page 75
+ARM GAS  /tmp/ccg7jAob.s 			page 75
 
 
  491:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   }
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2447              		.section	.text.VD55G1_DeInit,"ax",%progbits
  2448              		.align	1
  2449              		.global	VD55G1_DeInit
-ARM GAS  /tmp/ccAGibT0.s 			page 76
+ARM GAS  /tmp/ccg7jAob.s 			page 76
 
 
  2450              		.syntax unified
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1169:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
  2491              		.loc 1 1169 1 view .LVU778
  2492 001a 10BD     		pop	{r4, pc}
-ARM GAS  /tmp/ccAGibT0.s 			page 77
+ARM GAS  /tmp/ccg7jAob.s 			page 77
 
 
  2493              	.LVL201:
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1173:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   struct drv_ctx *drv_ctx = &ctx->ctx;
  2527              		.loc 1 1173 3 view .LVU782
 1174:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   int ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 78
+ARM GAS  /tmp/ccg7jAob.s 			page 78
 
 
  2528              		.loc 1 1174 3 view .LVU783
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2570              	.LBB93:
  566:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****       drv_ctx->config_save.out_itf.data_rate_in_mps > VD55G1_MAX_DATARATE)
  2571              		.loc 1 566 75 view .LVU795
-ARM GAS  /tmp/ccAGibT0.s 			page 79
+ARM GAS  /tmp/ccg7jAob.s 			page 79
 
 
  2572 0008 1344     		add	r3, r3, r2
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  574:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  2613              		.loc 1 574 3 view .LVU809
  2614 002c 0446     		mov	r4, r0
-ARM GAS  /tmp/ccAGibT0.s 			page 80
+ARM GAS  /tmp/ccg7jAob.s 			page 80
 
 
  2615 002e 00B3     		cbz	r0, .L245
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2653              		.loc 1 895 3 discriminator 1 view .LVU825
  2654 0054 40F27F33 		movw	r3, #895
  2655 0058 0294     		str	r4, [sp, #8]
-ARM GAS  /tmp/ccAGibT0.s 			page 81
+ARM GAS  /tmp/ccg7jAob.s 			page 81
 
 
  2656              	.L265:
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2696              	.LBB146:
  2697              	.LBB99:
  2698              	.LBB95:
-ARM GAS  /tmp/ccAGibT0.s 			page 82
+ARM GAS  /tmp/ccg7jAob.s 			page 82
 
 
  574:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2734              		.loc 1 605 3 view .LVU856
  606:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   uint8_t data_type;
  2735              		.loc 1 606 3 view .LVU857
-ARM GAS  /tmp/ccAGibT0.s 			page 83
+ARM GAS  /tmp/ccg7jAob.s 			page 83
 
 
  612:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   out_itf->data_lane_swap_enable = !!out_itf->data_lane_swap_enable;
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2772 00a8 2B26     		moveq	r6, #43
  2773              	.LVL219:
  620:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 84
+ARM GAS  /tmp/ccg7jAob.s 			page 84
 
 
  2774              		.loc 1 620 3 is_stmt 1 view .LVU876
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  898:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  2812              		.loc 1 898 3 discriminator 1 view .LVU893
  2813 00cc 40F28233 		movw	r3, #898
-ARM GAS  /tmp/ccAGibT0.s 			page 85
+ARM GAS  /tmp/ccg7jAob.s 			page 85
 
 
  2814 00d0 0294     		str	r4, [sp, #8]
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2852 00f6 2B69     		ldr	r3, [r5, #16]
  2853 00f8 9847     		blx	r3
  2854              	.LVL228:
-ARM GAS  /tmp/ccAGibT0.s 			page 86
+ARM GAS  /tmp/ccg7jAob.s 			page 86
 
 
  631:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  642:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (!mode)
  2890              		.loc 1 642 10 is_stmt 0 view .LVU929
  2891 010e 95F84030 		ldrb	r3, [r5, #64]	@ zero_extendqisi2
-ARM GAS  /tmp/ccAGibT0.s 			page 87
+ARM GAS  /tmp/ccg7jAob.s 			page 87
 
 
  2892              	.LVL230:
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2933 0144 0193     		str	r3, [sp, #4]
  2934 0146 FFF7FEFF 		bl	VD55G1_log_impl
  2935              	.LVL234:
-ARM GAS  /tmp/ccAGibT0.s 			page 88
+ARM GAS  /tmp/ccg7jAob.s 			page 88
 
 
  656:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  2973 0164 0446     		mov	r4, r0
  2974 0166 58B9     		cbnz	r0, .L196
  650:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = ctx->write16(ctx, VD55G1_REG_X_WIDTH, mode->crop.width);
-ARM GAS  /tmp/ccAGibT0.s 			page 89
+ARM GAS  /tmp/ccg7jAob.s 			page 89
 
 
  2975              		.loc 1 650 3 discriminator 3 view .LVU960
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3011 0188 4FF4A261 		mov	r1, #1296
  3012 018c 2846     		mov	r0, r5
  3013              	.LVL241:
-ARM GAS  /tmp/ccAGibT0.s 			page 90
+ARM GAS  /tmp/ccg7jAob.s 			page 90
 
 
  653:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3052              	.L251:
  3053              	.LVL245:
  656:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 91
+ARM GAS  /tmp/ccg7jAob.s 			page 91
 
 
  3054              		.loc 1 656 3 is_stmt 0 discriminator 1 view .LVU995
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3088              		.loc 1 667 3 view .LVU1015
  668:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  3089              		.loc 1 668 3 view .LVU1016
-ARM GAS  /tmp/ccAGibT0.s 			page 92
+ARM GAS  /tmp/ccg7jAob.s 			page 92
 
 
  670:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  717:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
  3129              		.loc 1 717 3 is_stmt 0 view .LVU1032
  3130              	.LBE111:
-ARM GAS  /tmp/ccAGibT0.s 			page 93
+ARM GAS  /tmp/ccg7jAob.s 			page 93
 
 
  3131              	.LBE110:
@@ -5578,7 +5578,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3173              		.loc 1 674 23 view .LVU1044
  3174 022a A1FB0001 		umull	r0, r1, r1, r0
  3175 022e FFF7FEFF 		bl	__aeabi_uldivmod
-ARM GAS  /tmp/ccAGibT0.s 			page 94
+ARM GAS  /tmp/ccg7jAob.s 			page 94
 
 
  3176              	.LVL256:
@@ -5638,7 +5638,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3214 025a 914A     		ldr	r2, .L268
  3215 025c 0093     		str	r3, [sp]
  3216 025e 0196     		str	r6, [sp, #4]
-ARM GAS  /tmp/ccAGibT0.s 			page 95
+ARM GAS  /tmp/ccg7jAob.s 			page 95
 
 
  3217 0260 0123     		movs	r3, #1
@@ -5698,7 +5698,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3257 0296 40F20C51 		movw	r1, #1292
  3258 029a 2846     		mov	r0, r5
  3259 029c 6B69     		ldr	r3, [r5, #20]
-ARM GAS  /tmp/ccAGibT0.s 			page 96
+ARM GAS  /tmp/ccg7jAob.s 			page 96
 
 
  3260 029e 9847     		blx	r3
@@ -5758,7 +5758,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3293              		.loc 1 764 3 is_stmt 1 view .LVU1095
  764:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   {
  3294              		.loc 1 764 6 is_stmt 0 view .LVU1096
-ARM GAS  /tmp/ccAGibT0.s 			page 97
+ARM GAS  /tmp/ccg7jAob.s 			page 97
 
 
  3295 02a8 83BB     		cbnz	r3, .L210
@@ -5818,7 +5818,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3336 02dc 734A     		ldr	r2, .L268+12
  3337 02de 0193     		str	r3, [sp, #4]
  3338 02e0 FFF7FEFF 		bl	VD55G1_log_impl
-ARM GAS  /tmp/ccAGibT0.s 			page 98
+ARM GAS  /tmp/ccg7jAob.s 			page 98
 
 
  3339              	.LVL274:
@@ -5878,7 +5878,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3378 02fe 6C4A     		ldr	r2, .L268+16
  3379 0300 0290     		str	r0, [sp, #8]
  3380 0302 0193     		str	r3, [sp, #4]
-ARM GAS  /tmp/ccAGibT0.s 			page 99
+ARM GAS  /tmp/ccg7jAob.s 			page 99
 
 
  3381 0304 68E7     		b	.L260
@@ -5938,7 +5938,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3424              	.LVL283:
  775:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  3425              		.loc 1 775 3 is_stmt 0 view .LVU1136
-ARM GAS  /tmp/ccAGibT0.s 			page 100
+ARM GAS  /tmp/ccg7jAob.s 			page 100
 
 
  3426 0328 0123     		movs	r3, #1
@@ -5998,7 +5998,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3464              	.LBE123:
  3465              	.LBE127:
  907:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 101
+ARM GAS  /tmp/ccg7jAob.s 			page 101
 
 
  3466              		.loc 1 907 3 is_stmt 1 view .LVU1153
@@ -6058,7 +6058,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3503 0366 E9E7     		b	.L214
  3504              	.LVL290:
  3505              	.L215:
-ARM GAS  /tmp/ccAGibT0.s 			page 102
+ARM GAS  /tmp/ccg7jAob.s 			page 102
 
 
  783:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -6118,7 +6118,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3547              	.LBE130:
  3548              	.LBE133:
  910:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 103
+ARM GAS  /tmp/ccg7jAob.s 			page 103
 
 
  3549              		.loc 1 910 3 is_stmt 1 view .LVU1184
@@ -6178,7 +6178,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3585              		.loc 1 819 3 discriminator 1 view .LVU1202
  3586 03a4 40F23333 		movw	r3, #819
  3587 03a8 444A     		ldr	r2, .L268+28
-ARM GAS  /tmp/ccAGibT0.s 			page 104
+ARM GAS  /tmp/ccg7jAob.s 			page 104
 
 
  3588 03aa 0290     		str	r0, [sp, #8]
@@ -6238,7 +6238,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3629              		.loc 1 847 5 is_stmt 1 view .LVU1215
  847:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     ret = ctx->write8(ctx, VD55G1_REG_DARKCAL_CTRL, VD55G1_DARKCAL_BYPASS_DARKAVG);
  3630              		.loc 1 847 5 view .LVU1216
-ARM GAS  /tmp/ccAGibT0.s 			page 105
+ARM GAS  /tmp/ccg7jAob.s 			page 105
 
 
  3631 03d6 0446     		mov	r4, r0
@@ -6298,7 +6298,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  848:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     VD55G1_TraceError(ctx, ret);
  3670              		.loc 1 848 11 is_stmt 0 view .LVU1232
  3671 03f8 0222     		movs	r2, #2
-ARM GAS  /tmp/ccAGibT0.s 			page 106
+ARM GAS  /tmp/ccg7jAob.s 			page 106
 
 
  3672 03fa 40F22A31 		movw	r1, #810
@@ -6358,7 +6358,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  913:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  3713              		.loc 1 913 3 is_stmt 1 view .LVU1246
  913:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 107
+ARM GAS  /tmp/ccg7jAob.s 			page 107
 
 
  3714              		.loc 1 913 3 view .LVU1247
@@ -6418,7 +6418,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3751              		.loc 1 1171 5 view .LVU1264
  3752              	.LBB156:
 1180:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
-ARM GAS  /tmp/ccAGibT0.s 			page 108
+ARM GAS  /tmp/ccg7jAob.s 			page 108
 
 
  3753              		.loc 1 1180 3 view .LVU1265
@@ -6478,7 +6478,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3792              		.loc 1 929 3 is_stmt 1 view .LVU1280
  929:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  3793              		.loc 1 929 3 view .LVU1281
-ARM GAS  /tmp/ccAGibT0.s 			page 109
+ARM GAS  /tmp/ccg7jAob.s 			page 109
 
 
  3794 0466 0446     		mov	r4, r0
@@ -6538,7 +6538,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3829              		.loc 1 934 3 view .LVU1300
  3830 0486 40F2A633 		movw	r3, #934
  3831 048a 0221     		movs	r1, #2
-ARM GAS  /tmp/ccAGibT0.s 			page 110
+ARM GAS  /tmp/ccg7jAob.s 			page 110
 
 
  3832 048c 2846     		mov	r0, r5
@@ -6598,7 +6598,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3877 04d0 0011EC2F 		.word	804000000
  3878 04d4 00000000 		.word	0
  3879              		.cfi_endproc
-ARM GAS  /tmp/ccAGibT0.s 			page 111
+ARM GAS  /tmp/ccg7jAob.s 			page 111
 
 
  3880              	.LFE41:
@@ -6658,7 +6658,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  3921              		.cfi_endproc
  3922              	.LFE42:
  3924              		.section	.rodata.VD55G1_StartAutoWakeUp.str1.1,"aMS",%progbits,1
-ARM GAS  /tmp/ccAGibT0.s 			page 112
+ARM GAS  /tmp/ccg7jAob.s 			page 112
 
 
  3925              	.LC24:
@@ -6718,7 +6718,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  975:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** {
  3965              		.loc 1 975 12 view .LVU1334
  3966              	.LBB174:
-ARM GAS  /tmp/ccAGibT0.s 			page 113
+ARM GAS  /tmp/ccg7jAob.s 			page 113
 
 
  977:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -6778,7 +6778,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4006 0048 39D1     		bne	.L272
  988:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
  4007              		.loc 1 988 3 is_stmt 1 view .LVU1350
-ARM GAS  /tmp/ccAGibT0.s 			page 114
+ARM GAS  /tmp/ccg7jAob.s 			page 114
 
 
  988:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
@@ -6838,7 +6838,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  997:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
  4047              		.loc 1 997 9 is_stmt 0 view .LVU1366
  4048 0080 40F22E52 		movw	r2, #1326
-ARM GAS  /tmp/ccAGibT0.s 			page 115
+ARM GAS  /tmp/ccg7jAob.s 			page 115
 
 
  4049 0084 40F21E61 		movw	r1, #1566
@@ -6898,7 +6898,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1025:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  4087              		.loc 1 1025 3 is_stmt 1 view .LVU1382
 1025:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 116
+ARM GAS  /tmp/ccg7jAob.s 			page 116
 
 
  4088              		.loc 1 1025 3 view .LVU1383
@@ -6958,7 +6958,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1216:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   ret = VD55G1_AWUStreaming(ctx);
 1217:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
 1218:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 117
+ARM GAS  /tmp/ccg7jAob.s 			page 117
 
 
 1219:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7018,7 +7018,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1029:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  4164              		.loc 1 1029 3 discriminator 1 view .LVU1411
 1029:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 118
+ARM GAS  /tmp/ccg7jAob.s 			page 118
 
 
  4165              		.loc 1 1029 3 discriminator 1 view .LVU1412
@@ -7078,7 +7078,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4204 0104 9847     		blx	r3
  4205              	.LVL355:
 1047:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 119
+ARM GAS  /tmp/ccg7jAob.s 			page 119
 
 
  4206              		.loc 1 1047 3 is_stmt 1 view .LVU1428
@@ -7138,7 +7138,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1052:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
  4243              		.loc 1 1052 9 view .LVU1446
  4244 0130 AB69     		ldr	r3, [r5, #24]
-ARM GAS  /tmp/ccAGibT0.s 			page 120
+ARM GAS  /tmp/ccg7jAob.s 			page 120
 
 
 1050:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****            (awu->zone_nb << 11);
@@ -7198,7 +7198,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4282              	.LVL361:
 1061:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  4283              		.loc 1 1061 3 is_stmt 1 view .LVU1464
-ARM GAS  /tmp/ccAGibT0.s 			page 121
+ARM GAS  /tmp/ccg7jAob.s 			page 121
 
 
 1061:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7258,7 +7258,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4320 017a 40F21D43 		movw	r3, #1053
  4321 017e 0290     		str	r0, [sp, #8]
  4322 0180 C6E7     		b	.L302
-ARM GAS  /tmp/ccAGibT0.s 			page 122
+ARM GAS  /tmp/ccg7jAob.s 			page 122
 
 
  4323              	.L281:
@@ -7318,7 +7318,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4365              	.LBE183:
  4366              	.LBE187:
  4367              	.LBB188:
-ARM GAS  /tmp/ccAGibT0.s 			page 123
+ARM GAS  /tmp/ccg7jAob.s 			page 123
 
 
  4368              	.LBB186:
@@ -7378,7 +7378,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1213:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
  4410              		.loc 1 1213 3 is_stmt 1 view .LVU1507
 1216:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (ret)
-ARM GAS  /tmp/ccAGibT0.s 			page 124
+ARM GAS  /tmp/ccg7jAob.s 			page 124
 
 
  4411              		.loc 1 1216 3 view .LVU1508
@@ -7438,7 +7438,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4449 01f6 2B69     		ldr	r3, [r5, #16]
  4450 01f8 9847     		blx	r3
  4451              	.LVL374:
-ARM GAS  /tmp/ccAGibT0.s 			page 125
+ARM GAS  /tmp/ccg7jAob.s 			page 125
 
 
  962:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7498,7 +7498,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4488 021c 2846     		mov	r0, r5
  4489              	.LVL377:
  967:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
-ARM GAS  /tmp/ccAGibT0.s 			page 126
+ARM GAS  /tmp/ccg7jAob.s 			page 126
 
 
  4490              		.loc 1 967 9 view .LVU1543
@@ -7558,7 +7558,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4528              	.L292:
  972:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
  4529              		.loc 1 972 10 view .LVU1560
-ARM GAS  /tmp/ccAGibT0.s 			page 127
+ARM GAS  /tmp/ccg7jAob.s 			page 127
 
 
  4530              	.LBE194:
@@ -7618,7 +7618,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4573              		.loc 1 330 3 view .LVU1570
  4574              	.LBE198:
  4575              	.LBE197:
-ARM GAS  /tmp/ccAGibT0.s 			page 128
+ARM GAS  /tmp/ccg7jAob.s 			page 128
 
 
 1224:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   struct drv_ctx *drv_ctx = &ctx->ctx;
@@ -7678,7 +7678,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1230:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if (is_streaming < 0)
  4618              		.loc 1 1230 3 is_stmt 1 view .LVU1583
 1231:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return is_streaming;
-ARM GAS  /tmp/ccAGibT0.s 			page 129
+ARM GAS  /tmp/ccg7jAob.s 			page 129
 
 
 1232:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7738,7 +7738,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4658              		.loc 1 1241 6 is_stmt 0 view .LVU1600
  4659 0034 30B9     		cbnz	r0, .L312
 1242:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return ret;
-ARM GAS  /tmp/ccAGibT0.s 			page 130
+ARM GAS  /tmp/ccg7jAob.s 			page 130
 
 
 1243:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7798,7 +7798,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4705              	VD55G1_GetBrightnessLevel:
  4706              	.LVL395:
  4707              	.LFB45:
-ARM GAS  /tmp/ccAGibT0.s 			page 131
+ARM GAS  /tmp/ccg7jAob.s 			page 131
 
 
 1252:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -7858,7 +7858,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4748              	.LVL398:
  4749              	.L316:
 1263:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** }
-ARM GAS  /tmp/ccAGibT0.s 			page 132
+ARM GAS  /tmp/ccg7jAob.s 			page 132
 
 
  4750              		.loc 1 1263 1 is_stmt 0 view .LVU1627
@@ -7918,7 +7918,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4799              	.LFB46:
 1264:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
 1265:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** int VD55G1_SetBrightnessLevel(VD55G1_Ctx_t *ctx, int level)
-ARM GAS  /tmp/ccAGibT0.s 			page 133
+ARM GAS  /tmp/ccg7jAob.s 			page 133
 
 
 1266:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** {
@@ -7978,7 +7978,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4841 0020 0092     		str	r2, [sp]
  4842 0022 2846     		mov	r0, r5
  4843              	.LVL407:
-ARM GAS  /tmp/ccAGibT0.s 			page 134
+ARM GAS  /tmp/ccg7jAob.s 			page 134
 
 
  4844              		.loc 1 1274 3 is_stmt 0 discriminator 1 view .LVU1651
@@ -8038,7 +8038,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4892              		.loc 1 1281 3 view .LVU1658
 1280:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   struct drv_ctx *drv_ctx = &ctx->ctx;
  4893              		.loc 1 1280 1 is_stmt 0 view .LVU1659
-ARM GAS  /tmp/ccAGibT0.s 			page 135
+ARM GAS  /tmp/ccg7jAob.s 			page 135
 
 
  4894 0000 38B5     		push	{r3, r4, r5, lr}
@@ -8098,7 +8098,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4935              		.cfi_startproc
  4936              		@ args = 0, pretend = 0, frame = 0
  4937              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccAGibT0.s 			page 136
+ARM GAS  /tmp/ccg7jAob.s 			page 136
 
 
 1295:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   struct drv_ctx *drv_ctx = &ctx->ctx;
@@ -8158,7 +8158,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  4975              		.loc 1 1308 3 is_stmt 1 view .LVU1690
  4976              		.loc 1 1308 6 is_stmt 0 view .LVU1691
  4977 001e 13D1     		bne	.L332
-ARM GAS  /tmp/ccAGibT0.s 			page 137
+ARM GAS  /tmp/ccg7jAob.s 			page 137
 
 
 1309:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return VD55G1_SetManualExpoGains(ctx);
@@ -8218,7 +8218,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5020              	.L332:
  5021              		.loc 1 1312 1 is_stmt 0 view .LVU1703
  5022 0048 2846     		mov	r0, r5
-ARM GAS  /tmp/ccAGibT0.s 			page 138
+ARM GAS  /tmp/ccg7jAob.s 			page 138
 
 
  5023 004a 04B0     		add	sp, sp, #16
@@ -8278,7 +8278,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5069 0004 0646     		mov	r6, r0
  5070              		.loc 1 1319 6 view .LVU1712
  5071 0006 1BD8     		bhi	.L342
-ARM GAS  /tmp/ccAGibT0.s 			page 139
+ARM GAS  /tmp/ccg7jAob.s 			page 139
 
 
 1320:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****     return -1;
@@ -8338,7 +8338,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5114 0030 064A     		ldr	r2, .L343+4
  5115 0032 0193     		str	r3, [sp, #4]
  5116 0034 FFF7FEFF 		bl	VD55G1_log_impl
-ARM GAS  /tmp/ccAGibT0.s 			page 140
+ARM GAS  /tmp/ccg7jAob.s 			page 140
 
 
  5117              	.LVL430:
@@ -8398,7 +8398,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5160              		.cfi_offset 5, -12
  5161              		.cfi_offset 6, -8
  5162              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccAGibT0.s 			page 141
+ARM GAS  /tmp/ccg7jAob.s 			page 141
 
 
  5163              		.loc 1 1335 45 view .LVU1737
@@ -8458,7 +8458,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5209              		.loc 1 1339 3 discriminator 1 view .LVU1756
 1339:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   VD55G1_TraceError(ctx, ret);
  5210              		.loc 1 1339 3 discriminator 1 view .LVU1757
-ARM GAS  /tmp/ccAGibT0.s 			page 142
+ARM GAS  /tmp/ccg7jAob.s 			page 142
 
 
  5211 0036 40F23B53 		movw	r3, #1339
@@ -8518,7 +8518,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5250 0058 3246     		mov	r2, r6
  5251 005a 4FF4A161 		mov	r1, #1288
  5252 005e 2846     		mov	r0, r5
-ARM GAS  /tmp/ccAGibT0.s 			page 143
+ARM GAS  /tmp/ccg7jAob.s 			page 143
 
 
  5253              	.LVL443:
@@ -8578,7 +8578,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5291              	.L357:
 1345:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
  5292              		.loc 1 1345 3 discriminator 3 view .LVU1788
-ARM GAS  /tmp/ccAGibT0.s 			page 144
+ARM GAS  /tmp/ccg7jAob.s 			page 144
 
 
 1345:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
@@ -8638,7 +8638,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5333              		.loc 1 1358 3 view .LVU1802
 1359:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
 1360:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   if ((min_us == NULL) || (max_us == NULL))
-ARM GAS  /tmp/ccAGibT0.s 			page 145
+ARM GAS  /tmp/ccg7jAob.s 			page 145
 
 
  5334              		.loc 1 1360 3 view .LVU1803
@@ -8698,7 +8698,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5376              		.loc 1 1369 9 view .LVU1818
  5377 0028 696C     		ldr	r1, [r5, #68]
 1367:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
-ARM GAS  /tmp/ccAGibT0.s 			page 146
+ARM GAS  /tmp/ccg7jAob.s 			page 146
 
 
  5378              		.loc 1 1367 11 view .LVU1819
@@ -8758,7 +8758,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5422              		@ sp needed
  5423 005c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
  5424              	.LVL456:
-ARM GAS  /tmp/ccAGibT0.s 			page 147
+ARM GAS  /tmp/ccg7jAob.s 			page 147
 
 
  5425              	.L363:
@@ -8818,7 +8818,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1381:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** int VD55G1_SetExposureTime(VD55G1_Ctx_t *ctx, int exposure_us)
 1382:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** {
  5472              		.loc 1 1382 1 is_stmt 1 view -0
-ARM GAS  /tmp/ccAGibT0.s 			page 148
+ARM GAS  /tmp/ccg7jAob.s 			page 148
 
 
  5473              		.cfi_startproc
@@ -8878,7 +8878,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5509 0014 059B     		ldr	r3, [sp, #20]
  5510 0016 9D42     		cmp	r5, r3
  5511 0018 28D3     		bcc	.L372
-ARM GAS  /tmp/ccAGibT0.s 			page 149
+ARM GAS  /tmp/ccg7jAob.s 			page 149
 
 
  5512              		.loc 1 1393 39 discriminator 1 view .LVU1861
@@ -8938,7 +8938,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
 1403:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c **** 
 1404:../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.c ****   drv_ctx->manual_coarse_integration = (uint16_t)exposure_reg;
  5555              		.loc 1 1404 3 view .LVU1879
-ARM GAS  /tmp/ccAGibT0.s 			page 150
+ARM GAS  /tmp/ccg7jAob.s 			page 150
 
 
  5556              		.loc 1 1404 38 is_stmt 0 view .LVU1880
@@ -8998,7 +8998,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5599 0072 00BF     		.align	2
  5600              	.L373:
  5601 0074 00000000 		.word	__func__.0
-ARM GAS  /tmp/ccAGibT0.s 			page 151
+ARM GAS  /tmp/ccg7jAob.s 			page 151
 
 
  5602 0078 00000000 		.word	.LC6
@@ -9058,7 +9058,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5657      6C476169 
  5658              		.section	.rodata.__func__.4,"a"
  5661              	__func__.4:
-ARM GAS  /tmp/ccAGibT0.s 			page 152
+ARM GAS  /tmp/ccg7jAob.s 			page 152
 
 
  5662 0000 56443535 		.ascii	"VD55G1_SetAnalogGain\000"
@@ -9118,7 +9118,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5701              	__func__.12:
  5702 0000 56443535 		.ascii	"VD55G1_Copy8\000"
  5702      47315F43 
-ARM GAS  /tmp/ccAGibT0.s 			page 153
+ARM GAS  /tmp/ccg7jAob.s 			page 153
 
 
  5702      6F707938 
@@ -9178,7 +9178,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5742      65747570 
  5742      4578706F 
  5742      73757265 
-ARM GAS  /tmp/ccAGibT0.s 			page 154
+ARM GAS  /tmp/ccg7jAob.s 			page 154
 
 
  5743              		.section	.rodata.__func__.21,"a"
@@ -9238,7 +9238,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5783              		.section	.rodata.__func__.29,"a"
  5786              	__func__.29:
  5787 0000 56443535 		.ascii	"VD55G1_SetBayerType\000"
-ARM GAS  /tmp/ccAGibT0.s 			page 155
+ARM GAS  /tmp/ccg7jAob.s 			page 155
 
 
  5787      47315F53 
@@ -9298,7 +9298,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5833 0044 52000000 		.word	82
  5834 0048 70000000 		.word	112
  5835 004c 80020000 		.word	640
-ARM GAS  /tmp/ccAGibT0.s 			page 156
+ARM GAS  /tmp/ccg7jAob.s 			page 156
 
 
  5836 0050 E0010000 		.word	480
@@ -9358,7 +9358,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5859      0E9C0B8C 
  5859      E84A60EF 
  5859      0B8C8E9C 
-ARM GAS  /tmp/ccAGibT0.s 			page 157
+ARM GAS  /tmp/ccg7jAob.s 			page 157
 
 
  5859      284F
@@ -9418,7 +9418,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5872 016e 090E04C0 		.ascii	"\011\016\004\300\000@@\334\001N\004\300L\014\004\362"
  5872      004040DC 
  5872      014E04C0 
-ARM GAS  /tmp/ccAGibT0.s 			page 158
+ARM GAS  /tmp/ccg7jAob.s 			page 158
 
 
  5872      4C0C04F2 
@@ -9478,7 +9478,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5884      7307C030 
  5884      460170F8 
  5885 0249 C03FA433 		.ascii	"\300?\2443@x\342\012\204\014\010\200\362x\027@\377\303"
-ARM GAS  /tmp/ccAGibT0.s 			page 159
+ARM GAS  /tmp/ccg7jAob.s 			page 159
 
 
  5885      4078E20A 
@@ -9538,7 +9538,7 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5896      88418346 
  5896      8C348801 
  5896      46C0E1
-ARM GAS  /tmp/ccAGibT0.s 			page 160
+ARM GAS  /tmp/ccg7jAob.s 			page 160
 
 
  5897 031a 0146E0E1 		.ascii	"\001F\340\341\001F\360\341\011\002 \340\024\312\003"
@@ -9590,147 +9590,147 @@ ARM GAS  /tmp/ccAGibT0.s 			page 1
  5907      00
  5908              		.text
  5909              	.Letext0:
- 5910              		.file 2 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/li
- 5911              		.file 3 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
- 5912              		.file 4 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 5910              		.file 2 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 5911              		.file 3 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
+ 5912              		.file 4 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
  5913              		.file 5 "../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1.h"
  5914              		.file 6 "../../Middlewares/stm32-mw-camera/sensors/vd55g1/vd55g1_patch_cut_2.c"
- 5915              		.file 7 "/home/min/snap/code/235/.local/share/stm32cube/bundles/gnu-tools-for-stm32/14.3.1+st.2/ar
+ 5915              		.file 7 "/opt/st/stm32cubeide_2.1.1/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-s
  5916              		.file 8 "<built-in>"
-ARM GAS  /tmp/ccAGibT0.s 			page 161
+ARM GAS  /tmp/ccg7jAob.s 			page 161
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 vd55g1.c
-     /tmp/ccAGibT0.s:26     .text.VD55G1_GetPixelClock:00000000 $t
-     /tmp/ccAGibT0.s:31     .text.VD55G1_GetPixelClock:00000000 VD55G1_GetPixelClock
-     /tmp/ccAGibT0.s:172    .text.VD55G1_GetPixelClock:00000058 $d
-     /tmp/ccAGibT0.s:185    .text.VD55G1_log_impl:00000000 $t
-     /tmp/ccAGibT0.s:190    .text.VD55G1_log_impl:00000000 VD55G1_log_impl
-     /tmp/ccAGibT0.s:242    .text.VD55G1_PollReg8:00000000 $t
-     /tmp/ccAGibT0.s:247    .text.VD55G1_PollReg8:00000000 VD55G1_PollReg8
-     /tmp/ccAGibT0.s:344    .text.VD55G1_PollReg8:00000054 $d
-     /tmp/ccAGibT0.s:354    .text.VD55G1_WaitState:00000000 $t
-     /tmp/ccAGibT0.s:359    .text.VD55G1_WaitState:00000000 VD55G1_WaitState
-     /tmp/ccAGibT0.s:440    .text.VD55G1_WaitState:00000040 $d
-     /tmp/ccAGibT0.s:454    .text.display_error:00000000 $t
-     /tmp/ccAGibT0.s:459    .text.display_error:00000000 display_error
-     /tmp/ccAGibT0.s:526    .text.display_error:00000038 $d
-     /tmp/ccAGibT0.s:5801   .rodata.__func__.32:00000000 __func__.32
-     /tmp/ccAGibT0.s:540    .text.VD55G1_ComputeFrameLength:00000000 $t
-     /tmp/ccAGibT0.s:545    .text.VD55G1_ComputeFrameLength:00000000 VD55G1_ComputeFrameLength
-     /tmp/ccAGibT0.s:704    .text.VD55G1_ComputeFrameLength:000000a0 $d
-     /tmp/ccAGibT0.s:5746   .rodata.__func__.21:00000000 __func__.21
-     /tmp/ccAGibT0.s:711    .text.VD55G1_SetManualExpoGains:00000000 $t
-     /tmp/ccAGibT0.s:716    .text.VD55G1_SetManualExpoGains:00000000 VD55G1_SetManualExpoGains
-     /tmp/ccAGibT0.s:904    .text.VD55G1_SetManualExpoGains:000000bc $d
-     /tmp/ccAGibT0.s:5736   .rodata.__func__.19:00000000 __func__.19
-     /tmp/ccAGibT0.s:910    .text.VD55G1_SetFlicker:00000000 $t
-     /tmp/ccAGibT0.s:915    .text.VD55G1_SetFlicker:00000000 VD55G1_SetFlicker
-     /tmp/ccAGibT0.s:988    .text.VD55G1_SetFlicker:00000044 $d
-     /tmp/ccAGibT0.s:5609   .rodata.CSWTCH.81:00000000 CSWTCH.81
-     /tmp/ccAGibT0.s:5721   .rodata.__func__.16:00000000 __func__.16
-     /tmp/ccAGibT0.s:998    .text.VD55G1_StopStreaming:00000000 $t
-     /tmp/ccAGibT0.s:1003   .text.VD55G1_StopStreaming:00000000 VD55G1_StopStreaming
-     /tmp/ccAGibT0.s:1133   .text.VD55G1_StopStreaming:00000074 $d
-     /tmp/ccAGibT0.s:5711   .rodata.__func__.14:00000000 __func__.14
-     /tmp/ccAGibT0.s:1140   .text.VD55G1_Copy16:00000000 $t
-     /tmp/ccAGibT0.s:1145   .text.VD55G1_Copy16:00000000 VD55G1_Copy16
-     /tmp/ccAGibT0.s:1241   .text.VD55G1_Copy16:00000050 $d
-     /tmp/ccAGibT0.s:5706   .rodata.__func__.13:00000000 __func__.13
-     /tmp/ccAGibT0.s:1247   .text.VD55G1_Copy8:00000000 $t
-     /tmp/ccAGibT0.s:1252   .text.VD55G1_Copy8:00000000 VD55G1_Copy8
-     /tmp/ccAGibT0.s:1348   .text.VD55G1_Copy8:00000050 $d
-     /tmp/ccAGibT0.s:5701   .rodata.__func__.12:00000000 __func__.12
-     /tmp/ccAGibT0.s:1354   .text.VD55G1_GetLineTimeInUs:00000000 $t
-     /tmp/ccAGibT0.s:1359   .text.VD55G1_GetLineTimeInUs:00000000 VD55G1_GetLineTimeInUs
-     /tmp/ccAGibT0.s:1469   .text.VD55G1_GetLineTimeInUs:00000060 $d
-     /tmp/ccAGibT0.s:5646   .rodata.__func__.1:00000000 __func__.1
-     /tmp/ccAGibT0.s:1479   .text.VD55G1_SetBayerType:00000000 $t
-     /tmp/ccAGibT0.s:1484   .text.VD55G1_SetBayerType:00000000 VD55G1_SetBayerType
-     /tmp/ccAGibT0.s:1574   .text.VD55G1_SetBayerType:0000005a $d
-     /tmp/ccAGibT0.s:1578   .text.VD55G1_SetBayerType:0000005e $t
-     /tmp/ccAGibT0.s:1616   .text.VD55G1_SetBayerType:00000080 $d
-     /tmp/ccAGibT0.s:5786   .rodata.__func__.29:00000000 __func__.29
-     /tmp/ccAGibT0.s:1646   .text.VD55G1_Init:00000000 $t
-     /tmp/ccAGibT0.s:1652   .text.VD55G1_Init:00000000 VD55G1_Init
-     /tmp/ccAGibT0.s:2427   .text.VD55G1_Init:00000308 $d
-     /tmp/ccAGibT0.s:5806   .rodata.__func__.33:00000000 __func__.33
-     /tmp/ccAGibT0.s:5848   .rodata.patch_array_cut_2:00000000 patch_array_cut_2
-ARM GAS  /tmp/ccAGibT0.s 			page 162
+     /tmp/ccg7jAob.s:26     .text.VD55G1_GetPixelClock:00000000 $t
+     /tmp/ccg7jAob.s:31     .text.VD55G1_GetPixelClock:00000000 VD55G1_GetPixelClock
+     /tmp/ccg7jAob.s:172    .text.VD55G1_GetPixelClock:00000058 $d
+     /tmp/ccg7jAob.s:185    .text.VD55G1_log_impl:00000000 $t
+     /tmp/ccg7jAob.s:190    .text.VD55G1_log_impl:00000000 VD55G1_log_impl
+     /tmp/ccg7jAob.s:242    .text.VD55G1_PollReg8:00000000 $t
+     /tmp/ccg7jAob.s:247    .text.VD55G1_PollReg8:00000000 VD55G1_PollReg8
+     /tmp/ccg7jAob.s:344    .text.VD55G1_PollReg8:00000054 $d
+     /tmp/ccg7jAob.s:354    .text.VD55G1_WaitState:00000000 $t
+     /tmp/ccg7jAob.s:359    .text.VD55G1_WaitState:00000000 VD55G1_WaitState
+     /tmp/ccg7jAob.s:440    .text.VD55G1_WaitState:00000040 $d
+     /tmp/ccg7jAob.s:454    .text.display_error:00000000 $t
+     /tmp/ccg7jAob.s:459    .text.display_error:00000000 display_error
+     /tmp/ccg7jAob.s:526    .text.display_error:00000038 $d
+     /tmp/ccg7jAob.s:5801   .rodata.__func__.32:00000000 __func__.32
+     /tmp/ccg7jAob.s:540    .text.VD55G1_ComputeFrameLength:00000000 $t
+     /tmp/ccg7jAob.s:545    .text.VD55G1_ComputeFrameLength:00000000 VD55G1_ComputeFrameLength
+     /tmp/ccg7jAob.s:704    .text.VD55G1_ComputeFrameLength:000000a0 $d
+     /tmp/ccg7jAob.s:5746   .rodata.__func__.21:00000000 __func__.21
+     /tmp/ccg7jAob.s:711    .text.VD55G1_SetManualExpoGains:00000000 $t
+     /tmp/ccg7jAob.s:716    .text.VD55G1_SetManualExpoGains:00000000 VD55G1_SetManualExpoGains
+     /tmp/ccg7jAob.s:904    .text.VD55G1_SetManualExpoGains:000000bc $d
+     /tmp/ccg7jAob.s:5736   .rodata.__func__.19:00000000 __func__.19
+     /tmp/ccg7jAob.s:910    .text.VD55G1_SetFlicker:00000000 $t
+     /tmp/ccg7jAob.s:915    .text.VD55G1_SetFlicker:00000000 VD55G1_SetFlicker
+     /tmp/ccg7jAob.s:988    .text.VD55G1_SetFlicker:00000044 $d
+     /tmp/ccg7jAob.s:5609   .rodata.CSWTCH.81:00000000 CSWTCH.81
+     /tmp/ccg7jAob.s:5721   .rodata.__func__.16:00000000 __func__.16
+     /tmp/ccg7jAob.s:998    .text.VD55G1_StopStreaming:00000000 $t
+     /tmp/ccg7jAob.s:1003   .text.VD55G1_StopStreaming:00000000 VD55G1_StopStreaming
+     /tmp/ccg7jAob.s:1133   .text.VD55G1_StopStreaming:00000074 $d
+     /tmp/ccg7jAob.s:5711   .rodata.__func__.14:00000000 __func__.14
+     /tmp/ccg7jAob.s:1140   .text.VD55G1_Copy16:00000000 $t
+     /tmp/ccg7jAob.s:1145   .text.VD55G1_Copy16:00000000 VD55G1_Copy16
+     /tmp/ccg7jAob.s:1241   .text.VD55G1_Copy16:00000050 $d
+     /tmp/ccg7jAob.s:5706   .rodata.__func__.13:00000000 __func__.13
+     /tmp/ccg7jAob.s:1247   .text.VD55G1_Copy8:00000000 $t
+     /tmp/ccg7jAob.s:1252   .text.VD55G1_Copy8:00000000 VD55G1_Copy8
+     /tmp/ccg7jAob.s:1348   .text.VD55G1_Copy8:00000050 $d
+     /tmp/ccg7jAob.s:5701   .rodata.__func__.12:00000000 __func__.12
+     /tmp/ccg7jAob.s:1354   .text.VD55G1_GetLineTimeInUs:00000000 $t
+     /tmp/ccg7jAob.s:1359   .text.VD55G1_GetLineTimeInUs:00000000 VD55G1_GetLineTimeInUs
+     /tmp/ccg7jAob.s:1469   .text.VD55G1_GetLineTimeInUs:00000060 $d
+     /tmp/ccg7jAob.s:5646   .rodata.__func__.1:00000000 __func__.1
+     /tmp/ccg7jAob.s:1479   .text.VD55G1_SetBayerType:00000000 $t
+     /tmp/ccg7jAob.s:1484   .text.VD55G1_SetBayerType:00000000 VD55G1_SetBayerType
+     /tmp/ccg7jAob.s:1574   .text.VD55G1_SetBayerType:0000005a $d
+     /tmp/ccg7jAob.s:1578   .text.VD55G1_SetBayerType:0000005e $t
+     /tmp/ccg7jAob.s:1616   .text.VD55G1_SetBayerType:00000080 $d
+     /tmp/ccg7jAob.s:5786   .rodata.__func__.29:00000000 __func__.29
+     /tmp/ccg7jAob.s:1646   .text.VD55G1_Init:00000000 $t
+     /tmp/ccg7jAob.s:1652   .text.VD55G1_Init:00000000 VD55G1_Init
+     /tmp/ccg7jAob.s:2427   .text.VD55G1_Init:00000308 $d
+     /tmp/ccg7jAob.s:5806   .rodata.__func__.33:00000000 __func__.33
+     /tmp/ccg7jAob.s:5848   .rodata.patch_array_cut_2:00000000 patch_array_cut_2
+ARM GAS  /tmp/ccg7jAob.s 			page 162
 
 
-     /tmp/ccAGibT0.s:5791   .rodata.__func__.30:00000000 __func__.30
-     /tmp/ccAGibT0.s:5796   .rodata.__func__.31:00000000 __func__.31
-     /tmp/ccAGibT0.s:5781   .rodata.__func__.28:00000000 __func__.28
-     /tmp/ccAGibT0.s:2448   .text.VD55G1_DeInit:00000000 $t
-     /tmp/ccAGibT0.s:2454   .text.VD55G1_DeInit:00000000 VD55G1_DeInit
-     /tmp/ccAGibT0.s:2514   .text.VD55G1_Start:00000000 $t
-     /tmp/ccAGibT0.s:2520   .text.VD55G1_Start:00000000 VD55G1_Start
-     /tmp/ccAGibT0.s:3140   .text.VD55G1_Start:000001f4 $d
-     /tmp/ccAGibT0.s:5771   .rodata.__func__.26:00000000 __func__.26
-     /tmp/ccAGibT0.s:5776   .rodata.__func__.27:00000000 __func__.27
-     /tmp/ccAGibT0.s:5766   .rodata.__func__.25:00000000 __func__.25
-     /tmp/ccAGibT0.s:5633   .rodata.CSWTCH.56:00000000 CSWTCH.56
-     /tmp/ccAGibT0.s:5761   .rodata.__func__.24:00000000 __func__.24
-     /tmp/ccAGibT0.s:5751   .rodata.__func__.22:00000000 __func__.22
-     /tmp/ccAGibT0.s:3160   .text.VD55G1_Start:00000218 $t
-     /tmp/ccAGibT0.s:3865   .text.VD55G1_Start:000004a0 $d
-     /tmp/ccAGibT0.s:5741   .rodata.__func__.20:00000000 __func__.20
-     /tmp/ccAGibT0.s:5756   .rodata.__func__.23:00000000 __func__.23
-     /tmp/ccAGibT0.s:5624   .rodata.CSWTCH.77:00000000 CSWTCH.77
-     /tmp/ccAGibT0.s:5731   .rodata.__func__.18:00000000 __func__.18
-     /tmp/ccAGibT0.s:5617   .rodata.CSWTCH.79:00000000 CSWTCH.79
-     /tmp/ccAGibT0.s:5726   .rodata.__func__.17:00000000 __func__.17
-     /tmp/ccAGibT0.s:5716   .rodata.__func__.15:00000000 __func__.15
-     /tmp/ccAGibT0.s:3883   .text.VD55G1_Stop:00000000 $t
-     /tmp/ccAGibT0.s:3889   .text.VD55G1_Stop:00000000 VD55G1_Stop
-     /tmp/ccAGibT0.s:3928   .text.VD55G1_StartAutoWakeUp:00000000 $t
-     /tmp/ccAGibT0.s:3934   .text.VD55G1_StartAutoWakeUp:00000000 VD55G1_StartAutoWakeUp
-     /tmp/ccAGibT0.s:4540   .text.VD55G1_StartAutoWakeUp:0000024c $d
-     /tmp/ccAGibT0.s:5696   .rodata.__func__.11:00000000 __func__.11
-     /tmp/ccAGibT0.s:5691   .rodata.__func__.10:00000000 __func__.10
-     /tmp/ccAGibT0.s:5686   .rodata.__func__.9:00000000 __func__.9
-     /tmp/ccAGibT0.s:5681   .rodata.__func__.8:00000000 __func__.8
-     /tmp/ccAGibT0.s:4550   .text.VD55G1_SetFlipMirrorMode:00000000 $t
-     /tmp/ccAGibT0.s:4556   .text.VD55G1_SetFlipMirrorMode:00000000 VD55G1_SetFlipMirrorMode
-     /tmp/ccAGibT0.s:4699   .text.VD55G1_GetBrightnessLevel:00000000 $t
-     /tmp/ccAGibT0.s:4705   .text.VD55G1_GetBrightnessLevel:00000000 VD55G1_GetBrightnessLevel
-     /tmp/ccAGibT0.s:4785   .text.VD55G1_GetBrightnessLevel:00000044 $d
-     /tmp/ccAGibT0.s:5676   .rodata.__func__.7:00000000 __func__.7
-     /tmp/ccAGibT0.s:4791   .text.VD55G1_SetBrightnessLevel:00000000 $t
-     /tmp/ccAGibT0.s:4797   .text.VD55G1_SetBrightnessLevel:00000000 VD55G1_SetBrightnessLevel
-     /tmp/ccAGibT0.s:4873   .text.VD55G1_SetBrightnessLevel:00000040 $d
-     /tmp/ccAGibT0.s:5671   .rodata.__func__.6:00000000 __func__.6
-     /tmp/ccAGibT0.s:4879   .text.VD55G1_SetFlickerMode:00000000 $t
-     /tmp/ccAGibT0.s:4885   .text.VD55G1_SetFlickerMode:00000000 VD55G1_SetFlickerMode
-     /tmp/ccAGibT0.s:4925   .text.VD55G1_SetExposureMode:00000000 $t
-     /tmp/ccAGibT0.s:4931   .text.VD55G1_SetExposureMode:00000000 VD55G1_SetExposureMode
-     /tmp/ccAGibT0.s:5037   .text.VD55G1_SetExposureMode:00000054 $d
-     /tmp/ccAGibT0.s:5666   .rodata.__func__.5:00000000 __func__.5
-     /tmp/ccAGibT0.s:5043   .text.VD55G1_SetAnalogGain:00000000 $t
-     /tmp/ccAGibT0.s:5049   .text.VD55G1_SetAnalogGain:00000000 VD55G1_SetAnalogGain
-     /tmp/ccAGibT0.s:5134   .text.VD55G1_SetAnalogGain:00000048 $d
-     /tmp/ccAGibT0.s:5661   .rodata.__func__.4:00000000 __func__.4
-     /tmp/ccAGibT0.s:5140   .text.VD55G1_SetDigitalGain:00000000 $t
-     /tmp/ccAGibT0.s:5146   .text.VD55G1_SetDigitalGain:00000000 VD55G1_SetDigitalGain
-     /tmp/ccAGibT0.s:5310   .text.VD55G1_SetDigitalGain:00000094 $d
-     /tmp/ccAGibT0.s:5656   .rodata.__func__.3:00000000 __func__.3
-     /tmp/ccAGibT0.s:5316   .text.VD55G1_GetExposureRegRange:00000000 $t
-ARM GAS  /tmp/ccAGibT0.s 			page 163
+     /tmp/ccg7jAob.s:5791   .rodata.__func__.30:00000000 __func__.30
+     /tmp/ccg7jAob.s:5796   .rodata.__func__.31:00000000 __func__.31
+     /tmp/ccg7jAob.s:5781   .rodata.__func__.28:00000000 __func__.28
+     /tmp/ccg7jAob.s:2448   .text.VD55G1_DeInit:00000000 $t
+     /tmp/ccg7jAob.s:2454   .text.VD55G1_DeInit:00000000 VD55G1_DeInit
+     /tmp/ccg7jAob.s:2514   .text.VD55G1_Start:00000000 $t
+     /tmp/ccg7jAob.s:2520   .text.VD55G1_Start:00000000 VD55G1_Start
+     /tmp/ccg7jAob.s:3140   .text.VD55G1_Start:000001f4 $d
+     /tmp/ccg7jAob.s:5771   .rodata.__func__.26:00000000 __func__.26
+     /tmp/ccg7jAob.s:5776   .rodata.__func__.27:00000000 __func__.27
+     /tmp/ccg7jAob.s:5766   .rodata.__func__.25:00000000 __func__.25
+     /tmp/ccg7jAob.s:5633   .rodata.CSWTCH.56:00000000 CSWTCH.56
+     /tmp/ccg7jAob.s:5761   .rodata.__func__.24:00000000 __func__.24
+     /tmp/ccg7jAob.s:5751   .rodata.__func__.22:00000000 __func__.22
+     /tmp/ccg7jAob.s:3160   .text.VD55G1_Start:00000218 $t
+     /tmp/ccg7jAob.s:3865   .text.VD55G1_Start:000004a0 $d
+     /tmp/ccg7jAob.s:5741   .rodata.__func__.20:00000000 __func__.20
+     /tmp/ccg7jAob.s:5756   .rodata.__func__.23:00000000 __func__.23
+     /tmp/ccg7jAob.s:5624   .rodata.CSWTCH.77:00000000 CSWTCH.77
+     /tmp/ccg7jAob.s:5731   .rodata.__func__.18:00000000 __func__.18
+     /tmp/ccg7jAob.s:5617   .rodata.CSWTCH.79:00000000 CSWTCH.79
+     /tmp/ccg7jAob.s:5726   .rodata.__func__.17:00000000 __func__.17
+     /tmp/ccg7jAob.s:5716   .rodata.__func__.15:00000000 __func__.15
+     /tmp/ccg7jAob.s:3883   .text.VD55G1_Stop:00000000 $t
+     /tmp/ccg7jAob.s:3889   .text.VD55G1_Stop:00000000 VD55G1_Stop
+     /tmp/ccg7jAob.s:3928   .text.VD55G1_StartAutoWakeUp:00000000 $t
+     /tmp/ccg7jAob.s:3934   .text.VD55G1_StartAutoWakeUp:00000000 VD55G1_StartAutoWakeUp
+     /tmp/ccg7jAob.s:4540   .text.VD55G1_StartAutoWakeUp:0000024c $d
+     /tmp/ccg7jAob.s:5696   .rodata.__func__.11:00000000 __func__.11
+     /tmp/ccg7jAob.s:5691   .rodata.__func__.10:00000000 __func__.10
+     /tmp/ccg7jAob.s:5686   .rodata.__func__.9:00000000 __func__.9
+     /tmp/ccg7jAob.s:5681   .rodata.__func__.8:00000000 __func__.8
+     /tmp/ccg7jAob.s:4550   .text.VD55G1_SetFlipMirrorMode:00000000 $t
+     /tmp/ccg7jAob.s:4556   .text.VD55G1_SetFlipMirrorMode:00000000 VD55G1_SetFlipMirrorMode
+     /tmp/ccg7jAob.s:4699   .text.VD55G1_GetBrightnessLevel:00000000 $t
+     /tmp/ccg7jAob.s:4705   .text.VD55G1_GetBrightnessLevel:00000000 VD55G1_GetBrightnessLevel
+     /tmp/ccg7jAob.s:4785   .text.VD55G1_GetBrightnessLevel:00000044 $d
+     /tmp/ccg7jAob.s:5676   .rodata.__func__.7:00000000 __func__.7
+     /tmp/ccg7jAob.s:4791   .text.VD55G1_SetBrightnessLevel:00000000 $t
+     /tmp/ccg7jAob.s:4797   .text.VD55G1_SetBrightnessLevel:00000000 VD55G1_SetBrightnessLevel
+     /tmp/ccg7jAob.s:4873   .text.VD55G1_SetBrightnessLevel:00000040 $d
+     /tmp/ccg7jAob.s:5671   .rodata.__func__.6:00000000 __func__.6
+     /tmp/ccg7jAob.s:4879   .text.VD55G1_SetFlickerMode:00000000 $t
+     /tmp/ccg7jAob.s:4885   .text.VD55G1_SetFlickerMode:00000000 VD55G1_SetFlickerMode
+     /tmp/ccg7jAob.s:4925   .text.VD55G1_SetExposureMode:00000000 $t
+     /tmp/ccg7jAob.s:4931   .text.VD55G1_SetExposureMode:00000000 VD55G1_SetExposureMode
+     /tmp/ccg7jAob.s:5037   .text.VD55G1_SetExposureMode:00000054 $d
+     /tmp/ccg7jAob.s:5666   .rodata.__func__.5:00000000 __func__.5
+     /tmp/ccg7jAob.s:5043   .text.VD55G1_SetAnalogGain:00000000 $t
+     /tmp/ccg7jAob.s:5049   .text.VD55G1_SetAnalogGain:00000000 VD55G1_SetAnalogGain
+     /tmp/ccg7jAob.s:5134   .text.VD55G1_SetAnalogGain:00000048 $d
+     /tmp/ccg7jAob.s:5661   .rodata.__func__.4:00000000 __func__.4
+     /tmp/ccg7jAob.s:5140   .text.VD55G1_SetDigitalGain:00000000 $t
+     /tmp/ccg7jAob.s:5146   .text.VD55G1_SetDigitalGain:00000000 VD55G1_SetDigitalGain
+     /tmp/ccg7jAob.s:5310   .text.VD55G1_SetDigitalGain:00000094 $d
+     /tmp/ccg7jAob.s:5656   .rodata.__func__.3:00000000 __func__.3
+     /tmp/ccg7jAob.s:5316   .text.VD55G1_GetExposureRegRange:00000000 $t
+ARM GAS  /tmp/ccg7jAob.s 			page 163
 
 
-     /tmp/ccAGibT0.s:5322   .text.VD55G1_GetExposureRegRange:00000000 VD55G1_GetExposureRegRange
-     /tmp/ccAGibT0.s:5457   .text.VD55G1_GetExposureRegRange:00000084 $d
-     /tmp/ccAGibT0.s:5651   .rodata.__func__.2:00000000 __func__.2
-     /tmp/ccAGibT0.s:5463   .text.VD55G1_SetExposureTime:00000000 $t
-     /tmp/ccAGibT0.s:5469   .text.VD55G1_SetExposureTime:00000000 VD55G1_SetExposureTime
-     /tmp/ccAGibT0.s:5601   .text.VD55G1_SetExposureTime:00000074 $d
-     /tmp/ccAGibT0.s:5641   .rodata.__func__.0:00000000 __func__.0
-     /tmp/ccAGibT0.s:5614   .rodata.CSWTCH.79:00000000 $d
-     /tmp/ccAGibT0.s:5630   .rodata.CSWTCH.56:00000000 $d
-     /tmp/ccAGibT0.s:5812   .rodata.vd55g1_supported_modes:00000000 vd55g1_supported_modes
-     /tmp/ccAGibT0.s:5809   .rodata.vd55g1_supported_modes:00000000 $d
+     /tmp/ccg7jAob.s:5322   .text.VD55G1_GetExposureRegRange:00000000 VD55G1_GetExposureRegRange
+     /tmp/ccg7jAob.s:5457   .text.VD55G1_GetExposureRegRange:00000084 $d
+     /tmp/ccg7jAob.s:5651   .rodata.__func__.2:00000000 __func__.2
+     /tmp/ccg7jAob.s:5463   .text.VD55G1_SetExposureTime:00000000 $t
+     /tmp/ccg7jAob.s:5469   .text.VD55G1_SetExposureTime:00000000 VD55G1_SetExposureTime
+     /tmp/ccg7jAob.s:5601   .text.VD55G1_SetExposureTime:00000074 $d
+     /tmp/ccg7jAob.s:5641   .rodata.__func__.0:00000000 __func__.0
+     /tmp/ccg7jAob.s:5614   .rodata.CSWTCH.79:00000000 $d
+     /tmp/ccg7jAob.s:5630   .rodata.CSWTCH.56:00000000 $d
+     /tmp/ccg7jAob.s:5812   .rodata.vd55g1_supported_modes:00000000 vd55g1_supported_modes
+     /tmp/ccg7jAob.s:5809   .rodata.vd55g1_supported_modes:00000000 $d
                            .group:00000000 wm4.0.0340b1c6b35792986b320b0caf0e6143
                            .group:00000000 wm4.stdarg.h.31.f7f4f3bfddce9ed034956076d59396f7
                            .group:00000000 wm4._newlib_version.h.4.0eb654b64686e2bd29646258853f6c22
