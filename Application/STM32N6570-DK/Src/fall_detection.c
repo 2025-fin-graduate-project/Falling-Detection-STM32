@@ -98,6 +98,10 @@ void FallDetection_RunInference(void)
   }
   BSP_XSPI_NOR_EnableMemoryMappedMode(0);
 
+  /* Invalidate D-Cache for the weight region to avoid stale data from indirect mode period */
+  extern const uint64_t g_gru_network_weights_array[];
+  SCB_InvalidateDCache_by_Addr((void*)g_gru_network_weights_array, STAI_GRU_NETWORK_WEIGHTS_SIZE_BYTES);
+
   stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
 }
 
@@ -116,13 +120,11 @@ void FallDetection_Update(PosePipeline_t *pipeline)
 
   /* IN[0]: time-first window [40][45] */
   PosePipeline_GetWindowTimeFirst(pipeline, (float32_t (*)[POSE_FEATURE_COUNT])gru_in[0]);
-  SCB_CleanDCache_by_Addr(gru_in[0], gru_in_len[0]);
 
   uint32_t t0 = HAL_GetTick();
   FallDetection_RunInference();
   fall_state.inference_ms = HAL_GetTick() - t0;
 
-  SCB_InvalidateDCache_by_Addr(gru_out[0], gru_out_len[0]);
   float32_t *logits = (float32_t *)gru_out[0];
 
   fall_state.normal_logit = logits[0];

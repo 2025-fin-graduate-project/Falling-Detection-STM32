@@ -51,6 +51,10 @@ BUILD_DIR = $(BUILD_TOP)/Application/STM32N6570-DK
 ######################################
 # C sources
 C_SOURCES += Src/main.c
+C_SOURCES += Src/system_init.c
+C_SOURCES += Src/vision_system.c
+C_SOURCES += Src/presence_manager.c
+C_SOURCES += Src/ui_system.c
 C_SOURCES += Src/fall_detection.c
 C_SOURCES += Src/syscalls.c
 C_SOURCES += Src/app_fuseprogramming.c
