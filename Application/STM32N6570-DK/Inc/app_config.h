@@ -38,12 +38,13 @@
 #define FALL_MODEL_GRU  1
 #define FALL_DETECTION_MODEL  FALL_MODEL_GRU
 
-/* GRU window-based (1×40×74): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
+/* GRU window-based (1×40×45): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
 #define GRU_WARMUP_FRAMES       40
-/* Softmax fall score must reach this to count as a fall frame — P27-vm0 INT8 val reselection */
-#define GRU_FALL_SCORE_THRESHOLD  0.50f
-/* Consecutive fall windows required to trigger alarm + pipeline reset — P27-vm0 min_consecutive=1 */
-#define GRU_FALL_RESET_COUNT    1
+/* Softmax fall score must reach this to count as a fall frame — P38-nv val-reselected threshold */
+#define GRU_FALL_SCORE_THRESHOLD  0.725f
+/* Majority vote: 3 out of 5 consecutive windows must be above threshold to trigger alarm */
+#define GRU_FALL_VOTE_WINDOW      5
+#define GRU_FALL_VOTE_K           3
 /* Keep showing FALL on display and sounding alarm for this many ms after confirmation */
 #define GRU_FALL_LATCH_MS       5000
 /* LED_RED blink half-period during alarm (ms) */

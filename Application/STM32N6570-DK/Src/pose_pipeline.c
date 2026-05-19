@@ -103,28 +103,7 @@ static const uint8_t hssc_indices[POSE_HSSC_INDICES_COUNT] = {
     POSE_KP_LEFT_SHOULDER, POSE_KP_RIGHT_SHOULDER
 };
 
-/* Velocity source indices into the 45-feat base array.
- * Matches KP13_VEL_BASE = columns ending in _y or _x from KP13_COLS.
- * Order: kp0_y,kp0_x, kp5_y,kp5_x, ..., kp16_y,kp16_x, HSSC_y, HSSC_x, AHSSC_x */
-static const uint8_t vel_src_indices[POSE_VEL_COUNT] = {
-     0,  1,   /* kp0  y, x */
-     3,  4,   /* kp5  y, x */
-     6,  7,   /* kp6  y, x */
-     9, 10,   /* kp7  y, x */
-    12, 13,   /* kp8  y, x */
-    15, 16,   /* kp9  y, x */
-    18, 19,   /* kp10 y, x */
-    21, 22,   /* kp11 y, x */
-    24, 25,   /* kp12 y, x */
-    27, 28,   /* kp13 y, x */
-    30, 31,   /* kp14 y, x */
-    33, 34,   /* kp15 y, x */
-    36, 37,   /* kp16 y, x */
-    39, 40,   /* HSSC_y, HSSC_x */
-    44        /* AHSSC_x */
-};
-
-/* MinMax normalization parameters — P37-pure-vel-kp13-w40-gru (74 features) */
+/* MinMax normalization parameters — P38-nv-a65-gru (45 features) */
 static const float32_t norm_min[POSE_FEATURE_COUNT]   = POSE_NORM_MIN;
 static const float32_t norm_scale[POSE_FEATURE_COUNT] = POSE_NORM_SCALE;
 
@@ -252,51 +231,28 @@ void PosePipeline_Process(PosePipeline_t *s,
     }
 
     /* ------------------------------------------------------------------
-     * Step 8 : Assemble raw 45-feat base vector
+     * Step 8 : Assemble raw 45-feat vector
      *   [0..38]  kp13 × (y, x, conf)  — 39 features
      *   [39..44] HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x
      * ------------------------------------------------------------------ */
-    float32_t raw_base[POSE_BASE_FEAT_COUNT];
+    float32_t features[POSE_FEATURE_COUNT];
 
     for (uint32_t k = 0u; k < POSE_KP13_COUNT; k++)
     {
         uint32_t src = kp13_indices[k];
-        raw_base[k * 3u + 0u] = all_kp[src * 3u + 0u];
-        raw_base[k * 3u + 1u] = all_kp[src * 3u + 1u];
-        raw_base[k * 3u + 2u] = all_kp[src * 3u + 2u];
+        features[k * 3u + 0u] = all_kp[src * 3u + 0u];
+        features[k * 3u + 1u] = all_kp[src * 3u + 1u];
+        features[k * 3u + 2u] = all_kp[src * 3u + 2u];
     }
 
-    raw_base[39u] = hssc_y;
-    raw_base[40u] = hssc_x;
-    raw_base[41u] = rwhc;
-    raw_base[42u] = vhssc_ema;
-    raw_base[43u] = ahssc;
-    raw_base[44u] = ahssc_x;
-
-    /* ------------------------------------------------------------------
-     * Step 9 : Velocity — forward diff of raw base at vel_src_indices
-     *   Matches Python: add_velocity(frames, vel_idx) with delta[0] = 0
-     *   Computed BEFORE normalization (same as training pipeline).
-     * ------------------------------------------------------------------ */
-    float32_t vel[POSE_VEL_COUNT];
-
-    if (s->deriv_initialized)
-    {
-        for (uint32_t i = 0u; i < POSE_VEL_COUNT; i++)
-        {
-            vel[i] = raw_base[vel_src_indices[i]] - s->prev_raw_vel[i];
-        }
-    }
-    else
-    {
-        memset(vel, 0, sizeof(vel));
-    }
+    features[39u] = hssc_y;
+    features[40u] = hssc_x;
+    features[41u] = rwhc;
+    features[42u] = vhssc_ema;
+    features[43u] = ahssc;
+    features[44u] = ahssc_x;
 
     /* Update state */
-    for (uint32_t i = 0u; i < POSE_VEL_COUNT; i++)
-    {
-        s->prev_raw_vel[i] = raw_base[vel_src_indices[i]];
-    }
     s->hssc_y_prev       = hssc_y;
     s->hssc_x_prev       = hssc_x;
     s->vhssc_ema         = vhssc_ema;
@@ -304,14 +260,8 @@ void PosePipeline_Process(PosePipeline_t *s,
     s->deriv_initialized = 1u;
 
     /* ------------------------------------------------------------------
-     * Step 10 : Assemble full 74-feat vector [base(45) | vel(29)]
-     * Step 11 : Normalize + clip [0, 1]
+     * Step 9 : Normalize + clip [0, 1]
      * ------------------------------------------------------------------ */
-    float32_t features[POSE_FEATURE_COUNT];
-
-    memcpy(features,                  raw_base, POSE_BASE_FEAT_COUNT * sizeof(float32_t));
-    memcpy(features + POSE_BASE_FEAT_COUNT, vel, POSE_VEL_COUNT      * sizeof(float32_t));
-
     for (uint32_t f = 0u; f < POSE_FEATURE_COUNT; f++)
     {
         float32_t v = (features[f] - norm_min[f]) / norm_scale[f];

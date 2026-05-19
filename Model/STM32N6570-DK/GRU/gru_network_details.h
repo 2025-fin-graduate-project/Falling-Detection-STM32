@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    gru_network.h
-  * @date    2026-05-18T18:13:41+0900
+  * @date    2026-05-19T21:36:43+0900
   * @brief   ST.AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
@@ -22,7 +22,7 @@
 
 const stai_network_details g_gru_network_details = {
   .tensors = (const stai_tensor[11]) {
-   { .size_bytes = 11840, .flags = (STAI_FLAG_HAS_BATCH|STAI_FLAG_CHANNEL_LAST), .format = STAI_FORMAT_FLOAT32, .shape = {3, (const int32_t[3]){1, 40, 74}}, .scale = {0, NULL}, .zeropoint = {0, NULL}, .name = "input_layer_output" },
+   { .size_bytes = 7200, .flags = (STAI_FLAG_HAS_BATCH|STAI_FLAG_CHANNEL_LAST), .format = STAI_FORMAT_FLOAT32, .shape = {3, (const int32_t[3]){1, 40, 45}}, .scale = {0, NULL}, .zeropoint = {0, NULL}, .name = "input_layer_output" },
    { .size_bytes = 10240, .flags = (STAI_FLAG_HAS_BATCH|STAI_FLAG_CHANNEL_LAST), .format = STAI_FORMAT_FLOAT32, .shape = {3, (const int32_t[3]){1, 40, 64}}, .scale = {0, NULL}, .zeropoint = {0, NULL}, .name = "conv1d_conv2d_output" },
    { .size_bytes = 10240, .flags = (STAI_FLAG_HAS_BATCH|STAI_FLAG_CHANNEL_LAST), .format = STAI_FORMAT_FLOAT32, .shape = {3, (const int32_t[3]){1, 40, 64}}, .scale = {0, NULL}, .zeropoint = {0, NULL}, .name = "conv1d_output" },
    { .size_bytes = 10240, .flags = (STAI_FLAG_HAS_BATCH|STAI_FLAG_CHANNEL_LAST), .format = STAI_FORMAT_FLOAT32, .shape = {3, (const int32_t[3]){1, 40, 64}}, .scale = {0, NULL}, .zeropoint = {0, NULL}, .name = "conv1d_1_conv2d_output" },

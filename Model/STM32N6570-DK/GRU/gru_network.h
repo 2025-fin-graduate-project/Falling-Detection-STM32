@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    gru_network.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    2026-05-18T18:13:41+0900
+  * @date    2026-05-19T21:36:43+0900
   * @brief   ST.AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
@@ -23,12 +23,12 @@
 
 /*****************************************************************************/
 /*  Original model name and signature  */
-#define STAI_GRU_NETWORK_ORIGIN_MODEL_NAME         "p37_vel_kp13_compat"
-#define STAI_GRU_NETWORK_ORIGIN_MODEL_SIGNATURE    "0x078b5f7f8097079a686449f2e91d671f"
+#define STAI_GRU_NETWORK_ORIGIN_MODEL_NAME         "p38_nv_a65_kp13_compat"
+#define STAI_GRU_NETWORK_ORIGIN_MODEL_SIGNATURE    "0x6003eb785d61cdbe7ae1c2bb832be032"
 
 /*  Generated model name and signature  */
 #define STAI_GRU_NETWORK_MODEL_NAME                "gru_network"
-#define STAI_GRU_NETWORK_MODEL_SIGNATURE           (0x1e1f29e86b4dea24)
+#define STAI_GRU_NETWORK_MODEL_SIGNATURE           (0x0ec62b125165df30)
 
 
 /*****************************************************************************/
@@ -43,11 +43,11 @@
 #define STAI_GRU_NETWORK_NODES_NUM           (10)
 
 /*  Macro to declare number macc for generated network model  */
-#define STAI_GRU_NETWORK_MACC_NUM            (6215072)
+#define STAI_GRU_NETWORK_MACC_NUM            (5843872)
 
 /*  Macros to declare input buffers characteristics  */
 #define STAI_GRU_NETWORK_IN_NUM              (1)
-#define STAI_GRU_NETWORK_IN_SIZE_BYTES       (11844)
+#define STAI_GRU_NETWORK_IN_SIZE_BYTES       (7204)
 
 #define STAI_GRU_NETWORK_IN_ALIGNMENTS \
   { 4}
@@ -56,21 +56,21 @@
 #define STAI_GRU_NETWORK_IN_FORMATS \
   { STAI_FORMAT_FLOAT32}
 #define STAI_GRU_NETWORK_IN_SIZES \
-  {2960}
+  {1800}
 #define STAI_GRU_NETWORK_IN_SIZES_BYTES \
-  {11840}
+  {7200}
 
 #define STAI_GRU_NETWORK_IN_1_ALIGNMENT   4
 #define STAI_GRU_NETWORK_IN_1_NAME        (NULL)
 #define STAI_GRU_NETWORK_IN_1_FLAGS       (STAI_FLAG_INPUTS|STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST|STAI_FLAG_HAS_BATCH)
 #define STAI_GRU_NETWORK_IN_1_FORMAT      (STAI_FORMAT_FLOAT32)
-#define STAI_GRU_NETWORK_IN_1_SHAPE       {1,40,74}
+#define STAI_GRU_NETWORK_IN_1_SHAPE       {1,40,45}
 #define STAI_GRU_NETWORK_IN_1_BATCH       (1)
 #define STAI_GRU_NETWORK_IN_1_HEIGHT      (40)
-#define STAI_GRU_NETWORK_IN_1_CHANNEL     (74)
+#define STAI_GRU_NETWORK_IN_1_CHANNEL     (45)
 #define STAI_GRU_NETWORK_IN_1_RANK        (2)
-#define STAI_GRU_NETWORK_IN_1_SIZE        (2960)
-#define STAI_GRU_NETWORK_IN_1_SIZE_BYTES  (11840)
+#define STAI_GRU_NETWORK_IN_1_SIZE        (1800)
+#define STAI_GRU_NETWORK_IN_1_SIZE_BYTES  (7200)
 
 /*****************************************************************************/
 /*  Macros to declare output buffers characteristics  */
@@ -115,16 +115,16 @@
 /*  Macros to declare weights buffers characteristics  */
 
 #define STAI_GRU_NETWORK_WEIGHTS_NUM                  (1)
-#define STAI_GRU_NETWORK_WEIGHTS_SIZE                  (641288)
-#define STAI_GRU_NETWORK_WEIGHTS_SIZE_BYTES            (641288)
+#define STAI_GRU_NETWORK_WEIGHTS_SIZE                  (604168)
+#define STAI_GRU_NETWORK_WEIGHTS_SIZE_BYTES            (604168)
 #define STAI_GRU_NETWORK_WEIGHTS_ALIGNMENTS \
   { 4}
 #define STAI_GRU_NETWORK_WEIGHTS_SIZES \
-  { 641288}
+  { 604168}
 #define STAI_GRU_NETWORK_WEIGHTS_NUM        (1)
 #define STAI_GRU_NETWORK_WEIGHT_1_FLAGS       ((STAI_FLAG_PREALLOCATED))
-#define STAI_GRU_NETWORK_WEIGHT_1_SIZE        (641288)
-#define STAI_GRU_NETWORK_WEIGHT_1_SIZE_BYTES  (641288)
+#define STAI_GRU_NETWORK_WEIGHT_1_SIZE        (604168)
+#define STAI_GRU_NETWORK_WEIGHT_1_SIZE_BYTES  (604168)
 
 
 /*****************************************************************************/

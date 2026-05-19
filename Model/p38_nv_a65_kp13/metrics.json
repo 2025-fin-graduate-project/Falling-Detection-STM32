@@ -1,0 +1,110 @@
+{
+  "exp_id": "P38-nv-a65-gru",
+  "config": {
+    "exp_id": "P38-nv-a65-gru",
+    "feature_set": "kp13",
+    "window_size": 40,
+    "model_type": "gru",
+    "hidden_sizes": [
+      128,
+      64
+    ],
+    "epochs": 80,
+    "batch_size": 512,
+    "lr": 0.001,
+    "dropout": 0.3,
+    "fall_stride": 1,
+    "nfall_stride": 5,
+    "focal_alpha": 0.65,
+    "focal_gamma": 2.0,
+    "use_velocity": false,
+    "use_hip_center": false,
+    "exclude_boundary": false,
+    "pure_window": true,
+    "pure_margin": 5,
+    "seed": 42
+  },
+  "threshold": 0.725,
+  "metrics": {
+    "val_window": {
+      "min_pr": 0.9490342837207526,
+      "fall_precision": 0.9503001047984708,
+      "fall_recall": 0.9490342837207526,
+      "nfall_precision": 0.992071753834612,
+      "nfall_recall": 0.9922773635461903,
+      "tp": 29924,
+      "fp": 1565,
+      "fn": 1607,
+      "tn": 201086
+    },
+    "test_window": {
+      "min_pr": 0.9345287473676896,
+      "fall_precision": 0.9450826019617355,
+      "fall_recall": 0.9345287473676896,
+      "nfall_precision": 0.9899187407269021,
+      "nfall_recall": 0.9916238508631962,
+      "tp": 14645,
+      "fp": 851,
+      "fn": 1026,
+      "tn": 100747
+    },
+    "val_event_raw": {
+      "min_pr": 0.8565,
+      "fall_precision": 0.9497,
+      "fall_recall": 0.9944,
+      "nfall_precision": 0.9825,
+      "nfall_recall": 0.8565,
+      "tp": 1247,
+      "fp": 66,
+      "fn": 7,
+      "tn": 394,
+      "vote_window": 1,
+      "vote_k": 1
+    },
+    "test_event_raw": {
+      "min_pr": 0.8947,
+      "fall_precision": 0.9627,
+      "fall_recall": 0.9904,
+      "nfall_precision": 0.9714,
+      "nfall_recall": 0.8947,
+      "tp": 619,
+      "fp": 24,
+      "fn": 6,
+      "tn": 204,
+      "vote_window": 1,
+      "vote_k": 1
+    },
+    "val_event_vote": {
+      "min_pr": 0.8848,
+      "fall_precision": 0.9592,
+      "fall_recall": 0.9928,
+      "nfall_precision": 0.9784,
+      "nfall_recall": 0.8848,
+      "tp": 1245,
+      "fp": 53,
+      "fn": 9,
+      "tn": 407,
+      "vote_window": 5,
+      "vote_k": 3
+    },
+    "test_event_vote": {
+      "min_pr": 0.9079,
+      "fall_precision": 0.9671,
+      "fall_recall": 0.9872,
+      "nfall_precision": 0.9628,
+      "nfall_recall": 0.9079,
+      "tp": 617,
+      "fp": 21,
+      "fn": 8,
+      "tn": 207,
+      "vote_window": 5,
+      "vote_k": 3
+    }
+  },
+  "window_stats": {
+    "train_fall": 112863,
+    "train_nfall": 146648,
+    "val_fall": 31531,
+    "test_fall": 15671
+  }
+}

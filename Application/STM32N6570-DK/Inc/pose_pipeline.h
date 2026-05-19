@@ -37,9 +37,7 @@ extern "C" {
 #define POSE_KP_COUNT         17    /* COCO 17-keypoint MoveNet (all used for HSSC/RWHC) */
 #define POSE_KP13_COUNT       13    /* kp13 subset stored in feature vector */
 #define POSE_ENG_FEAT_COUNT    6    /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */
-#define POSE_BASE_FEAT_COUNT  (POSE_KP13_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 45 */
-#define POSE_VEL_COUNT        29    /* velocity features (Δy/Δx per kp + ΔHSSC + ΔAHSSC_x) */
-#define POSE_FEATURE_COUNT    (POSE_BASE_FEAT_COUNT + POSE_VEL_COUNT)       /* 74 */
+#define POSE_FEATURE_COUNT    (POSE_KP13_COUNT * 3 + POSE_ENG_FEAT_COUNT)  /* 45 */
 #define POSE_WINDOW_SIZE      40    /* timesteps (15 fps × ~2.7 s) */
 
 /* --- One-Euro Filter (Pipeline D) -----------------------------------
@@ -69,12 +67,12 @@ extern "C" {
 #define POSE_VHSSC_EMA_ALPHA      (0.4f)
 
 /* ------------------------------------------------------------------ */
-/* MinMax normalization — P37-pure-vel-kp13-w40-gru training stats     */
-/* Applied after computing raw features (incl. velocity), clipped [0,1] */
+/* MinMax normalization — P38-nv-a65-gru training stats                */
+/* Applied after computing raw features, clipped [0,1]                 */
 /* feat_norm = clip((feat_raw - min) / scale, 0, 1)                   */
 /* ------------------------------------------------------------------ */
 #define POSE_NORM_MIN { \
-    /* kp0..kp16 (y, x, conf) × 13 keypoints = 39 */ \
+    /* kp0..kp16 (y, x, s) × 13 keypoints = 39 */ \
     0.000000f, 0.000000f, 0.002383f, \
     0.000000f, 0.000000f, 0.004055f, \
     0.000000f, 0.000000f, 0.001079f, \
@@ -89,26 +87,10 @@ extern "C" {
     0.021160f, 0.001553f, 0.000135f, \
     0.028301f, 0.000000f, 0.000181f, \
     /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */ \
-    0.000088f, 0.000158f, 0.024745f, -2.220820f, -18.393295f, -67.749054f, \
-    /* velocity: Δkp_y/x (13 kp × 2) + ΔHSSC_y/x + ΔAHSSC_x = 29 */ \
-    -0.326340f, -0.370308f, \
-    -0.330223f, -0.367651f, \
-    -0.295398f, -0.361651f, \
-    -0.350462f, -0.361591f, \
-    -0.343730f, -0.346354f, \
-    -0.326175f, -0.344907f, \
-    -0.334965f, -0.358773f, \
-    -0.354925f, -0.348700f, \
-    -0.322721f, -0.338775f, \
-    -0.338234f, -0.369034f, \
-    -0.334703f, -0.352386f, \
-    -0.333270f, -0.352124f, \
-    -0.295971f, -0.366540f, \
-    -0.258068f, -0.296806f, \
-    -71.751724f }
+    0.000088f, 0.000158f, 0.024745f, -2.220820f, -18.393295f, -67.749054f }
 
 #define POSE_NORM_SCALE { \
-    /* kp0..kp16 (y, x, conf) × 13 keypoints = 39 */ \
+    /* kp0..kp16 (y, x, s) × 13 keypoints = 39 */ \
     0.999908f, 0.999997f, 0.880732f, \
     0.997732f, 0.999995f, 0.968784f, \
     0.984889f, 0.999999f, 0.965219f, \
@@ -123,23 +105,7 @@ extern "C" {
     0.978840f, 0.996987f, 0.965499f, \
     0.971697f, 0.999525f, 0.968101f, \
     /* HSSC_y, HSSC_x, RWHC, VHSSC, AHSSC, AHSSC_x */ \
-    0.991588f, 0.998811f, 21.949295f, 5.239275f, 45.194557f, 125.428223f, \
-    /* velocity: 29 features */ \
-    0.641402f, 0.732577f, \
-    0.632868f, 0.738794f, \
-    0.602938f, 0.727628f, \
-    0.662161f, 0.723614f, \
-    0.666761f, 0.708053f, \
-    0.657091f, 0.694968f, \
-    0.653508f, 0.709945f, \
-    0.678645f, 0.705804f, \
-    0.640663f, 0.694200f, \
-    0.654983f, 0.733996f, \
-    0.654903f, 0.704164f, \
-    0.660538f, 0.709521f, \
-    0.620174f, 0.713176f, \
-    0.554145f, 0.633213f, \
-    131.219452f }
+    0.991588f, 0.998811f, 21.949295f, 5.239275f, 45.194557f, 125.428223f }
 
 /* ------------------------------------------------------------------ */
 /* HSSC upper-body keypoint indices                                     */
@@ -170,7 +136,7 @@ extern "C" {
 /* State structures                                                     */
 /* ------------------------------------------------------------------ */
 
-/** Output of one processed frame (74 features) */
+/** Output of one processed frame (45 features) */
 typedef struct {
     float32_t f[POSE_FEATURE_COUNT];
     uint8_t   valid;
@@ -200,9 +166,6 @@ typedef struct {
     /* Horizontal kinematics (AHSSC_x) */
     float32_t hssc_x_prev;    /* previous HSSC_x */
     float32_t vhssc_x_ema;    /* previous raw VHSSC_x (no EMA — matches Python Pipeline D) */
-
-    /* Previous raw base features at velocity source indices (for delta) */
-    float32_t prev_raw_vel[POSE_VEL_COUNT];
 
     uint8_t   deriv_initialized;  /* VHSSC/AHSSC and velocity share first-frame guard */
 

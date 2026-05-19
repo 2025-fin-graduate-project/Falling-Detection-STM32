@@ -104,7 +104,8 @@ typedef struct
   float32_t fall_logit;
   float32_t normal_score;
   float32_t fall_score;
-  uint32_t fall_consec_count; /* consecutive fall frames; resets GRU on threshold */
+  uint8_t fall_vote_buf[GRU_FALL_VOTE_WINDOW];
+  uint32_t fall_vote_idx;
   uint32_t fall_latch_tick;   /* HAL tick of last confirmed fall; 0 if never */
 } FallDetectionState_TypeDef;
 
@@ -180,12 +181,12 @@ static FallDetectionState_TypeDef fall_state;
 static PosePipeline_t pose_pipeline;
 static uint32_t pose_last_tick;
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-/* GRU window-based (1×40×74): same structure as TCN path */
+/* GRU window-based (1×40×45): same structure as TCN path */
 static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
 static stai_ptr gru_out[STAI_GRU_NETWORK_OUT_NUM]  = {0};
 static int32_t  gru_in_len[STAI_GRU_NETWORK_IN_NUM]  = {0};
 static int32_t  gru_out_len[STAI_GRU_NETWORK_OUT_NUM] = {0};
-/* Input window buffer (time-first: [40][74]) in activation memory */
+/* Input window buffer (time-first: [40][45]) in activation memory */
 __attribute__((aligned(32))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
 #else
 static stai_ptr tcn_in;
@@ -591,7 +592,7 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   fall_state.frame_count = pipeline->win_count;
 
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* GRU window-based (1×40×74): run every frame, alarm after window is full */
+  /* GRU window-based (1×40×45): run every frame, alarm after window is full */
   fall_state.window_ready = PosePipeline_WindowFull(pipeline);
 
   if (!fall_state.window_ready)
@@ -692,25 +693,32 @@ static void FallDetection_Update(PosePipeline_t *pipeline)
   }
 
 #if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  if (fall_state.fall_detected)
+  /* Update voting buffer */
+  fall_state.fall_vote_buf[fall_state.fall_vote_idx % GRU_FALL_VOTE_WINDOW] = fall_state.fall_detected;
+  fall_state.fall_vote_idx++;
+
+  /* Count votes */
+  uint32_t votes = 0;
+  for (int i = 0; i < GRU_FALL_VOTE_WINDOW; i++)
   {
-    fall_state.fall_consec_count++;
-    if (fall_state.fall_consec_count >= GRU_FALL_RESET_COUNT)
-    {
-      printf("[ALARM] FALL CONFIRMED (%lu cumulative frames) - resetting GRU state\r\n",
-             fall_state.fall_consec_count);
-      /* Trigger alarm latch so display + LED stay active */
-      fall_state.fall_latch_tick = HAL_GetTick();
-      PosePipeline_Init(pipeline);
-      fall_state.fall_consec_count = 0;
-      fall_state.frame_count       = 0;
-      fall_state.window_ready      = 0;
-      /* fall_detected stays 1 so the display keeps showing FALL this frame */
-    }
+    votes += fall_state.fall_vote_buf[i];
   }
-  else
+
+  /* Trigger alarm if threshold reached and we have at least one full window */
+  if (votes >= GRU_FALL_VOTE_K && fall_state.fall_vote_idx >= GRU_FALL_VOTE_WINDOW)
   {
-    fall_state.fall_consec_count = 0;
+    printf("[ALARM] FALL CONFIRMED (%lu/%d votes) - resetting pipeline\r\n",
+           votes, GRU_FALL_VOTE_WINDOW);
+
+    /* Trigger alarm latch so display + LED stay active */
+    fall_state.fall_latch_tick = HAL_GetTick();
+
+    /* Reset pipeline and voting state */
+    PosePipeline_Init(pipeline);
+    memset(fall_state.fall_vote_buf, 0, sizeof(fall_state.fall_vote_buf));
+    fall_state.fall_vote_idx = 0;
+    fall_state.frame_count    = 0;
+    fall_state.window_ready   = 0;
   }
 #endif
 }
@@ -735,7 +743,8 @@ static void FallDetection_Invalidate(PosePipeline_t *pipeline)
   fall_state.fall_logit = 0.0f;
   fall_state.normal_score = 0.0f;
   fall_state.fall_score = 0.0f;
-  fall_state.fall_consec_count = 0u;
+  memset(fall_state.fall_vote_buf, 0, sizeof(fall_state.fall_vote_buf));
+  fall_state.fall_vote_idx = 0u;
   /* Do NOT reset fall_latch_tick: alarm must keep showing even if person
    * is hard to detect on the floor (low-confidence keypoints → Invalidate). */
 }
