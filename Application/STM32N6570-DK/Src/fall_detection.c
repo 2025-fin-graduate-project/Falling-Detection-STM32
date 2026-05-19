@@ -9,6 +9,7 @@
 #include "gru_network.h"
 #include "stm32n6xx_hal.h"
 #include "stm32n6570_discovery_xspi.h"
+#include "stm32n6570_discovery.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -55,7 +56,30 @@ void FallDetection_Init(void)
 
   gru_in_len[0]  = STAI_GRU_NETWORK_IN_1_SIZE_BYTES;
   gru_out_len[0] = STAI_GRU_NETWORK_OUT_1_SIZE_BYTES;
+
+  BSP_LED_Init(LED_RED);
+  BSP_LED_Off(LED_RED);
 }
+
+void Alarm_Update(void)
+{
+  uint8_t latch_active = (fall_state.fall_latch_tick != 0u) &&
+                         ((HAL_GetTick() - fall_state.fall_latch_tick) < GRU_FALL_LATCH_MS);
+
+  if (latch_active)
+  {
+    /* Blink LED_RED at ~2Hz while alarm is active */
+    if ((HAL_GetTick() % (2u * GRU_ALARM_BLINK_PERIOD_MS)) < GRU_ALARM_BLINK_PERIOD_MS)
+      BSP_LED_On(LED_RED);
+    else
+      BSP_LED_Off(LED_RED);
+  }
+  else
+  {
+    BSP_LED_Off(LED_RED);
+  }
+}
+
 
 void FallDetection_RunInference(void)
 {

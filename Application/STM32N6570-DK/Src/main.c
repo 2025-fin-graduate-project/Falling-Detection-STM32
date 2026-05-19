@@ -169,11 +169,6 @@ static void Hardware_init(void);
 static void Run_Inference(stai_network *network_instance);
 static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_size *number_output, int32_t nn_out_len[]);
 static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai_size number_output, spe_pp_out_t *p_postprocess);
-static void FallModel_init(void);
-static void Run_FallInference(void);
-static void FallDetection_Update(PosePipeline_t *pipeline);
-static void FallDetection_Invalidate(PosePipeline_t *pipeline);
-static void Alarm_Update(void);
 
 
 /**
@@ -199,11 +194,7 @@ int main(void)
   printf("HAL: %lu.%lu.%lu\n", __STM32N6xx_HAL_VERSION_MAIN, __STM32N6xx_HAL_VERSION_SUB1, __STM32N6xx_HAL_VERSION_SUB2);
   printf("STEdgeAI Tools: %d.%d.%d\n", STAI_TOOLS_VERSION_MAJOR, STAI_TOOLS_VERSION_MINOR, STAI_TOOLS_VERSION_MICRO);
   printf("NN model: %s\n", STAI_NETWORK_ORIGIN_MODEL_NAME);
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  printf("Fall model: %s\n", STAI_GRU_NETWORK_ORIGIN_MODEL_NAME);
-#else
-  printf("Fall model: %s\n", STAI_TCN_NETWORK_ORIGIN_MODEL_NAME);
-#endif
+  printf("Fall model: GRU (p38-nv-a65)\n");
   printf("========================================\n");
 
   /*** NN Init ****************************************************************/
@@ -214,7 +205,7 @@ int main(void)
   int32_t nn_out_len[STAI_NETWORK_OUT_NUM] = {0};
 
   NeuralNetwork_init(&nn_in_len, nn_out, &number_output, nn_out_len);
-  FallModel_init();
+  FallDetection_Init();
 
   /*** Post Processing Init ***************************************************/
   stai_network_info info;
@@ -451,244 +442,6 @@ static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_si
   }
 }
 
-static void FallModel_init(void)
-{
-  int ret;
-
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  stai_size number_input  = STAI_GRU_NETWORK_IN_NUM;
-  stai_size number_output = STAI_GRU_NETWORK_OUT_NUM;
-
-  ret = stai_gru_network_init(gru_network_context);
-  assert(ret == STAI_SUCCESS);
-
-  /* Connect input/output pointers into the activation buffer */
-  stai_ptr act_bufs[STAI_GRU_NETWORK_ACTIVATIONS_NUM] = { (stai_ptr)gru_activation_buf };
-  stai_size n_act = STAI_GRU_NETWORK_ACTIVATIONS_NUM;
-  ret = stai_gru_network_set_activations(gru_network_context, act_bufs, n_act);
-  assert(ret == STAI_SUCCESS);
-
-  ret = stai_gru_network_get_inputs(gru_network_context, gru_in, &number_input);
-  assert(ret == STAI_SUCCESS);
-
-  ret = stai_gru_network_get_outputs(gru_network_context, gru_out, &number_output);
-  assert(ret == STAI_SUCCESS);
-
-  gru_in_len[0]  = STAI_GRU_NETWORK_IN_1_SIZE_BYTES;
-  gru_out_len[0] = STAI_GRU_NETWORK_OUT_1_SIZE_BYTES;
-
-#else
-  stai_size number_input  = STAI_TCN_NETWORK_IN_NUM;
-  stai_size number_output = STAI_TCN_NETWORK_OUT_NUM;
-
-  ret = stai_tcn_network_init(tcn_network_context);
-  assert(ret == STAI_SUCCESS);
-
-  ret = stai_tcn_network_get_info(tcn_network_context, &info);
-  assert(ret == STAI_SUCCESS);
-  assert(info.n_inputs  == STAI_TCN_NETWORK_IN_NUM);
-  assert(info.n_outputs == STAI_TCN_NETWORK_OUT_NUM);
-  assert(info.inputs[0].size_bytes  == STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
-  assert(info.outputs[0].size_bytes == STAI_TCN_NETWORK_OUT_1_SIZE_BYTES);
-
-  ret = stai_tcn_network_get_inputs(tcn_network_context, &tcn_in, &number_input);
-  assert(ret == STAI_SUCCESS);
-
-  ret = stai_tcn_network_get_outputs(tcn_network_context, tcn_out, &number_output);
-  assert(ret == STAI_SUCCESS);
-
-  for (int i = 0; i < STAI_TCN_NETWORK_OUT_NUM; i++)
-    tcn_out_len[i] = info.outputs[i].size_bytes;
-#endif
-
-  memset(&fall_state, 0, sizeof(fall_state));
-  /* Show "no person" on startup until presence is confirmed. */
-  pose_debug_metrics.person_missing_confirmed = 1u;
-
-  BSP_LED_Init(LED_RED);
-  BSP_LED_Off(LED_RED);
-}
-
-static void FallDetection_Update(PosePipeline_t *pipeline)
-{
-  fall_state.frame_count = pipeline->win_count;
-
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* GRU window-based (1×40×45): run every frame, alarm after window is full */
-  fall_state.window_ready = PosePipeline_WindowFull(pipeline);
-
-  if (!fall_state.window_ready)
-  {
-    fall_state.fall_detected = 0;
-    fall_state.fall_score    = 0.0f;
-    fall_state.normal_score  = 0.0f;
-    fall_state.inference_ms  = 0;
-    return;
-  }
-
-  /* IN[0]: time-first window [40][27] → feed directly into activation buffer */
-  PosePipeline_GetWindowTimeFirst(pipeline,
-                                  (float32_t (*)[POSE_FEATURE_COUNT])gru_in[0]);
-  SCB_CleanDCache_by_Addr(gru_in[0], gru_in_len[0]);
-
-  uint32_t t0 = HAL_GetTick();
-  Run_FallInference();
-  uint32_t t1 = HAL_GetTick();
-  fall_state.inference_ms = t1 - t0;
-
-  SCB_InvalidateDCache_by_Addr(gru_out[0], gru_out_len[0]);
-  /* OUT[0]: softmax probabilities [normal, fall] — already normalized */
-  float32_t *logits = (float32_t *)gru_out[0];
-
-#else /* TCN */
-  fall_state.window_ready = PosePipeline_WindowFull(pipeline);
-
-  if (!fall_state.window_ready)
-  {
-    fall_state.fall_detected = 0;
-    fall_state.fall_score    = 0.0f;
-    fall_state.normal_score  = 0.0f;
-    fall_state.inference_ms  = 0;
-    return;
-  }
-
-  PosePipeline_GetWindowFeaturesFirst(pipeline, (float32_t (*)[POSE_WINDOW_SIZE])tcn_in);
-  SCB_CleanDCache_by_Addr(tcn_in, STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
-
-  uint32_t t0 = HAL_GetTick();
-  Run_FallInference();
-  uint32_t t1 = HAL_GetTick();
-  fall_state.inference_ms = t1 - t0;
-
-  SCB_InvalidateDCache_by_Addr(tcn_out[0], tcn_out_len[0]);
-  float32_t *logits = (float32_t *)tcn_out[0];
-#endif
-
-  fall_state.normal_logit = logits[0];
-  fall_state.fall_logit   = logits[1];
-
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* GRU output is already softmax probabilities */
-  fall_state.normal_score = logits[0];
-  fall_state.fall_score   = logits[1];
-#else
-  /* TCN output is raw logits — apply numerically-stable softmax */
-  float32_t max_logit  = (logits[0] > logits[1]) ? logits[0] : logits[1];
-  float32_t normal_exp = expf(logits[0] - max_logit);
-  float32_t fall_exp   = expf(logits[1] - max_logit);
-  float32_t denom      = normal_exp + fall_exp;
-
-  if (denom > 0.0f)
-  {
-    fall_state.normal_score = normal_exp / denom;
-    fall_state.fall_score   = fall_exp   / denom;
-  }
-  else
-  {
-    fall_state.normal_score = 0.5f;
-    fall_state.fall_score   = 0.5f;
-  }
-#endif
-
-  if (fall_state.window_ready) {
-    fall_state.fall_detected = (fall_state.fall_score >= GRU_FALL_SCORE_THRESHOLD) ? 1u : 0u;
-  } else {
-    fall_state.fall_detected = 0u;
-}
-  if (fall_state.window_ready)
-  {
-    static uint32_t last_fall_log_tick = 0;
-    uint32_t now_tick = HAL_GetTick();
-    if ((last_fall_log_tick == 0u) || ((now_tick - last_fall_log_tick) >= 1000u))
-    {
-      printf("[%s] %lums %s Fall %.2f Normal %.2f KP %lu/%lu P%lu\r\n",
-             (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
-             fall_state.inference_ms,
-             fall_state.fall_detected ? "FALL" : "NORMAL",
-             (double)fall_state.fall_score,
-             (double)fall_state.normal_score,
-             pose_debug_metrics.visible_keypoints,
-             (uint32_t)AI_POSE_PP_POSE_KEYPOINTS_NB,
-             pose_debug_metrics.person_keypoints);
-      last_fall_log_tick = now_tick;
-    }
-  }
-
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* Update voting buffer */
-  fall_state.fall_vote_buf[fall_state.fall_vote_idx % GRU_FALL_VOTE_WINDOW] = fall_state.fall_detected;
-  fall_state.fall_vote_idx++;
-
-  /* Count votes */
-  uint32_t votes = 0;
-  for (int i = 0; i < GRU_FALL_VOTE_WINDOW; i++)
-  {
-    votes += fall_state.fall_vote_buf[i];
-  }
-
-  /* Trigger alarm if threshold reached and we have at least one full window */
-  if (votes >= GRU_FALL_VOTE_K && fall_state.fall_vote_idx >= GRU_FALL_VOTE_WINDOW)
-  {
-    printf("[ALARM] FALL CONFIRMED (%lu/%d votes) - resetting pipeline\r\n",
-           votes, GRU_FALL_VOTE_WINDOW);
-
-    /* Trigger alarm latch so display + LED stay active */
-    fall_state.fall_latch_tick = HAL_GetTick();
-
-    /* Reset pipeline and voting state */
-    PosePipeline_Init(pipeline);
-    memset(fall_state.fall_vote_buf, 0, sizeof(fall_state.fall_vote_buf));
-    fall_state.fall_vote_idx = 0;
-    fall_state.frame_count    = 0;
-    fall_state.window_ready   = 0;
-  }
-#endif
-}
-
-static void FallDetection_Invalidate(PosePipeline_t *pipeline)
-{
-  if (pipeline != NULL)
-  {
-    /* We don't call PosePipeline_Init here because it clears the One-Euro filters.
-     * Reset the window and derivative state so re-entry starts clean, but keep
-     * the filters in their last known state to prevent coordinate snapping. */
-    pipeline->win_count = 0u;
-    pipeline->win_head  = 0u;
-    pipeline->deriv_initialized = 0u;
-  }
-
-  fall_state.window_ready = 0u;
-  fall_state.fall_detected = 0u;
-  fall_state.frame_count = 0u;
-  fall_state.inference_ms = 0u;
-  fall_state.normal_logit = 0.0f;
-  fall_state.fall_logit = 0.0f;
-  fall_state.normal_score = 0.0f;
-  fall_state.fall_score = 0.0f;
-  memset(fall_state.fall_vote_buf, 0, sizeof(fall_state.fall_vote_buf));
-  fall_state.fall_vote_idx = 0u;
-  /* Do NOT reset fall_latch_tick: alarm must keep showing even if person
-   * is hard to detect on the floor (low-confidence keypoints → Invalidate). */
-}
-
-static void Alarm_Update(void)
-{
-  uint8_t latch_active = (fall_state.fall_latch_tick != 0u) &&
-                         ((HAL_GetTick() - fall_state.fall_latch_tick) < GRU_FALL_LATCH_MS);
-
-  if (latch_active)
-  {
-    /* Blink LED_RED at ~2Hz while alarm is active */
-    if ((HAL_GetTick() % (2u * GRU_ALARM_BLINK_PERIOD_MS)) < GRU_ALARM_BLINK_PERIOD_MS)
-      BSP_LED_On(LED_RED);
-    else
-      BSP_LED_Off(LED_RED);
-  }
-  else
-  {
-    BSP_LED_Off(LED_RED);
-  }
-}
 
 static void NPURam_enable(void)
 {
@@ -873,7 +626,7 @@ static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
                           show_fall ? "FALL" : "NORMAL",
                           (double)fall_state.fall_score,
                           (double)fall_state.normal_score,
-                          (FALL_DETECTION_MODEL == FALL_MODEL_GRU) ? "GRU" : "TCN",
+                          "GRU",
                           fall_state.inference_ms);
 
       if (latch_active)

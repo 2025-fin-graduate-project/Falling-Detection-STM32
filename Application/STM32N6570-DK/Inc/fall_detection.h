@@ -31,6 +31,7 @@ void FallDetection_Init(void);
 void FallDetection_Update(PosePipeline_t *pipeline);
 void FallDetection_Invalidate(PosePipeline_t *pipeline);
 void FallDetection_RunInference(void);
+void Alarm_Update(void);
 
 /* Shared state access */
 extern FallDetectionState_t fall_state;
