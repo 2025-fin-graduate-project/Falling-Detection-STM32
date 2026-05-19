@@ -1,7 +1,7 @@
 ../../Model/STM32N6570-DK/GRU/gru_network.c:240:6:_stai_gru_network_check	0	static
 ../../Model/STM32N6570-DK/GRU/gru_network.c:272:18:stai_gru_network_init	24	static
 ../../Model/STM32N6570-DK/GRU/gru_network.c:314:18:stai_gru_network_deinit	0	static
-../../Model/STM32N6570-DK/GRU/gru_network.c:431:6:forward_lite_gru_gru	24	static
+../../Model/STM32N6570-DK/GRU/gru_network.c:431:6:forward_lite_gru	24	static
 ../../Model/STM32N6570-DK/GRU/gru_network.c:497:18:stai_gru_network_run	160	static
 ../../Model/STM32N6570-DK/GRU/gru_network.c:660:11:stai_gru_network_get_context_size	0	static
 ../../Model/STM32N6570-DK/GRU/gru_network.c:683:18:stai_gru_network_get_activations	12	static

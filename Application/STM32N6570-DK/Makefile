@@ -24,12 +24,9 @@ rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(su
 ######################################
 TARGET = Project
 MODEL_DIR     = ../../Model/STM32N6570-DK
-TCN_MODEL_DIR = $(MODEL_DIR)/TCN
 GRU_MODEL_DIR = $(MODEL_DIR)/GRU
 BINARY_DIR = Binary
 
-# Fall detection model selection: TCN or GRU (must match app_config.h)
-FALL_DETECTION_MODEL ?= GRU
 ifdef APP_GIT_SHA1_STRING
 C_DEFS += -DAPP_GIT_SHA1_STRING=\"$(APP_GIT_SHA1_STRING)\"
 endif
@@ -54,6 +51,7 @@ BUILD_DIR = $(BUILD_TOP)/Application/STM32N6570-DK
 ######################################
 # C sources
 C_SOURCES += Src/main.c
+C_SOURCES += Src/fall_detection.c
 C_SOURCES += Src/syscalls.c
 C_SOURCES += Src/app_fuseprogramming.c
 C_SOURCES += $(wildcard ../../Middlewares/ai-postprocessing-wrapper/*.c)
@@ -66,13 +64,8 @@ C_SOURCES += ../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/mcu_cache.c
 C_SOURCES += ../../Middlewares/stedgeai-lib/Npu/Devices/STM32N6xx/npu_cache.c
 C_SOURCES += $(MODEL_DIR)/network.c
 C_SOURCES += $(MODEL_DIR)/stai_network.c
-ifeq ($(FALL_DETECTION_MODEL),GRU)
 C_SOURCES += $(GRU_MODEL_DIR)/gru_network.c
 C_SOURCES += $(GRU_MODEL_DIR)/gru_network_data.c
-else
-C_SOURCES += $(TCN_MODEL_DIR)/tcn_network.c
-C_SOURCES += $(TCN_MODEL_DIR)/stai_tcn_network.c
-endif
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/CMSIS/Device/ST/STM32N6xx/Source/Templates/system_stm32n6xx_fsbl.c
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal.c
 C_SOURCES += ../../STM32Cube_FW_N6/Drivers/STM32N6xx_HAL_Driver/Src/stm32n6xx_hal_cortex.c
@@ -200,11 +193,7 @@ C_INCLUDES += -I../../Middlewares/stm32-mw-camera/sensors/ov5640
 
 C_INCLUDES += -IInc
 C_INCLUDES += -I$(MODEL_DIR)
-ifeq ($(FALL_DETECTION_MODEL),GRU)
 C_INCLUDES += -I$(GRU_MODEL_DIR)
-else
-C_INCLUDES += -I$(TCN_MODEL_DIR)
-endif
 C_INCLUDES += -I../../Middlewares/ai-postprocessing-wrapper
 C_INCLUDES += -I../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Inc
 C_INCLUDES += -I../../Middlewares/stedgeai-lib/Npu/ll_aton
@@ -311,10 +300,6 @@ flash: $(BUILD_DIR)/$(TARGET)_sign.bin
 flash_weights: $(MODEL_DIR)/network_data.hex
 	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
 
-.PHONY: flash_tcn_weights
-flash_tcn_weights: $(TCN_MODEL_DIR)/tcn_network_data.hex
-	$(FLASHER) -c port=SWD mode=UR freq=4000 -el $(EL) -hardRst -w $<
-
 # Extract GRU weights from .gru_weights ELF section into ihex (0x70680000).
 $(GRU_MODEL_DIR)/gru_network_data.hex: $(BUILD_DIR)/$(TARGET).elf
 	$(CP) -j .gru_weights -O ihex $< $@
@@ -327,7 +312,7 @@ flash_gru_weights: $(GRU_MODEL_DIR)/gru_network_data.hex
 # GRU weights are placed in XIP flash at 0x70680000 (separate from application binary).
 .PHONY: flash_gru
 flash_gru:
-	$(MAKE) FALL_DETECTION_MODEL=GRU
+	$(MAKE) all
 	$(MAKE) sign
 	$(MAKE) $(GRU_MODEL_DIR)/gru_network_data.hex
 	$(MAKE) flash

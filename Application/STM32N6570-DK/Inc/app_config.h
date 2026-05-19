@@ -33,11 +33,6 @@
 #define ASPECT_RATIO_FULLSCREEN (3) /* Resize camera image to NN input size and display a maximized image. See Doc/Build-Options.md#aspect-ratio-mode */
 #define ASPECT_RATIO_MODE ASPECT_RATIO_CROP
 
-/* Fall detection model selection: change this line to switch between TCN and GRU */
-#define FALL_MODEL_TCN  0
-#define FALL_MODEL_GRU  1
-#define FALL_DETECTION_MODEL  FALL_MODEL_GRU
-
 /* GRU window-based (1×40×45): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
 #define GRU_WARMUP_FRAMES       40
 /* Softmax fall score must reach this to count as a fall frame — P38-nv val-reselected threshold */

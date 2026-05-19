@@ -30,11 +30,7 @@
 #include "app_postprocess.h"
 #include "stai.h"
 #include "stai_network.h"
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-#include "gru_network.h"
-#else
-#include "stai_tcn_network.h"
-#endif
+#include "fall_detection.h"
 #include "app_camerapipeline.h"
 #include "main.h"
 #include <stdio.h>
@@ -94,21 +90,6 @@ typedef struct
   int32_t postprocess_status;
 } PoseDebugMetrics_TypeDef;
 
-typedef struct
-{
-  uint8_t window_ready;
-  uint8_t fall_detected;
-  uint32_t frame_count;
-  uint32_t inference_ms;
-  float32_t normal_logit;
-  float32_t fall_logit;
-  float32_t normal_score;
-  float32_t fall_score;
-  uint8_t fall_vote_buf[GRU_FALL_VOTE_WINDOW];
-  uint32_t fall_vote_idx;
-  uint32_t fall_latch_tick;   /* HAL tick of last confirmed fall; 0 if never */
-} FallDetectionState_TypeDef;
-
 /* Lcd Background area */
 Rectangle_TypeDef lcd_bg_area = {
 #if ASPECT_RATIO_MODE == ASPECT_RATIO_CROP || ASPECT_RATIO_MODE == ASPECT_RATIO_FIT
@@ -161,12 +142,6 @@ uint8_t *dcmipp_out_nn;
 
 /* MoveNet model context */
 STAI_NETWORK_CONTEXT_DECLARE(network_context, STAI_NETWORK_CONTEXT_SIZE)
-/* Fall detection model context */
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-STAI_NETWORK_CONTEXT_DECLARE(gru_network_context, STAI_GRU_NETWORK_CONTEXT_SIZE)
-#else
-STAI_NETWORK_CONTEXT_DECLARE(tcn_network_context, STAI_TCN_NETWORK_CONTEXT_SIZE)
-#endif
 /* Lcd Background Buffer */
 __attribute__ ((section (".psram_bss")))
 __attribute__ ((aligned (32)))
@@ -177,22 +152,8 @@ __attribute__ ((aligned (32)))
 static uint8_t lcd_fg_buffer[2][LCD_FG_WIDTH * LCD_FG_HEIGHT * 2];
 static int lcd_fg_buffer_rd_idx;
 static PoseDebugMetrics_TypeDef pose_debug_metrics;
-static FallDetectionState_TypeDef fall_state;
 static PosePipeline_t pose_pipeline;
 static uint32_t pose_last_tick;
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-/* GRU window-based (1×40×45): same structure as TCN path */
-static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
-static stai_ptr gru_out[STAI_GRU_NETWORK_OUT_NUM]  = {0};
-static int32_t  gru_in_len[STAI_GRU_NETWORK_IN_NUM]  = {0};
-static int32_t  gru_out_len[STAI_GRU_NETWORK_OUT_NUM] = {0};
-/* Input window buffer (time-first: [40][45]) in activation memory */
-__attribute__((aligned(32))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
-#else
-static stai_ptr tcn_in;
-static stai_ptr tcn_out[STAI_TCN_NETWORK_OUT_NUM] = {0};
-static int32_t tcn_out_len[STAI_TCN_NETWORK_OUT_NUM] = {0};
-#endif
 
 static void SystemClock_Config(void);
 static void CONSOLE_Config(void);
@@ -456,45 +417,6 @@ static void Run_Inference(stai_network *network_instance) {
   } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
 
   ret = stai_ext_network_new_inference(network_instance);
-  assert(ret == STAI_SUCCESS);
-}
-
-static void Run_FallInference(void) {
-  stai_return_code ret;
-
-#if FALL_DETECTION_MODEL == FALL_MODEL_GRU
-  /* ll_aton leaves OctoSPI2 in indirect/DMA mode after MoveNet inference.
-   * BSP_XSPI_NOR_DeInit has a linker issue (HAL_DMA_Abort relocation), so
-   * we abort the hardware directly and force HAL state to READY. */
-  {
-    extern XSPI_HandleTypeDef hxspi_nor[];
-    /* Disable DMA, abort any pending hw transaction */
-    CLEAR_BIT(hxspi_nor[0].Instance->CR, XSPI_CR_DMAEN);
-    if (HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_BUSY))
-    {
-      SET_BIT(hxspi_nor[0].Instance->CR, XSPI_CR_ABORT);
-      uint32_t t0 = HAL_GetTick();
-      while (!HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_TC) &&
-             (HAL_GetTick() - t0) < 100U) {}
-      HAL_XSPI_CLEAR_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_TC);
-      t0 = HAL_GetTick();
-      while (HAL_XSPI_GET_FLAG(&hxspi_nor[0], HAL_XSPI_FLAG_BUSY) &&
-             (HAL_GetTick() - t0) < 100U) {}
-    }
-    hxspi_nor[0].State = HAL_XSPI_STATE_READY;
-  }
-  BSP_XSPI_NOR_EnableMemoryMappedMode(0);
-
-  ret = stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
-#else
-  do {
-    ret = stai_tcn_network_run(tcn_network_context, STAI_MODE_ASYNC);
-    if (ret == STAI_RUNNING_WFE)
-      LL_ATON_OSAL_WFE();
-  } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
-  ret = stai_ext_tcn_network_new_inference(tcn_network_context);
-#endif
-
   assert(ret == STAI_SUCCESS);
 }
 
