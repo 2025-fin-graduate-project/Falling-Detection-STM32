@@ -1,0 +1,29 @@
+# STM32 Build Artifacts
+*.o
+*.lst
+*.d
+*.su
+*.cyclo
+*.elf
+*.bin
+*.map
+*.list
+*.hex
+
+# Keep intentional binaries
+!FSBL/*.hex
+!Binary/**/*.hex
+
+# Build directories
+**/build/
+**/Debug/
+**/Release/
+
+# AI Generated Code
+st_ai_output/
+Model/st_ai_output_*/
+
+# Environment and IDE
+.venv-onnx/
+.vscode/
+.DS_Store

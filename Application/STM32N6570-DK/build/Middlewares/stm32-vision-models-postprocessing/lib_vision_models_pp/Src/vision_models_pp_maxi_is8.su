@@ -1,5 +1,0 @@
-../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_models_pp_maxi_is8.c:99:6:vision_models_maxi_p_is8ou16	52	static
-../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_models_pp_maxi_is8.c:15:6:vision_models_maxi_p_is8ou8	96	static
-../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_models_pp_maxi_is8.c:152:6:vision_models_maxi_tr_p_is8ou8	32	static
-../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_models_pp_maxi_is8.c:198:6:vision_models_maxi_tr_p_is8ou16	104	static
-../../Middlewares/stm32-vision-models-postprocessing/lib_vision_models_pp/Src/vision_models_pp_maxi_is8.c:274:6:vision_models_maxi_tr_p_is8ou32	136	static

@@ -1,3 +1,0 @@
-Src/display_mpe.c:46:13:Display_keypoint	32	static
-Src/display_mpe.c:110:6:Display_mpe_InitFunctions	8	static
-Src/display_mpe.c:121:6:Display_mpe_Detection	112	static

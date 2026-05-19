@@ -1,8 +1,0 @@
-Src/pose_pipeline.c:31:25:clamp01	3
-Src/pose_pipeline.c:45:18:euro_filter_apply	4
-Src/pose_pipeline.c:147:6:PosePipeline_Init	1
-Src/pose_pipeline.c:152:6:PosePipeline_Process	20
-Src/pose_pipeline.c:284:6:PosePipeline_GetWindowFeaturesFirst	4
-Src/pose_pipeline.c:296:6:PosePipeline_GetWindowTimeFirst	3
-Src/pose_pipeline.c:307:9:PosePipeline_WindowFull	1
-Src/pose_pipeline.c:312:6:PosePipeline_GetLatestFeature	2
