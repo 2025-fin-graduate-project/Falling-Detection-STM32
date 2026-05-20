@@ -30,6 +30,7 @@ stedgeai generate \
     --target stm32n6 \
     --input-data-type float32 \
     --output-data-type float32 \
+    --compression high \
     --optimization time \
     --name gru_network \
     --output st_ai_output_gru_p38nv

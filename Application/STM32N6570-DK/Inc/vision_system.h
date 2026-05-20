@@ -58,6 +58,13 @@ void Vision_StartCamera(uint8_t *buffer);
  */
 int32_t Vision_Process(spe_pp_out_t **pp_out, VisionMetrics_t *metrics);
 
+/* Granular functions for pipelining */
+void Vision_CaptureStart(void);
+int32_t Vision_CaptureWait(void);
+void Vision_InferenceStart(void);
+void Vision_InferenceWait(void);
+int32_t Vision_PostProcess(spe_pp_out_t **pp_out, VisionMetrics_t *metrics);
+
 #ifdef __cplusplus
 }
 #endif

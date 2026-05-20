@@ -48,6 +48,7 @@ This README provides an overview of the application. Additional documentation is
 - [Deploying your Quantized Model](Doc/Deploy-your-Quantized-Model.md)
 - [Programming Hex Files with STM32CubeProgrammer](Doc/Program-Hex-Files-STM32CubeProgrammer.md)
 - [Korean Run Guide](Doc/Run-Guide-KO.md)
+- [Final Deployment Report (KO)](Doc/DEPLOYMENT_REPORT.md)
 
 ---
 

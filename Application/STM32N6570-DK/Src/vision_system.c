@@ -14,6 +14,7 @@
 #include "app_config.h"
 #include "crop_img.h"
 #include "utils.h"
+#include "profiler.h"
 #include <string.h>
 #include <stdio.h>
 #include <assert.h>
@@ -53,8 +54,98 @@ volatile int32_t cameraFrameReceived = 0;
 
 /* Internal helpers */
 static void NeuralNetwork_Init(void);
-static void Run_Inference(stai_network *network_instance);
 static void Update_VisionMetrics(VisionMetrics_t *metrics);
+
+/* Granular Pipelining Implementation */
+static uint8_t *g_nn_capture_dst = NULL;
+static uint32_t g_inference_start_cycles = 0;
+
+void Vision_CaptureStart(void)
+{
+  CameraPipeline_IspUpdate();
+
+  if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)) {
+    g_nn_capture_dst = dcmipp_out_nn_buf;
+  } else {
+    g_nn_capture_dst = (uint8_t *)nn_in;
+    SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
+  }
+
+  /* Trigger Snapshot */
+  CameraPipeline_NNPipe_Start(g_nn_capture_dst, CMW_MODE_SNAPSHOT);
+}
+
+int32_t Vision_CaptureWait(void)
+{
+  /* Wait for frame */
+  uint32_t t_start = HAL_GetTick();
+  while (cameraFrameReceived == 0) {
+    if (HAL_GetTick() - t_start > 1000) return -2; // Timeout
+  };
+  cameraFrameReceived = 0;
+
+  /* Handle Cropping if hardware pitch != network width */
+  if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)) {
+#if (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL) != ALIGN_TO_16(STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)
+    SCB_InvalidateDCache_by_Addr(dcmipp_out_nn_buf, sizeof(dcmipp_out_nn_buf));
+    img_crop(dcmipp_out_nn_buf, nn_in, pitch_nn, STAI_NETWORK_IN_1_WIDTH, STAI_NETWORK_IN_1_HEIGHT, STAI_NETWORK_IN_1_CHANNEL);
+    SCB_CleanInvalidateDCache_by_Addr(nn_in, nn_in_len);
+#endif
+  } else {
+    SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
+  }
+  return 0;
+}
+
+void Vision_InferenceStart(void)
+{
+  g_inference_start_cycles = Profiler_GetCycles();
+  /* Start asynchronous inference */
+  stai_network_run(network_context, STAI_MODE_ASYNC);
+}
+
+void Vision_InferenceWait(void)
+{
+  stai_return_code ret;
+  /* Poll for completion */
+  do {
+    ret = stai_network_run(network_context, STAI_MODE_ASYNC);
+    if (ret == STAI_RUNNING_WFE) LL_ATON_OSAL_WFE();
+  } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
+
+  assert(stai_ext_network_new_inference(network_context) == STAI_SUCCESS);
+  
+  g_profiler.npu_run_us = Profiler_CyclesToUs(Profiler_GetCycles() - g_inference_start_cycles);
+}
+
+int32_t Vision_PostProcess(spe_pp_out_t **pp_out, VisionMetrics_t *metrics)
+{
+  metrics->inference_ms = g_profiler.npu_run_us / 1000;
+
+  /* Invalidate output buffers for CPU postprocessing */
+  for (int i = 0; i < (int)number_output; i++) {
+    SCB_InvalidateDCache_by_Addr(nn_out[i], nn_out_len[i]);
+  }
+
+  /* Postprocessing */
+  uint32_t c1 = Profiler_GetCycles();
+  metrics->postprocess_status = app_postprocess_run((void **)nn_out, number_output, &pp_output, &pp_params);
+  g_profiler.postproc_us = Profiler_CyclesToUs(Profiler_GetCycles() - c1);
+  
+  Update_VisionMetrics(metrics);
+  
+  *pp_out = &pp_output;
+  return 0;
+}
+
+int32_t Vision_Process(spe_pp_out_t **pp_out, VisionMetrics_t *metrics)
+{
+  Vision_CaptureStart();
+  if (Vision_CaptureWait() != 0) return -2;
+  Vision_InferenceStart();
+  Vision_InferenceWait();
+  return Vision_PostProcess(pp_out, metrics);
+}
 
 int32_t Vision_Init(uint32_t *bg_width, uint32_t *bg_height)
 {
@@ -74,58 +165,6 @@ void Vision_StartCamera(uint8_t *buffer)
   CameraPipeline_DisplayPipe_Start(buffer, CMW_MODE_CONTINUOUS);
 }
 
-int32_t Vision_Process(spe_pp_out_t **pp_out, VisionMetrics_t *metrics)
-{
-  CameraPipeline_IspUpdate();
-
-  uint8_t *nn_capture_dst;
-  if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)) {
-    nn_capture_dst = dcmipp_out_nn_buf;
-  } else {
-    nn_capture_dst = (uint8_t *)nn_in;
-    SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
-  }
-
-  /* Trigger Snapshot */
-  CameraPipeline_NNPipe_Start(nn_capture_dst, CMW_MODE_SNAPSHOT);
-
-  /* Wait for frame */
-  uint32_t t_start = HAL_GetTick();
-  while (cameraFrameReceived == 0) {
-    if (HAL_GetTick() - t_start > 1000) return -2; // Timeout
-  };
-  cameraFrameReceived = 0;
-
-  /* Handle Cropping if hardware pitch != network width */
-  if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)) {
-#if (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL) != ALIGN_TO_16(STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)
-    SCB_InvalidateDCache_by_Addr(dcmipp_out_nn_buf, sizeof(dcmipp_out_nn_buf));
-    img_crop(dcmipp_out_nn_buf, nn_in, pitch_nn, STAI_NETWORK_IN_1_WIDTH, STAI_NETWORK_IN_1_HEIGHT, STAI_NETWORK_IN_1_CHANNEL);
-    SCB_CleanInvalidateDCache_by_Addr(nn_in, nn_in_len);
-#endif
-  } else {
-    SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
-  }
-
-  /* Inference */
-  uint32_t ts0 = HAL_GetTick();
-  Run_Inference(network_context);
-  metrics->inference_ms = HAL_GetTick() - ts0;
-
-  /* Invalidate output buffers for CPU postprocessing */
-  for (int i = 0; i < (int)number_output; i++) {
-    SCB_InvalidateDCache_by_Addr(nn_out[i], nn_out_len[i]);
-  }
-
-  /* Postprocessing */
-  metrics->postprocess_status = app_postprocess_run((void **)nn_out, number_output, &pp_output, &pp_params);
-  
-  Update_VisionMetrics(metrics);
-  
-  *pp_out = &pp_output;
-  return 0;
-}
-
 static void NeuralNetwork_Init(void)
 {
   stai_network_info info;
@@ -143,17 +182,6 @@ static void NeuralNetwork_Init(void)
   for (int i = 0; i < (int)number_output; i++) {
     nn_out_len[i] = info.outputs[i].size_bytes;
   }
-}
-
-static void Run_Inference(stai_network *network_instance)
-{
-  stai_return_code ret;
-  do {
-    ret = stai_network_run(network_instance, STAI_MODE_ASYNC);
-    if (ret == STAI_RUNNING_WFE) LL_ATON_OSAL_WFE();
-  } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
-
-  assert(stai_ext_network_new_inference(network_instance) == STAI_SUCCESS);
 }
 
 static void Update_VisionMetrics(VisionMetrics_t *metrics)

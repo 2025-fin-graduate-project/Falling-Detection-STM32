@@ -56,6 +56,7 @@ C_SOURCES += Src/vision_system.c
 C_SOURCES += Src/presence_manager.c
 C_SOURCES += Src/ui_system.c
 C_SOURCES += Src/fall_detection.c
+C_SOURCES += Src/profiler.c
 C_SOURCES += Src/syscalls.c
 C_SOURCES += Src/app_fuseprogramming.c
 C_SOURCES += $(wildcard ../../Middlewares/ai-postprocessing-wrapper/*.c)
@@ -146,12 +147,14 @@ PREFIX = arm-none-eabi-
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
+LD = $(GCC_PATH)/$(PREFIX)gcc
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 READELF = $(GCC_PATH)/$(PREFIX)readelf
 else
 CC = $(PREFIX)gcc
 AS = $(PREFIX)gcc -x assembler-with-cpp
+LD = $(PREFIX)gcc
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size
 CP = $(PREFIX)objcopy
@@ -184,6 +187,7 @@ C_DEFS += -DLL_ATON_OSAL=LL_ATON_OSAL_BARE_METAL
 C_DEFS += -DLL_ATON_RT_MODE=LL_ATON_RT_ASYNC
 C_DEFS += -DLL_ATON_SW_FALLBACK
 C_DEFS += -DLL_ATON_DBG_BUFFER_INFO_EXCLUDED=1
+C_DEFS += -DHAVE_GRU_NETWORK_INFO
 
 # C includes
 # Patched files

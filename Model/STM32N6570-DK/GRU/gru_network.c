@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    gru_network.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    2026-05-19T21:36:43+0900
+  * @date    2026-05-20T04:08:17+0900
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
@@ -152,8 +152,8 @@
 
 
 /*****************************************************************************/
-#define _STAI_GRU_NETWORK_MODEL_SIGNATURE     "0x6003eb785d61cdbe7ae1c2bb832be032"
-#define _STAI_GRU_NETWORK_DATETIME            "2026-05-19T21:36:43+0900"
+#define _STAI_GRU_NETWORK_MODEL_SIGNATURE     "0x759e2d5902530abd074eafe61269e63e"
+#define _STAI_GRU_NETWORK_DATETIME            "2026-05-20T04:08:17+0900"
 #define _STAI_GRU_NETWORK_COMPILE_DATETIME    __DATE__ " " __TIME__
 
 #define _STAI_CONTEXT_ALIGNMENT        STAI_GRU_NETWORK_CONTEXT_ALIGNMENT
@@ -209,7 +209,7 @@ static const stai_network_info g_gru_network_info = {
       STAI_GRU_NETWORK_ACTIVATION_1_FLAGS,
       STAI_FORMAT_U8,
       STAI_GRU_NETWORK_ACTIVATION_1_SIZE_BYTES,
-      STAI_DECLARE_ARRAY(int32_t, 1, 33792),
+      STAI_DECLARE_ARRAY(int32_t, 1, 22016),
       STAI_EMPTY_ARRAY(),
       STAI_EMPTY_ARRAY()),
     },
@@ -219,7 +219,7 @@ static const stai_network_info g_gru_network_info = {
       STAI_GRU_NETWORK_WEIGHT_1_FLAGS,
       STAI_FORMAT_U8,
       STAI_GRU_NETWORK_WEIGHT_1_SIZE_BYTES,
-      STAI_DECLARE_ARRAY(int32_t, 1, 604168),
+      STAI_DECLARE_ARRAY(int32_t, 1, 281992),
       STAI_EMPTY_ARRAY(),
       STAI_EMPTY_ARRAY()),
     },
@@ -335,27 +335,27 @@ AI_ARRAY_OBJ_DECLARE(
 /* Array#1 */
 AI_ARRAY_OBJ_DECLARE(
   gru_output0_array, AI_ARRAY_FORMAT_FLOAT,
-  NULL, NULL, 5120, AI_STATIC)
+  NULL, NULL, 2560, AI_STATIC)
 
 /* Array#2 */
 AI_ARRAY_OBJ_DECLARE(
   gru_kernel_array, AI_ARRAY_FORMAT_FLOAT,
-  NULL, NULL, 24576, AI_STATIC)
+  NULL, NULL, 12288, AI_STATIC)
 
 /* Array#3 */
 AI_ARRAY_OBJ_DECLARE(
   gru_recurrent_array, AI_ARRAY_FORMAT_FLOAT,
-  NULL, NULL, 49152, AI_STATIC)
+  NULL, NULL, 12288, AI_STATIC)
 
 /* Array#4 */
 AI_ARRAY_OBJ_DECLARE(
   gru_bias_array, AI_ARRAY_FORMAT_FLOAT,
-  NULL, NULL, 768, AI_STATIC)
+  NULL, NULL, 384, AI_STATIC)
 
 /* Array#5 */
 AI_ARRAY_OBJ_DECLARE(
   gru_scratch0_array, AI_ARRAY_FORMAT_FLOAT,
-  NULL, NULL, 768, AI_STATIC)
+  NULL, NULL, 384, AI_STATIC)
 
 
 
@@ -370,35 +370,35 @@ AI_TENSOR_OBJ_DECLARE(
 AI_TENSOR_OBJ_DECLARE(
   gru_bias, AI_STATIC,
   23, 0x0,
-  AI_SHAPE_INIT(4, 384, 2, 1, 1), AI_STRIDE_INIT(4, 4, 1536, 3072, 3072),
+  AI_SHAPE_INIT(4, 192, 2, 1, 1), AI_STRIDE_INIT(4, 4, 768, 1536, 1536),
   1, &gru_bias_array, NULL)
 
 /* Tensor #2 */
 AI_TENSOR_OBJ_DECLARE(
   gru_kernel, AI_STATIC,
   24, 0x0,
-  AI_SHAPE_INIT(4, 64, 384, 1, 1), AI_STRIDE_INIT(4, 4, 256, 98304, 98304),
+  AI_SHAPE_INIT(4, 64, 192, 1, 1), AI_STRIDE_INIT(4, 4, 256, 49152, 49152),
   1, &gru_kernel_array, NULL)
 
 /* Tensor #3 */
 AI_TENSOR_OBJ_DECLARE(
   gru_output0, AI_STATIC,
   25, 0x0,
-  AI_SHAPE_INIT(4, 1, 128, 1, 40), AI_STRIDE_INIT(4, 4, 4, 512, 512),
+  AI_SHAPE_INIT(4, 1, 64, 1, 40), AI_STRIDE_INIT(4, 4, 4, 256, 256),
   1, &gru_output0_array, NULL)
 
 /* Tensor #4 */
 AI_TENSOR_OBJ_DECLARE(
   gru_recurrent, AI_STATIC,
   26, 0x0,
-  AI_SHAPE_INIT(4, 128, 384, 1, 1), AI_STRIDE_INIT(4, 4, 512, 196608, 196608),
+  AI_SHAPE_INIT(4, 64, 192, 1, 1), AI_STRIDE_INIT(4, 4, 256, 49152, 49152),
   1, &gru_recurrent_array, NULL)
 
 /* Tensor #5 */
 AI_TENSOR_OBJ_DECLARE(
   gru_scratch0, AI_STATIC,
   27, 0x0,
-  AI_SHAPE_INIT(4, 1, 768, 1, 1), AI_STRIDE_INIT(4, 4, 4, 3072, 3072),
+  AI_SHAPE_INIT(4, 1, 384, 1, 1), AI_STRIDE_INIT(4, 4, 4, 1536, 1536),
   1, &gru_scratch0_array, NULL)
 
 
@@ -416,7 +416,7 @@ AI_LAYER_OBJ_DECLARE(
   gru, forward_gru,
   &gru_chain,
   NULL, &gru_layer, AI_STATIC, 
-  .n_units = 128, 
+  .n_units = 64, 
   .activation_nl = nl_func_tanh_array_f32, 
   .go_backwards = false, 
   .reverse_seq = false, 
@@ -430,18 +430,18 @@ AI_LAYER_OBJ_DECLARE(
 /**  Hybrid layers declarations section  *************************************/
 void forward_lite_gru(_stai_gru_network_context* net_ctx)
 {
-  conv1d_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
-  conv1d_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  conv1d_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 11776);
+  conv1d_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 11776);
   gru_kernel_array.data = AI_PTR(net_ctx->_weights[0] + 140032);
   gru_kernel_array.data_start = AI_PTR(net_ctx->_weights[0] + 140032);
-  gru_recurrent_array.data = AI_PTR(net_ctx->_weights[0] + 238336);
-  gru_recurrent_array.data_start = AI_PTR(net_ctx->_weights[0] + 238336);
-  gru_bias_array.data = AI_PTR(net_ctx->_weights[0] + 434944);
-  gru_bias_array.data_start = AI_PTR(net_ctx->_weights[0] + 434944);
+  gru_recurrent_array.data = AI_PTR(net_ctx->_weights[0] + 189184);
+  gru_recurrent_array.data_start = AI_PTR(net_ctx->_weights[0] + 189184);
+  gru_bias_array.data = AI_PTR(net_ctx->_weights[0] + 238336);
+  gru_bias_array.data_start = AI_PTR(net_ctx->_weights[0] + 238336);
   gru_scratch0_array.data = AI_PTR(net_ctx->_activations[0] + 10240);
   gru_scratch0_array.data_start = AI_PTR(net_ctx->_activations[0] + 10240);
-  gru_output0_array.data = AI_PTR(net_ctx->_activations[0] + 13312);
-  gru_output0_array.data_start = AI_PTR(net_ctx->_activations[0] + 13312);
+  gru_output0_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  gru_output0_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(3, 1, { conv1d_1_output.data->data});
   forward_gru(&gru_layer);
   _STAI_GRU_NETWORK_EVENT_NODE_STOP_CB(3, 1, { gru_output0.data->data});
@@ -486,10 +486,10 @@ static const ai_i32 conv1d_1_t_in_0_shape_ch_h_prod_const_s32 = 2560;
 
 
 static const ai_size gru_1_t_in_0_shape_h_const_size = 40;
-static const ai_size gru_1_t_in_0_shape_ch_const_size = 128;
+static const ai_size gru_1_t_in_0_shape_ch_const_size = 64;
 
 
-static const ai_i32 dense_t_in_0_shape_ch_prod_const_s32 = 64;
+static const ai_i32 dense_t_in_0_shape_ch_prod_const_s32 = 32;
 
 
 static const ai_i32 dense_1_t_in_0_shape_ch_prod_const_s32 = 2;
@@ -516,10 +516,10 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION BEGIN conv1d_conv2d */
   {
       const ai_float* conv1d_conv2d_t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_inputs[0] + 0);
-    ai_float* conv1d_conv2d_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 8100);
+    ai_float* conv1d_conv2d_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 256);
     const ai_u8* conv1d_conv2d_t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 0);
     const ai_u8* conv1d_conv2d_t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 57600);
-    ai_float* conv1d_conv2d_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 7200);
+    ai_float* conv1d_conv2d_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 17696);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(1, 1, {(stai_ptr) conv1d_conv2d_t_in_0_ptr_const_f32});
     
@@ -530,8 +530,8 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION END conv1d_conv2d */
   /* LITE_KERNEL_SECTION BEGIN conv1d */
   {
-      ai_handle conv1d_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 8100);
-    const ai_handle conv1d_t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 8100);
+      ai_handle conv1d_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 256);
+    const ai_handle conv1d_t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 256);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(1, 1, {(stai_ptr) conv1d_t_in_0_ptr_const_handle});
     
@@ -542,11 +542,11 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION END conv1d */
   /* LITE_KERNEL_SECTION BEGIN conv1d_1_conv2d */
   {
-      const ai_float* conv1d_1_conv2d_t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 8100);
-    ai_float* conv1d_1_conv2d_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 18340);
+      const ai_float* conv1d_1_conv2d_t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 256);
+    ai_float* conv1d_1_conv2d_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 11776);
     const ai_u8* conv1d_1_conv2d_t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 57856);
     const ai_u8* conv1d_1_conv2d_t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 139776);
-    ai_float* conv1d_1_conv2d_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    ai_float* conv1d_1_conv2d_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 10496);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(2, 1, {(stai_ptr) conv1d_1_conv2d_t_in_0_ptr_const_f32});
     
@@ -557,8 +557,8 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION END conv1d_1_conv2d */
   /* LITE_KERNEL_SECTION BEGIN conv1d_1 */
   {
-      ai_handle conv1d_1_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 0);
-    const ai_handle conv1d_1_t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 18340);
+      ai_handle conv1d_1_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 11776);
+    const ai_handle conv1d_1_t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 11776);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(2, 1, {(stai_ptr) conv1d_1_t_in_0_ptr_const_handle});
     
@@ -575,16 +575,16 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION END gru */
   /* LITE_KERNEL_SECTION BEGIN gru_1 */
   {
-      ai_float* gru_1_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 1536);
-    const ai_float* gru_1_t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 13312);
-    const ai_float* gru_1_t_weight_0_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 438016);
-    const ai_float* gru_1_t_weight_1_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 536320);
-    const ai_float* gru_1_t_weight_2_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 585472);
-    ai_float* gru_1_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+      ai_float* gru_1_t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 11008);
+    const ai_float* gru_1_t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    const ai_float* gru_1_t_weight_0_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 239872);
+    const ai_float* gru_1_t_weight_1_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 264448);
+    const ai_float* gru_1_t_weight_2_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 276736);
+    ai_float* gru_1_t_scratch_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 10240);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(4, 1, {(stai_ptr) gru_1_t_in_0_ptr_const_f32});
     
-  forward_lite_gru_if32of32wf32(gru_1_t_out_0_ptr_f32, gru_1_t_in_0_ptr_const_f32, gru_1_t_weight_0_ptr_const_f32, gru_1_t_weight_1_ptr_const_f32, gru_1_t_weight_2_ptr_const_f32, gru_1_t_scratch_0_ptr_f32, (ai_u32)(64), gru_1_t_in_0_shape_h_const_size, gru_1_t_in_0_shape_ch_const_size, AI_HANDLE_PTR(forward_lite_nl_tanh_if32of32), AI_HANDLE_PTR(forward_lite_nl_sigmoid_if32of32), false, false, false, true, NULL, NULL, NULL);
+  forward_lite_gru_if32of32wf32(gru_1_t_out_0_ptr_f32, gru_1_t_in_0_ptr_const_f32, gru_1_t_weight_0_ptr_const_f32, gru_1_t_weight_1_ptr_const_f32, gru_1_t_weight_2_ptr_const_f32, gru_1_t_scratch_0_ptr_f32, (ai_u32)(32), gru_1_t_in_0_shape_h_const_size, gru_1_t_in_0_shape_ch_const_size, AI_HANDLE_PTR(forward_lite_nl_tanh_if32of32), AI_HANDLE_PTR(forward_lite_nl_sigmoid_if32of32), false, false, false, true, NULL, NULL, NULL);
     
   _STAI_GRU_NETWORK_EVENT_NODE_STOP_CB(4, 1, {(stai_ptr) gru_1_t_out_0_ptr_f32});
   }
@@ -593,15 +593,15 @@ stai_return_code stai_gru_network_run(
   {
       forward_lite_dense_if32of32wf32_args arg_30f51e = {
       .output = (float*)(net_ctx->_activations[0] + 0),
-      .input = (float*)(net_ctx->_activations[0] + 1536),
-      .weights = (float*)(net_ctx->_weights[0] + 587008),
-      .bias = (float*)(net_ctx->_weights[0] + 603392),
-      .n_channel_in = 64,
-      .n_channel_out = 64,
+      .input = (float*)(net_ctx->_activations[0] + 11008),
+      .weights = (float*)(net_ctx->_weights[0] + 277504),
+      .bias = (float*)(net_ctx->_weights[0] + 281600),
+      .n_channel_in = 32,
+      .n_channel_out = 32,
       .n_elements = 1,
     };
   
-  _STAI_GRU_NETWORK_EVENT_NODE_START_CB(5, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 1536)});
+  _STAI_GRU_NETWORK_EVENT_NODE_START_CB(5, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 11008)});
     
   forward_lite_dense_if32of32wf32((forward_lite_dense_if32of32wf32_args*)&arg_30f51e);
     
@@ -610,7 +610,7 @@ stai_return_code stai_gru_network_run(
   /* LITE_KERNEL_SECTION END dense_dense */
   /* LITE_KERNEL_SECTION BEGIN dense */
   {
-      ai_handle dense_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 256);
+      ai_handle dense_t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 128);
     const ai_handle dense_t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 0);
   
   _STAI_GRU_NETWORK_EVENT_NODE_START_CB(5, 1, {(stai_ptr) dense_t_in_0_ptr_const_handle});
@@ -624,15 +624,15 @@ stai_return_code stai_gru_network_run(
   {
       forward_lite_dense_if32of32wf32_args arg_30f51e = {
       .output = (float*)(net_ctx->_activations[0] + 0),
-      .input = (float*)(net_ctx->_activations[0] + 256),
-      .weights = (float*)(net_ctx->_weights[0] + 603648),
-      .bias = (float*)(net_ctx->_weights[0] + 604160),
-      .n_channel_in = 64,
+      .input = (float*)(net_ctx->_activations[0] + 128),
+      .weights = (float*)(net_ctx->_weights[0] + 281728),
+      .bias = (float*)(net_ctx->_weights[0] + 281984),
+      .n_channel_in = 32,
       .n_channel_out = 2,
       .n_elements = 1,
     };
   
-  _STAI_GRU_NETWORK_EVENT_NODE_START_CB(7, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 256)});
+  _STAI_GRU_NETWORK_EVENT_NODE_START_CB(7, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 128)});
     
   forward_lite_dense_if32of32wf32((forward_lite_dense_if32of32wf32_args*)&arg_30f51e);
     
@@ -786,7 +786,7 @@ const uintptr_t _activations_alignment[] = STAI_GRU_NETWORK_ACTIVATIONS_ALIGNMEN
                     STAI_ERROR_INVALID_BUFFER_ALIGNMENT, net_ctx->_return_code)
     net_ctx->_activations[idx] = activations[idx];
   }
-  net_ctx->_inputs[0] = activations[0] + 0;
+  net_ctx->_inputs[0] = activations[0] + 10496;
 
   net_ctx->_outputs[0] = activations[0] + 8;
 _stai_gru_network_check(net_ctx);

@@ -35,11 +35,11 @@
 
 /* GRU window-based (1×40×45): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
 #define GRU_WARMUP_FRAMES       40
-/* Softmax fall score must reach this to count as a fall frame — P38-nv val-reselected threshold */
-#define GRU_FALL_SCORE_THRESHOLD  0.4f
-/* Majority vote: 3 out of 5 consecutive windows must be above threshold to trigger alarm */
+/* Softmax fall score must reach this to count as a fall frame — Balanced sensitivity */
+#define GRU_FALL_SCORE_THRESHOLD  0.50f
+/* Majority vote: 2 out of 5 consecutive windows must be above threshold to trigger alarm */
 #define GRU_FALL_VOTE_WINDOW      5
-#define GRU_FALL_VOTE_K           3
+#define GRU_FALL_VOTE_K           2
 /* Keep showing FALL on display and sounding alarm for this many ms after confirmation */
 #define GRU_FALL_LATCH_MS       5000
 /* LED_RED blink half-period during alarm (ms) */

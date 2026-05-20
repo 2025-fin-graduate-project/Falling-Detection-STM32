@@ -7,9 +7,11 @@
 
 #include "fall_detection.h"
 #include "gru_network.h"
+#include "gru_network_data.h"
 #include "stm32n6xx_hal.h"
 #include "stm32n6570_discovery_xspi.h"
 #include "stm32n6570_discovery.h"
+#include "profiler.h"
 #include <string.h>
 #include <stdio.h>
 
@@ -18,6 +20,10 @@ STAI_NETWORK_CONTEXT_DECLARE(gru_network_context, STAI_GRU_NETWORK_CONTEXT_SIZE)
 
 /* Activation buffer */
 __attribute__((aligned(32))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
+
+/* Path C: Weights AXISRAM buffer (fast access, no bus contention with NPU) */
+__attribute__((aligned(32)))
+static uint8_t gru_weights_sram[STAI_GRU_NETWORK_WEIGHTS_SIZE];
 
 /* Input/Output pointers */
 static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
@@ -39,6 +45,18 @@ void FallDetection_Init(void)
   ret = stai_gru_network_init(gru_network_context);
   if (ret != STAI_SUCCESS) {
       printf("Error: stai_gru_network_init failed (%d)\n", ret);
+      return;
+  }
+
+  /* Path B: Copy weights to SRAM for performance (Flash XIP -> PSRAM) */
+  printf("[GRU] Copying weights to SRAM (%d bytes)...\n", STAI_GRU_NETWORK_WEIGHTS_SIZE);
+  memcpy(gru_weights_sram, g_gru_network_weights_array, STAI_GRU_NETWORK_WEIGHTS_SIZE);
+  SCB_CleanDCache_by_Addr(gru_weights_sram, STAI_GRU_NETWORK_WEIGHTS_SIZE);
+  
+  stai_ptr weights_ptr = (stai_ptr)gru_weights_sram;
+  ret = stai_gru_network_set_weights(gru_network_context, &weights_ptr, 1);
+  if (ret != STAI_SUCCESS) {
+      printf("Error: stai_gru_network_set_weights failed (%d)\n", ret);
       return;
   }
 
@@ -83,6 +101,8 @@ void Alarm_Update(void)
 
 void FallDetection_RunInference(void)
 {
+  uint32_t c0 = Profiler_GetCycles();
+
   /* OctoSPI2 Fix: ll_aton leaves it in indirect mode. Force to memory-mapped. */
   {
     extern XSPI_HandleTypeDef hxspi_nor[];
@@ -98,11 +118,15 @@ void FallDetection_RunInference(void)
   }
   BSP_XSPI_NOR_EnableMemoryMappedMode(0);
 
-  /* Invalidate D-Cache for the weight region to avoid stale data from indirect mode period */
-  extern const uint64_t g_gru_network_weights_array[];
-  SCB_InvalidateDCache_by_Addr((void*)g_gru_network_weights_array, STAI_GRU_NETWORK_WEIGHTS_SIZE_BYTES);
+  uint32_t c1 = Profiler_GetCycles();
+  g_profiler.xspi_fix_us = Profiler_CyclesToUs(c1 - c0);
+
+  /* Invalidate D-Cache for the weight region (though it's in PSRAM now) */
+  /* REDUNDANT: Removed to allow D-Cache to work across frames */
+  // SCB_InvalidateDCache_by_Addr((void*)gru_weights_sram, STAI_GRU_NETWORK_WEIGHTS_SIZE_BYTES);
 
   stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
+  g_profiler.gru_run_us = Profiler_CyclesToUs(Profiler_GetCycles() - c1);
 }
 
 void FallDetection_Update(PosePipeline_t *pipeline)
