@@ -4,20 +4,58 @@
  * @author  GPM Application Team
  *
  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
-#include <stdio.h>
-#include <assert.h>
-
-#include "system_init.h"
-#include "vision_system.h"
-#include "presence_manager.h"
-#include "ui_system.h"
-#include "fall_detection.h"
-#include "pose_pipeline.h"
+#include <string.h>
+#include <unistd.h>
+#include "main.h"
 #include "app_config.h"
-#include "profiler.h"
+#include <math.h>
+#include <stdio.h>
 
-BINDINGS;
+#include "cmw_camera.h"
+#include "stm32n6570_discovery_bus.h"
+#include "stm32n6570_discovery_lcd.h"
+#include "stm32n6570_discovery_xspi.h"
+#include "stm32n6570_discovery.h"
+#include "stm32_lcd.h"
+#include "app_fuseprogramming.h"
+#include "stm32_lcd_ex.h"
+#include "app_postprocess.h"
+#include "stai.h"
+#include "stai_network.h"
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+#include "gru_network.h"
+#elif FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATELESS
+#include "gru_stateless.h"
+#else
+#include "stai_tcn_network.h"
+#endif
+#include "app_camerapipeline.h"
+#include "pose_pipeline.h"
+#include "crop_img.h"
+#include "stlogo.h"
+#include "utils.h"
+#if POSTPROCESS_TYPE == POSTPROCESS_MPE_YOLO_V8_UI
+  #include "display_mpe.h"
+#elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
+  #include "display_spe.h"
+#else
+  #error "PostProcessing type not supported"
+#endif
+
+#define LCD_FG_WIDTH  SCREEN_WIDTH
+#define LCD_FG_HEIGHT SCREEN_HEIGHT
+#define LCD_FG_FRAMEBUFFER_SIZE  (LCD_FG_WIDTH * LCD_FG_HEIGHT * 2)
 
 #ifndef APP_GIT_SHA1_STRING
 #define APP_GIT_SHA1_STRING "dev"
@@ -26,98 +64,1460 @@ BINDINGS;
 #define APP_VERSION_STRING "unversioned"
 #endif
 
+
+typedef struct
+{
+  uint32_t X0;
+  uint32_t Y0;
+  uint32_t XSize;
+  uint32_t YSize;
+} Rectangle_TypeDef;
+
+typedef struct
+{
+  int8_t raw_min;
+  int8_t raw_max;
+  float32_t raw_min_dequant;
+  float32_t raw_max_dequant;
+  float32_t max_keypoint_proba;
+  uint32_t visible_keypoints;
+  uint32_t person_keypoints;
+  uint32_t person_missing_count;
+  uint32_t person_entry_count;
+  uint8_t person_present;
+  uint8_t person_present_confirmed;
+  uint8_t person_missing_confirmed;
+  uint8_t postprocess_valid;
+  uint8_t draw_keypoints;
+  uint32_t output_width;
+  uint32_t output_height;
+  uint32_t output_channels;
+  int32_t postprocess_status;
+} PoseDebugMetrics_TypeDef;
+
+typedef struct
+{
+  uint8_t window_ready;
+  uint8_t fall_detected;
+  uint32_t frame_count;
+  uint32_t inference_ms;
+  float32_t normal_logit;
+  float32_t fall_logit;
+  float32_t normal_score;
+  float32_t fall_score;
+  uint32_t fall_consec_count; /* consecutive fall frames; resets GRU on threshold */
+  uint32_t fall_latch_tick;   /* HAL tick of last confirmed fall; 0 if never */
+} FallDetectionState_TypeDef;
+
+/* Lcd Background area */
+Rectangle_TypeDef lcd_bg_area = {
+#if ASPECT_RATIO_MODE == ASPECT_RATIO_CROP || ASPECT_RATIO_MODE == ASPECT_RATIO_FIT
+  .X0 = (LCD_FG_WIDTH - LCD_FG_HEIGHT) / 2,
+#else
+  .X0 = 0,
+#endif
+  .Y0 = 0,
+  .XSize = 0,
+  .YSize = 0,
+};
+
+/* Lcd Foreground area */
+Rectangle_TypeDef lcd_fg_area = {
+  .X0 = 0,
+  .Y0 = 0,
+  .XSize = LCD_FG_WIDTH,
+  .YSize = LCD_FG_HEIGHT,
+};
+
+#if POSTPROCESS_TYPE == POSTPROCESS_MPE_YOLO_V8_UI
+  mpe_yolov8_pp_static_param_t pp_params;
+  mpe_pp_out_t pp_output;
+#elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
+  spe_movenet_pp_static_param_t pp_params;
+  spe_pp_out_t pp_output;
+#else
+  #error "PostProcessing type not supported"
+#endif
+
+BINDINGS;
+
+UART_HandleTypeDef huart1;
+volatile int32_t cameraFrameReceived;
+stai_ptr nn_in;
+BSP_LCD_LayerConfig_t LayerConfig = {0};
+
+#define ALIGN_TO_16(value) (((value) + 15) & ~15)
+
+/* for models not multiple of 16; needs a working buffer */
+#if (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL) != ALIGN_TO_16(STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL)
+#define DCMIPP_OUT_NN_LEN (ALIGN_TO_16(STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL) * STAI_NETWORK_IN_1_HEIGHT)
+#define DCMIPP_OUT_NN_BUFF_LEN (DCMIPP_OUT_NN_LEN + 32 - DCMIPP_OUT_NN_LEN%32)
+
+__attribute__ ((aligned (32)))
+uint8_t dcmipp_out_nn[DCMIPP_OUT_NN_BUFF_LEN];
+#else
+uint8_t *dcmipp_out_nn;
+#endif
+
+/* MoveNet model context */
+STAI_NETWORK_CONTEXT_DECLARE(network_context, STAI_NETWORK_CONTEXT_SIZE)
+/* Fall detection model selection helper */
+#if (FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL) || (FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATELESS)
+#define FALL_DETECTION_IS_GRU 1
+#else
+#define FALL_DETECTION_IS_GRU 0
+#endif
+
+/* Fall detection model context */
+#if FALL_DETECTION_IS_GRU
+  #if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+    STAI_NETWORK_CONTEXT_DECLARE(gru_network_context, STAI_GRU_NETWORK_CONTEXT_SIZE)
+  #else
+    STAI_NETWORK_CONTEXT_DECLARE(gru_network_context, STAI_GRU_STATELESS_CONTEXT_SIZE)
+  #endif
+#else
+STAI_NETWORK_CONTEXT_DECLARE(tcn_network_context, STAI_TCN_NETWORK_CONTEXT_SIZE)
+#endif
+/* Lcd Background Buffer */
+__attribute__ ((section (".psram_bss")))
+__attribute__ ((aligned (32)))
+static uint8_t lcd_bg_buffer[800 * 480 * 2];
+/* Lcd Foreground Buffer */
+__attribute__ ((section (".psram_bss")))
+__attribute__ ((aligned (32)))
+static uint8_t lcd_fg_buffer[2][LCD_FG_WIDTH * LCD_FG_HEIGHT * 2];
+static int lcd_fg_buffer_rd_idx;
+static PoseDebugMetrics_TypeDef pose_debug_metrics;
+static FallDetectionState_TypeDef fall_state;
 static PosePipeline_t pose_pipeline;
 static uint32_t pose_last_tick;
 
+#if FALL_DETECTION_IS_GRU
+  #if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+    static stai_ptr gru_in[STAI_GRU_NETWORK_IN_NUM]   = {0};
+    static stai_ptr gru_out[STAI_GRU_NETWORK_OUT_NUM]  = {0};
+    static int32_t  gru_in_len[STAI_GRU_NETWORK_IN_NUM]  = {0};
+    static int32_t  gru_out_len[STAI_GRU_NETWORK_OUT_NUM] = {0};
+    /* INT8 model: h1/h2/c2 states are int8, c1 pose history stays float32.
+     * Initial values must match quantization zero-points (= 0.0 in float space):
+     *   h1 zp=-1 (0xFF), h2 zp=0 (0x00), c2 zp=-128 (0x80). */
+    __attribute__((aligned(4))) int8_t gru_h1[128];
+    __attribute__((aligned(4))) int8_t gru_h2[64];
+    __attribute__((aligned(32))) float32_t gru_c1[4][27];
+    __attribute__((aligned(4))) int8_t gru_c2[2][64];
+    /* c1_window: [c1_state(4,27) || current_pose(1,27)], built per-frame */
+    __attribute__((aligned(32))) float32_t gru_c1_window[5][27];
+    __attribute__((aligned(4))) static uint8_t gru_activation_buf[STAI_GRU_NETWORK_ACTIVATION_1_SIZE];
+  #else /* STATELESS */
+    static stai_ptr gru_in[STAI_GRU_STATELESS_IN_NUM]   = {0};
+    static stai_ptr gru_out[STAI_GRU_STATELESS_OUT_NUM]  = {0};
+    static int32_t  gru_in_len[STAI_GRU_STATELESS_IN_NUM]  = {0};
+    static int32_t  gru_out_len[STAI_GRU_STATELESS_OUT_NUM] = {0};
+    __attribute__((aligned(4))) static uint8_t gru_activation_buf[STAI_GRU_STATELESS_ACTIVATION_1_SIZE];
+  #endif
+#else /* TCN */
+static stai_ptr tcn_in;
+static stai_ptr tcn_out[STAI_TCN_NETWORK_OUT_NUM] = {0};
+static int32_t tcn_out_len[STAI_TCN_NETWORK_OUT_NUM] = {0};
+#endif
+
+static void SystemClock_Config(void);
+static void CONSOLE_Config(void);
+static void NPURam_enable(void);
+static void NPUCache_config(void);
+static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms);
+static void LCD_init(void);
+static void Security_Config(void);
+static void set_clk_sleep_mode(void);
+static void IAC_Config(void);
+static void Display_WelcomeScreen(void);
+static void Hardware_init(void);
+static void Run_Inference(stai_network *network_instance);
+static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_size *number_output, int32_t nn_out_len[]);
+static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai_size number_output, spe_pp_out_t *p_postprocess);
+static void FallModel_init(void);
+static void Run_FallInference(void);
+static void FallDetection_Update(PosePipeline_t *pipeline);
+
+static void FallDetection_Invalidate(PosePipeline_t *pipeline);
+static void Alarm_Update(void);
+
+
 /**
   * @brief  Main program
+  * @param  None
+  * @retval None
   */
 int main(void)
 {
-  uint32_t bg_w, bg_h;
+  Hardware_init();
 
-  System_Init();
-  Profiler_Init();
-
+  /*** App header *************************************************************/
   printf("========================================\n");
-  printf("STM32N6 Fall Detection System %s (%s)\n", APP_VERSION_STRING, APP_GIT_SHA1_STRING);
+  printf("STM32N6-GettingStarted-PoseEstimation %s (%s)\n", APP_VERSION_STRING, APP_GIT_SHA1_STRING);
   printf("Build date & time: %s %s\n", __DATE__, __TIME__);
+  #if defined(__GNUC__)
+  printf("Compiler: GCC %d.%d.%d\n", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+#elif defined(__ICCARM__)
+  printf("Compiler: IAR EWARM %d.%d.%d\n", __VER__ / 1000000, (__VER__ / 1000) % 1000 ,__VER__ % 1000);
+#else
+  printf("Compiler: Unknown\n");
+#endif
+  printf("HAL: %lu.%lu.%lu\n", __STM32N6xx_HAL_VERSION_MAIN, __STM32N6xx_HAL_VERSION_SUB1, __STM32N6xx_HAL_VERSION_SUB2);
+  printf("STEdgeAI Tools: %d.%d.%d\n", STAI_TOOLS_VERSION_MAJOR, STAI_TOOLS_VERSION_MINOR, STAI_TOOLS_VERSION_MICRO);
   printf("NN model: %s\n", STAI_NETWORK_ORIGIN_MODEL_NAME);
-  printf("Fall model: GRU (p38-nv-a65 Pipelined)\n");
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+  printf("Fall model: %s (Stateful)\n", STAI_GRU_NETWORK_ORIGIN_MODEL_NAME);
+#elif FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATELESS
+  printf("Fall model: %s (Stateless)\n", STAI_GRU_STATELESS_ORIGIN_MODEL_NAME);
+#else
+  printf("Fall model: %s\n", STAI_TCN_NETWORK_ORIGIN_MODEL_NAME);
+#endif
   printf("========================================\n");
 
-  /* Initialize modules */
-  Vision_Init(&bg_w, &bg_h);
-  Presence_Init();
-  FallDetection_Init();
+  /*** NN Init ****************************************************************/
+  uint32_t pitch_nn = 0;
+  uint32_t nn_in_len = 0;
+  stai_size number_output = 0;
+  stai_ptr nn_out[STAI_NETWORK_OUT_NUM] = {0};
+  int32_t nn_out_len[STAI_NETWORK_OUT_NUM] = {0};
+
+  NeuralNetwork_init(&nn_in_len, nn_out, &number_output, nn_out_len);
+  FallModel_init();
+
+  /*** Post Processing Init ***************************************************/
+  stai_network_info info;
+  int ret;
+
+  ret = stai_network_get_info(network_context, &info);
+  assert(ret == STAI_SUCCESS);
+  app_postprocess_init(&pp_params, &info);
+
+  /*** Pose pipeline Init *****************************************************/
   PosePipeline_Init(&pose_pipeline);
-  UI_Init(bg_w, bg_h);
-
-  /* Start camera display stream */
-  Vision_StartCamera(UI_GetBgBuffer());
-
   pose_last_tick = HAL_GetTick();
 
-  /* Pipelining state */
-  static spe_pp_out_t *pp_output_prev = NULL;
-  static uint8_t pp_prev_valid = 0;
+  /*** Camera Init ************************************************************/
+  CameraPipeline_Init(&lcd_bg_area.XSize, &lcd_bg_area.YSize, &pitch_nn);
 
+  LCD_init();
+
+  /* Start LCD Display camera pipe stream */
+  CameraPipeline_DisplayPipe_Start(lcd_bg_buffer, CMW_MODE_CONTINUOUS);
+
+  /*** App Loop ***************************************************************/
   while (1)
   {
-    spe_pp_out_t *pp_output = NULL;
-    VisionMetrics_t v_metrics = {0};
+    CameraPipeline_IspUpdate();
 
-    /* 1. Start Vision Capture */
-    Vision_CaptureStart();
-    
-    /* 2. Wait for Capture Completion */
-    if (Vision_CaptureWait() != 0) continue;
-
-    /* 3. Start NPU Inference (Async) */
-    Vision_InferenceStart();
-
-    /* 4. Parallel Step: GRU for previous frame results */
-    if (pp_prev_valid)
+    if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL))
     {
-      uint32_t now_tick = HAL_GetTick();
-      float32_t dt_s = (float32_t)(now_tick - pose_last_tick) * 1e-3f;
-      if (dt_s <= 0.0f || dt_s > 1.0f) dt_s = 1.0f / 15.0f;
-      pose_last_tick = now_tick;
+      /* Start NN camera single capture Snapshot */
+      CameraPipeline_NNPipe_Start(dcmipp_out_nn, CMW_MODE_SNAPSHOT);
+    }
+    else
+    {
+      /* Start NN camera single capture Snapshot */
+      SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
+      CameraPipeline_NNPipe_Start(nn_in, CMW_MODE_SNAPSHOT);
+    }
+
+    while (cameraFrameReceived == 0) {};
+    cameraFrameReceived = 0;
+
+    uint32_t ts[2] = { 0 };
+
+    if (pitch_nn != (STAI_NETWORK_IN_1_WIDTH * STAI_NETWORK_IN_1_CHANNEL))
+    {
+      SCB_InvalidateDCache_by_Addr(dcmipp_out_nn, sizeof(dcmipp_out_nn));
+    /*
+     * Crop the image if the neural network (NN) input dimensions are not a multiple of 16.
+     * The DCMIPP hardware requires the output image dimensions to be multiples of 16.
+     * This ensures compatibility with the NN input dimensions.
+     */
+      img_crop(dcmipp_out_nn, nn_in, pitch_nn, STAI_NETWORK_IN_1_WIDTH, STAI_NETWORK_IN_1_HEIGHT, STAI_NETWORK_IN_1_CHANNEL);
+      SCB_CleanInvalidateDCache_by_Addr(nn_in, nn_in_len);
+    }
+    else
+    {
+      SCB_InvalidateDCache_by_Addr(nn_in, nn_in_len);
+    }
+
+    ts[0] = HAL_GetTick();
+    /* run ATON inference */
+    Run_Inference(network_context);
+    ts[1] = HAL_GetTick();
+
+    for (int i = 0; i < number_output; i++)
+    {
+      SCB_InvalidateDCache_by_Addr(nn_out[i], nn_out_len[i]);
+    }
+
+    int32_t ret = app_postprocess_run((void **) nn_out, number_output, &pp_output, &pp_params);
+    pose_debug_metrics.postprocess_status = ret;
+    Update_PoseDebugMetrics(nn_out, nn_out_len, number_output, &pp_output);
+
+    /* --- Pose pipeline (2 frames -> 15fps for model time-context) ------- */
+    static uint32_t pipeline_frame_count = 0;
+    pipeline_frame_count++;
+
+    pose_debug_metrics.postprocess_valid = ((ret == AI_SPE_POSTPROCESS_ERROR_NO) &&
+                                            (pp_output.pOutBuff != NULL)) ? 1u : 0u;
+
+    /* --- Presence State Machine --- */
+    if (pose_debug_metrics.postprocess_valid != 0u)
+    {
+      if (pose_debug_metrics.person_present != 0u)
+      {
+        /* Entry logic: Need consecutive frames to confirm */
+        pose_debug_metrics.person_missing_count = 0u;
+        if (pose_debug_metrics.person_present_confirmed == 0u)
+        {
+          pose_debug_metrics.person_entry_count++;
+          if (pose_debug_metrics.person_entry_count >= FALL_PERSON_ENTRY_CONF_COUNT)
+          {
+            pose_debug_metrics.person_present_confirmed = 1u;
+            pose_debug_metrics.person_missing_confirmed = 0u;
+          }
+        }
+      }
+      else
+      {
+        /* Exit logic: Need consecutive frames to confirm missing */
+        pose_debug_metrics.person_entry_count = 0u;
+        if (pose_debug_metrics.person_present_confirmed != 0u)
+        {
+          pose_debug_metrics.person_missing_count++;
+          if (pose_debug_metrics.person_missing_count >= FALL_PERSON_MISSING_RESET_COUNT)
+          {
+            pose_debug_metrics.person_present_confirmed = 0u;
+            pose_debug_metrics.person_missing_confirmed = 1u;
+          }
+        }
+        else
+        {
+          pose_debug_metrics.person_missing_confirmed = 1u;
+        }
+      }
+    }
+
+    uint8_t pose_valid = ((pose_debug_metrics.postprocess_valid != 0u) &&
+                          (pose_debug_metrics.person_present_confirmed != 0u)) ? 1u : 0u;
+    
+    /* Visualization depends on the confirmed presence state */
+    pose_debug_metrics.draw_keypoints = ((pose_debug_metrics.postprocess_valid != 0u) &&
+                                         (pose_debug_metrics.person_present_confirmed != 0u) &&
+                                         (pose_debug_metrics.visible_keypoints > 0u)) ? 1u : 0u;
+
+    if ((pose_valid != 0u) && (pipeline_frame_count % 2 == 0))
+    {
+      /* Use fixed dt to match the 15fps training context precisely, 
+       * avoiding jitter from measured HAL_GetTick delta. */
+      float32_t dt_s = 1.0f / 15.0f;
+      pose_last_tick = HAL_GetTick();
 
       PoseFeatureVec_t feat_vec;
-      PosePipeline_Process(&pose_pipeline, pp_output_prev->pOutBuff, dt_s, &feat_vec);
+      PosePipeline_Process(&pose_pipeline, pp_output.pOutBuff, dt_s, &feat_vec);
       FallDetection_Update(&pose_pipeline);
     }
-
-    /* 5. Wait for NPU Inference Completion */
-    Vision_InferenceWait();
-
-    /* 6. Postprocess NPU results */
-    if (Vision_PostProcess(&pp_output, &v_metrics) != 0)
-    {
-      pp_prev_valid = 0;
-      continue;
-    }
-
-    /* 7. Presence Logic (State Machine) */
-    uint8_t pose_valid = Presence_Update(&v_metrics);
-    
-    /* decide whether to render the skeleton */
-    v_metrics.draw_keypoints = (pose_valid && v_metrics.visible_keypoints > 0 && !v_metrics.keypoints_too_spread);
-
-    if (!pose_valid)
+    else if (pose_valid == 0u)
     {
       FallDetection_Invalidate(&pose_pipeline);
     }
 
-    /* Update pipelining state for next iteration */
-    pp_output_prev = pp_output;
-    pp_prev_valid = pose_valid;
-
-    /* 8. UI Update (Rendering & Alarm) */
-    UI_Update(pp_output, &v_metrics, Presence_GetStatus(), &fall_state);
+    Display_NetworkOutput(&pp_output, ts[1] - ts[0]);
     Alarm_Update();
-
-    Profiler_PrintReport(3000);
   }
 }
+
+
+static void Hardware_init(void)
+{
+  /* Power on ICACHE */
+  MEMSYSCTL->MSCR |= MEMSYSCTL_MSCR_ICACTIVE_Msk;
+
+  /* Set back system and CPU clock source to HSI */
+  __HAL_RCC_CPUCLK_CONFIG(RCC_CPUCLKSOURCE_HSI);
+  __HAL_RCC_SYSCLK_CONFIG(RCC_SYSCLKSOURCE_HSI);
+
+  HAL_Init();
+
+  SCB_EnableICache();
+
+#if defined(USE_DCACHE)
+  /* Power on DCACHE */
+  MEMSYSCTL->MSCR |= MEMSYSCTL_MSCR_DCACTIVE_Msk;
+  SCB_EnableDCache();
+#endif
+
+  SystemClock_Config();
+
+  CONSOLE_Config();
+
+  NPURam_enable();
+
+  Fuse_Programming();
+
+  NPUCache_config();
+
+  /*** External RAM and NOR Flash *********************************************/
+  BSP_XSPI_RAM_Init(0);
+  BSP_XSPI_RAM_EnableMemoryMappedMode(0);
+
+  BSP_XSPI_NOR_Init_t NOR_Init;
+  NOR_Init.InterfaceMode = BSP_XSPI_NOR_OPI_MODE;
+  NOR_Init.TransferRate = BSP_XSPI_NOR_DTR_TRANSFER;
+  BSP_XSPI_NOR_Init(0, &NOR_Init);
+  BSP_XSPI_NOR_EnableMemoryMappedMode(0);
+
+  /* Set all required IPs as secure privileged */
+  Security_Config();
+
+  IAC_Config();
+  set_clk_sleep_mode();
+
+}
+
+static void Run_Inference(stai_network *network_instance) {
+  stai_return_code ret;
+
+  do {
+    ret = stai_network_run(network_instance, STAI_MODE_ASYNC);
+    if (ret == STAI_RUNNING_WFE)
+      LL_ATON_OSAL_WFE();
+  } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
+
+  ret = stai_ext_network_new_inference(network_instance);
+  assert(ret == STAI_SUCCESS);
+}
+
+static void Run_FallInference(void) {
+  stai_return_code ret;
+
+#if FALL_DETECTION_IS_GRU
+  #if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+    ret = stai_gru_network_run(gru_network_context, STAI_MODE_SYNC);
+  #else
+    ret = stai_gru_stateless_run(gru_network_context, STAI_MODE_SYNC);
+  #endif
+#else
+  do {
+    ret = stai_tcn_network_run(tcn_network_context, STAI_MODE_ASYNC);
+    if (ret == STAI_RUNNING_WFE)
+      LL_ATON_OSAL_WFE();
+  } while (ret == STAI_RUNNING_WFE || ret == STAI_RUNNING_NO_WFE);
+  ret = stai_ext_tcn_network_new_inference(tcn_network_context);
+#endif
+  assert(ret == STAI_SUCCESS);
+}
+
+static void NeuralNetwork_init(uint32_t *nn_in_length, stai_ptr *nn_out, stai_size *number_output, int32_t nn_out_len[])
+{
+  stai_network_info info;
+  int ret;
+
+  /* initialize runtime */
+  ret = stai_runtime_init();
+  assert(ret == STAI_SUCCESS);
+  /* init model instance */
+  ret = stai_network_init(network_context);
+  assert(ret == STAI_SUCCESS);
+
+  ret = stai_network_get_info(network_context, &info);
+  assert(ret == STAI_SUCCESS);
+  assert(info.n_inputs == 1);
+  *number_output = STAI_NETWORK_OUT_NUM;
+
+  /* Get the input buffer size & address */
+  *nn_in_length = info.inputs[0].size_bytes;
+  ret = stai_network_get_inputs(network_context, &nn_in, (stai_size *)&info.n_inputs);
+  assert(ret == STAI_SUCCESS);
+
+  /* Get the output buffers size & address */
+  ret = stai_network_get_outputs(network_context, nn_out, number_output);
+  assert(ret == STAI_SUCCESS);
+  for (int i = 0; i < *number_output; i++)
+  {
+    nn_out_len[i] = info.outputs[i].size_bytes;
+  }
+}
+
+static void FallModel_init(void)
+{
+  int ret;
+
+#if FALL_DETECTION_IS_GRU
+  #if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+    stai_size number_input  = STAI_GRU_NETWORK_IN_NUM;
+    stai_size number_output = STAI_GRU_NETWORK_OUT_NUM;
+    ret = stai_gru_network_init(gru_network_context);
+    assert(ret == STAI_SUCCESS);
+    stai_ptr act_bufs[STAI_GRU_NETWORK_ACTIVATIONS_NUM] = { (stai_ptr)gru_activation_buf };
+    ret = stai_gru_network_set_activations(gru_network_context, act_bufs, STAI_GRU_NETWORK_ACTIVATIONS_NUM);
+    assert(ret == STAI_SUCCESS);
+    ret = stai_gru_network_get_inputs(gru_network_context, gru_in, &number_input);
+    assert(ret == STAI_SUCCESS);
+    ret = stai_gru_network_get_outputs(gru_network_context, gru_out, &number_output);
+    assert(ret == STAI_SUCCESS);
+    gru_in_len[0]  = STAI_GRU_NETWORK_IN_1_SIZE_BYTES;   /* c1_window f32(1,5,27) */
+    gru_in_len[1]  = STAI_GRU_NETWORK_IN_2_SIZE_BYTES;   /* c2_in    int8(1,2,64) */
+    gru_in_len[2]  = STAI_GRU_NETWORK_IN_3_SIZE_BYTES;   /* h1       int8(1,128)  */
+    gru_in_len[3]  = STAI_GRU_NETWORK_IN_4_SIZE_BYTES;   /* h2       int8(1,64)   */
+    gru_out_len[0] = STAI_GRU_NETWORK_OUT_1_SIZE_BYTES;  /* h2_new   int8(1,64)   */
+    gru_out_len[1] = STAI_GRU_NETWORK_OUT_2_SIZE_BYTES;  /* softmax  int8(1,2)    */
+    gru_out_len[2] = STAI_GRU_NETWORK_OUT_3_SIZE_BYTES;  /* h1_new   int8(1,128)  */
+    gru_out_len[3] = STAI_GRU_NETWORK_OUT_4_SIZE_BYTES;  /* c1_last  int8(1,64,1) */
+    /* Initialize states to their INT8 zero-points (= float 0.0):
+     *   h1 zp=-1, h2 zp=0, c2 zp=-128 */
+    memset(gru_h1, (int8_t)STAI_GRU_NETWORK_IN_3_ZERO_POINT, sizeof(gru_h1));
+    memset(gru_h2, (int8_t)STAI_GRU_NETWORK_IN_4_ZERO_POINT, sizeof(gru_h2));
+    memset(gru_c1, 0, sizeof(gru_c1));
+    memset(gru_c2, (int8_t)STAI_GRU_NETWORK_IN_2_ZERO_POINT, sizeof(gru_c2));
+    memset(gru_c1_window, 0, sizeof(gru_c1_window));
+  #else /* STATELESS */
+    stai_size number_input  = STAI_GRU_STATELESS_IN_NUM;
+    stai_size number_output = STAI_GRU_STATELESS_OUT_NUM;
+    ret = stai_gru_stateless_init(gru_network_context);
+    assert(ret == STAI_SUCCESS);
+    stai_ptr act_bufs[STAI_GRU_STATELESS_ACTIVATIONS_NUM] = { (stai_ptr)gru_activation_buf };
+    ret = stai_gru_stateless_set_activations(gru_network_context, act_bufs, STAI_GRU_STATELESS_ACTIVATIONS_NUM);
+    assert(ret == STAI_SUCCESS);
+    ret = stai_gru_stateless_get_inputs(gru_network_context, gru_in, &number_input);
+    assert(ret == STAI_SUCCESS);
+    ret = stai_gru_stateless_get_outputs(gru_network_context, gru_out, &number_output);
+    assert(ret == STAI_SUCCESS);
+    gru_in_len[0]  = STAI_GRU_STATELESS_IN_1_SIZE_BYTES;
+    gru_out_len[0] = STAI_GRU_STATELESS_OUT_1_SIZE_BYTES;
+  #endif
+#else /* TCN */
+  stai_network_info info;
+  stai_size number_input  = STAI_TCN_NETWORK_IN_NUM;
+  stai_size number_output = STAI_TCN_NETWORK_OUT_NUM;
+
+  ret = stai_tcn_network_init(tcn_network_context);
+  assert(ret == STAI_SUCCESS);
+
+  ret = stai_tcn_network_get_info(tcn_network_context, &info);
+  assert(ret == STAI_SUCCESS);
+  assert(info.n_inputs  == STAI_TCN_NETWORK_IN_NUM);
+  assert(info.n_outputs == STAI_TCN_NETWORK_OUT_NUM);
+  assert(info.inputs[0].size_bytes  == STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
+  assert(info.outputs[0].size_bytes == STAI_TCN_NETWORK_OUT_1_SIZE_BYTES);
+
+  ret = stai_tcn_network_get_inputs(tcn_network_context, &tcn_in, &number_input);
+  assert(ret == STAI_SUCCESS);
+
+  ret = stai_tcn_network_get_outputs(tcn_network_context, tcn_out, &number_output);
+  assert(ret == STAI_SUCCESS);
+
+  for (int i = 0; i < STAI_TCN_NETWORK_OUT_NUM; i++)
+    tcn_out_len[i] = info.outputs[i].size_bytes;
+#endif
+
+  memset(&fall_state, 0, sizeof(fall_state));
+  /* Show "no person" on startup until presence is confirmed. */
+  pose_debug_metrics.person_missing_confirmed = 1u;
+
+  BSP_LED_Init(LED_RED);
+  BSP_LED_Off(LED_RED);
+}
+
+static void FallDetection_Update(PosePipeline_t *pipeline)
+{
+  fall_state.frame_count = pipeline->win_count;
+
+#if FALL_DETECTION_IS_GRU
+  #if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+    /* GRU stateful: run every frame, show result after warmup */
+    fall_state.window_ready = (pipeline->win_count >= GRU_WARMUP_FRAMES) ? 1u : 0u;
+
+    if (pipeline->win_count == 0)
+    {
+      fall_state.fall_detected = 0;
+      fall_state.fall_score    = 0.0f;
+      fall_state.normal_score  = 0.0f;
+      fall_state.inference_ms  = 0;
+      return;
+    }
+
+    /* Pure data warmup: Let the pose pipeline filters stabilize for the first 5 frames 
+     * before starting GRU inference. This prevents filter initialization spikes 
+     * from corrupting the GRU hidden state. */
+    if (pipeline->win_count < 5)
+    {
+      return;
+    }
+
+    /* INT8 Stateful Flow (4-input):
+       IN: [0]c1_window f32(1,5,27), [1]c2_in int8(1,2,64), [2]h1 int8(1,128), [3]h2 int8(1,64)
+       OUT:[0]h2_new int8(1,64), [1]softmax int8(1,2), [2]h1_new int8(1,128), [3]c1_last int8(1,64) */
+    /* Build c1_window: rows [0..3] = c1_state history, row [4] = current pose */
+    memcpy(gru_c1_window, gru_c1, 4u * sizeof(gru_c1[0]));
+    PosePipeline_GetLatestFeature(pipeline, gru_c1_window[4]);
+    memcpy(gru_in[0], gru_c1_window, STAI_GRU_NETWORK_IN_1_SIZE_BYTES);
+    memcpy(gru_in[1], gru_c2, STAI_GRU_NETWORK_IN_2_SIZE_BYTES);
+    memcpy(gru_in[2], gru_h1, STAI_GRU_NETWORK_IN_3_SIZE_BYTES);
+    memcpy(gru_in[3], gru_h2, STAI_GRU_NETWORK_IN_4_SIZE_BYTES);
+
+    for (int i = 0; i < STAI_GRU_NETWORK_IN_NUM; i++)
+      SCB_CleanDCache_by_Addr(gru_in[i], gru_in_len[i]);
+
+    uint32_t t0 = HAL_GetTick();
+    Run_FallInference();
+    uint32_t t1 = HAL_GetTick();
+    fall_state.inference_ms = t1 - t0;
+
+    for (int i = 0; i < STAI_GRU_NETWORK_OUT_NUM; i++)
+      SCB_InvalidateDCache_by_Addr(gru_out[i], gru_out_len[i]);
+
+    /* Update persistent states from INT8 model outputs */
+    memcpy(gru_h2, gru_out[0], STAI_GRU_NETWORK_OUT_1_SIZE_BYTES);   /* h2_new  int8(1,64) */
+    memcpy(gru_h1, gru_out[2], STAI_GRU_NETWORK_OUT_3_SIZE_BYTES);   /* h1_new  int8(1,128) */
+    
+    /* c1_state: shift window by 1 and append the latest pose */
+    memmove(gru_c1[0], gru_c1[1], 3u * sizeof(gru_c1[0]));
+    memcpy(gru_c1[3], gru_c1_window[4], sizeof(gru_c1[0]));
+
+    /* c2_state: shift window by 1 and append c1_last int8(1,64) 
+     * CRITICAL: Must re-quantize because OUT_4 scale (0.016) != IN_2 scale (0.013) */
+    memcpy(gru_c2[0], gru_c2[1], 64u * sizeof(int8_t));
+    const int8_t *c1_last_raw = (const int8_t *)gru_out[3];
+    const float32_t scale_ratio = STAI_GRU_NETWORK_OUT_4_SCALE / STAI_GRU_NETWORK_IN_2_SCALE;
+    
+    for (int i = 0; i < 64; i++) {
+        /* val_f = (raw - old_ZP) * old_scale
+         * new_q = (val_f / new_scale) + new_ZP
+         * new_q = (raw - old_ZP) * (old_scale / new_scale) + new_ZP */
+        float32_t val = (float32_t)(c1_last_raw[i] - STAI_GRU_NETWORK_OUT_4_ZERO_POINT) * scale_ratio;
+        int32_t q = (int32_t)roundf(val) + STAI_GRU_NETWORK_IN_2_ZERO_POINT;
+        if (q < -128) q = -128;
+        if (q > 127)  q = 127;
+        gru_c2[1][i] = (int8_t)q;
+    }
+
+    /* Dequantize int8 softmax output → float probabilities */
+    const int8_t *probs_int8 = (const int8_t *)gru_out[1];
+    float32_t f_norm = (float32_t)((int32_t)probs_int8[0] - STAI_GRU_NETWORK_OUT_2_ZERO_POINT) * STAI_GRU_NETWORK_OUT_2_SCALE;
+    float32_t f_fall = (float32_t)((int32_t)probs_int8[1] - STAI_GRU_NETWORK_OUT_2_ZERO_POINT) * STAI_GRU_NETWORK_OUT_2_SCALE;
+    
+    /* Re-normalize current inference results */
+    float32_t sum = f_norm + f_fall;
+    if (sum > 1e-6f)
+    {
+      float32_t raw_n = f_norm / sum;
+      float32_t raw_f = f_fall / sum;
+      
+      /* Apply strong EMA (alpha=0.15) to accumulate evidence over ~0.5s.
+       * This eliminates jumping values during standing still. */
+      const float32_t alpha = 0.15f;
+      fall_state.normal_score = (alpha * raw_n) + (1.0f - alpha) * fall_state.normal_score;
+      fall_state.fall_score   = (alpha * raw_f) + (1.0f - alpha) * fall_state.fall_score;
+      
+      /* Force sum=1.0 for logical consistency */
+      float32_t final_sum = fall_state.normal_score + fall_state.fall_score;
+      fall_state.normal_score /= final_sum;
+      fall_state.fall_score /= final_sum;
+    }
+    else
+    {
+      /* Keep previous smoothed scores if inference is invalid */
+    }
+
+    fall_state.normal_logit = fall_state.normal_score; 
+    fall_state.fall_logit   = fall_state.fall_score;
+    
+    /* Skip common softmax step as we already have probabilities */
+    goto skip_softmax;
+  #else /* STATELESS */
+    fall_state.window_ready = PosePipeline_WindowFull(pipeline);
+
+    if (!fall_state.window_ready)
+    {
+      fall_state.fall_detected = 0;
+      fall_state.fall_score    = 0.0f;
+      fall_state.normal_score  = 0.0f;
+      fall_state.inference_ms  = 0;
+      return;
+    }
+
+    PosePipeline_GetWindowTimeFirst(pipeline, (float32_t (*)[POSE_FEATURE_COUNT])gru_in[0]);
+    SCB_CleanDCache_by_Addr(gru_in[0], gru_in_len[0]);
+
+    uint32_t t0 = HAL_GetTick();
+    Run_FallInference();
+    uint32_t t1 = HAL_GetTick();
+    fall_state.inference_ms = t1 - t0;
+
+    SCB_InvalidateDCache_by_Addr(gru_out[0], gru_out_len[0]);
+    float32_t *logits = (float32_t *)gru_out[0];
+  #endif
+#else /* TCN */
+  fall_state.window_ready = PosePipeline_WindowFull(pipeline);
+
+  if (!fall_state.window_ready)
+  {
+    fall_state.fall_detected = 0;
+    fall_state.fall_score    = 0.0f;
+    fall_state.normal_score  = 0.0f;
+    fall_state.inference_ms  = 0;
+    return;
+  }
+
+  PosePipeline_GetWindowFeaturesFirst(pipeline, (float32_t (*)[POSE_WINDOW_SIZE])tcn_in);
+  SCB_CleanDCache_by_Addr(tcn_in, STAI_TCN_NETWORK_IN_1_SIZE_BYTES);
+
+  uint32_t t0 = HAL_GetTick();
+  Run_FallInference();
+  uint32_t t1 = HAL_GetTick();
+  fall_state.inference_ms = t1 - t0;
+
+  SCB_InvalidateDCache_by_Addr(tcn_out[0], tcn_out_len[0]);
+  float32_t *logits = (float32_t *)tcn_out[0];
+#endif
+
+skip_softmax:
+#if FALL_DETECTION_MODEL != FALL_MODEL_GRU_STATEFUL
+  fall_state.normal_logit = logits[0];
+  fall_state.fall_logit   = logits[1];
+
+  /* Perform manual softmax for numerical stability across all models (Stateless, Stateless, TCN). */
+  float32_t max_logit  = (logits[0] > logits[1]) ? logits[0] : logits[1];
+  float32_t normal_exp = expf(logits[0] - max_logit);
+  float32_t fall_exp   = expf(logits[1] - max_logit);
+  float32_t denom      = normal_exp + fall_exp;
+
+  if (denom > 0.0f)
+  {
+    fall_state.normal_score = normal_exp / denom;
+    fall_state.fall_score   = fall_exp   / denom;
+  }
+  else
+  {
+    fall_state.normal_score = 0.5f;
+    fall_state.fall_score   = 0.5f;
+  }
+#endif
+
+  if (fall_state.window_ready) {
+    /* Compare probability scores (ratios), not raw logits */
+    fall_state.fall_detected = (fall_state.fall_score >= GRU_FALL_SCORE_THRESHOLD) ? 1u : 0u;
+  } else {
+    fall_state.fall_detected = 0u;
+}
+  if (fall_state.fall_detected)
+    fall_state.fall_latch_tick = HAL_GetTick();
+
+  if (fall_state.window_ready)
+  {
+    static uint32_t last_fall_log_tick = 0;
+    uint32_t now_tick = HAL_GetTick();
+    if ((last_fall_log_tick == 0u) || ((now_tick - last_fall_log_tick) >= 1000u))
+    {
+      printf("[%s] %lums %s Fall %.2f Normal %.2f KP %lu/%lu P%lu\r\n",
+             (FALL_DETECTION_MODEL == FALL_DETECTION_IS_GRU) ? "GRU" : "TCN",
+             fall_state.inference_ms,
+             fall_state.fall_detected ? "FALL" : "NORMAL",
+             (double)fall_state.fall_score,
+             (double)fall_state.normal_score,
+             pose_debug_metrics.visible_keypoints,
+             (uint32_t)AI_POSE_PP_POSE_KEYPOINTS_NB,
+             pose_debug_metrics.person_keypoints);
+      last_fall_log_tick = now_tick;
+    }
+  }
+
+#if FALL_DETECTION_MODEL == FALL_DETECTION_IS_GRU
+  if (fall_state.fall_detected)
+  {
+    fall_state.fall_consec_count++;
+    if (fall_state.fall_consec_count >= GRU_FALL_RESET_COUNT)
+    {
+      printf("[GRU] Fall confirmed (%lu frames) - resetting state\r\n",
+             fall_state.fall_consec_count);
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+      memset(gru_h1, (int8_t)STAI_GRU_NETWORK_IN_3_ZERO_POINT, sizeof(gru_h1));
+      memset(gru_h2, (int8_t)STAI_GRU_NETWORK_IN_4_ZERO_POINT, sizeof(gru_h2));
+      memset(gru_c1, 0, sizeof(gru_c1));
+      memset(gru_c2, (int8_t)STAI_GRU_NETWORK_IN_2_ZERO_POINT, sizeof(gru_c2));
+      memset(gru_c1_window, 0, sizeof(gru_c1_window));
+#elif FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATELESS
+      memset(gru_h1, 0, sizeof(gru_h1));
+      memset(gru_h2, 0, sizeof(gru_h2));
+#endif
+      PosePipeline_Init(pipeline);
+      fall_state.fall_consec_count = 0;
+      fall_state.frame_count       = 0;
+      fall_state.window_ready      = 0;
+      /* fall_detected stays 1 so the display keeps showing FALL this frame */
+    }
+  }
+  else
+  {
+    fall_state.fall_consec_count = 0;
+  }
+#endif
+}
+
+
+static void FallDetection_Invalidate(PosePipeline_t *pipeline)
+{
+  if (pipeline != NULL)
+  {
+    /* Always clear filters on invalidate.
+     * Prevents massive acceleration spikes when a person reappears. */
+    PosePipeline_Init(pipeline);
+  }
+
+#if FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATEFUL
+  memset(gru_h1, (int8_t)STAI_GRU_NETWORK_IN_3_ZERO_POINT, sizeof(gru_h1));
+  memset(gru_h2, (int8_t)STAI_GRU_NETWORK_IN_4_ZERO_POINT, sizeof(gru_h2));
+  memset(gru_c1, 0, sizeof(gru_c1));
+  memset(gru_c2, (int8_t)STAI_GRU_NETWORK_IN_2_ZERO_POINT, sizeof(gru_c2));
+  memset(gru_c1_window, 0, sizeof(gru_c1_window));
+#elif FALL_DETECTION_MODEL == FALL_MODEL_GRU_STATELESS
+  memset(gru_h1, 0, sizeof(gru_h1));
+  memset(gru_h2, 0, sizeof(gru_h2));
+#endif
+
+  fall_state.window_ready = 0u;
+  fall_state.fall_detected = 0u;
+  fall_state.frame_count = 0u;
+  fall_state.inference_ms = 0u;
+  fall_state.normal_logit = 1.0f;
+  fall_state.fall_logit = 0.0f;
+  fall_state.normal_score = 1.0f;
+  fall_state.fall_score = 0.0f;
+  fall_state.fall_consec_count = 0u;
+}
+
+static void Alarm_Update(void)
+{
+  uint8_t latch_active = (fall_state.fall_latch_tick != 0u) &&
+                         ((HAL_GetTick() - fall_state.fall_latch_tick) < GRU_FALL_LATCH_MS);
+
+  if (latch_active)
+  {
+    /* Blink LED_RED at ~2Hz while alarm is active */
+    if ((HAL_GetTick() % (2u * GRU_ALARM_BLINK_PERIOD_MS)) < GRU_ALARM_BLINK_PERIOD_MS)
+      BSP_LED_On(LED_RED);
+    else
+      BSP_LED_Off(LED_RED);
+  }
+  else
+  {
+    BSP_LED_Off(LED_RED);
+  }
+}
+
+static void NPURam_enable(void)
+{
+  __HAL_RCC_NPU_CLK_ENABLE();
+  __HAL_RCC_NPU_FORCE_RESET();
+  __HAL_RCC_NPU_RELEASE_RESET();
+
+  /* Enable NPU RAMs (4x448KB) */
+  __HAL_RCC_AXISRAM3_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM4_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM5_MEM_CLK_ENABLE();
+  __HAL_RCC_AXISRAM6_MEM_CLK_ENABLE();
+  __HAL_RCC_RAMCFG_CLK_ENABLE();
+  RAMCFG_HandleTypeDef hramcfg = {0};
+  hramcfg.Instance =  RAMCFG_SRAM3_AXI;
+  HAL_RAMCFG_EnableAXISRAM(&hramcfg);
+  hramcfg.Instance =  RAMCFG_SRAM4_AXI;
+  HAL_RAMCFG_EnableAXISRAM(&hramcfg);
+  hramcfg.Instance =  RAMCFG_SRAM5_AXI;
+  HAL_RAMCFG_EnableAXISRAM(&hramcfg);
+  hramcfg.Instance =  RAMCFG_SRAM6_AXI;
+  HAL_RAMCFG_EnableAXISRAM(&hramcfg);
+}
+
+static void set_clk_sleep_mode(void)
+{
+  /*** Enable sleep mode support during NPU inference *************************/
+  /* Configure peripheral clocks to remain active during sleep mode */
+  /* Keep all IP's enabled during WFE so they can wake up CPU. Fine tune
+   * this if you want to save maximum power
+   */
+  __HAL_RCC_XSPI1_CLK_SLEEP_ENABLE();    /* For display frame buffer */
+  __HAL_RCC_XSPI2_CLK_SLEEP_ENABLE();    /* For NN weights */
+  __HAL_RCC_NPU_CLK_SLEEP_ENABLE();      /* For NN inference */
+  __HAL_RCC_CACHEAXI_CLK_SLEEP_ENABLE(); /* For NN inference */
+  __HAL_RCC_LTDC_CLK_SLEEP_ENABLE();     /* For display */
+  __HAL_RCC_DMA2D_CLK_SLEEP_ENABLE();    /* For display */
+  __HAL_RCC_DCMIPP_CLK_SLEEP_ENABLE();   /* For camera configuration retention */
+  __HAL_RCC_CSI_CLK_SLEEP_ENABLE();      /* For camera configuration retention */
+
+  __HAL_RCC_FLEXRAM_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM1_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM2_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM3_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM4_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM5_MEM_CLK_SLEEP_ENABLE();
+  __HAL_RCC_AXISRAM6_MEM_CLK_SLEEP_ENABLE(); 
+
+}
+
+static void NPUCache_config(void)
+{
+  npu_cache_enable();
+}
+
+static void Security_Config(void)
+{
+  __HAL_RCC_RIFSC_CLK_ENABLE();
+  RIMC_MasterConfig_t RIMC_master = {0};
+  RIMC_master.MasterCID = RIF_CID_1;
+  RIMC_master.SecPriv = RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV;
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_NPU, &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_DMA2D, &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_DCMIPP, &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC1 , &RIMC_master);
+  HAL_RIF_RIMC_ConfigMasterAttributes(RIF_MASTER_INDEX_LTDC2 , &RIMC_master);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_NPU , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_DMA2D , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_CSI    , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_DCMIPP , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDC   , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDCL1 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+  HAL_RIF_RISC_SetSlaveSecureAttributes(RIF_RISC_PERIPH_INDEX_LTDCL2 , RIF_ATTRIBUTE_SEC | RIF_ATTRIBUTE_PRIV);
+}
+
+static void IAC_Config(void)
+{
+/* Configure IAC to trap illegal access events */
+  __HAL_RCC_IAC_CLK_ENABLE();
+  __HAL_RCC_IAC_FORCE_RESET();
+  __HAL_RCC_IAC_RELEASE_RESET();
+}
+
+void IAC_IRQHandler(void)
+{
+  printf("[FAULT] IAC IllegalAccess!\r\n");
+  while (1) {}
+}
+
+/* Display functions */
+static int clamp_point(int *x, int *y)
+{
+  int xi = *x;
+  int yi = *y;
+
+  if (*x < (int)lcd_bg_area.X0)
+    *x = lcd_bg_area.X0;
+  if (*y < (int)lcd_bg_area.Y0)
+    *y = lcd_bg_area.Y0;
+  if (*x >= lcd_bg_area.X0 + lcd_bg_area.XSize)
+    *x = lcd_bg_area.X0 + lcd_bg_area.XSize - 1;
+  if (*y >= lcd_bg_area.Y0 + lcd_bg_area.YSize)
+    *y = lcd_bg_area.Y0 + lcd_bg_area.YSize - 1;
+
+  return (xi != *x) || (yi != *y);
+}
+
+static void convert_length(float32_t wi, float32_t hi, int *wo, int *ho)
+{
+  *wo = lcd_bg_area.XSize * wi;
+  *ho = lcd_bg_area.YSize * hi;
+}
+
+static void convert_point(float32_t xi, float32_t yi, int *xo, int *yo)
+{
+  *xo = lcd_bg_area.XSize * xi + lcd_bg_area.X0;
+  *yo = lcd_bg_area.YSize * yi + lcd_bg_area.Y0;
+}
+
+static void Display_binding_line(int x0, int y0, int x1, int y1, uint32_t color)
+{
+  clamp_point(&x0, &y0);
+  clamp_point(&x1, &y1);
+
+  UTIL_LCD_DrawLine(x0, y0, x1, y1, color);
+}
+
+/**
+* @brief Display Neural Network output classification results as well as other performances informations
+*
+* @param p_postprocess pointer to postprocessing output
+* @param inference_ms inference time in ms
+*/
+static void Display_NetworkOutput(void *p_postprocess, uint32_t inference_ms)
+{
+#if POSTPROCESS_TYPE == POSTPROCESS_MPE_YOLO_V8_UI
+  mpe_pp_outBuffer_t *rois = ((mpe_pp_out_t *) p_postprocess)->pOutBuff;
+  uint32_t nb_rois = ((mpe_pp_out_t *) p_postprocess)->nb_detect;
+#elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
+  spe_pp_outBuffer_t *roi = (p_postprocess != NULL) ? ((spe_pp_out_t *) p_postprocess)->pOutBuff : NULL;
+#endif
+  int ret;
+
+  ret = HAL_LTDC_SetAddress_NoReload(&hlcd_ltdc, (uint32_t) lcd_fg_buffer[lcd_fg_buffer_rd_idx], LTDC_LAYER_2);
+  assert(ret == HAL_OK);
+
+  /* Draw bounding boxes */
+  UTIL_LCD_FillRect(lcd_fg_area.X0, lcd_fg_area.Y0, lcd_fg_area.XSize, lcd_fg_area.YSize, 0x00000000); /* Clear previous boxes */
+#if POSTPROCESS_TYPE == POSTPROCESS_MPE_YOLO_V8_UI
+  for (int i = 0; i < nb_rois; i++)
+    Display_mpe_Detection(&rois[i]);
+  UTIL_LCDEx_PrintfAt(0, LINE(2), CENTER_MODE, "Objects %u", nb_rois);
+#elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
+    if (roi != NULL)
+    {
+      /* --- RAW MODE: Bypassing filters for visualization --- */
+      Display_spe_Detection(roi);
+    }
+#endif
+  UTIL_LCD_SetBackColor(0x40000000);
+  if (pose_debug_metrics.postprocess_valid == 0u)
+  {
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GRAY);
+    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "postprocess error PP %ld",
+                        (long)pose_debug_metrics.postprocess_status);
+  }
+  else if (pose_debug_metrics.person_missing_confirmed != 0u)
+  {
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GRAY);
+    UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "no person");
+  }
+  else
+  {
+    uint8_t latch_active = (fall_state.fall_latch_tick != 0u) &&
+                           ((HAL_GetTick() - fall_state.fall_latch_tick) < GRU_FALL_LATCH_MS);
+
+    if (fall_state.window_ready || latch_active)
+    {
+      uint8_t is_fall_now = fall_state.fall_detected;
+      
+      /* Clear status lines by filling with background */
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+      UTIL_LCD_FillRect(0, LINE(1), LCD_FG_WIDTH, 24, 0); 
+      
+      if (is_fall_now) {
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+        UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "!! FALL !! F:%.2f N:%.2f %lums",
+                            (double)fall_state.fall_score, (double)fall_state.normal_score, fall_state.inference_ms);
+      } else if (latch_active) {
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ORANGE);
+        UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "LATCHED F:%.2f N:%.2f %lums",
+                            (double)fall_state.fall_score, (double)fall_state.normal_score, fall_state.inference_ms);
+      } else {
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+        UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "NORMAL F:%.2f N:%.2f %lums",
+                            (double)fall_state.fall_score, (double)fall_state.normal_score, fall_state.inference_ms);
+      }
+
+      if (latch_active)
+      {
+        /* Large warning text without the screen-blocking banner */
+        UTIL_LCD_SetFont(&Font24);
+        UTIL_LCD_SetBackColor(0x00000000);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+        UTIL_LCDEx_PrintfAt(0, 228, CENTER_MODE, "!! FALL DETECTED !!");
+        UTIL_LCD_SetFont(&Font20);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
+        /* Show smoothed real-time confidence */
+        UTIL_LCDEx_PrintfAt(0, 258, CENTER_MODE, "Confidence: %.0f%%",
+                            (double)(fall_state.fall_score * 100.0f));
+      }
+    }
+    else
+    {
+      uint32_t warmup_target = (FALL_DETECTION_MODEL == FALL_DETECTION_IS_GRU) ? GRU_WARMUP_FRAMES : POSE_WINDOW_SIZE;
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_YELLOW);
+      UTIL_LCDEx_PrintfAt(0, LINE(1), CENTER_MODE, "Fall detector warming %lu/%u",
+                          fall_state.frame_count,
+                          warmup_target);
+    }
+  }
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCDEx_PrintfAt(0, LINE(2), CENTER_MODE, "KP %lu/%u P%lu M%lu Max %.2f",
+                      pose_debug_metrics.visible_keypoints,
+                      (uint32_t)AI_POSE_PP_POSE_KEYPOINTS_NB,
+                      pose_debug_metrics.person_keypoints,
+                      pose_debug_metrics.person_missing_count,
+                      (double)pose_debug_metrics.max_keypoint_proba);
+  UTIL_LCDEx_PrintfAt(0, LINE(3), CENTER_MODE, "Raw[%d,%d] Deq[%.2f,%.2f]",
+                      pose_debug_metrics.raw_min,
+                      pose_debug_metrics.raw_max,
+                      (double)pose_debug_metrics.raw_min_dequant,
+                      (double)pose_debug_metrics.raw_max_dequant);
+  UTIL_LCDEx_PrintfAt(0, LINE(4), CENTER_MODE, "Out %lux%lux%lu PP %ld",
+                      pose_debug_metrics.output_width,
+                      pose_debug_metrics.output_height,
+                      pose_debug_metrics.output_channels,
+                      (long)pose_debug_metrics.postprocess_status);
+  UTIL_LCDEx_PrintfAt(0, LINE(20), CENTER_MODE, "Inference: %ums", inference_ms);
+
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetFont(&Font20);
+  UTIL_LCD_SetBackColor(0);
+
+  Display_WelcomeScreen();
+
+  SCB_CleanDCache_by_Addr(lcd_fg_buffer[lcd_fg_buffer_rd_idx], LCD_FG_FRAMEBUFFER_SIZE);
+  ret = HAL_LTDC_ReloadLayer(&hlcd_ltdc, LTDC_RELOAD_VERTICAL_BLANKING, LTDC_LAYER_2);
+  assert(ret == HAL_OK);
+  lcd_fg_buffer_rd_idx = 1 - lcd_fg_buffer_rd_idx;
+}
+
+static void Update_PoseDebugMetrics(stai_ptr *nn_out, int32_t nn_out_len[], stai_size number_output, spe_pp_out_t *p_postprocess)
+{
+  pose_debug_metrics.raw_min = 0;
+  pose_debug_metrics.raw_max = 0;
+  pose_debug_metrics.raw_min_dequant = 0.0f;
+  pose_debug_metrics.raw_max_dequant = 0.0f;
+  pose_debug_metrics.max_keypoint_proba = 0.0f;
+  pose_debug_metrics.visible_keypoints = 0;
+  pose_debug_metrics.person_keypoints = 0;
+  pose_debug_metrics.person_present = 0u;
+  pose_debug_metrics.postprocess_valid = 0u;
+  pose_debug_metrics.draw_keypoints = 0u;
+  pose_debug_metrics.output_width = STAI_NETWORK_OUT_1_WIDTH;
+  pose_debug_metrics.output_height = STAI_NETWORK_OUT_1_HEIGHT;
+  pose_debug_metrics.output_channels = STAI_NETWORK_OUT_1_CHANNEL;
+
+  if ((number_output > 0) && (nn_out[0] != NULL) && (nn_out_len[0] > 0))
+  {
+    int8_t *raw_output = (int8_t *)nn_out[0];
+    int32_t raw_len = nn_out_len[0];
+    int8_t raw_min = raw_output[0];
+    int8_t raw_max = raw_output[0];
+
+    for (int32_t i = 1; i < raw_len; i++)
+    {
+      if (raw_output[i] < raw_min)
+      {
+        raw_min = raw_output[i];
+      }
+      if (raw_output[i] > raw_max)
+      {
+        raw_max = raw_output[i];
+      }
+    }
+
+    pose_debug_metrics.raw_min = raw_min;
+    pose_debug_metrics.raw_max = raw_max;
+    pose_debug_metrics.raw_min_dequant = pp_params.raw_scale * (float32_t)((int32_t)raw_min - (int32_t)pp_params.raw_zero_point);
+    pose_debug_metrics.raw_max_dequant = pp_params.raw_scale * (float32_t)((int32_t)raw_max - (int32_t)pp_params.raw_zero_point);
+  }
+
+  if ((p_postprocess != NULL) && (p_postprocess->pOutBuff != NULL))
+  {
+    /* Collect confidence scores from the raw postprocess output for presence logic.
+     * We don't use the smoothed features from the pipeline here to avoid a deadlock
+     * where the pipeline doesn't update because no person is present, and no person
+     * is present because the pipeline isn't updating. */
+    float32_t scores[POSE_KP_COUNT];
+    for (uint32_t i = 0; i < POSE_KP_COUNT; i++)
+    {
+      float32_t proba = p_postprocess->pOutBuff[i].proba;
+      scores[i] = proba;
+
+      if (proba > pose_debug_metrics.max_keypoint_proba)
+      {
+        pose_debug_metrics.max_keypoint_proba = proba;
+      }
+      if (proba >= AI_POSE_PP_CONF_THRESHOLD)
+      {
+        pose_debug_metrics.visible_keypoints++;
+      }
+      if (proba >= FALL_PERSON_CONF_THRESHOLD)
+      {
+        pose_debug_metrics.person_keypoints++;
+      }
+    }
+
+    /* Robust Presence: Top-5 Average Confidence. 
+     * If at least 5 keypoints are detected with some confidence, 
+     * their average must be above threshold. */
+    for (int i = 0; i < 5; i++)
+    {
+      for (int j = i + 1; j < POSE_KP_COUNT; j++)
+      {
+        if (scores[j] > scores[i])
+        {
+          float32_t tmp = scores[i];
+          scores[i] = scores[j];
+          scores[j] = tmp;
+        }
+      }
+    }
+
+    float32_t top5_avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4]) / 5.0f;
+
+    /* Presence: top-5 average confidence must be >= 0.2 */
+    pose_debug_metrics.person_present = (top5_avg >= 0.2f) ? 1u : 0u;
+  }
+}
+
+static void LCD_init(void)
+{
+  BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
+
+  /* Preview layer Init */
+  LayerConfig.X0          = lcd_bg_area.X0;
+  LayerConfig.Y0          = lcd_bg_area.Y0;
+  LayerConfig.X1          = lcd_bg_area.X0 + lcd_bg_area.XSize;
+  LayerConfig.Y1          = lcd_bg_area.Y0 + lcd_bg_area.YSize;
+  LayerConfig.PixelFormat = LCD_PIXEL_FORMAT_RGB565;
+  LayerConfig.Address     = (uint32_t) lcd_bg_buffer;
+
+  BSP_LCD_ConfigLayer(0, LTDC_LAYER_1, &LayerConfig);
+
+  LayerConfig.X0 = lcd_fg_area.X0;
+  LayerConfig.Y0 = lcd_fg_area.Y0;
+  LayerConfig.X1 = lcd_fg_area.X0 + lcd_fg_area.XSize;
+  LayerConfig.Y1 = lcd_fg_area.Y0 + lcd_fg_area.YSize;
+  LayerConfig.PixelFormat = LCD_PIXEL_FORMAT_ARGB4444;
+  LayerConfig.Address = (uint32_t) lcd_fg_buffer; /* External XSPI1 PSRAM */
+
+  BSP_LCD_ConfigLayer(0, LTDC_LAYER_2, &LayerConfig);
+  UTIL_LCD_SetFuncDriver(&LCD_Driver);
+  UTIL_LCD_SetLayer(LTDC_LAYER_2);
+  UTIL_LCD_Clear(0x00000000);
+  UTIL_LCD_SetFont(&Font20);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+
+#if POSTPROCESS_TYPE == POSTPROCESS_MPE_YOLO_V8_UI
+  Display_mpe_InitFunctions(clamp_point,
+                            convert_length,
+                            convert_point,
+                            Display_binding_line);
+#elif POSTPROCESS_TYPE == POSTPROCESS_SPE_MOVENET_UI
+  Display_spe_InitFunctions(clamp_point,
+                            convert_length,
+                            convert_point,
+                            Display_binding_line);
+#endif
+}
+
+/**
+ * @brief Displays a Welcome screen
+ */
+static void Display_WelcomeScreen(void)
+{
+  static uint32_t t0 = 0;
+  if (t0 == 0)
+    t0 = HAL_GetTick();
+
+  if (HAL_GetTick() - t0 < 4000)
+  {
+    /* Draw logo */
+    UTIL_LCD_FillRGBRect(300, 100, (uint8_t *) stlogo, 200, 107);
+
+    /* Display welcome message */
+    UTIL_LCD_SetBackColor(0x40000000);
+    UTIL_LCDEx_PrintfAt(0, LINE(16), CENTER_MODE, "Pose Estimation");
+    UTIL_LCDEx_PrintfAt(0, LINE(17), CENTER_MODE, WELCOME_MSG_1);
+    UTIL_LCDEx_PrintfAt(0, LINE(18), CENTER_MODE, WELCOME_MSG_2);
+    UTIL_LCD_SetBackColor(0);
+  }
+}
+
+/**
+  * @brief  DCMIPP Clock Config for DCMIPP.
+  * @param  hdcmipp  DCMIPP Handle
+  *         Being __weak it can be overwritten by the application
+  * @retval HAL_status
+  */
+HAL_StatusTypeDef MX_DCMIPP_ClockConfig(DCMIPP_HandleTypeDef *hdcmipp)
+{
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct = {0};
+  HAL_StatusTypeDef ret = HAL_OK;
+
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_DCMIPP;
+  RCC_PeriphCLKInitStruct.DcmippClockSelection = RCC_DCMIPPCLKSOURCE_IC17;
+  RCC_PeriphCLKInitStruct.ICSelection[RCC_IC17].ClockSelection = RCC_ICCLKSOURCE_PLL2;
+  RCC_PeriphCLKInitStruct.ICSelection[RCC_IC17].ClockDivider = 3;
+  ret = HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct);
+  if (ret)
+  {
+    return ret;
+  }
+
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_CSI;
+  RCC_PeriphCLKInitStruct.ICSelection[RCC_IC18].ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_PeriphCLKInitStruct.ICSelection[RCC_IC18].ClockDivider = 40;
+  ret = HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct);
+  if (ret)
+  {
+    return ret;
+  }
+
+  return ret;
+}
+
+static void SystemClock_Config(void)
+{
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef RCC_PeriphCLKInitStruct = {0};
+
+  /* Ensure VDDCORE=0.9V before increasing the system frequency */
+  BSP_SMPS_Init(SMPS_VOLTAGE_OVERDRIVE);
+
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_NONE;
+
+  /* PLL1 = 64 x 25 / 2 = 800MHz */
+  RCC_OscInitStruct.PLL1.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL1.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL1.PLLM = 2;
+  RCC_OscInitStruct.PLL1.PLLN = 25;
+  RCC_OscInitStruct.PLL1.PLLFractional = 0;
+  RCC_OscInitStruct.PLL1.PLLP1 = 1;
+  RCC_OscInitStruct.PLL1.PLLP2 = 1;
+
+  /* PLL2 = 64 x 125 / 8 = 1000MHz */
+  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL2.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL2.PLLM = 8;
+  RCC_OscInitStruct.PLL2.PLLFractional = 0;
+  RCC_OscInitStruct.PLL2.PLLN = 125;
+  RCC_OscInitStruct.PLL2.PLLP1 = 1;
+  RCC_OscInitStruct.PLL2.PLLP2 = 1;
+
+  /* PLL3 = (64 x 225 / 8) / (1 * 2) = 900MHz */
+  RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL3.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL3.PLLM = 8;
+  RCC_OscInitStruct.PLL3.PLLN = 225;
+  RCC_OscInitStruct.PLL3.PLLFractional = 0;
+  RCC_OscInitStruct.PLL3.PLLP1 = 1;
+  RCC_OscInitStruct.PLL3.PLLP2 = 2;
+
+  /* PLL4 = (64 x 225 / 8) / (6 * 6) = 50 MHz */
+  RCC_OscInitStruct.PLL4.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL4.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL4.PLLM = 8;
+  RCC_OscInitStruct.PLL4.PLLFractional = 0;
+  RCC_OscInitStruct.PLL4.PLLN = 225;
+  RCC_OscInitStruct.PLL4.PLLP1 = 6;
+  RCC_OscInitStruct.PLL4.PLLP2 = 6;
+
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    while(1);
+  }
+
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_CPUCLK | RCC_CLOCKTYPE_SYSCLK |
+                                 RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 |
+                                 RCC_CLOCKTYPE_PCLK2 | RCC_CLOCKTYPE_PCLK4 |
+                                 RCC_CLOCKTYPE_PCLK5);
+
+  /* CPU CLock (sysa_ck) = ic1_ck = PLL1 output/ic1_divider = 800 MHz */
+  RCC_ClkInitStruct.CPUCLKSource = RCC_CPUCLKSOURCE_IC1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_IC2_IC6_IC11;
+  RCC_ClkInitStruct.IC1Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_ClkInitStruct.IC1Selection.ClockDivider = 1;
+
+  /* AXI Clock (sysb_ck) = ic2_ck = PLL1 output/ic2_divider = 400 MHz */
+  RCC_ClkInitStruct.IC2Selection.ClockSelection = RCC_ICCLKSOURCE_PLL1;
+  RCC_ClkInitStruct.IC2Selection.ClockDivider = 2;
+
+  /* NPU Clock (sysc_ck) = ic6_ck = PLL2 output/ic6_divider = 1000 MHz */
+  RCC_ClkInitStruct.IC6Selection.ClockSelection = RCC_ICCLKSOURCE_PLL2;
+  RCC_ClkInitStruct.IC6Selection.ClockDivider = 1;
+
+  /* AXISRAM3/4/5/6 Clock (sysd_ck) = ic11_ck = PLL3 output/ic11_divider = 900 MHz */
+  RCC_ClkInitStruct.IC11Selection.ClockSelection = RCC_ICCLKSOURCE_PLL3;
+  RCC_ClkInitStruct.IC11Selection.ClockDivider = 1;
+
+  /* HCLK = sysb_ck / HCLK divider = 200 MHz */
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_HCLK_DIV2;
+
+  /* PCLKx = HCLK / PCLKx divider = 200 MHz */
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_APB1_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV1;
+  RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV1;
+  RCC_ClkInitStruct.APB5CLKDivider = RCC_APB5_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct) != HAL_OK)
+  {
+    while(1);
+  }
+
+  RCC_PeriphCLKInitStruct.PeriphClockSelection = 0;
+
+  /* XSPI1 kernel clock (ck_ker_xspi1) = HCLK = 200MHz */
+  RCC_PeriphCLKInitStruct.PeriphClockSelection |= RCC_PERIPHCLK_XSPI1;
+  RCC_PeriphCLKInitStruct.Xspi1ClockSelection = RCC_XSPI1CLKSOURCE_HCLK;
+
+  /* XSPI2 kernel clock (ck_ker_xspi1) = HCLK =  200MHz */
+  RCC_PeriphCLKInitStruct.PeriphClockSelection |= RCC_PERIPHCLK_XSPI2;
+  RCC_PeriphCLKInitStruct.Xspi2ClockSelection = RCC_XSPI2CLKSOURCE_HCLK;
+
+  if (HAL_RCCEx_PeriphCLKConfig(&RCC_PeriphCLKInitStruct) != HAL_OK)
+  {
+    while (1);
+  }
+}
+
+static void CONSOLE_Config()
+{
+  GPIO_InitTypeDef gpio_init;
+
+  __HAL_RCC_USART1_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+
+ /* DISCO & NUCLEO USART1 (PE5/PE6) */
+  gpio_init.Mode      = GPIO_MODE_AF_PP;
+  gpio_init.Pull      = GPIO_PULLUP;
+  gpio_init.Speed     = GPIO_SPEED_FREQ_HIGH;
+  gpio_init.Pin       = GPIO_PIN_5 | GPIO_PIN_6;
+  gpio_init.Alternate = GPIO_AF7_USART1;
+  HAL_GPIO_Init(GPIOE, &gpio_init);
+
+  huart1.Instance          = USART1;
+  huart1.Init.BaudRate     = 115200;
+  huart1.Init.Mode         = UART_MODE_TX_RX;
+  huart1.Init.Parity       = UART_PARITY_NONE;
+  huart1.Init.WordLength   = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits     = UART_STOPBITS_1;
+  huart1.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_8;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    while (1);
+  }
+}
+
+int _write(int file, char *ptr, int len)
+{
+  HAL_StatusTypeDef status;
+
+  if ((file != STDOUT_FILENO) && (file != STDERR_FILENO)) {
+      errno = EBADF;
+      return -1;
+  }
+
+  status = HAL_UART_Transmit(&huart1, (uint8_t*)ptr, len, ~0);
+
+  return (status == HAL_OK ? len : 0);
+}
+
+void npu_cache_enable_clocks_and_reset(void)
+{
+  __HAL_RCC_CACHEAXIRAM_MEM_CLK_ENABLE();
+  __HAL_RCC_CACHEAXI_CLK_ENABLE();
+  __HAL_RCC_CACHEAXI_FORCE_RESET();
+  __HAL_RCC_CACHEAXI_RELEASE_RESET();
+}
+
+void npu_cache_disable_clocks_and_reset(void)
+{
+  __HAL_RCC_CACHEAXIRAM_MEM_CLK_DISABLE();
+  __HAL_RCC_CACHEAXI_CLK_DISABLE();
+  __HAL_RCC_CACHEAXI_FORCE_RESET();
+}
+
+#ifdef  USE_FULL_ASSERT
+void assert_failed(uint8_t* file, uint32_t line)
+{
+  UNUSED(file);
+  UNUSED(line);
+  __BKPT(0);
+  while (1)
+  {
+  }
+}
+#endif

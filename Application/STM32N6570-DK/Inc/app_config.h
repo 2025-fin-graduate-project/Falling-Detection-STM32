@@ -33,25 +33,43 @@
 #define ASPECT_RATIO_FULLSCREEN (3) /* Resize camera image to NN input size and display a maximized image. See Doc/Build-Options.md#aspect-ratio-mode */
 #define ASPECT_RATIO_MODE ASPECT_RATIO_CROP
 
-/* GRU window-based (1×40×45): window fills before inference begins (= POSE_WINDOW_SIZE = 40) */
-#define GRU_WARMUP_FRAMES       40
-/* Softmax fall score must reach this to count as a fall frame — Balanced sensitivity */
-#define GRU_FALL_SCORE_THRESHOLD  0.50f
-/* Majority vote: 2 out of 5 consecutive windows must be above threshold to trigger alarm */
-#define GRU_FALL_VOTE_WINDOW      5
-#define GRU_FALL_VOTE_K           2
-/* Keep showing FALL on display and sounding alarm for this many ms after confirmation */
-#define GRU_FALL_LATCH_MS       5000
-/* LED_RED blink half-period during alarm (ms) */
-#define GRU_ALARM_BLINK_PERIOD_MS  250
-/* Minimum postprocessed keypoint confidence required to run fall detection */
-#define FALL_PERSON_CONF_THRESHOLD  (0.08f)
+/* --- Fall Detection Configuration --- */
+
+/* Model selection: FALL_MODEL_TCN or FALL_MODEL_GRU */
+#define FALL_DETECTION_MODEL      FALL_MODEL_GRU
+
+/* Minimum softmax score to consider a frame as a fall */
+#define FALL_THRESHOLD            0.50f
+
+/* Number of consecutive fall frames required to trigger an alarm */
+#define FALL_CONSECUTIVE_COUNT    1
+
+/* How long (ms) the alarm banner and LED remain active after a fall is confirmed */
+#define FALL_ALARM_LATCH_MS       5000
+
+/* Warmup: frames required to fill the sliding window before inference starts */
+#define FALL_WARMUP_FRAMES        POSE_WINDOW_SIZE
+
+/* LED blink half-period (ms) during alarm */
+#define FALL_ALARM_BLINK_MS       250
+
+/* --- Presence & Keypoint Configuration --- */
+
+/* Threshold for top-5 average confidence to confirm a person is present */
+#define FALL_PRESENCE_THRESHOLD   0.20f
+
+/* Minimum confidence for an individual keypoint to be used in fall detection */
+#define FALL_KEYPOINT_THRESHOLD   0.08f
+
+/* Threshold for One-Euro filter to treat a keypoint as missing (Pipeline D) */
+#define FALL_CONF_MASK_THRESHOLD  0.15f
+
 /* Max keypoint bounding-box span (normalized 0-1) before skipping visualization */
-#define FALL_KP_SPREAD_MAX          (0.85f)
-/* Consecutive postprocessed frames below the person threshold before reset */
-#define FALL_PERSON_MISSING_RESET_COUNT  45
-/* Consecutive postprocessed frames above the person threshold before confirming entry */
-#define FALL_PERSON_ENTRY_CONF_COUNT     3
+#define FALL_KP_SPREAD_MAX        0.85f
+
+/* Frames required to confirm a person has entered or left the view */
+#define FALL_ENTRY_CONF_COUNT     3
+#define FALL_MISSING_CONF_COUNT   45
 
 /* Model Related Info */
 #define POSTPROCESS_TYPE    POSTPROCESS_SPE_MOVENET_UI
